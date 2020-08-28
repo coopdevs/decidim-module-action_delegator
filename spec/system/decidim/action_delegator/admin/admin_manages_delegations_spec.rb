@@ -47,16 +47,20 @@ describe "Admin manages delegations", type: :system do
   context "when creating a delegation" do
     let!(:granter) { create(:user, organization: organization) }
     let!(:grantee) { create(:user, organization: organization) }
-    let!(:setting) { create(:setting, organization: organization) }
+    let!(:consultation) { create(:consultation, organization: organization) }
 
     before do
+      create(:setting, organization: organization)
       click_link I18n.t("delegations.index.actions.new_delegation", scope: i18n_scope)
     end
 
     it "creates a new delegation" do
+      consultation_title = Decidim::ActionDelegator::Admin::ConsultationPresenter.new(consultation).translated_title
+
       within ".new_delegation" do
         select granter.name, from: :delegation_granter_id
         select grantee.name, from: :delegation_grantee_id
+        select consultation_title, from: :delegation_decidim_consultation_id
 
         find("*[type=submit]").click
       end
