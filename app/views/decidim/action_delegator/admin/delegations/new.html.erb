@@ -9,15 +9,15 @@
     </div>
 
     <div class="card-section">
-      <% prompt_options = { url: decidim_admin.users_organization_url, placeholder: t('.select_member') } %>
+      <% prompt_options = { url: decidim_admin.users_organization_url, placeholder: t(".select_member") } %>
 
       <div class="row column">
-        <%= f.autocomplete_select(:granter_id, @form.granter,  { multiple: false, label: t('.granter') }, prompt_options) do |user|
+        <%= f.autocomplete_select(:granter_id, @form.granter,  { multiple: false, label: t(".granter") }, prompt_options) do |user|
           { value: user.id, label: "#{user.name} (@#{user.nickname})" }
         end %>
       </div>
       <div class="row column">
-        <%= f.autocomplete_select(:grantee_id, @form.grantee,  { multiple: false, label: t('.grantee') }, prompt_options) do |user|
+        <%= f.autocomplete_select(:grantee_id, @form.grantee,  { multiple: false, label: t(".grantee") }, prompt_options) do |user|
           { value: user.id, label: "#{user.name} (@#{user.nickname})" }
         end %>
       </div>
