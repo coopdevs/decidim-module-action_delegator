@@ -23,19 +23,24 @@ module Decidim
         def new
           enforce_permission_to :create, :delegation
 
-          @delegation = Delegation.new
+          @form = form(DelegationForm).instance
         end
 
         def create
           enforce_permission_to :create, :delegation
 
-          @delegation = build_delegation
+          @form = form(DelegationForm).from_params(params)
 
-          if @delegation.save
-            notice = I18n.t("delegations.create.success", scope: "decidim.action_delegator.admin")
-            redirect_to setting_delegations_path(@delegation.setting), notice: notice
-          else
-            flash.now[:error] = I18n.t("delegations.create.error", scope: "decidim.action_delegator.admin")
+          CreateDelegation.call(@form, current_setting, current_user) do
+            on(:ok) do
+              notice = I18n.t("delegations.create.success", scope: "decidim.action_delegator.admin")
+              redirect_to setting_delegations_path(@delegation.setting), notice: notice
+            end
+
+            on(:invalid) do
+              flash.now[:error] = I18n.t("delegations.create.error", scope: "decidim.action_delegator.admin")
+              render :new
+            end
           end
         end
 
@@ -54,15 +59,6 @@ module Decidim
         end
 
         private
-
-        def build_delegation
-          attributes = delegation_params.merge(setting: current_setting)
-          Delegation.new(attributes)
-        end
-
-        def delegation_params
-          params.require(:delegation).permit(:granter_id, :grantee_id)
-        end
 
         def delegation
           @delegation ||= collection.find_by(id: params[:id])

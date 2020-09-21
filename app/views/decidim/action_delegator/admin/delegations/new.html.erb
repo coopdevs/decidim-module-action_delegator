@@ -2,7 +2,7 @@
   <%= t ".title" %>
 </h2>
 
-<%= form_for @delegation, url: { action: "create" }, html: { class: "form new_delegation" } do |f| %>
+<%= decidim_form_for @form, url: { action: "create" }, html: { class: "form new_delegation" } do |f| %>
   <div class="card">
     <div class="card-divider">
       <h2 class="card-title"><%= t ".form.title" %></h2>
@@ -12,12 +12,12 @@
       <% prompt_options = { url: decidim_admin.users_organization_url, placeholder: t('.select_member') } %>
 
       <div class="row column">
-        <%= f.autocomplete_select(:granter_id, @delegation.granter_id,  { multiple: false, label: t('.granter') }, prompt_options) do |user|
+        <%= f.autocomplete_select(:granter_id, @form.granter,  { multiple: false, label: t('.granter') }, prompt_options) do |user|
           { value: user.id, label: "#{user.name} (@#{user.nickname})" }
         end %>
       </div>
       <div class="row column">
-        <%= f.autocomplete_select(:grantee_id, @delegation.grantee_id,  { multiple: false, label: t('.grantee') }, prompt_options) do |user|
+        <%= f.autocomplete_select(:grantee_id, @form.grantee,  { multiple: false, label: t('.grantee') }, prompt_options) do |user|
           { value: user.id, label: "#{user.name} (@#{user.nickname})" }
         end %>
       </div>
