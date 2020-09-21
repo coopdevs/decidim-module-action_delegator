@@ -23,7 +23,7 @@ module Decidim
         def call
           return broadcast(:invalid) if form.invalid? || self_delegate?
 
-          create_delegation
+          create_delegation!
 
           broadcast(:ok)
         end
@@ -39,9 +39,9 @@ module Decidim
           true
         end
 
-        def create_delegation
+        def create_delegation!
           attributes = form.attributes.merge(setting: current_setting)
-          Delegation.new(attributes)
+          Delegation.create!(attributes)
         end
       end
     end
