@@ -34,7 +34,7 @@ module Decidim
           CreateDelegation.call(@form, current_setting, current_user) do
             on(:ok) do
               notice = I18n.t("delegations.create.success", scope: "decidim.action_delegator.admin")
-              redirect_to setting_delegations_path(@delegation.setting), notice: notice
+              redirect_to setting_delegations_path(current_setting), notice: notice
             end
 
             on(:invalid) do
