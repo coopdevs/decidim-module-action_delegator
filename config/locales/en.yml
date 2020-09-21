@@ -24,6 +24,9 @@ en:
               title: General information
             save: Create
             title: New delegation
+            select_member: Select member
+            grantee: Grantee
+            granter: Granter
         menu:
           delegations: User delegations
           participants: Participants
