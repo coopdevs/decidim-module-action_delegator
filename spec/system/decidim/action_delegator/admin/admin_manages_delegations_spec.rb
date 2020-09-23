@@ -25,8 +25,8 @@ describe "Admin manages delegations", type: :system do
       click_link I18n.t("delegations.index.actions.new_delegation", scope: i18n_scope)
 
       within ".new_delegation" do
-        select granter.name, from: :delegation_granter_id
-        select grantee.name, from: :delegation_grantee_id
+        autocomplete_select "#{granter.name} (@#{granter.nickname})", from: :granter_id
+        autocomplete_select "#{grantee.name} (@#{grantee.nickname})", from: :grantee_id
 
         find("*[type=submit]").click
       end

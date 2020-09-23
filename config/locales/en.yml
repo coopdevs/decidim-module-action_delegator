@@ -29,11 +29,11 @@ en:
           new:
             form:
               title: General information
-            save: Create
-            title: New delegation
-            select_member: Select member
             grantee: Grantee
             granter: Granter
+            save: Create
+            select_member: Select member
+            title: New delegation
         menu:
           delegations: User delegations
           participants: Participants
