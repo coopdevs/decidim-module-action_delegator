@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::ActionDelegator::Admin::CreateDelegation do
-  subject { described_class.new(form, current_setting, current_user) }
+  subject { described_class.new(form, current_user) }
 
   let(:current_user) { create(:user, organization: organization) }
   let(:current_setting) { create(:setting) }
@@ -18,7 +18,8 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
       granter_id: granter.id,
       attributes: {
         grantee_id: grantee.id,
-        granter_id: granter.id
+        granter_id: granter.id,
+        setting: current_setting
       },
       errors: double(add: true)
     )

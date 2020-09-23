@@ -29,9 +29,9 @@ module Decidim
         def create
           enforce_permission_to :create, :delegation
 
-          @form = form(DelegationForm).from_params(params)
+          @form = form(DelegationForm).from_params(params.merge(setting: current_setting))
 
-          CreateDelegation.call(@form, current_setting, current_user) do
+          CreateDelegation.call(@form, current_user) do
             on(:ok) do
               notice = I18n.t("delegations.create.success", scope: "decidim.action_delegator.admin")
               redirect_to setting_delegations_path(current_setting), notice: notice

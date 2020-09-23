@@ -8,9 +8,8 @@ module Decidim
         #
         # form         - A form object with the params.
         # delegated_by - The user performing the operation
-        def initialize(form, current_setting, performed_by)
+        def initialize(form, performed_by)
           @form = form
-          @current_setting = current_setting
           @performed_by = performed_by
         end
 
@@ -30,7 +29,7 @@ module Decidim
 
         private
 
-        attr_reader :form, :performed_by, :current_setting
+        attr_reader :form, :performed_by
 
         def self_delegate?
           return false unless performed_by.id == form.grantee_id
@@ -40,8 +39,7 @@ module Decidim
         end
 
         def create_delegation!
-          attributes = form.attributes.merge(setting: current_setting)
-          Delegation.create!(attributes)
+          Delegation.create!(form.attributes)
         end
       end
     end
