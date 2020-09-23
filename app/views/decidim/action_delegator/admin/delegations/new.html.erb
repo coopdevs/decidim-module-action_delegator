@@ -9,24 +9,17 @@
     </div>
 
     <div class="card-section">
+      <% prompt_options = { url: decidim_admin.users_organization_url, placeholder: t(".select_member") } %>
+
       <div class="row column">
-        <%= f.select :granter_id,
-                     options_from_collection_for_select(
-                       granters_for_select,
-                       :id,
-                       :name,
-                       selected: @delegation.granter_id
-                     ),
-                     autofocus: true %>
+        <%= f.autocomplete_select(:granter_id, @delegation.granter_id,  { multiple: false, label: t(".granter") }, prompt_options) do |user|
+          { value: user.id, label: "#{user.name} (@#{user.nickname})" }
+        end %>
       </div>
       <div class="row column">
-        <%= f.select :grantee_id,
-                     options_from_collection_for_select(
-                       grantees_for_select,
-                       :id,
-                       :name,
-                       selected: @delegation.grantee_id
-                     ) %>
+        <%= f.autocomplete_select(:grantee_id, @delegation.grantee_id,  { multiple: false, label: t(".grantee") }, prompt_options) do |user|
+          { value: user.id, label: "#{user.name} (@#{user.nickname})" }
+        end %>
       </div>
     </div>
   </div>
