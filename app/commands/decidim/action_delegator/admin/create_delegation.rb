@@ -21,7 +21,7 @@ module Decidim
         # Returns nothing.
         def call
           return broadcast(:invalid) if form.invalid? || self_delegate?
-          return broadcast(:max_grants) if max_grants?
+          return broadcast(:above_max_grants) if above_max_grants?
 
           create_delegation!
 
@@ -32,7 +32,7 @@ module Decidim
 
         attr_reader :form, :performed_by
 
-        def max_grants?
+        def above_max_grants?
           return false unless grants_count >= form.setting.max_grants
 
           true

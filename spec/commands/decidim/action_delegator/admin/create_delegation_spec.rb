@@ -48,8 +48,8 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
         create(:delegation, form.attributes)
       end
 
-      it "broadcasts :max_grants" do
-        expect { subject.call }.to broadcast(:max_grants)
+      it "broadcasts :above_max_grants" do
+        expect { subject.call }.to broadcast(:above_max_grants)
       end
     end
   end
