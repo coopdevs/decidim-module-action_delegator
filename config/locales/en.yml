@@ -76,6 +76,10 @@ en:
       delegations_verifier:
         explanation: Verified users with this method can delegate votes to other users
         name: Delegations Verifier
+    admin:
+      consultations:
+        results:
+          membership_type: Membership type
   layouts:
     decidim:
       user_profile:
