@@ -33,9 +33,7 @@ module Decidim
         attr_reader :form, :performed_by
 
         def above_max_grants?
-          return false unless grants_count >= form.setting.max_grants
-
-          true
+          grants_count >= form.setting.max_grants
         end
 
         def grants_count
