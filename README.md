@@ -37,13 +37,17 @@ ActionDelegator does not provides new Components or Participatory Spaces but enh
 
 ### Extended consultation results
 
-This gem modifies the consultation's results page adding two extra columns `Membership type` and `Membership weight`. This requires a Decidim verification that creates `decidim_authorizations` records which include the following JSON structure in the `metadata` column:
+This gem modifies the consultation's results page adding two extra columns
+`Membership type` and `Membership weight`. This requires a Decidim verification
+that creates `decidim_authorizations` records which include the following JSON
+structure in the `metadata` column:
 
 ```json
 "{ metadata_type: '',   metadata_weight: '' }"
 ```
 
-See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2 as an example of such verification.
+See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
+as an example of such verification.
 
 ## Contributing
 
