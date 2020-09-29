@@ -1,0 +1,19 @@
+name: Notify change
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          curl \
+            -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/coopdevs/decidim-coopcat/actions/workflows/main.yml/dispatches \
+            -u "sauloperez:${{secrets.GH_API_TOKEN}}" \
+            -d '{"ref":"master"}'
