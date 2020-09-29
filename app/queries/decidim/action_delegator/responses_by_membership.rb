@@ -2,6 +2,15 @@
 
 module Decidim
   module ActionDelegator
+    # Returns total votes of each response by memberships' type and weight.
+    #
+    # This query completely relies on the schema of the `metadata` of the relevant
+    # `decidim_authorizations` records, which is expected to be like:
+    #
+    #   '{ metadata_type: "a type",   metadata_weight: "a number" }'
+    #
+    # Note that although we assume `metadata_type` to be a string and `metadata_weight` to be an
+    # integer, there are no implications in the code for their actual data type.
     class ResponsesByMembership < Rectify::Query
       def initialize(question)
         @question = question
@@ -37,6 +46,8 @@ module Decidim
         SQL
       end
 
+      # Retuns the value of the specified key in the `metadata` JSONB PostgreSQL column. More
+      # details: https://www.postgresql.org/docs/current/functions-json.html
       def metadata_field(name)
         "decidim_authorizations.metadata ->> '#{name}'"
       end
