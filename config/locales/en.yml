@@ -13,6 +13,7 @@ en:
         delegations:
           create:
             error: There was a problem creating the delegation
+            error_max_grants: You reached the limit of allowed delegations
             success: Delegation created successfully
           destroy:
             error: There was a problem destroying this delegation

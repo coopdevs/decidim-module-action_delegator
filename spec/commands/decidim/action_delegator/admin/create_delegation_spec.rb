@@ -6,7 +6,7 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
   subject { described_class.new(form, current_user) }
 
   let(:current_user) { create(:user, organization: organization) }
-  let(:current_setting) { create(:setting) }
+  let(:current_setting) { create(:setting, max_grants: 1) }
   let(:organization) { create(:organization) }
   let(:granter) { create(:user, organization: organization) }
   let(:grantee) { create(:user, organization: organization) }
@@ -16,6 +16,7 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
       invalid?: invalid,
       grantee_id: grantee.id,
       granter_id: granter.id,
+      setting: current_setting,
       attributes: {
         grantee_id: grantee.id,
         granter_id: granter.id,
@@ -39,6 +40,16 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
 
       it "broadcasts :invalid" do
         expect { subject.call }.to broadcast(:invalid)
+      end
+    end
+
+    context "when max_grant reaches limit" do
+      before do
+        create(:delegation, form.attributes)
+      end
+
+      it "broadcasts :above_max_grants" do
+        expect { subject.call }.to broadcast(:above_max_grants)
       end
     end
   end

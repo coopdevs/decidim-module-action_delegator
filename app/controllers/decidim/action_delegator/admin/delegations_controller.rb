@@ -37,6 +37,11 @@ module Decidim
               redirect_to setting_delegations_path(current_setting), notice: notice
             end
 
+            on(:above_max_grants) do
+              flash.now[:error] = I18n.t("delegations.create.error_max_grants", scope: "decidim.action_delegator.admin")
+              render :new
+            end
+
             on(:invalid) do
               flash.now[:error] = I18n.t("delegations.create.error", scope: "decidim.action_delegator.admin")
               render :new
