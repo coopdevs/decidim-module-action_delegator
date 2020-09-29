@@ -7,7 +7,7 @@ module Decidim
     # This query completely relies on the schema of the `metadata` of the relevant
     # `decidim_authorizations` records, which is expected to be like:
     #
-    #   '{ metadata_type: "a type",   metadata_weight: "a number" }'
+    #   "{ metadata_type: '',   metadata_weight: '' }"
     #
     # Note that although we assume `metadata_type` to be a string and `metadata_weight` to be an
     # integer, there are no implications in the code for their actual data type.
