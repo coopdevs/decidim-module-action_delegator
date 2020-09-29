@@ -11,11 +11,17 @@ module Decidim
         question
           .responses
           .joins(:votes)
-          .joins("INNER JOIN decidim_authorizations ON decidim_authorizations.decidim_user_id = decidim_consultations_votes.decidim_author_id")
-          .group(:title, "decidim_authorizations.metadata ->> 'membership_type'")
+          .joins("INNER JOIN decidim_authorizations
+                  ON decidim_authorizations.decidim_user_id = decidim_consultations_votes.decidim_author_id")
+          .group(
+            :title,
+            "decidim_authorizations.metadata ->> 'membership_type'",
+            "decidim_authorizations.metadata ->> 'membership_weight'"
+          )
           .select(
             :title,
             "decidim_authorizations.metadata ->> 'membership_type' AS membership_type",
+            "decidim_authorizations.metadata ->> 'membership_weight' AS membership_weight",
             "COUNT(*) AS votes_count"
           )
           .order("votes_count DESC")

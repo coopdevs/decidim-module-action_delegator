@@ -24,8 +24,12 @@ describe "Admin manages consultation results", type: :system do
     let!(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
     let!(:other_vote) { question.votes.create(author: other_user, response: response) }
 
-    let!(:authorization) { create(:authorization, user: user, metadata: { membership_type: "producer" }) }
-    let!(:other_authorization) { create(:authorization, user: other_user, metadata: { membership_type: "consumer" }) }
+    let!(:authorization) do
+      create(:authorization, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
+    end
+    let!(:other_authorization) do
+      create(:authorization, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
+    end
 
     let(:votes) { consultation.questions.first.total_votes }
 
@@ -35,17 +39,20 @@ describe "Admin manages consultation results", type: :system do
       expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
     end
 
-    it "shows votes by membership type" do
+    it "shows votes by membership and weight type" do
       visit decidim_admin_consultations.results_consultation_path(consultation)
 
       expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type").upcase)
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight").upcase)
 
       first_row = find(:xpath, ".//table/tbody/tr[1]")
       expect(first_row.find(".membership-type")).to have_content("consumer")
+      expect(first_row.find(".membership-weight")).to have_content(3)
       expect(first_row.find(".votes-count")).to have_content(1)
 
       second_row = find(:xpath, ".//table/tbody/tr[2]")
       expect(second_row.find(".membership-type")).to have_content("producer")
+      expect(second_row.find(".membership-weight")).to have_content(2)
       expect(second_row.find(".votes-count")).to have_content(1)
     end
   end

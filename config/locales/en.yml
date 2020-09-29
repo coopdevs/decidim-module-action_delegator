@@ -80,6 +80,7 @@ en:
       consultations:
         results:
           membership_type: Membership type
+          membership_weight: Weight
   layouts:
     decidim:
       user_profile:
