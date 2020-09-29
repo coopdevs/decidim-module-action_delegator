@@ -27,7 +27,7 @@
           </thead>
           <tbody>
             <% if question.publishable_results? %>
-              <% Decidim::ActionDelegator::ResponsesByMembershipType.new(question).query.each do |group| %>
+              <% Decidim::ActionDelegator::ResponsesByMembership.new(question).query.each do |group| %>
               <tr>
                 <td><%= strip_tags translated_attribute group.title %></td>
                 <td class="membership-type"><%= group.membership_type %></td>
