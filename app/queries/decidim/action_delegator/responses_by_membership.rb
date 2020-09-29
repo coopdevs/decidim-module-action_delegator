@@ -11,17 +11,16 @@ module Decidim
         question
           .responses
           .joins(:votes)
-          .joins("INNER JOIN decidim_authorizations
-                  ON decidim_authorizations.decidim_user_id = decidim_consultations_votes.decidim_author_id")
+          .joins(authorizations)
           .group(
             :title,
-            "decidim_authorizations.metadata ->> 'membership_type'",
-            "decidim_authorizations.metadata ->> 'membership_weight'"
+            metadata_field("membership_type"),
+            metadata_field("membership_weight")
           )
           .select(
             :title,
-            "decidim_authorizations.metadata ->> 'membership_type' AS membership_type",
-            "decidim_authorizations.metadata ->> 'membership_weight' AS membership_weight",
+            metadata_field_with_alias("membership_type"),
+            metadata_field_with_alias("membership_weight"),
             "COUNT(*) AS votes_count"
           )
           .order("votes_count DESC")
@@ -30,6 +29,21 @@ module Decidim
       private
 
       attr_reader :question
+
+      def authorizations
+        <<-SQL.strip_heredoc
+          INNER JOIN decidim_authorizations
+          ON decidim_authorizations.decidim_user_id = decidim_consultations_votes.decidim_author_id
+        SQL
+      end
+
+      def metadata_field(name)
+        "decidim_authorizations.metadata ->> '#{name}'"
+      end
+
+      def metadata_field_with_alias(name)
+        "#{metadata_field(name)} AS #{name}"
+      end
     end
   end
 end
