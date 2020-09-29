@@ -15,10 +15,6 @@ Initially, only votes can be delegated.
 
 > **NOTE** THIS IS IN DEVELOPMENT, NOT READY FOR USE IN PRODUCTION
 
-## Usage
-
-ActionDelegator does not provides new Components or Participatory Spaces but enhances some functionalities in them.
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -34,6 +30,24 @@ bundle
 bundle exec rails decidim_action_delegator:install:migrations
 bundle exec rails db:migrate
 ```
+
+## Usage
+
+ActionDelegator does not provides new Components or Participatory Spaces but enhances some functionalities in them.
+
+### Extended consultation results
+
+This gem modifies the consultation's results page adding two extra columns
+`Membership type` and `Membership weight`. This requires a Decidim verification
+that creates `decidim_authorizations` records which include the following JSON
+structure in the `metadata` column:
+
+```json
+"{ metadata_type: '',   metadata_weight: '' }"
+```
+
+See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
+as an example of such verification.
 
 ## Contributing
 

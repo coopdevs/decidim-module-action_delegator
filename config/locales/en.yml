@@ -69,6 +69,11 @@ en:
           members:
             index:
               title: Members management
+    admin:
+      consultations:
+        results:
+          membership_type: Membership type
+          membership_weight: Weight
     authorization_handlers:
       admin:
         delegations_verifier:
