@@ -5,14 +5,14 @@ ca:
         delegation:
           attributes:
             grantee_id:
-              self_delegate: You can't delegate to yourself
+              self_delegate: No et pots delegar el vot a tu mateix
   decidim:
     action_delegator:
       admin:
         delegations:
           create:
-            error: There was a problem creating the delegation
-            error_max_grants: You reached the limit of allowed delegations
+            error: S'ha produït un error en crear aquesta delegació
+            error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegation created successfully
           destroy:
             error: There was a problem destroying this delegation
