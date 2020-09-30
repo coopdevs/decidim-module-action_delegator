@@ -1,12 +1,5 @@
 ---
 en:
-  activemodel:
-    errors:
-      models:
-        delegation:
-          attributes:
-            grantee_id:
-              self_delegate: You can't delegate to yourself
   decidim:
     action_delegator:
       admin:

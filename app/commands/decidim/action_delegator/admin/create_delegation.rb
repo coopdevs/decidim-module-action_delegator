@@ -20,7 +20,7 @@ module Decidim
         #
         # Returns nothing.
         def call
-          return broadcast(:invalid) if form.invalid? || self_delegate?
+          return broadcast(:invalid) if form.invalid?
           return broadcast(:above_max_grants) if above_max_grants?
 
           create_delegation!
@@ -38,13 +38,6 @@ module Decidim
 
         def grants_count
           SettingDelegations.new(form.setting).query.count
-        end
-
-        def self_delegate?
-          return false unless performed_by.id == form.grantee_id
-
-          form.errors.add(:grantee_id, :self_delegate)
-          true
         end
 
         def create_delegation!
