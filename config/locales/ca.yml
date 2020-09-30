@@ -1,11 +1,4 @@
 ca:
-  activemodel:
-    errors:
-      models:
-        delegation:
-          attributes:
-            grantee_id:
-              self_delegate: No et pots delegar el vot a tu mateix
   decidim:
     action_delegator:
       admin:
