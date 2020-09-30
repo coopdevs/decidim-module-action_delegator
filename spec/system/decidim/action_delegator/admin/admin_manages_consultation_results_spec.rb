@@ -24,15 +24,6 @@ describe "Admin manages consultation results", type: :system do
         title: { "en" => "A", "ca" => "A", "es" => "A" }
       )
     end
-
-    let!(:vote) { question.votes.create(author: user, response: response) }
-
-    let!(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
-    let!(:other_vote) { question.votes.create(author: other_user, response: response) }
-
-    let!(:another_user) { create(:user, :admin, :confirmed, organization: organization) }
-    let!(:another_vote) { question.votes.create(author: another_user, response: response) }
-
     let!(:other_response) do
       create(
         :response,
@@ -40,18 +31,25 @@ describe "Admin manages consultation results", type: :system do
         title: { "en" => "B", "ca" => "B", "es" => "B" }
       )
     end
+
+    let!(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
+    let!(:another_user) { create(:user, :admin, :confirmed, organization: organization) }
     let!(:yet_another_user) { create(:user, :admin, :confirmed, organization: organization) }
-    let!(:yet_another_vote) { question.votes.create(author: yet_another_user, response: other_response) }
+
+    let(:votes) { consultation.questions.first.total_votes }
 
     before do
+      question.votes.create(author: user, response: response)
+      question.votes.create(author: other_user, response: response)
+      question.votes.create(author: another_user, response: response)
+      question.votes.create(author: yet_another_user, response: other_response)
+
       create(:authorization, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
       create(:authorization, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
       create(:authorization, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
 
       create(:authorization, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
     end
-
-    let(:votes) { consultation.questions.first.total_votes }
 
     it "shows votes total" do
       visit decidim_admin_consultations.results_consultation_path(consultation)
