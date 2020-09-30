@@ -32,7 +32,7 @@ module Decidim
             metadata_field_with_alias("membership_weight"),
             "COUNT(*) AS votes_count"
           )
-          .order("votes_count DESC")
+          .order("title ASC, membership_type ASC, membership_weight DESC, votes_count DESC")
       end
 
       private

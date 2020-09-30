@@ -29,7 +29,7 @@
             <% if question.publishable_results? %>
               <% Decidim::ActionDelegator::ResponsesByMembership.new(question).query.each do |group| %>
               <tr>
-                <td><%= strip_tags translated_attribute group.title %></td>
+                <td class="response-title"><%= strip_tags translated_attribute group.title %></td>
                 <td class="membership-type"><%= group.membership_type %></td>
                 <td class="membership-weight"><%= group.membership_weight %></td>
                 <td class="votes-count"><%= group.votes_count %></td>

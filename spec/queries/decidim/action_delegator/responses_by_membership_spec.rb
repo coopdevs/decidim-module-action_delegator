@@ -42,11 +42,11 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
         result = subject.query
 
         expect(result.first.membership_type).to eq("producer")
-        expect(result.first.membership_weight).to eq("1")
+        expect(result.first.membership_weight).to eq("2")
         expect(result.first.votes_count).to eq(1)
 
         expect(result.second.membership_type).to eq("producer")
-        expect(result.second.membership_weight).to eq("2")
+        expect(result.second.membership_weight).to eq("1")
         expect(result.second.votes_count).to eq(1)
       end
     end
