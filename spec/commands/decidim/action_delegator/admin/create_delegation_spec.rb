@@ -10,6 +10,7 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
   let(:organization) { create(:organization) }
   let(:granter) { create(:user, organization: organization) }
   let(:grantee) { create(:user, organization: organization) }
+  let(:other_grantee) { create(:user, organization: organization) }
 
   let(:form) do
     double(
@@ -35,13 +36,25 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
       end
     end
 
-    context "when max_grant reaches limit" do
-      before do
-        create(:delegation, form.attributes)
+    context "when max_grant is 1" do
+      context "when grantee has already a delegation" do
+        before do
+          create(:delegation, form.attributes)
+        end
+
+        it "broadcasts :above_max_grants" do
+          expect { subject.call }.to broadcast(:above_max_grants)
+        end
       end
 
-      it "broadcasts :above_max_grants" do
-        expect { subject.call }.to broadcast(:above_max_grants)
+      context "when grantee has no delegation" do
+        before do
+          create(:delegation, form.attributes.merge(grantee_id: other_grantee.id))
+        end
+
+        it "does not broadcast :above_max_grants" do
+          expect { subject.call }.not_to broadcast(:above_max_grants)
+        end
       end
     end
   end
