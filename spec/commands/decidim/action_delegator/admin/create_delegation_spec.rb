@@ -35,14 +35,6 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
       end
     end
 
-    context "when current_user self delegates" do
-      let(:grantee) { current_user }
-
-      it "broadcasts :invalid" do
-        expect { subject.call }.to broadcast(:invalid)
-      end
-    end
-
     context "when max_grant reaches limit" do
       before do
         create(:delegation, form.attributes)
