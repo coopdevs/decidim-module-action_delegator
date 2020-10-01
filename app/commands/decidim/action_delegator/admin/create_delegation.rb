@@ -37,7 +37,9 @@ module Decidim
         end
 
         def grants_count
-          SettingDelegations.new(form.setting).query.count
+          SettingDelegations.new(form.setting).query
+                            .where(grantee_id: form.grantee_id)
+                            .count
         end
 
         def create_delegation!
