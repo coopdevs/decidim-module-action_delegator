@@ -8,9 +8,10 @@ module Decidim
         #
         # form         - A form object with the params.
         # delegated_by - The user performing the operation
-        def initialize(form, performed_by)
+        def initialize(form, performed_by, current_setting)
           @form = form
           @performed_by = performed_by
+          @current_setting = current_setting
         end
 
         # Executes the command. Broadcasts these events:
@@ -20,30 +21,31 @@ module Decidim
         #
         # Returns nothing.
         def call
-          return broadcast(:invalid) if form.invalid?
+          return broadcast(:invalid) if form.invalid? || current_setting.nil?
           return broadcast(:above_max_grants) if above_max_grants?
 
-          create_delegation!
+          create_delegation
 
+          return broadcast(:invalid) if delegation.invalid?
           broadcast(:ok)
         end
 
         private
 
-        attr_reader :form, :performed_by
+        attr_reader :form, :performed_by, :current_setting, :delegation
 
         def above_max_grants?
-          grants_count >= form.setting.max_grants
+          grants_count >= current_setting.max_grants
         end
 
         def grants_count
-          SettingDelegations.new(form.setting).query
+          SettingDelegations.new(current_setting).query
                             .where(grantee_id: form.grantee_id)
                             .count
         end
 
-        def create_delegation!
-          Delegation.create!(form.attributes)
+        def create_delegation
+          @delegation = Delegation.create(form.attributes.merge(setting: current_setting))
         end
       end
     end

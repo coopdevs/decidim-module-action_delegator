@@ -5,8 +5,7 @@ require "spec_helper"
 describe Decidim::ActionDelegator::Admin::DelegationForm do
   subject { described_class.from_params(attributes) }
 
-  let(:attributes) { { granter_id: granter.id, grantee_id: grantee.id, setting: current_setting } }
-  let(:current_setting) { create(:setting) }
+  let(:attributes) { { granter_id: granter.id, grantee_id: grantee.id } }
   let(:organization) { create(:organization) }
   let(:granter) { create(:user, organization: organization) }
   let(:grantee) { create(:user, organization: organization) }
