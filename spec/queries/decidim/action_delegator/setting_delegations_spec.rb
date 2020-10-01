@@ -12,13 +12,13 @@ describe Decidim::ActionDelegator::SettingDelegations do
   let(:other_user) { create(:user, organization: organization) }
 
   let!(:delegation) { create(:delegation, setting: setting, granter: granter, grantee: grantee) }
-  let!(:other_delegation) { create(:delegation, setting: setting, granter: granter, grantee: other_user) }
+  let!(:other_delegation) { create(:delegation, setting: other_setting, granter: granter, grantee: other_user) }
   let!(:setting) { create(:setting, consultation: consultation) }
   let!(:other_setting) { create(:setting) }
 
   describe "#query" do
     it "returns the delegations of the specified setting only" do
-      expect(subject.query).to match_array([delegation, other_delegation])
+      expect(subject.query).to match_array([delegation])
     end
   end
 end
