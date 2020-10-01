@@ -27,6 +27,7 @@ module Decidim
           create_delegation
 
           return broadcast(:invalid) if delegation.invalid?
+
           broadcast(:ok)
         end
 
