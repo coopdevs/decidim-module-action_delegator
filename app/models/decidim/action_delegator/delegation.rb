@@ -11,6 +11,8 @@ module Decidim
                  foreign_key: "decidim_action_delegator_setting_id",
                  class_name: "Decidim::ActionDelegator::Setting"
 
+      validates :grantee, uniqueness: { scope: [:granter, :setting] }
+
       def self.granted_to?(user, consultation)
         ConsultationDelegations.for(consultation, user).exists?
       end
