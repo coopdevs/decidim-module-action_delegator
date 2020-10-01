@@ -5,7 +5,7 @@ ca:
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
-            error_max_grants: Has arribat al limit de delegacions permeses
+            error_max_grants: You reached the limit of allowed delegations for this grantee
             success: Delegation created successfully
           destroy:
             error: There was a problem destroying this delegation
