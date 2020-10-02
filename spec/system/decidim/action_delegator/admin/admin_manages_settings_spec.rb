@@ -23,7 +23,6 @@ describe "Admin manages settings", type: :system do
     it "creates a new setting" do
       within ".new_setting" do
         fill_in :setting_max_grants, with: 5
-        fill_in :setting_expires_at, with: 2.days.from_now.to_date
         select consultation_translated_title, from: :setting_decidim_consultation_id
 
         find("*[type=submit]").click

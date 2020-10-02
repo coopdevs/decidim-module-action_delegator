@@ -15,16 +15,8 @@ module Decidim
                foreign_key: "decidim_action_delegator_setting_id",
                dependent: :destroy
 
-      validate :expires_at_in_the_future
-
-      validates :max_grants, :expires_at, presence: true
+      validates :max_grants, presence: true
       validates :max_grants, numericality: { greater_than: 0 }
-
-      private
-
-      def expires_at_in_the_future
-        errors.add(:expires_at, "can't be in the past") if expires_at.present? && expires_at < Time.current
-      end
     end
   end
 end

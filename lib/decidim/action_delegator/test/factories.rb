@@ -12,7 +12,6 @@ FactoryBot.define do
 
   factory :setting, class: "Decidim::ActionDelegator::Setting" do
     max_grants { 3 }
-    expires_at { Time.zone.now + 2.days }
     consultation
   end
 end

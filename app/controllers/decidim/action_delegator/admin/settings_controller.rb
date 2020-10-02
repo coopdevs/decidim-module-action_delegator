@@ -51,7 +51,7 @@ module Decidim
         private
 
         def setting_params
-          params.require(:setting).permit(:max_grants, :expires_at, :decidim_consultation_id)
+          params.require(:setting).permit(:max_grants, :decidim_consultation_id)
         end
 
         def build_setting
