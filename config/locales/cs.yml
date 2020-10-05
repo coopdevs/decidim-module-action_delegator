@@ -1,0 +1,80 @@
+cs:
+  decidim:
+    action_delegator:
+      admin:
+        delegations:
+          create:
+            error: Při vytváření delegace došlo k chybě
+            error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
+            success: Delegace úspěšně vytvořena
+          destroy:
+            error: Došlo k potížím při odstraňování této delegace
+            success: Delegace úspěšně zničena
+          index:
+            actions:
+              new_delegation: Nový účastník
+            consultation: Konzultace
+            created_at: Vytvořeno v
+            delete: Smazat
+            grantee: Příjemce
+            granter: Delegující
+            title: Účastníci
+          new:
+            form:
+              title: Obecné informace
+            grantee: Příjemce
+            granter: Delegující
+            save: Vytvořit
+            select_member: Vybrat člena
+            title: Nová delegace
+        menu:
+          delegations: Uživatelské delegace
+          participants: Účastníci
+        settings:
+          create:
+            error: There was a problem creating the settings
+            success: Settings saved successfully
+          destroy:
+            error: There was a problem destroying this setting
+            success: Setting successfully destroyed
+          index:
+            actions:
+              new_setting: New delegation
+            consultation: Consultation
+            created_at: Created at
+            title: Delegations
+          new:
+            form:
+              title: General information
+            max_grants: Maximum delegations
+            save: Save
+            title: Delegation settings
+      delegations:
+        link: You have delegations granted
+      delegations_modal:
+        callout: Remember, you are voting on behalf of
+        contextual_help: 'You have been granted the vote from:'
+        title: 'Consultation: granted delegations'
+      name: Decidim ActionDelegator cooperatives module
+      verification:
+        admin:
+          members:
+            index:
+              title: Members management
+    admin:
+      consultations:
+        results:
+          membership_type: Membership type
+          membership_weight: Weight
+    authorization_handlers:
+      admin:
+        delegations_verifier:
+          help:
+            - A verification method for delegate voting
+      delegations_verifier:
+        explanation: Verified users with this method can delegate votes to other users
+        name: Delegations Verifier
+  layouts:
+    decidim:
+      user_profile:
+        vote_delegations: Vote delegations
