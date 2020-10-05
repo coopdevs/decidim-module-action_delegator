@@ -53,6 +53,7 @@ describe "Admin manages consultation results", type: :system do
 
     it "shows votes total" do
       visit decidim_admin_consultations.results_consultation_path(consultation)
+
       expect(page).to have_content(/#{total_votes}/i)
       expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
     end
@@ -84,8 +85,19 @@ describe "Admin manages consultation results", type: :system do
       expect(nth_row(4).find(".votes-count")).to have_content(1)
     end
 
-    def nth_row(number)
-      find(:xpath, ".//table/tbody/tr[#{number}]")
+    it "enables exporting to CSV" do
+      visit decidim_admin_consultations.results_consultation_path(consultation)
+
+      perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
+
+      expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
+
+      expect(last_email.subject).to include("results", "csv")
+      expect(last_email.attachments.first.filename).to match(/^consultation_results.*\.zip$/)
     end
+  end
+
+  def nth_row(number)
+    find(:xpath, ".//table/tbody/tr[#{number}]")
   end
 end

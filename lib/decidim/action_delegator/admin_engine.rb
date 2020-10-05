@@ -14,6 +14,10 @@ module Decidim
           resources :delegations, only: [:index, :new, :create, :destroy]
         end
 
+        resources :consultations, param: :slug, only: [] do
+          resources :exports, only: [:create]
+        end
+
         root to: "delegations#index"
       end
 
