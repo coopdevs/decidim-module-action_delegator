@@ -3,13 +3,15 @@
 module Decidim
   module ActionDelegator
     class ExportConsultationResultsJob < ApplicationJob
+      EXPORT_NAME = "consultation_results"
+
       queue_as :default
 
       def perform(user, consultation)
         @consultation = consultation
 
         export_data = Decidim::Exporters.find_exporter("CSV").new(collection, serializer).export
-        ExportMailer.export(user, "consultation_results", export_data).deliver_now
+        ExportMailer.export(user, EXPORT_NAME, export_data).deliver_now
       end
 
       private
