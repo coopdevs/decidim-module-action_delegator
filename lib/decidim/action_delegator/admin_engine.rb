@@ -15,7 +15,7 @@ module Decidim
         end
 
         resources :consultations, param: :slug, only: [] do
-          resources :exports, only: [:create]
+          resources :exports, only: [:create], module: :consultations
         end
 
         root to: "delegations#index"
