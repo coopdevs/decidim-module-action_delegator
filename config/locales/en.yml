@@ -6,9 +6,9 @@ en:
         delegations:
           create:
             error: There was a problem creating the delegation
+            error_granter_unique: already delegated their vote
             error_max_grants: You reached the limit of allowed delegations for this
               grantee
-            error_granter_unique: already delegated their vote
             success: Delegation created successfully
           destroy:
             error: There was a problem destroying this delegation
