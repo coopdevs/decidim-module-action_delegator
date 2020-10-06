@@ -19,9 +19,7 @@ module Decidim
       attr_reader :consultation
 
       def collection
-        consultation.questions.published.includes(:responses).flat_map do |question|
-          Decidim::ActionDelegator::ResponsesByMembership.new(question).query
-        end
+        ResponsesByMembership.new.merge(PublishedQuestions.new(consultation))
       end
 
       def serializer
