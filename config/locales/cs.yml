@@ -1,0 +1,80 @@
+cs:
+  decidim:
+    action_delegator:
+      admin:
+        delegations:
+          create:
+            error: Při vytváření delegace došlo k chybě
+            error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
+            success: Delegace úspěšně vytvořena
+          destroy:
+            error: Došlo k potížím při odstraňování této delegace
+            success: Delegace úspěšně zničena
+          index:
+            actions:
+              new_delegation: Nový účastník
+            consultation: Konzultace
+            created_at: Vytvořeno v
+            delete: Smazat
+            grantee: Příjemce
+            granter: Delegující
+            title: Účastníci
+          new:
+            form:
+              title: Obecné informace
+            grantee: Příjemce
+            granter: Delegující
+            save: Vytvořit
+            select_member: Vybrat člena
+            title: Nová delegace
+        menu:
+          delegations: Uživatelské delegace
+          participants: Účastníci
+        settings:
+          create:
+            error: Při vytváření nastavení se vyskytl problém
+            success: Nastavení bylo úspěšně uloženo
+          destroy:
+            error: Při odstraňování tohoto nastavení došlo k chybě
+            success: Nastavení úspěšně zničeno
+          index:
+            actions:
+              new_setting: Nová delegace
+            consultation: Konzultace
+            created_at: Vytvořeno v
+            title: Delegace
+          new:
+            form:
+              title: Obecné informace
+            max_grants: Maximum delegací
+            save: Uložit
+            title: Nastavení delegování
+      delegations:
+        link: Máte udělené delegace
+      delegations_modal:
+        callout: Pamatujte, že hlasujete jménem
+        contextual_help: 'Hlasování vám bylo uděleno od:'
+        title: 'Konzultace: udělené delegace'
+      name: Modul Decidim ActionDelegator cooperatives
+      verification:
+        admin:
+          members:
+            index:
+              title: Správa členů
+    admin:
+      consultations:
+        results:
+          membership_type: Typ členství
+          membership_weight: Váha
+    authorization_handlers:
+      admin:
+        delegations_verifier:
+          help:
+            - Metoda ověřování pro delegované hlasování
+      delegations_verifier:
+        explanation: Ověření uživatelé s touto metodou mohou delegovat hlasy na ostatní uživatele
+        name: Ověřovatel delegací
+  layouts:
+    decidim:
+      user_profile:
+        vote_delegations: Delegace hlasů
