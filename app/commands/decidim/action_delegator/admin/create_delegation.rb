@@ -21,14 +21,14 @@ module Decidim
         #
         # Returns nothing.
         def call
-          return broadcast(:invalid) if form.invalid? || current_setting.nil?
-          return broadcast(:above_max_grants) if above_max_grants?
+          return broadcast(:error, generic_error_message) if form.invalid? || current_setting.nil?
+          return broadcast(:error, above_max_grants_error_message) if above_max_grants?
 
           create_delegation
 
-          return broadcast(:invalid) if delegation.invalid?
+          return broadcast(:ok) if delegation.persisted?
 
-          broadcast(:ok)
+          broadcast(:error, delegation.errors.full_messages.first)
         end
 
         private
@@ -37,6 +37,14 @@ module Decidim
 
         def above_max_grants?
           grants_count >= current_setting.max_grants
+        end
+
+        def above_max_grants_error_message
+          I18n.t("delegations.create.error_max_grants", scope: "decidim.action_delegator.admin")
+        end
+
+        def generic_error_message
+          I18n.t("delegations.create.error", scope: "decidim.action_delegator.admin")
         end
 
         def grants_count

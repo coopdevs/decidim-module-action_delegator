@@ -11,6 +11,7 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
   let(:granter) { create(:user, organization: organization) }
   let(:grantee) { create(:user, organization: organization) }
   let(:other_grantee) { create(:user, organization: organization) }
+  let(:other_granter) { create(:user, organization: organization) }
 
   let(:form) do
     double(
@@ -19,8 +20,8 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
       granter_id: granter.id,
       setting: current_setting,
       attributes: {
-        grantee_id: grantee.id,
         granter_id: granter.id,
+        grantee_id: grantee.id,
         setting: current_setting
       },
       errors: double(add: true)
@@ -39,21 +40,21 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
     context "when max_grant is 1" do
       context "when grantee has already a delegation" do
         before do
-          create(:delegation, form.attributes)
+          create(:delegation, granter_id: other_granter.id, grantee_id: grantee.id, setting: current_setting)
         end
 
-        it "broadcasts :above_max_grants" do
-          expect { subject.call }.to broadcast(:above_max_grants)
+        it "broadcasts :error" do
+          expect { subject.call }.to broadcast(:error)
         end
       end
 
       context "when grantee has no delegation" do
         before do
-          create(:delegation, form.attributes.merge(grantee_id: other_grantee.id))
+          create(:delegation, granter_id: other_granter.id, grantee_id: other_grantee.id, setting: current_setting)
         end
 
-        it "does not broadcast :above_max_grants" do
-          expect { subject.call }.not_to broadcast(:above_max_grants)
+        it "does not broadcast :error" do
+          expect { subject.call }.not_to broadcast(:error)
         end
       end
     end
@@ -62,8 +63,8 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
   context "when form is invalid" do
     let(:invalid) { true }
 
-    it "broadcasts :invalid" do
-      expect { subject.call }.to broadcast(:invalid)
+    it "broadcasts :error" do
+      expect { subject.call }.to broadcast(:error)
     end
   end
 end

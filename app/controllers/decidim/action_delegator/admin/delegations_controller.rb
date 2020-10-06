@@ -29,7 +29,7 @@ module Decidim
         def create
           enforce_permission_to :create, :delegation
 
-          @form = DelegationForm.from_params(delegation_params)
+          @form = DelegationForm.from_params(params)
 
           CreateDelegation.call(@form, current_user, current_setting) do
             on(:ok) do
@@ -37,13 +37,8 @@ module Decidim
               redirect_to setting_delegations_path(current_setting), notice: notice
             end
 
-            on(:above_max_grants) do
-              flash.now[:error] = I18n.t("delegations.create.error_max_grants", scope: "decidim.action_delegator.admin")
-              render :new
-            end
-
-            on(:invalid) do
-              flash.now[:error] = I18n.t("delegations.create.error", scope: "decidim.action_delegator.admin")
+            on(:error) do |error|
+              flash.now[:error] = error
               render :new
             end
           end
@@ -67,10 +62,6 @@ module Decidim
 
         def delegation
           @delegation ||= collection.find_by(id: params[:id])
-        end
-
-        def delegation_params
-          params.require(:delegation).permit(:granter_id, :grantee_id)
         end
 
         def collection
