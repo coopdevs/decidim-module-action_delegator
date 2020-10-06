@@ -5,6 +5,7 @@ ca:
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
+            error_granter_unique: already delegated their vote
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegation created successfully
           destroy:
