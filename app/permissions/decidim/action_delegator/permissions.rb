@@ -3,6 +3,8 @@
 module Decidim
   module ActionDelegator
     class Permissions < Decidim::DefaultPermissions
+      SUBJECTS_WHITELIST = [:delegation, :setting, :consultation].freeze
+
       def permissions
         return permission_action unless user.admin?
         return permission_action unless permission_action.scope == :admin
@@ -20,7 +22,7 @@ module Decidim
       end
 
       def action_delegator_subject?
-        [:delegation, :setting, :consultation].include?(permission_action.subject)
+        SUBJECTS_WHITELIST.include?(permission_action.subject)
       end
 
       def can_perform_action?
