@@ -57,7 +57,7 @@ module Decidim::ActionDelegator
       it "sends an export mail" do
         expect(Decidim::ExportMailer)
           .to receive(:export)
-          .with(user, "consultation_results", kind_of(Decidim::Exporters::ExportData))
+          .with(user, I18n.t("decidim.admin.consultations.results.export_filename"), kind_of(Decidim::Exporters::ExportData))
           .and_return(mailer)
 
         subject.perform_now(user, consultation)
