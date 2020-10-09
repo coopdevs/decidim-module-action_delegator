@@ -17,14 +17,14 @@ ca:
             consultation: Consultation
             created_at: Created at
             delete: Delete
-            grantee: Atorgant
-            granter: Receptor
+            grantee: Receptor
+            granter: Atorgant
             title: Participants
           new:
             form:
               title: General information
-            grantee: Grantee
-            granter: Granter
+            grantee: Receptor
+            granter: Atorgant
             save: Create
             select_member: Select member
             title: Nova delegació
