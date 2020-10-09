@@ -9,35 +9,36 @@ module Decidim
     #
     #   "{ metadata_type: '',   metadata_weight: '' }"
     #
-    # Note that although we assume `metadata_type` to be a string and `metadata_weight` to be an
-    # integer, there are no implications in the code for their actual data type.
+    # Note that although we assume `membership_type` to be a string and `membership_weight` to be an
+    # integer, there are no implications in the code for their actual data types.
     class ResponsesByMembership < Rectify::Query
-      def initialize(question)
-        @question = question
+      def initialize(question = nil)
+        @relation = Decidim::Consultations::Response
+        @relation = relation.where(question: question) if question.present?
       end
 
       def query
-        question
-          .responses
+        relation
           .joins(:votes)
           .joins(authorizations)
           .group(
             :title,
-            metadata_field("membership_type"),
-            metadata_field("membership_weight")
+            metadata_field(:membership_type),
+            metadata_field(:membership_weight)
           )
           .select(
             :title,
-            metadata_field_with_alias("membership_type"),
-            metadata_field_with_alias("membership_weight"),
+            metadata_field_with_alias(:membership_type),
+            metadata_field_with_alias(:membership_weight),
             "COUNT(*) AS votes_count"
           )
-          .order("title ASC, membership_type ASC, membership_weight DESC, votes_count DESC")
+          .order(:title, :membership_type, membership_weight: :desc)
+          .order("votes_count DESC")
       end
 
       private
 
-      attr_reader :question
+      attr_reader :relation
 
       def authorizations
         <<-SQL.strip_heredoc

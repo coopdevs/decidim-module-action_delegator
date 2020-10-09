@@ -19,7 +19,7 @@ module Decidim
         end
 
         def organization_consultations
-          Consultations::OrganizationConsultations.new(current_organization).query
+          Decidim::Consultations::OrganizationConsultations.new(current_organization).query
         end
       end
     end
