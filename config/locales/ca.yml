@@ -13,18 +13,18 @@ ca:
             success: Delegation successfully destroyed
           index:
             actions:
-              new_delegation: New participant
+              new_delegation: Nou participant
             consultation: Consultation
             created_at: Created at
             delete: Delete
-            grantee: Atorgant
-            granter: Receptor
+            grantee: Receptor
+            granter: Atorgant
             title: Participants
           new:
             form:
               title: General information
-            grantee: Grantee
-            granter: Granter
+            grantee: Receptor
+            granter: Atorgant
             save: Create
             select_member: Select member
             title: Nova delegació
@@ -66,7 +66,7 @@ ca:
       consultations:
         results:
           membership_type: Membership type
-          membership_weight: Weight
+          membership_weight: Ponderació
     authorization_handlers:
       admin:
         delegations_verifier:
