@@ -5,6 +5,7 @@ ca:
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
+            error_granter_unique: already delegated their vote
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegation created successfully
           destroy:
@@ -16,8 +17,8 @@ ca:
             consultation: Consultation
             created_at: Created at
             delete: Delete
-            grantee: Grantee
-            granter: Granter
+            grantee: Atorgant
+            granter: Receptor
             title: Participants
           new:
             form:
@@ -26,9 +27,9 @@ ca:
             granter: Granter
             save: Create
             select_member: Select member
-            title: New delegation
+            title: Nova delegació
         menu:
-          delegations: User delegations
+          delegations: Delegacions
           participants: Participants
         settings:
           create:

@@ -5,6 +5,7 @@ cs:
         delegations:
           create:
             error: Při vytváření delegace došlo k chybě
+            error_granter_unique: already delegated their vote
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
           destroy:
