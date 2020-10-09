@@ -32,49 +32,49 @@ cs:
           participants: Účastníci
         settings:
           create:
-            error: There was a problem creating the settings
-            success: Settings saved successfully
+            error: Při vytváření nastavení se vyskytl problém
+            success: Nastavení bylo úspěšně uloženo
           destroy:
-            error: There was a problem destroying this setting
-            success: Setting successfully destroyed
+            error: Při odstraňování tohoto nastavení došlo k chybě
+            success: Nastavení úspěšně zničeno
           index:
             actions:
-              new_setting: New delegation
-            consultation: Consultation
-            created_at: Created at
-            title: Delegations
+              new_setting: Nová delegace
+            consultation: Konzultace
+            created_at: Vytvořeno v
+            title: Delegace
           new:
             form:
-              title: General information
-            max_grants: Maximum delegations
-            save: Save
-            title: Delegation settings
+              title: Obecné informace
+            max_grants: Maximum delegací
+            save: Uložit
+            title: Nastavení delegování
       delegations:
-        link: You have delegations granted
+        link: Máte udělené delegace
       delegations_modal:
-        callout: Remember, you are voting on behalf of
-        contextual_help: 'You have been granted the vote from:'
-        title: 'Consultation: granted delegations'
-      name: Decidim ActionDelegator cooperatives module
+        callout: Pamatujte, že hlasujete jménem
+        contextual_help: 'Hlasování vám bylo uděleno od:'
+        title: 'Konzultace: udělené delegace'
+      name: Modul Decidim ActionDelegator cooperatives
       verification:
         admin:
           members:
             index:
-              title: Members management
+              title: Správa členů
     admin:
       consultations:
         results:
-          membership_type: Membership type
-          membership_weight: Weight
+          membership_type: Typ členství
+          membership_weight: Váha
     authorization_handlers:
       admin:
         delegations_verifier:
           help:
-            - A verification method for delegate voting
+            - Metoda ověřování pro delegované hlasování
       delegations_verifier:
-        explanation: Verified users with this method can delegate votes to other users
-        name: Delegations Verifier
+        explanation: Ověření uživatelé s touto metodou mohou delegovat hlasy na ostatní uživatele
+        name: Ověřovatel delegací
   layouts:
     decidim:
       user_profile:
-        vote_delegations: Vote delegations
+        vote_delegations: Delegace hlasů

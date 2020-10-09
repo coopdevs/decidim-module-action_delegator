@@ -15,6 +15,10 @@ Initially, only votes can be delegated.
 
 > **NOTE** THIS IS IN DEVELOPMENT, NOT READY FOR USE IN PRODUCTION
 
+## Dependencies
+
+In order to use `decidim-action_delegator` you also need to install the [decidim-consultations](https://github.com/decidim/decidim/tree/develop/decidim-consultations) module.
+
 ## Installation
 
 Add this line to your application's Gemfile:
