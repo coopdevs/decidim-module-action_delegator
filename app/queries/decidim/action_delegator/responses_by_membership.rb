@@ -12,9 +12,8 @@ module Decidim
     # Note that although we assume `membership_type` to be a string and `membership_weight` to be an
     # integer, there are no implications in the code for their actual data types.
     class ResponsesByMembership < Rectify::Query
-      def initialize(question = nil)
-        @relation = Decidim::Consultations::Response
-        @relation = relation.where(question: question) if question.present?
+      def initialize(relation = nil)
+        @relation = relation.presence || Decidim::Consultations::Response
       end
 
       def query
@@ -22,12 +21,12 @@ module Decidim
           .joins(:votes)
           .joins(authorizations)
           .group(
-            :title,
+            "decidim_consultations_responses.title",
             metadata_field(:membership_type),
             metadata_field(:membership_weight)
           )
           .select(
-            :title,
+            "decidim_consultations_responses.title",
             metadata_field_with_alias(:membership_type),
             metadata_field_with_alias(:membership_weight),
             "COUNT(*) AS votes_count"

@@ -17,7 +17,13 @@ module Decidim
       attr_reader :consultation
 
       def collection
-        ResponsesByMembership.new.merge(PublishedQuestions.new(consultation))
+        ResponsesByMembership.new.query.merge(published_questions_responses)
+      end
+
+      # Returns the published questions' responses of the given consultation as an ActiveRecord
+      # Relation. Note this enables us to the chain it with other AR Relation objects.
+      def published_questions_responses
+        PublishedResponses.new(consultation).query
       end
 
       def serializer

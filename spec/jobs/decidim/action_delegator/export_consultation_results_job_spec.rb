@@ -9,7 +9,7 @@ module Decidim::ActionDelegator
     let(:organization) { create(:organization) }
     let(:user) { create(:user, :admin, :confirmed, organization: organization) }
 
-    let!(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
+    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
     let!(:question) { create(:question, consultation: consultation) }
     let!(:response) do
       create(
@@ -63,18 +63,49 @@ module Decidim::ActionDelegator
         subject.perform_now(user, consultation)
       end
 
-      it "exports consultation's by membership" do
-        expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-          expect(export_data.read).to eq(<<-CSV.strip_heredoc)
-            title;membership_type;membership_weight;votes_count
-            A;consumer;3;1
-            A;consumer;1;1
-            A;producer;2;1
-            B;consumer;1;1
-          CSV
-        end.and_return(mailer)
+      context "when the consultation is active" do
+        let!(:consultation) { create(:consultation, :active, organization: organization) }
 
-        subject.perform_now(user, consultation)
+        it "exports consultation's by membership" do
+          expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
+            expect(export_data.read).to eq("\n")
+          end.and_return(mailer)
+
+          subject.perform_now(user, consultation)
+        end
+      end
+
+      # TODO: Missing published questions
+      context "when the consultation is finished" do
+        context "and the results are published" do
+          let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+
+          it "exports consultation's by membership" do
+            expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
+              expect(export_data.read).to eq(<<-CSV.strip_heredoc)
+                title;membership_type;membership_weight;votes_count
+                A;consumer;3;1
+                A;consumer;1;1
+                A;producer;2;1
+                B;consumer;1;1
+              CSV
+            end.and_return(mailer)
+
+            subject.perform_now(user, consultation)
+          end
+        end
+
+        context "and the results are not published" do
+          let!(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
+
+          it "exports consultation's by membership" do
+            expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
+              expect(export_data.read).to eq("\n")
+            end.and_return(mailer)
+
+            subject.perform_now(user, consultation)
+          end
+        end
       end
     end
   end

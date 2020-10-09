@@ -3,7 +3,9 @@
 require "spec_helper"
 
 describe Decidim::ActionDelegator::ResponsesByMembership do
-  subject { described_class.new(question) }
+  subject { described_class.new(relation) }
+
+  let(:relation) { Decidim::Consultations::Response.where(question: question) }
 
   let(:organization) { create(:organization) }
   let(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
