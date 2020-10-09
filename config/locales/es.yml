@@ -65,6 +65,8 @@ es:
     admin:
       consultations:
         results:
+          export: Export
+          export_filename: consultation_results
           membership_type: Membership type
           membership_weight: Weight
     authorization_handlers:
