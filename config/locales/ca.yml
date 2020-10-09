@@ -40,10 +40,10 @@ ca:
             success: Setting successfully destroyed
           index:
             actions:
-              new_setting: New delegation
-            consultation: Consultation
+              new_setting: Nova delegació
+            consultation: Consulta
             created_at: Created at
-            title: Delegations
+            title: Delegacions
           new:
             form:
               title: General information
