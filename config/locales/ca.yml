@@ -13,7 +13,7 @@ ca:
             success: Delegation successfully destroyed
           index:
             actions:
-              new_delegation: New participant
+              new_delegation: Nou participant
             consultation: Consultation
             created_at: Created at
             delete: Delete
@@ -66,7 +66,7 @@ ca:
       consultations:
         results:
           membership_type: Membership type
-          membership_weight: Weight
+          membership_weight: Ponderació
     authorization_handlers:
       admin:
         delegations_verifier:
