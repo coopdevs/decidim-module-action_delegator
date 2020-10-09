@@ -14,7 +14,7 @@ ca:
           index:
             actions:
               new_delegation: Nou participant
-            consultation: Consultation
+            consultation: Consulta
             created_at: Created at
             delete: Delete
             grantee: Receptor
@@ -65,6 +65,8 @@ ca:
     admin:
       consultations:
         results:
+          export: Export
+          export_filename: consultation_results
           membership_type: Membership type
           membership_weight: Ponderació
     authorization_handlers:
@@ -78,4 +80,4 @@ ca:
   layouts:
     decidim:
       user_profile:
-        vote_delegations: Vote delegations
+        vote_delegations: Delegacions de vot
