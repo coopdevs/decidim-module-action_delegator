@@ -18,7 +18,7 @@ module Decidim
 
       describe "#create" do
         it "authorizes the action" do
-          expect(controller).to receive(:allowed_to?).with(:export_results, :consultation, {})
+          expect(controller).to receive(:allowed_to?).with(:export_consultation_results, :consultation, consultation: consultation)
 
           post :create, params: { consultation_slug: consultation.slug }
         end

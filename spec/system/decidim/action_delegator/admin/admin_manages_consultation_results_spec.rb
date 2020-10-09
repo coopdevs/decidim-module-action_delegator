@@ -44,7 +44,6 @@ describe "Admin manages consultation results", type: :system do
 
     switch_to_host(organization.host)
     login_as user, scope: :user
-    visit decidim_admin_consultations.results_consultation_path(consultation)
   end
 
   context "when viewing a finished consultation with votes" do
@@ -86,7 +85,6 @@ describe "Admin manages consultation results", type: :system do
 
     it "enables exporting to CSV" do
       visit decidim_admin_consultations.results_consultation_path(consultation)
-
       perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
 
       expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))

@@ -9,7 +9,7 @@ module Decidim
           include Decidim::Consultations::NeedsConsultation
 
           def create
-            enforce_permission_to :export_results, :consultation
+            enforce_permission_to :export_consultation_results, :consultation, consultation: current_consultation
 
             ExportConsultationResultsJob.perform_later(current_user, current_consultation)
 
