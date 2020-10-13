@@ -52,6 +52,10 @@ en:
             max_grants: Maximum delegations
             save: Save
             title: Delegation settings
+      authorizations:
+        new:
+          phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
+          missing_phone_error: Missing membership phone
       delegations:
         link: You have delegations granted
       delegations_modal:
@@ -59,6 +63,7 @@ en:
         contextual_help: 'You have been granted the vote from:'
         title: 'Consultation: granted delegations'
       name: Decidim ActionDelegator cooperatives module
+      sms_message: "Your verification code is %{code}"
       verification:
         admin:
           members:
