@@ -19,7 +19,7 @@ module Decidim::ActionDelegator
       end
 
       context "when code's result is 200" do
-        let(:result) { "<xml><codigo>200</codigo><description>Went well</description></xml>" }
+        let(:result) { "<xml><codigo>200</codigo><descripcion>Went well</descripcion></xml>" }
 
         it "returns true" do
           expect(subject.deliver_code).to eq(true)
@@ -27,7 +27,7 @@ module Decidim::ActionDelegator
       end
 
       context "when code's result isn't 200" do
-        let(:result) { "<xml><codigo>115</codigo><description>Woopsie</description></xml>" }
+        let(:result) { "<xml><codigo>115</codigo><descripcion>Woopsie</descripcion></xml>" }
 
         it "returns false" do
           expect(subject.deliver_code).to eq(false)

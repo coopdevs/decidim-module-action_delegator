@@ -29,7 +29,7 @@ module Decidim
 
         @parsed_response = {
           code: doc.xpath("//codigo").text,
-          description: doc.xpath("//description").text
+          description: doc.xpath("//descripcion").text
         }
 
         @parsed_response
