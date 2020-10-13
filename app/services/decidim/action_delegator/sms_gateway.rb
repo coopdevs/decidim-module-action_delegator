@@ -16,11 +16,11 @@ module Decidim
         success?
       end
 
+      private
+
       def success?
         parsed_response[:code] == "200"
       end
-
-      private
 
       def parsed_response
         return @parsed_response if @parsed_response
