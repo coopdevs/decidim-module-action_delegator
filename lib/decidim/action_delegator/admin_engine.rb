@@ -15,6 +15,7 @@ module Decidim
         end
 
         resources :consultations, param: :slug, only: [] do
+          get :results, on: :member
           resources :exports, only: [:create], module: :consultations
         end
 

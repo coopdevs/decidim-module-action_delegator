@@ -50,14 +50,14 @@ describe "Admin manages consultation results", type: :system do
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
     it "shows votes total" do
-      visit decidim_admin_consultations.results_consultation_path(consultation)
+      visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
       expect(page).to have_content(/#{total_votes}/i)
       expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
     end
 
     it "shows votes by membership and weight type" do
-      visit decidim_admin_consultations.results_consultation_path(consultation)
+      visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
       expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type").upcase)
       expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight").upcase)
@@ -84,7 +84,7 @@ describe "Admin manages consultation results", type: :system do
     end
 
     it "enables exporting to CSV" do
-      visit decidim_admin_consultations.results_consultation_path(consultation)
+      visit decidim_admin_action_delegator.results_consultation_path(consultation)
       perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
 
       expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
@@ -98,12 +98,17 @@ describe "Admin manages consultation results", type: :system do
     let!(:consultation) { create(:consultation, :active, :unpublished_results, organization: organization) }
 
     it "disables the export button" do
-      visit decidim_admin_consultations.results_consultation_path(consultation)
+      visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
       within "#export-consultation-results" do
         expect(page).to have_css(".disabled")
         expect(page).not_to have_link(I18n.t("decidim.admin.consultations.results.export"))
       end
+    end
+
+    it "does not show any response" do
+      visit decidim_admin_action_delegator.results_consultation_path(consultation)
+      expect(page).not_to have_content(nth_row(1))
     end
   end
 

@@ -8,7 +8,7 @@
         <%= t "decidim.admin.consultations.results.participants", count: current_consultation.total_participants %>
       </span>
       <span id="export-consultation-results" class="button--title">
-        <% if allowed_to?(:export_consultation_results, :consultation, { consultation: current_consultation }, [::Decidim::ActionDelegator::Permissions]) %>
+        <% if allowed_to?(:export_consultation_results, :consultation, consultation: current_consultation) %>
           <%= link_to t("decidim.admin.consultations.results.export"), decidim_admin_action_delegator.consultation_exports_path(current_consultation), method: :post, class: "button tiny button--title" %>
         <% else %>
           <span class="button tiny button--title disabled"><%= t("decidim.admin.consultations.results.export") %></span>
@@ -18,7 +18,7 @@
   </div>
   <div class="card-section">
     <table class="table-list">
-      <% current_consultation.questions.published.includes(:responses).each do |question| %>
+      <% @questions.each do |question| %>
         <% unless question.external_voting %>
           <thead>
             <tr>
@@ -34,12 +34,12 @@
           </thead>
           <tbody>
             <% if question.publishable_results? %>
-              <% Decidim::ActionDelegator::ResponsesByMembership.new(question).query.each do |group| %>
+              <% responses_for(question).each do |row| %>
               <tr>
-                <td class="response-title"><%= strip_tags translated_attribute group.title %></td>
-                <td class="membership-type"><%= group.membership_type %></td>
-                <td class="membership-weight"><%= group.membership_weight %></td>
-                <td class="votes-count"><%= group.votes_count %></td>
+                <td class="response-title"><%= strip_tags translated_attribute row.title %></td>
+                <td class="membership-type"><%= row.membership_type %></td>
+                <td class="membership-weight"><%= row.membership_weight %></td>
+                <td class="votes-count"><%= row.votes_count %></td>
               </tr>
               <% end %>
             <% else %>
