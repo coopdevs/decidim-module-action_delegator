@@ -66,7 +66,7 @@ module Decidim::ActionDelegator
       context "when the consultation is active" do
         let!(:consultation) { create(:consultation, :active, organization: organization) }
 
-        it "exports consultation's by membership" do
+        it "does not export anything" do
           expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
             expect(export_data.read).to eq("\n")
           end.and_return(mailer)
@@ -75,7 +75,6 @@ module Decidim::ActionDelegator
         end
       end
 
-      # TODO: Missing published questions
       context "when the consultation is finished" do
         context "and the results are published" do
           let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
@@ -89,18 +88,6 @@ module Decidim::ActionDelegator
                 A;producer;2;1
                 B;consumer;1;1
               CSV
-            end.and_return(mailer)
-
-            subject.perform_now(user, consultation)
-          end
-        end
-
-        context "and the results are not published" do
-          let!(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
-
-          it "exports consultation's by membership" do
-            expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-              expect(export_data.read).to eq("\n")
             end.and_return(mailer)
 
             subject.perform_now(user, consultation)
