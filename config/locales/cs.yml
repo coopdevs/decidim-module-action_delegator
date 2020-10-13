@@ -65,6 +65,8 @@ cs:
     admin:
       consultations:
         results:
+          export: Export
+          export_filename: consultation_results
           membership_type: Typ členství
           membership_weight: Váha
     authorization_handlers:
