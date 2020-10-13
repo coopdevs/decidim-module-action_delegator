@@ -8,7 +8,7 @@
         <%= t "decidim.admin.consultations.results.participants", count: current_consultation.total_participants %>
       </span>
       <span id="export-consultation-results" class="button--title">
-        <% if allowed_to?(:export_consultation_results, :consultation, { consultation: current_consultation }, [::Decidim::ActionDelegator::Permissions]) %>
+        <% if allowed_to?(:export_consultation_results, :consultation, consultation: current_consultation) %>
           <%= link_to t("decidim.admin.consultations.results.export"), decidim_admin_action_delegator.consultation_exports_path(current_consultation), method: :post, class: "button tiny button--title" %>
         <% else %>
           <span class="button tiny button--title disabled"><%= t("decidim.admin.consultations.results.export") %></span>
