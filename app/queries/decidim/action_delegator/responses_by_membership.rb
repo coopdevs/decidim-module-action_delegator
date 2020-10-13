@@ -21,11 +21,13 @@ module Decidim
           .joins(:votes)
           .joins(authorizations)
           .group(
+            :decidim_consultations_questions_id,
             "decidim_consultations_responses.title",
             metadata_field(:membership_type),
             metadata_field(:membership_weight)
           )
           .select(
+            :decidim_consultations_questions_id,
             "decidim_consultations_responses.title",
             metadata_field_with_alias(:membership_type),
             metadata_field_with_alias(:membership_weight),

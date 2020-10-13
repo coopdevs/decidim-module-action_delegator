@@ -18,7 +18,7 @@
   </div>
   <div class="card-section">
     <table class="table-list">
-      <% current_consultation.questions.published.includes(:responses).each do |question| %>
+      <% @questions.each do |question| %>
         <% unless question.external_voting %>
           <thead>
             <tr>
@@ -34,12 +34,12 @@
           </thead>
           <tbody>
             <% if question.publishable_results? %>
-              <% Decidim::ActionDelegator::ResponsesByMembership.new(Decidim::Consultations::Response.where(question: question)).query.each do |group| %>
+              <% responses_for(question).each do |row| %>
               <tr>
-                <td class="response-title"><%= strip_tags translated_attribute group.title %></td>
-                <td class="membership-type"><%= group.membership_type %></td>
-                <td class="membership-weight"><%= group.membership_weight %></td>
-                <td class="votes-count"><%= group.votes_count %></td>
+                <td class="response-title"><%= strip_tags translated_attribute row.title %></td>
+                <td class="membership-type"><%= row.membership_type %></td>
+                <td class="membership-weight"><%= row.membership_weight %></td>
+                <td class="votes-count"><%= row.votes_count %></td>
               </tr>
               <% end %>
             <% else %>
