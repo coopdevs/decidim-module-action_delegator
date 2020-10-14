@@ -9,20 +9,8 @@ describe "Admin manages consultation results", type: :system do
   let(:total_votes) { I18n.t("decidim.admin.consultations.results.total_votes", count: votes) }
 
   let!(:question) { create(:question, consultation: consultation) }
-  let!(:response) do
-    create(
-      :response,
-      question: question,
-      title: { "en" => "A", "ca" => "A", "es" => "A" }
-    )
-  end
-  let!(:other_response) do
-    create(
-      :response,
-      question: question,
-      title: { "en" => "B", "ca" => "B", "es" => "B" }
-    )
-  end
+  let!(:response) { create(:response, question: question, title: { "ca" => "A" }) }
+  let!(:other_response) { create(:response, question: question, title: { "ca" => "B" }) }
 
   let!(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
   let!(:another_user) { create(:user, :admin, :confirmed, organization: organization) }
@@ -44,6 +32,18 @@ describe "Admin manages consultation results", type: :system do
 
     switch_to_host(organization.host)
     login_as user, scope: :user
+  end
+
+  context "when in the consultation page" do
+    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+
+    before { visit decidim_admin_consultations.edit_consultation_path(consultation) }
+
+    it "enables navigating to the results page" do
+      click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
+
+      expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
+    end
   end
 
   context "when viewing a finished consultation with votes" do
