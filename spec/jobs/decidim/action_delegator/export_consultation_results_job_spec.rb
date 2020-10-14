@@ -11,20 +11,8 @@ module Decidim::ActionDelegator
 
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
     let!(:question) { create(:question, consultation: consultation) }
-    let!(:response) do
-      create(
-        :response,
-        question: question,
-        title: { "en" => "A", "ca" => "A", "es" => "A" }
-      )
-    end
-    let!(:other_response) do
-      create(
-        :response,
-        question: question,
-        title: { "en" => "B", "ca" => "B", "es" => "B" }
-      )
-    end
+    let!(:response) { create(:response, question: question, title: { "ca" => "A" }) }
+    let!(:other_response) { create(:response, question: question, title: { "ca" => "B" }) }
 
     let!(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
     let!(:another_user) { create(:user, :admin, :confirmed, organization: organization) }
