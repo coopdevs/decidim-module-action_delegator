@@ -34,6 +34,18 @@ describe "Admin manages consultation results", type: :system do
     login_as user, scope: :user
   end
 
+  context "when in the consultation page" do
+    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+
+    before { visit decidim_admin_consultations.edit_consultation_path(consultation) }
+
+    it "enables navigating to the results page" do
+      click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
+
+      expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
+    end
+  end
+
   context "when viewing a finished consultation with votes" do
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
