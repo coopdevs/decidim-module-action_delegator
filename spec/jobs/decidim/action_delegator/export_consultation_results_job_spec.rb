@@ -10,7 +10,7 @@ module Decidim::ActionDelegator
     let(:user) { create(:user, :admin, :confirmed, organization: organization) }
 
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
-    let!(:question) { create(:question, consultation: consultation) }
+    let!(:question) { create(:question, consultation: consultation, title: { "ca" => "question_title" }) }
     let!(:response) { create(:response, question: question, title: { "ca" => "A" }) }
     let!(:other_response) { create(:response, question: question, title: { "ca" => "B" }) }
 
@@ -70,11 +70,11 @@ module Decidim::ActionDelegator
           it "exports consultation's by membership" do
             expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
               expect(export_data.read).to eq(<<-CSV.strip_heredoc)
-                title;membership_type;membership_weight;votes_count
-                A;consumer;3;1
-                A;consumer;1;1
-                A;producer;2;1
-                B;consumer;1;1
+                question;response;membership_type;membership_weight;votes_count
+                question_title;A;consumer;3;1
+                question_title;A;consumer;1;1
+                question_title;A;producer;2;1
+                question_title;B;consumer;1;1
               CSV
             end.and_return(mailer)
 

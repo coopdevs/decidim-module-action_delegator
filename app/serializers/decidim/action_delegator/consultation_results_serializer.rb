@@ -7,7 +7,8 @@ module Decidim
 
       def serialize
         {
-          title: translated_attribute(resource.title),
+          question: translated_attribute(resource.question.title),
+          response: translated_attribute(resource.title),
           membership_type: resource.membership_type,
           membership_weight: resource.membership_weight,
           votes_count: resource.votes_count
