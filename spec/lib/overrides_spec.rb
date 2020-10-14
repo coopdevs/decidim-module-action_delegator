@@ -29,6 +29,15 @@ module Decidim::ActionDelegator
         "/app/controllers/decidim/consultations/question_votes_controller.rb" => "69bf764e99dfcdae138613adbed28b84",
         "/app/forms/decidim/consultations/vote_form.rb" => "d2b69f479b61b32faf3b108da310081a"
       }
+    }, {
+      package: "decidim-verifications",
+      files: {
+        # views
+        "/app/views/decidim/verifications/sms/authorizations/new.html.erb" => "c8d91f5a2221c3f4b51ccd720ddb427e",
+
+        # monkeypatches
+        "/app/controllers/decidim/verifications/sms/authorizations_controller.rb" => "ad4a85dfad26a8cf9313b481b8e4872c"
+      }
     }
   ]
 
