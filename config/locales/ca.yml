@@ -5,56 +5,56 @@ ca:
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
-            error_granter_unique: already delegated their vote
+            error_granter_unique: ja ha delegat el seu vot
             error_max_grants: Has arribat al limit de delegacions permeses
-            success: Delegation created successfully
+            success: Delegació creada amb èxit
           destroy:
-            error: There was a problem destroying this delegation
-            success: Delegation successfully destroyed
+            error: S'ha produït un error en eliminar aquesta delegació
+            success: S'ha eliminat la delegació amb èxit
           index:
             actions:
               new_delegation: Nou participant
             consultation: Consulta
-            created_at: Created at
-            delete: Delete
+            created_at: Creat el
+            delete: Eliminar
             grantee: Receptor
             granter: Atorgant
             title: Participants
           new:
             form:
-              title: General information
+              title: Informació general
             grantee: Receptor
             granter: Atorgant
-            save: Create
-            select_member: Select member
+            save: Crear
+            select_member: Selecciona un membre
             title: Nova delegació
         menu:
           delegations: Delegacions
           participants: Participants
         settings:
           create:
-            error: There was a problem creating the settings
-            success: Settings saved successfully
+            error: S'ha produït un error en crear la configuració
+            success: Configuració guardada amb èxit
           destroy:
-            error: There was a problem destroying this setting
-            success: Setting successfully destroyed
+            error: S'ha produït un error en eliminar aquesta configuració
+            success: Configuració eliminada correctament
           index:
             actions:
               new_setting: Nova delegació
             consultation: Consulta
-            created_at: Created at
+            created_at: Creat el
             title: Delegacions
           new:
             form:
-              title: General information
-            max_grants: Maximum delegations
-            save: Save
-            title: Delegation settings
+              title: Informació general
+            max_grants: Màxim de delegacions rebudes per persona
+            save: Desa
+            title: Configuració de delacions
       delegations:
-        link: You have delegations granted
+        link: Tens delegacions disponibles
       delegations_modal:
-        callout: Remember, you are voting on behalf of
-        contextual_help: 'You have been granted the vote from:'
+        callout: Recorda, estàs votant en nom de
+        contextual_help: 'Has estat autoritzat a votar en nom de:'
         title: 'Consultation: granted delegations'
       name: Decidim ActionDelegator cooperatives module
       verification:
