@@ -55,7 +55,7 @@ module Decidim
       end
 
       def client
-        @client ||= ::Savon.client(wsdl: "https://websms.smsvirtual.es/api_php/smsvirtual.wsdl")
+        @client ||= ::Savon.client(wsdl: "https://websms.masmovil.com/api_php/smsvirtual.wsdl")
       end
 
       def message
