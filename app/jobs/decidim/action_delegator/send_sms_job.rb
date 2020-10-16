@@ -8,7 +8,7 @@ module Decidim
       queue_as :default
 
       def perform(mobile_phone_number)
-        client = ::Savon.client(wsdl: "https://websms.smsvirtual.es/api_php/smsvirtual.wsdl")
+        client = ::Savon.client(wsdl: "https://websms.masmovil.com/api_php/smsvirtual.wsdl")
 
         response = client.call(:send_sms,
                                message: {
