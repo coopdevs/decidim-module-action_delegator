@@ -55,28 +55,28 @@ ca:
       delegations_modal:
         callout: Recorda, estàs votant en nom de
         contextual_help: 'Has estat autoritzat a votar en nom de:'
-        title: 'Consultation: granted delegations'
-      name: Decidim ActionDelegator cooperatives module
+        title: 'Consulta: delegacions atorgades'
+      name: Mòdul Decidim ActionDelegator per a cooperatives
       verification:
         admin:
           members:
             index:
-              title: Members management
+              title: Administració de membres
     admin:
       consultations:
         results:
-          export: Export
-          export_filename: consultation_results
-          membership_type: Membership type
+          export: Exporta
+          export_filename: consulta_resultats
+          membership_type: Tipus de membre
           membership_weight: Ponderació
     authorization_handlers:
       admin:
         delegations_verifier:
           help:
-            - A verification method for delegate voting
+            - Mètode de verificació per la delegació de vot
       delegations_verifier:
-        explanation: Verified users with this method can delegate votes to other users
-        name: Delegations Verifier
+        explanation: Els usuaris verificats per aquest mètode poden delegar els seus vots a altres usuaris
+        name: Verificador de Delegacions
   layouts:
     decidim:
       user_profile:
