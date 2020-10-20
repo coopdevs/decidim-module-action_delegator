@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'twilio-ruby'
+
 module Decidim
   module ActionDelegator
     class TwilioSendSmsJob < ApplicationJob
@@ -26,7 +28,7 @@ module Decidim
       end
 
       def client
-        Twilio::REST::Client.new twilio_account_sid, twilio_auth_token
+        ::Twilio::REST::Client.new twilio_account_sid, twilio_auth_token
       end
 
       def twilio_account_sid
