@@ -50,6 +50,10 @@ ca:
             max_grants: Màxim de delegacions rebudes per persona
             save: Desa
             title: Configuració de delacions
+      authorizations:
+        new:
+          missing_phone_error: Missing membership phone
+          phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
       delegations:
         link: Tens delegacions disponibles
       delegations_modal:
@@ -57,6 +61,7 @@ ca:
         contextual_help: 'Has estat autoritzat a votar en nom de:'
         title: 'Consulta: delegacions atorgades'
       name: Mòdul Decidim ActionDelegator per a cooperatives
+      sms_message: Your verification code is %{code}
       verification:
         admin:
           members:

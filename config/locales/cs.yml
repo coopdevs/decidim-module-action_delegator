@@ -50,6 +50,10 @@ cs:
             max_grants: Maximum delegací
             save: Uložit
             title: Nastavení delegování
+      authorizations:
+        new:
+          missing_phone_error: Missing membership phone
+          phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
       delegations:
         link: Máte udělené delegace
       delegations_modal:
@@ -57,6 +61,7 @@ cs:
         contextual_help: 'Hlasování vám bylo uděleno od:'
         title: 'Konzultace: udělené delegace'
       name: Modul Decidim ActionDelegator cooperatives
+      sms_message: Your verification code is %{code}
       verification:
         admin:
           members:
