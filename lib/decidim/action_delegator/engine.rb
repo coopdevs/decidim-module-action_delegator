@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "savon"
 require "rails"
 require "decidim/core"
 require "decidim/consultations"

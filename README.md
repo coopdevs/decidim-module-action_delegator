@@ -53,6 +53,24 @@ structure in the `metadata` column:
 See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
 as an example of such verification.
 
+### SMS gateway setup
+
+In order to use this new sms gateway you need to configure your application. In config/initializers/decidim.rb set:
+
+```ruby
+config.sms_gateway_service = 'Decidim::ActionDelegator::SmsGateway'
+```
+
+Then you'll need to set the following ENV vars:
+
+```bash
+SMS_USER=
+SMS_PASS=
+SMS_SENDER_NAME= (optional)
+```
+
+This gateway uses Som Connexió as a provider which uses [this SOAP API](https://websms.masmovil.com/api_php/smsvirtual.wsdl).
+
 ## Contributing
 
 See [Decidim](https://github.com/decidim/decidim).
