@@ -16,28 +16,61 @@ describe "Delegation vote", type: :system do
       let(:granter) { create(:user, :confirmed, organization: organization) }
       let!(:delegation) { create(:delegation, setting: setting, granter: granter, grantee: user) }
 
-      context "and never voted before" do
-        before do
-          switch_to_host(organization.host)
-          login_as user, scope: :user
-          visit decidim_consultations.question_path(question)
+      context "and delegation is not voted" do
+        context "and the user didn't vote" do
+          before do
+            switch_to_host(organization.host)
+            login_as user, scope: :user
+            visit decidim_consultations.question_path(question)
+          end
+
+          it "lets the user vote on behalf of another member" do
+            click_link(id: "delegations-button")
+            within "#delegations-modal" do
+              click_link(I18n.t("decidim.questions.vote_button.vote"))
+            end
+
+            expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+
+            click_button translated(response.title)
+            click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
+
+            click_link(I18n.t("decidim.action_delegator.delegations.link"))
+            within "#delegations-modal" do
+              expect(page).to have_content(t("decidim.questions.vote_button.already_voted").upcase)
+            end
+          end
         end
 
-        it "lets the user vote on behalf of some other member" do
-          click_link(id: "delegations-button")
-          click_link(class: "delegation-vote-button")
+        context "and the user already voted" do
+          before do
+            create(:vote, author: user, question: question)
 
-          expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+            switch_to_host(organization.host)
+            login_as user, scope: :user
+            visit decidim_consultations.question_path(question)
+          end
 
-          click_button translated(response.title)
-          click_button "Confirm"
+          it "lets the user vote on behalf of another member" do
+            click_link(id: "delegations-button")
+            within "#delegations-modal" do
+              click_link(I18n.t("decidim.questions.vote_button.vote"))
+            end
 
-          click_link(id: "delegations-button")
-          expect(page).to have_button(class: "delegation_unvote_button")
+            expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+
+            click_button translated(response.title)
+            click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
+
+            click_link(I18n.t("decidim.action_delegator.delegations.link"))
+            within "#delegations-modal" do
+              expect(page).to have_content(t("decidim.questions.vote_button.already_voted").upcase)
+            end
+          end
         end
       end
 
-      context "and voted before" do
+      context "and delegation is voted" do
         let!(:vote) { create(:vote, author: granter, question: question, response: response) }
 
         before do
@@ -46,12 +79,14 @@ describe "Delegation vote", type: :system do
           visit decidim_consultations.question_path(question)
         end
 
-        it "lets the user unvote on behalf of some other member" do
+        it "lets the user unvote on behalf of another member" do
           click_link(id: "delegations-button")
-          click_button(class: "delegation_unvote_button")
+          within "#delegations-modal" do
+            click_button(class: "delegation_unvote_button")
+          end
 
-          click_link(id: "delegations-button")
-          expect(page).to have_link(class: "delegation-vote-button")
+          click_link(I18n.t("decidim.action_delegator.delegations.link"))
+          expect(page).to have_link(I18n.t("decidim.questions.vote_button.vote"))
         end
       end
     end
