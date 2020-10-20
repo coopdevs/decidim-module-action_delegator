@@ -39,9 +39,7 @@ module Decidim::ActionDelegator
         let(:result) { "<xml><codigo>115</codigo><descripcion>Woopsie</descripcion></xml>" }
 
         it "returns false" do
-          expect {
-            subject.perform_now(sender_name, mobile_phone_number, message)
-          }.to raise_error(SendSmsJobException)
+          expect { subject.perform_now(sender_name, mobile_phone_number, message) }.to raise_error(SendSmsJobException)
         end
       end
     end
