@@ -40,6 +40,10 @@ module Decidim
                     active: :exact
         end
       end
+
+      initializer "decidim_action_delegator.permissions" do
+        Decidim::Consultations::Permissions.prepend(ConsultationsPermissionsExtension)
+      end
     end
   end
 end
