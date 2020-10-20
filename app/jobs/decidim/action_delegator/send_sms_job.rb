@@ -8,7 +8,7 @@ module Decidim
     class SendSmsJob < ApplicationJob
       queue_as :default
 
-      SMSVIRTUAL_WSDL_URL = "https://websms.masmovil.com/api_php/smsvirtual.wsdl".freeze
+      SMSVIRTUAL_WSDL_URL = "https://websms.masmovil.com/api_php/smsvirtual.wsdl"
 
       def perform(sender_name, mobile_phone_number, message)
         @sender_name = sender_name
