@@ -19,7 +19,7 @@ module Decidim
       private
 
       def sender_name
-        ENV["SMS_SENDER_NAME"] || "Decidim"
+        ENV["SMS_SENDER_NAME"] || Decidim.application_name
       end
 
       def message
