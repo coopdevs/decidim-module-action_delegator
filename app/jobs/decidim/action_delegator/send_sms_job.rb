@@ -8,9 +8,7 @@ module Decidim
     class SendSmsJob < ApplicationJob
       queue_as :default
 
-      attr_reader :response
-
-      SMSVIRTUAL_WSDL_URL = "https://websms.masmovil.com/api_php/smsvirtual.wsdl"
+      SMSVIRTUAL_WSDL_URL = "https://websms.masmovil.com/api_php/smsvirtual.wsdl".freeze
 
       def perform(sender_name, mobile_phone_number, message)
         @sender_name = sender_name
@@ -19,12 +17,12 @@ module Decidim
 
         send_sms!
 
-        raise SendSmsJobException, @response unless success?
+        raise SendSmsJobException, response unless success?
       end
 
       private
 
-      attr_reader :sender_name, :mobile_phone_number, :message
+      attr_reader :sender_name, :mobile_phone_number, :message, :response
 
       def send_sms!
         @response = client.call(:send_sms,

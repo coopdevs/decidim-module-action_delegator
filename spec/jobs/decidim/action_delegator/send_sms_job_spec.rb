@@ -38,7 +38,7 @@ module Decidim::ActionDelegator
       context "when code's result isn't 200" do
         let(:result) { "<xml><codigo>115</codigo><descripcion>Woopsie</descripcion></xml>" }
 
-        it "returns false" do
+        it "Raises SendSmsJobException" do
           expect { subject.perform_now(sender_name, mobile_phone_number, message) }.to raise_error(SendSmsJobException)
         end
       end
