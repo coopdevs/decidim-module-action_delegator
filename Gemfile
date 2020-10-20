@@ -17,6 +17,7 @@ gem "decidim-consultations", Decidim::ActionDelegator::DECIDIM_VERSION
 gem "bootsnap", "~> 1.4"
 gem "puma", ">= 4.3"
 gem "savon", "~> 2.12"
+gem "twilio-ruby", "~> 5.41"
 gem "uglifier", "~> 4.1"
 
 group :development, :test do

@@ -10,8 +10,28 @@ module Decidim::ActionDelegator
     let(:response_body) { { send_sms_response: { result: result } } }
 
     describe "#deliver_code" do
-      it "enqueues a SendSmsJob" do
-        expect { subject.deliver_code }.to have_enqueued_job(SendSmsJob)
+      before do
+        allow(ENV).to receive(:[]).with("SMS_SENDER_NAME").and_return("Amazing app")
+      end
+
+      context "when using som_connexio as provider" do
+        before do
+          allow(ENV).to receive(:[]).with("SMS_GATEWAY_PROVIDER").and_return("som_connexio")
+        end
+
+        it "enqueues a SendSmsJob" do
+          expect { subject.deliver_code }.to have_enqueued_job(SendSmsJob)
+        end
+      end
+
+      context "when using twilio as provider" do
+        before do
+          allow(ENV).to receive(:[]).with("SMS_GATEWAY_PROVIDER").and_return("twilio")
+        end
+
+        it "enqueues a TwilioSendSmsJob" do
+          expect { subject.deliver_code }.to have_enqueued_job(TwilioSendSmsJob)
+        end
       end
     end
   end

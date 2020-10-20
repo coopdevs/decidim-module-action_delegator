@@ -1,0 +1,41 @@
+# frozen_string_literal: true
+
+module Decidim
+  module ActionDelegator
+    class TwilioSendSmsJob < ApplicationJob
+      queue_as :default
+
+      def perform(sender_name, mobile_phone_number, message)
+        @sender_name = sender_name
+        @mobile_phone_number = mobile_phone_number
+        @message = message
+
+        send_sms!
+      end
+
+      private
+
+      attr_reader :sender_name, :mobile_phone_number, :message
+
+      def send_sms!
+        client.messages.create(
+          from: sender_name,
+          to: mobile_phone_number,
+          body: message
+        )
+      end
+
+      def client
+        Twilio::REST::Client.new twilio_account_sid, twilio_auth_token
+      end
+
+      def twilio_account_sid
+        ENV["TWILIO_ACCOUNT_SID"]
+      end
+
+      def twilio_auth_token
+        ENV["TWILIO_AUTH_TOKEN"]
+      end
+    end
+  end
+end
