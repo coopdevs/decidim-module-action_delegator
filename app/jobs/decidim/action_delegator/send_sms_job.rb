@@ -10,8 +10,8 @@ module Decidim
 
       SMSVIRTUAL_WSDL_URL = "https://websms.masmovil.com/api_php/smsvirtual.wsdl"
 
-      def perform(sender_name, mobile_phone_number, message)
-        @sender_name = sender_name
+      def perform(sender, mobile_phone_number, message)
+        @sender = sender
         @mobile_phone_number = mobile_phone_number
         @message = message
 
@@ -22,14 +22,14 @@ module Decidim
 
       private
 
-      attr_reader :sender_name, :mobile_phone_number, :message, :response
+      attr_reader :sender, :mobile_phone_number, :message, :response
 
       def send_sms!
         @response = client.call(:send_sms,
                                 message: {
                                   user: ENV["SMS_USER"],
                                   pass: ENV["SMS_PASS"],
-                                  src: sender_name,
+                                  src: sender,
                                   dst: mobile_phone_number,
                                   msg: message
                                 })

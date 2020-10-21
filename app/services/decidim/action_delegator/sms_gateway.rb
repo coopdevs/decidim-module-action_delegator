@@ -5,21 +5,42 @@ module Decidim
     class SmsGateway
       attr_reader :mobile_phone_number, :code, :response
 
+      SMS_GATEWAY_PROVIDER_JOBS = {
+        som_connexio: SendSmsJob,
+        twilio: TwilioSendSmsJob
+      }.freeze
+
       def initialize(mobile_phone_number, code)
         @mobile_phone_number = mobile_phone_number
         @code = code
       end
 
       def deliver_code
-        SendSmsJob.perform_later(sender_name, mobile_phone_number, message)
+        return false unless sms_gateway_provider_valid?
+
+        sms_gateway_job.perform_later(sender, mobile_phone_number, message)
 
         true
       end
 
       private
 
-      def sender_name
-        ENV["SMS_SENDER_NAME"] || Decidim.application_name
+      def sms_gateway_job
+        SMS_GATEWAY_PROVIDER_JOBS[sms_gateway_provider.to_sym]
+      end
+
+      def sender
+        ENV["SMS_SENDER"]
+      end
+
+      def sms_gateway_provider
+        ENV["SMS_GATEWAY_PROVIDER"]
+      end
+
+      def sms_gateway_provider_valid?
+        return false unless sms_gateway_provider
+
+        SMS_GATEWAY_PROVIDER_JOBS.keys.include? sms_gateway_provider.to_sym
       end
 
       def message
