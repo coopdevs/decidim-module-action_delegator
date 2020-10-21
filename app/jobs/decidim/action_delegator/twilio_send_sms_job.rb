@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'twilio-ruby'
+require "twilio-ruby"
 
 module Decidim
   module ActionDelegator
