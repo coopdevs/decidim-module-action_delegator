@@ -8,7 +8,7 @@ module Decidim
       queue_as :default
 
       def perform(sender, mobile_phone_number, message)
-        @sender= sender
+        @sender = sender
         @mobile_phone_number = mobile_phone_number
         @message = message
 
