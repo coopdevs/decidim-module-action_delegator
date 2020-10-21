@@ -66,7 +66,7 @@ Then you'll need to set the following ENV vars:
 ```bash
 SMS_USER=
 SMS_PASS=
-SMS_SENDER_NAME= (optional)
+SMS_SENDER= (optional)
 ```
 
 This gateway uses Som Connexió as a provider which uses [this SOAP API](https://websms.masmovil.com/api_php/smsvirtual.wsdl).

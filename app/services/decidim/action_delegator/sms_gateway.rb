@@ -18,7 +18,7 @@ module Decidim
       def deliver_code
         return false unless sms_gateway_provider_valid?
 
-        sms_gateway_job.perform_later(sender_name, mobile_phone_number, message)
+        sms_gateway_job.perform_later(sender, mobile_phone_number, message)
 
         true
       end
@@ -29,8 +29,8 @@ module Decidim
         SMS_GATEWAY_PROVIDER_JOBS[sms_gateway_provider.to_sym]
       end
 
-      def sender_name
-        ENV["SMS_SENDER_NAME"] || Decidim.application_name
+      def sender
+        ENV["SMS_SENDER"]
       end
 
       def sms_gateway_provider

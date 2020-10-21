@@ -6,7 +6,7 @@ module Decidim::ActionDelegator
   describe SendSmsJob do
     subject { described_class }
 
-    let(:sender_name) { "Sender" }
+    let(:sender) { "Sender" }
     let(:mobile_phone_number) { "+12 345 6789" }
     let(:message) { "A very important message" }
 
@@ -31,7 +31,7 @@ module Decidim::ActionDelegator
         let(:result) { "<xml><codigo>200</codigo><descripcion>Went well</descripcion></xml>" }
 
         it "Does not raise SendSmsJobException" do
-          expect { subject.perform_now(sender_name, mobile_phone_number, message) }.not_to raise_error
+          expect { subject.perform_now(sender, mobile_phone_number, message) }.not_to raise_error
         end
       end
 
@@ -39,7 +39,7 @@ module Decidim::ActionDelegator
         let(:result) { "<xml><codigo>115</codigo><descripcion>Woopsie</descripcion></xml>" }
 
         it "Raises SendSmsJobException" do
-          expect { subject.perform_now(sender_name, mobile_phone_number, message) }.to raise_error(SendSmsJobException)
+          expect { subject.perform_now(sender, mobile_phone_number, message) }.to raise_error(SendSmsJobException)
         end
       end
     end

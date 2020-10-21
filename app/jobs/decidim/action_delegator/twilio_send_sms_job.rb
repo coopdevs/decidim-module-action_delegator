@@ -7,8 +7,8 @@ module Decidim
     class TwilioSendSmsJob < ApplicationJob
       queue_as :default
 
-      def perform(sender_name, mobile_phone_number, message)
-        @sender_name = sender_name
+      def perform(sender, mobile_phone_number, message)
+        @sender= sender
         @mobile_phone_number = mobile_phone_number
         @message = message
 
@@ -17,11 +17,11 @@ module Decidim
 
       private
 
-      attr_reader :sender_name, :mobile_phone_number, :message
+      attr_reader :sender, :mobile_phone_number, :message
 
       def send_sms!
         client.messages.create(
-          from: sender_name,
+          from: sender,
           to: mobile_phone_number,
           body: message
         )

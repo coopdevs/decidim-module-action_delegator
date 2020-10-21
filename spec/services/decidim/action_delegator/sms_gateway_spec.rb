@@ -11,7 +11,7 @@ module Decidim::ActionDelegator
 
     describe "#deliver_code" do
       before do
-        allow(ENV).to receive(:[]).with("SMS_SENDER_NAME").and_return("Amazing app")
+        allow(ENV).to receive(:[]).with("SMS_SENDER").and_return("Amazing app")
       end
 
       context "when using som_connexio as provider" do
