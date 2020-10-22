@@ -52,8 +52,8 @@ ca:
             title: Configuració de delacions
       authorizations:
         new:
-          missing_phone_error: Missing membership phone
-          phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
+          missing_phone_error: No s'ha trobat telèfon del membre
+          phone_warning: Aquest número de telèfon s'ha importat per l'administrador. Si us plau, poseu-vos-hi en contacte si no és correcte.
       delegations:
         link: Tens delegacions disponibles
       delegations_modal:
@@ -61,7 +61,7 @@ ca:
         contextual_help: 'Has estat autoritzat a votar en nom de:'
         title: 'Consulta: delegacions atorgades'
       name: Mòdul Decidim ActionDelegator per a cooperatives
-      sms_message: Your verification code is %{code}
+      sms_message: El teu codi de verificació és %{code}
       verification:
         admin:
           members:
