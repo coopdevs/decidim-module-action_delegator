@@ -15,29 +15,53 @@ describe "Delegation vote", type: :system do
       let(:setting) { create(:setting, consultation: consultation) }
       let(:granter) { create(:user, :confirmed, organization: organization) }
       let!(:delegation) { create(:delegation, setting: setting, granter: granter, grantee: user) }
+      let(:permissions) { { "vote" => { "authorization_handlers" => { "dummy_authorization_workflow" => {} } } } }
+
+      before do
+        switch_to_host(organization.host)
+        login_as user, scope: :user
+      end
 
       context "and delegation is not voted" do
         context "and the user didn't vote" do
           before do
-            switch_to_host(organization.host)
-            login_as user, scope: :user
-            visit decidim_consultations.question_path(question)
+            question.build_resource_permission.update!(permissions: permissions)
           end
 
-          it "lets the user vote on behalf of another member" do
-            click_link(id: "delegations-button")
-            within "#delegations-modal" do
-              click_link(I18n.t("decidim.questions.vote_button.vote"))
+          context "and the questions verification is not fulfilled" do
+            before do
+              visit decidim_consultations.question_path(question)
             end
 
-            expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+            it "requires verification first" do
+              click_link(id: "delegations-button")
+              within "#delegations-modal" do
+                expect(page).to have_content(t("decidim.questions.vote_button.verification_required").upcase)
+              end
+            end
+          end
 
-            click_button translated(response.title)
-            click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
+          context "and the questions verification is fulfilled" do
+            before do
+              Decidim::Authorization.create!(name: "dummy_authorization_workflow", decidim_user_id: user.id, granted_at: Time.zone.now)
+              visit decidim_consultations.question_path(question)
+            end
 
-            click_link(I18n.t("decidim.action_delegator.delegations.link"))
-            within "#delegations-modal" do
-              expect(page).to have_content(t("decidim.questions.vote_button.already_voted").upcase)
+            it "lets the user vote on behalf of another member" do
+              click_link(id: "delegations-button")
+              within "#delegations-modal" do
+                click_link(I18n.t("decidim.questions.vote_button.vote"))
+              end
+
+              expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+
+              click_button translated(response.title)
+              click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
+
+              click_link(I18n.t("decidim.action_delegator.delegations.link"))
+              within "#delegations-modal" do
+                expect(page).to have_content(t("decidim.questions.vote_button.already_voted").upcase)
+              end
             end
           end
         end
@@ -45,9 +69,6 @@ describe "Delegation vote", type: :system do
         context "and the user already voted" do
           before do
             create(:vote, author: user, question: question)
-
-            switch_to_host(organization.host)
-            login_as user, scope: :user
             visit decidim_consultations.question_path(question)
           end
 
@@ -72,10 +93,11 @@ describe "Delegation vote", type: :system do
 
       context "and delegation is voted" do
         let!(:vote) { create(:vote, author: granter, question: question, response: response) }
+        let(:permissions) { { "vote" => { "authorization_handlers" => { "dummy_authorization_workflow" => {} } } } }
 
         before do
-          switch_to_host(organization.host)
-          login_as user, scope: :user
+          question.build_resource_permission.update!(permissions: permissions)
+          Decidim::Authorization.create!(name: "dummy_authorization_workflow", decidim_user_id: user.id, granted_at: Time.zone.now)
           visit decidim_consultations.question_path(question)
         end
 
