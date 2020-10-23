@@ -10,6 +10,17 @@ describe "Delegation vote", type: :system do
     let(:consultation) { create(:consultation, :active, organization: organization) }
     let(:user) { create(:user, :confirmed, organization: organization) }
 
+    context "and unauthenticated user" do
+      before do
+        switch_to_host(organization.host)
+      end
+
+      it "renders the question page" do
+        visit decidim_consultations.question_path(question)
+        expect(page).to have_content(I18n.t("decidim.questions.vote_button.vote").upcase)
+      end
+    end
+
     context "and authenticated user" do
       let!(:response) { create :response, question: question }
       let(:setting) { create(:setting, consultation: consultation) }
