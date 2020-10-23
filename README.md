@@ -47,7 +47,7 @@ that creates `decidim_authorizations` records which include the following JSON
 structure in the `metadata` column:
 
 ```json
-"{ metadata_type: '',   metadata_weight: '' }"
+"{ membership_type: '', membership_weight: '' }"
 ```
 
 See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
