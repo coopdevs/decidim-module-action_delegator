@@ -47,7 +47,7 @@ that creates `decidim_authorizations` records which include the following JSON
 structure in the `metadata` column:
 
 ```json
-"{ metadata_type: '',   metadata_weight: '' }"
+"{ membership_type: '', membership_weight: '' }"
 ```
 
 See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
@@ -59,17 +59,29 @@ In order to use this new sms gateway you need to configure your application. In 
 
 ```ruby
 config.sms_gateway_service = 'Decidim::ActionDelegator::SmsGateway'
+
 ```
+#### Som Connexió
+
+You can use Som Connexió as SMS provider which uses [this SOAP API](https://websms.masmovil.com/api_php/smsvirtual.wsdl). Reach out to Som Connexió to sign up first.
 
 Then you'll need to set the following ENV vars:
 
 ```bash
-SMS_USER=
-SMS_PASS=
-SMS_SENDER= (optional)
+SMS_USER= # Username provided by Som Connexió
+SMS_PASS= # Password provided by Som Connexió
+SMS_SENDER= # (optional) Name or phone number used as sender of the SMS
 ```
 
-This gateway uses Som Connexió as a provider which uses [this SOAP API](https://websms.masmovil.com/api_php/smsvirtual.wsdl).
+#### Twilio
+
+Alternatively, you can use Twilio as provider by specifying the folowing ENV vars
+
+```bash
+TWILIO_ACCOUNT_SID # SID from your Twilio account
+TWILIO_AUTH_TOKEN # Token from your Twilio account
+SMS_SENDER # Twilio's phone number. You need to purchase one there with SMS capability.
+```
 
 ## Contributing
 
