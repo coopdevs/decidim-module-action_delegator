@@ -5,9 +5,9 @@ require "decidim/consultations/test/factories"
 
 FactoryBot.define do
   factory :delegation, class: "Decidim::ActionDelegator::Delegation" do
-    granter factory: :user
-    grantee factory: :user
     setting
+    granter { association :user, organization: setting.consultation.organization }
+    grantee { association :user, organization: setting.consultation.organization }
   end
 
   factory :setting, class: "Decidim::ActionDelegator::Setting" do
