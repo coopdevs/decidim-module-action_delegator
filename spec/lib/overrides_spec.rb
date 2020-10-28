@@ -16,12 +16,12 @@ module Decidim::ActionDelegator
       package: "decidim-consultations",
       files: {
         # views
-        "/app/views/decidim/consultations/consultations/_question.html.erb" => "e0490411ca3af6573cc736b297cbe6c8",
+        "/app/views/decidim/consultations/consultations/_question.html.erb" => "364d7f8370cdbe7ae70c545fff2e21fa",
         "/app/views/decidim/consultations/consultations/show.html.erb" => "84a1569b796f724efa304b9dfc40f68a",
         "/app/views/decidim/consultations/question_votes/update_vote_button.js.erb" => "a675fe780e77e8766beef999112a8fcb",
-        "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "036bbb6a3e37062ed37325da8d48ed36",
-        "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "b23948e4ed7e0360a09faef326bc3664",
-        "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "7eb753c457e9a5adc6c16efd155ba434",
+        "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "ac4b6314c4f11216764fa8977d4f829f",
+        "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "ae7c38afcc6588a00f8298ea69769da7",
+        "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "011300b9001c6eb3eb4384849609e90a",
         "/app/views/decidim/consultations/admin/consultations/results.html.erb" => "1a2f7afd79b20b1fcf66bdece660e8ae",
         "/app/views/layouts/decidim/admin/consultation.html.erb" => "7f70f790cf474389f327528136d366a3",
 
@@ -34,10 +34,10 @@ module Decidim::ActionDelegator
       package: "decidim-verifications",
       files: {
         # views
-        "/app/views/decidim/verifications/sms/authorizations/new.html.erb" => "c8d91f5a2221c3f4b51ccd720ddb427e",
+        "/app/views/decidim/verifications/sms/authorizations/new.html.erb" => "0a526a74ef9ab7738414c1e2d0d01872",
 
         # monkeypatches
-        "/app/controllers/decidim/verifications/sms/authorizations_controller.rb" => "ad4a85dfad26a8cf9313b481b8e4872c"
+        "/app/controllers/decidim/verifications/sms/authorizations_controller.rb" => "4b71f48f9785058c27fcffa57579d341"
       }
     }
   ]

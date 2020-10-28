@@ -59,8 +59,8 @@ describe "Admin manages consultation results", type: :system do
     it "shows votes by membership and weight type" do
       visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type").upcase)
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight").upcase)
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
 
       expect(nth_row(1).find(".response-title")).to have_content("A")
       expect(nth_row(1).find(".membership-type")).to have_content("consumer")
