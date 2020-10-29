@@ -69,5 +69,30 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
         expect(result.second.votes_count).to eq(1)
       end
     end
+
+    context "when users have multiple authorizations" do
+      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
+      let(:other_auth_metadata) { { membership_type: "consumer", membership_weight: 2 } }
+
+      before do
+        create(:authorization, user: user, metadata: {})
+      end
+
+      it "returns an extra vote" do
+        result = subject.query
+
+        expect(result.first.membership_type).to eq("consumer")
+        expect(result.first.membership_weight).to eq("2")
+        expect(result.first.votes_count).to eq(1)
+
+        expect(result.second.membership_type).to eq("producer")
+        expect(result.second.membership_weight).to eq("2")
+        expect(result.second.votes_count).to eq(1)
+
+        expect(result.third.membership_type).to be_nil
+        expect(result.third.membership_weight).to be_nil
+        expect(result.third.votes_count).to eq(1)
+      end
+    end
   end
 end

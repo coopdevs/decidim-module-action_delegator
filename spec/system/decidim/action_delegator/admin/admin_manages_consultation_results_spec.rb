@@ -83,6 +83,41 @@ describe "Admin manages consultation results", type: :system do
       expect(nth_row(4).find(".votes-count")).to have_content(1)
     end
 
+    context "when an author has multiple authorizations" do
+      before do
+        create(:authorization, user: user, metadata: {})
+      end
+
+      it "shows an odd row" do
+        visit decidim_admin_action_delegator.results_consultation_path(consultation)
+
+        expect(nth_row(1).find(".response-title")).to have_content("A")
+        expect(nth_row(1).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(1).find(".membership-weight")).to have_content(3)
+        expect(nth_row(1).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(2).find(".response-title")).to have_content("A")
+        expect(nth_row(2).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(2).find(".membership-weight")).to have_content(1)
+        expect(nth_row(2).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(3).find(".response-title")).to have_content("A")
+        expect(nth_row(3).find(".membership-type")).to have_content("producer")
+        expect(nth_row(3).find(".membership-weight")).to have_content(2)
+        expect(nth_row(3).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(4).find(".response-title")).to have_content("A")
+        expect(nth_row(4).find(".membership-type")).to have_content("")
+        expect(nth_row(4).find(".membership-weight")).to have_content("")
+        expect(nth_row(4).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(5).find(".response-title")).to have_content("B")
+        expect(nth_row(5).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(5).find(".membership-weight")).to have_content(1)
+        expect(nth_row(5).find(".votes-count")).to have_content(1)
+      end
+    end
+
     it "enables exporting to CSV" do
       visit decidim_admin_action_delegator.results_consultation_path(consultation)
       perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
