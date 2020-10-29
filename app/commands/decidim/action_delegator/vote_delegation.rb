@@ -4,22 +4,22 @@ module Decidim
   module ActionDelegator
     class VoteDelegation
       def initialize(form)
-        @form = form
-        @delegation = form.context.delegation
+        @context = form.context
+        @response = form.response
       end
 
       def call
-        build_vote
+        WhodunnitVote.new(build_vote, context.current_user)
       end
 
       private
 
-      attr_reader :form, :delegation
+      attr_reader :context, :response
 
       def build_vote
-        form.context.current_question.votes.build(
-          author: delegation.granter,
-          response: form.response
+        context.current_question.votes.build(
+          author: context.delegation.granter,
+          response: response
         )
       end
     end

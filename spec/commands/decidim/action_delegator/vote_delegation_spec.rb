@@ -12,7 +12,7 @@ describe Decidim::ActionDelegator::VoteDelegation do
   let(:question) { build(:question, :published, consultation: consultation) }
   let(:response) { build(:response, question: question) }
 
-  let(:context) { double(:context, delegation: delegation, current_question: question) }
+  let(:context) { double(:context, delegation: delegation, current_question: question, current_user: delegation.grantee) }
   let(:form) { instance_double(Decidim::Consultations::VoteForm, context: context, response: response) }
 
   describe "#call" do
@@ -29,6 +29,13 @@ describe Decidim::ActionDelegator::VoteDelegation do
     it "builds a valid vote" do
       vote = subject.call
       expect(vote).to be_valid
+    end
+
+    it "tracks who performed the vote", versioning: true do
+      vote = subject.call
+      vote.save
+
+      expect(vote.versions.last.whodunnit).to eq(context.current_user.id.to_s)
     end
   end
 end
