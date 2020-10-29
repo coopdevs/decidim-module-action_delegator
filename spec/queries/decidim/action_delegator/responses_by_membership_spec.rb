@@ -18,8 +18,8 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
     question.votes.create(author: user, response: response)
     question.votes.create(author: other_user, response: response)
 
-    create(:authorization, user: user, metadata: auth_metadata)
-    create(:authorization, user: other_user, metadata: other_auth_metadata)
+    create(:authorization, :direct_verification, user: user, metadata: auth_metadata)
+    create(:authorization, :direct_verification, user: other_user, metadata: other_auth_metadata)
   end
 
   describe "#query" do
@@ -78,7 +78,7 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
         create(:authorization, user: user, metadata: {})
       end
 
-      it "returns an extra vote" do
+      it "only considers direct_verifications authorizations" do
         result = subject.query
 
         expect(result.first.membership_type).to eq("consumer")
@@ -89,9 +89,7 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
         expect(result.second.membership_weight).to eq("2")
         expect(result.second.votes_count).to eq(1)
 
-        expect(result.third.membership_type).to be_nil
-        expect(result.third.membership_weight).to be_nil
-        expect(result.third.votes_count).to eq(1)
+        expect(result.third).to be_nil
       end
     end
   end
