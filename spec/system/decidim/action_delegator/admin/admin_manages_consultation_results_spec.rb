@@ -24,11 +24,11 @@ describe "Admin manages consultation results", type: :system do
     question.votes.create(author: another_user, response: response)
     question.votes.create(author: yet_another_user, response: other_response)
 
-    create(:authorization, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
-    create(:authorization, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
-    create(:authorization, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
+    create(:authorization, :direct_verification, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
+    create(:authorization, :direct_verification, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
+    create(:authorization, :direct_verification, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
 
-    create(:authorization, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
+    create(:authorization, :direct_verification, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
 
     switch_to_host(organization.host)
     login_as user, scope: :user

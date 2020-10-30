@@ -18,8 +18,8 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
     question.votes.create(author: user, response: response)
     question.votes.create(author: other_user, response: response)
 
-    create(:authorization, user: user, metadata: auth_metadata)
-    create(:authorization, user: other_user, metadata: other_auth_metadata)
+    create(:authorization, :direct_verification, user: user, metadata: auth_metadata)
+    create(:authorization, :direct_verification, user: other_user, metadata: other_auth_metadata)
   end
 
   describe "#query" do
@@ -67,6 +67,29 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
         expect(result.second.membership_type).to eq("producer")
         expect(result.second.membership_weight).to eq("2")
         expect(result.second.votes_count).to eq(1)
+      end
+    end
+
+    context "when users have multiple authorizations" do
+      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
+      let(:other_auth_metadata) { { membership_type: "consumer", membership_weight: 2 } }
+
+      before do
+        create(:authorization, user: user, metadata: {})
+      end
+
+      it "only considers direct_verifications authorizations" do
+        result = subject.query
+
+        expect(result.first.membership_type).to eq("consumer")
+        expect(result.first.membership_weight).to eq("2")
+        expect(result.first.votes_count).to eq(1)
+
+        expect(result.second.membership_type).to eq("producer")
+        expect(result.second.membership_weight).to eq("2")
+        expect(result.second.votes_count).to eq(1)
+
+        expect(result.third).to be_nil
       end
     end
   end

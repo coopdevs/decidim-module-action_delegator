@@ -33,6 +33,7 @@ module Decidim
             metadata_field_with_alias(:membership_weight),
             "COUNT(*) AS votes_count"
           )
+          .where(decidim_authorizations: { name: "direct_verifications" })
           .order(:title, :membership_type, membership_weight: :desc)
           .order("votes_count DESC")
       end
