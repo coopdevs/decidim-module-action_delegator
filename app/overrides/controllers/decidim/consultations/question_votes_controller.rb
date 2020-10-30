@@ -5,6 +5,7 @@ Decidim::Consultations::QuestionVotesController.class_eval do
     enforce_permission_to_unvote
 
     user = delegation.blank? ? current_user : delegation.granter
+
     Decidim::Consultations::UnvoteQuestion.call(current_question, user) do
       on(:ok) do
         current_question.reload
