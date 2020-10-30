@@ -12,6 +12,8 @@ module Decidim
     # Note that although we assume `membership_type` to be a string and `membership_weight` to be an
     # integer, there are no implications in the code for their actual data types.
     class ResponsesByMembership < Rectify::Query
+      DEFAULT_METADATA = "(membership data not available)"
+
       def initialize(relation = nil)
         @relation = relation.presence || Decidim::Consultations::Response
       end
@@ -33,7 +35,7 @@ module Decidim
             metadata_field_with_alias(:membership_weight),
             "COUNT(*) AS votes_count"
           )
-          .where(decidim_authorizations: { name: "direct_verifications" })
+          .where("decidim_authorizations.name = 'direct_verifications' OR decidim_authorizations.id IS NULL")
           .order(:title, :membership_type, membership_weight: :desc)
           .order("votes_count DESC")
       end
@@ -44,7 +46,7 @@ module Decidim
 
       def authorizations
         <<-SQL.strip_heredoc
-          INNER JOIN decidim_authorizations
+          LEFT JOIN decidim_authorizations
           ON decidim_authorizations.decidim_user_id = decidim_consultations_votes.decidim_author_id
         SQL
       end
@@ -56,7 +58,7 @@ module Decidim
       end
 
       def metadata_field_with_alias(name)
-        "#{metadata_field(name)} AS #{name}"
+        "COALESCE(#{metadata_field(name)}, '#{DEFAULT_METADATA}') AS #{name}"
       end
     end
   end
