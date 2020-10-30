@@ -6,7 +6,7 @@ Decidim::Consultations::QuestionVotesController.class_eval do
 
     user = delegation.blank? ? current_user : delegation.granter
 
-    PaperTrail.request(enabled: delegation.present?) do
+    PaperTrail.request(enabled: delegation.present?, whodunnit: current_user.id) do
       Decidim::Consultations::UnvoteQuestion.call(current_question, user) do
         on(:ok) do
           current_question.reload

@@ -23,7 +23,7 @@ module Decidim
         context "when a delegation is specified", versioning: true do
           let(:delegation) { create(:delegation, setting: setting, grantee: user) }
 
-          before { create(:vote, author: delegation.granter, question: question) }
+          let!(:vote) { create(:vote, author: delegation.granter, question: question) }
 
           it "destroys the vote" do
             delete :destroy, params: { question_slug: question.slug, decidim_consultations_delegation_id: delegation.id }, format: :js
@@ -34,6 +34,12 @@ module Decidim
             expect do
               delete :destroy, params: { question_slug: question.slug, decidim_consultations_delegation_id: delegation.id }, format: :js
             end.to change(PaperTrail::Version, :count)
+          end
+
+          it "tracks who performed the unvote" do
+            delete :destroy, params: { question_slug: question.slug, decidim_consultations_delegation_id: delegation.id }, format: :js
+            version = vote.versions.last
+            expect(version.whodunnit).to eq(user.id.to_s)
           end
         end
 
