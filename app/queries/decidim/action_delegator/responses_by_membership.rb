@@ -21,21 +21,21 @@ module Decidim
       def query
         relation
           .joins(:votes)
-          .joins(authorizations)
+          .joins(decidim_authorizations)
           .group(
-            :decidim_consultations_questions_id,
-            "decidim_consultations_responses.title",
+            responses[:decidim_consultations_questions_id],
+            responses[:title],
             metadata_field(:membership_type),
             metadata_field(:membership_weight)
           )
           .select(
-            :decidim_consultations_questions_id,
-            "decidim_consultations_responses.title",
+            responses[:decidim_consultations_questions_id],
+            responses[:title],
             metadata_field_with_alias(:membership_type),
             metadata_field_with_alias(:membership_weight),
             "COUNT(*) AS votes_count"
           )
-          .where("decidim_authorizations.name = 'direct_verifications' OR decidim_authorizations.id IS NULL")
+          .where(direct_verification.or(no_authorization))
           .order(:title, :membership_type, membership_weight: :desc)
           .order("votes_count DESC")
       end
@@ -44,7 +44,7 @@ module Decidim
 
       attr_reader :relation
 
-      def authorizations
+      def decidim_authorizations
         <<-SQL.strip_heredoc
           LEFT JOIN decidim_authorizations
           ON decidim_authorizations.decidim_user_id = decidim_consultations_votes.decidim_author_id
@@ -59,6 +59,22 @@ module Decidim
 
       def metadata_field_with_alias(name)
         "COALESCE(#{metadata_field(name)}, '#{DEFAULT_METADATA}') AS #{name}"
+      end
+
+      def direct_verification
+        authorizations[:name].eq("direct_verifications")
+      end
+
+      def no_authorization
+        authorizations[:id].eq(nil)
+      end
+
+      def authorizations
+        Decidim::Authorization.arel_table
+      end
+
+      def responses
+        Decidim::Consultations::Response.arel_table
       end
     end
   end
