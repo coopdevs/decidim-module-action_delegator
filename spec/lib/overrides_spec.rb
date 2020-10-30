@@ -28,6 +28,7 @@ module Decidim::ActionDelegator
 
         # monkeypatches
         "/app/commands/decidim/consultations/vote_question.rb" => "8d89031039a1ba2972437d13687a72b5",
+        "/app/models/decidim/consultations/vote.rb" => "c06286e3f7366d3a017bf69f1c9e3eef",
         "/app/controllers/decidim/consultations/question_votes_controller.rb" => "69bf764e99dfcdae138613adbed28b84",
         "/app/forms/decidim/consultations/vote_form.rb" => "d2b69f479b61b32faf3b108da310081a"
       }

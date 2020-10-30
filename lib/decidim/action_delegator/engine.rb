@@ -26,8 +26,6 @@ module Decidim
           Dir.glob(Decidim::ActionDelegator::Engine.root + "app/overrides/**/*.rb").each do |c|
             require_dependency(c)
           end
-
-          Decidim::Consultations::Vote.has_paper_trail
         end
       end
 
