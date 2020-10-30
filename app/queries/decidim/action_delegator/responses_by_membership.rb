@@ -12,7 +12,7 @@ module Decidim
     # Note that although we assume `membership_type` to be a string and `membership_weight` to be an
     # integer, there are no implications in the code for their actual data types.
     class ResponsesByMembership < Rectify::Query
-      DEFAULT_METADATA = "(membership data not available)"
+      DEFAULT_METADATA = I18n.t("decidim.admin.consultations.results.default_metadata")
 
       def initialize(relation = nil)
         @relation = relation.presence || Decidim::Consultations::Response
