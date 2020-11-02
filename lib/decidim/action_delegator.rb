@@ -3,10 +3,6 @@
 require "decidim/action_delegator/admin"
 require "decidim/action_delegator/admin_engine"
 require "decidim/action_delegator/engine"
-require "decidim/action_delegator/verification/admin"
-require "decidim/action_delegator/verification/admin_engine"
-require "decidim/action_delegator/verification/engine"
-require "decidim/action_delegator/workflow"
 
 module Decidim
   # This namespace holds the logic of the `ActionDelegator` module
