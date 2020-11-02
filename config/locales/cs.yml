@@ -70,6 +70,7 @@ cs:
     admin:
       consultations:
         results:
+          default_metadata: "(membership data not available)"
           export: Export
           export_filename: výsledky konzultací
           membership_type: Typ členství
