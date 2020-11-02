@@ -70,6 +70,7 @@ es:
     admin:
       consultations:
         results:
+          default_metadata: "(membership data not available)"
           export: Export
           export_filename: consultation_results
           membership_type: Membership type
