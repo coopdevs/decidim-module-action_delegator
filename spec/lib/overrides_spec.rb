@@ -19,6 +19,7 @@ module Decidim::ActionDelegator
         "/app/views/decidim/consultations/consultations/_question.html.erb" => "364d7f8370cdbe7ae70c545fff2e21fa",
         "/app/views/decidim/consultations/consultations/show.html.erb" => "84a1569b796f724efa304b9dfc40f68a",
         "/app/views/decidim/consultations/question_votes/update_vote_button.js.erb" => "a675fe780e77e8766beef999112a8fcb",
+        # NOTE: _vote_button.html.erb is copied into _delegations_modal.html.erb, double check that view if _vote_button.html.erb changed
         "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "ac4b6314c4f11216764fa8977d4f829f",
         "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "ae7c38afcc6588a00f8298ea69769da7",
         "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "011300b9001c6eb3eb4384849609e90a",
