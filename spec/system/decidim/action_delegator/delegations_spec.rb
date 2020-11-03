@@ -71,7 +71,7 @@ describe "Delegation vote", type: :system do
 
               click_link(I18n.t("decidim.action_delegator.delegations.link"))
               within "#delegations-modal" do
-                expect(page).to have_content(t("decidim.questions.vote_button.already_voted").upcase)
+                expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
               end
             end
           end
@@ -96,7 +96,7 @@ describe "Delegation vote", type: :system do
 
             click_link(I18n.t("decidim.action_delegator.delegations.link"))
             within "#delegations-modal" do
-              expect(page).to have_content(t("decidim.questions.vote_button.already_voted").upcase)
+              expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
             end
           end
         end
