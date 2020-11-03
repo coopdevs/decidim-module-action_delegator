@@ -70,7 +70,7 @@ ca:
     admin:
       consultations:
         results:
-          default_metadata: "(membership data not available)"
+          default_metadata: "(dades de membre no disponibles)"
           export: Exporta
           export_filename: consulta_resultats
           membership_type: Tipus de membre
