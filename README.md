@@ -17,7 +17,9 @@ Initially, only votes can be delegated.
 
 ## Dependencies
 
-In order to use `decidim-action_delegator` you also need to install the [decidim-consultations](https://github.com/decidim/decidim/tree/develop/decidim-consultations) module.
+* [decidim-consultations](https://github.com/decidim/decidim/tree/release/0.22-stable/decidim-consultations) v0.22.0
+* [decidim-admin](https://github.com/decidim/decidim/tree/release/0.22-stable/decidim-admin) v0.22.0
+* [decidim-core](https://github.com/decidim/decidim/tree/release/0.22-stable/decidim-core) v0.22.0
 
 ## Installation
 
