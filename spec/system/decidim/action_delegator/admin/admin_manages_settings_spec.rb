@@ -45,10 +45,10 @@ describe "Admin manages settings", type: :system do
     end
 
     it "renders the list of settings in a table" do
-      expect(page).to have_content(I18n.t("decidim.action_delegator.admin.delegations.index.title").upcase)
+      expect(page).to have_content(I18n.t("decidim.action_delegator.admin.delegations.index.title"))
 
-      expect(page).to have_content(I18n.t("settings.index.consultation", scope: i18n_scope).upcase)
-      expect(page).to have_content(I18n.t("settings.index.created_at", scope: i18n_scope).upcase)
+      expect(page).to have_content(I18n.t("settings.index.consultation", scope: i18n_scope))
+      expect(page).to have_content(I18n.t("settings.index.created_at", scope: i18n_scope))
 
       expect(page).to have_content(consultation_translated_title)
       expect(page).to have_content(I18n.l(setting.created_at, format: :short))
