@@ -21,6 +21,15 @@ module Decidim::ActionDelegator
     let!(:other_delegation) { create(:delegation, setting: other_setting, granter: user) }
     let!(:other_vote) { create(:vote, author: other_delegation.granter, question: other_question) }
 
+    before do
+      PaperTrail::Version.create!(
+        item_type: "Decidim::Consultations::Vote",
+        item_id: vote.id,
+        event: "create",
+        decidim_action_delegator_delegation_id: delegation.id
+      )
+    end
+
     describe "#query", versioning: true do
       it "enables fetching all versions related to a consultation" do
         result = subject.query

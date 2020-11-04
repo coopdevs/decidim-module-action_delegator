@@ -18,6 +18,14 @@ Decidim::Consultations::QuestionVotesController.class_eval do
 
   private
 
+  def info_for_paper_trail
+    if delegation.present?
+      { decidim_action_delegator_delegation_id: delegation.id }
+    else
+      {}
+    end
+  end
+
   def delegation
     @delegation ||= Decidim::ActionDelegator::Delegation.find_by(id: params[:decidim_consultations_delegation_id])
   end

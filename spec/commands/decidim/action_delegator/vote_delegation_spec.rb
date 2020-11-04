@@ -37,5 +37,15 @@ describe Decidim::ActionDelegator::VoteDelegation do
 
       expect(vote.versions.last.whodunnit).to eq(context.current_user.id.to_s)
     end
+
+    it "tracks the delegation the vote is related to", versioning: true do
+      delegation.save
+      question.save
+
+      vote = subject.call
+      vote.save
+
+      expect(vote.versions.last.decidim_action_delegator_delegation_id).to eq(delegation.id)
+    end
   end
 end
