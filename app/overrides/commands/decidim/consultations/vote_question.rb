@@ -4,11 +4,16 @@ Decidim::Consultations::VoteQuestion.class_eval do
   private
 
   def build_vote
-    author = delegation ? delegation.granter : form.context.current_user
-    form.context.current_question.votes.build(
-      author: author,
-      response: form.response
-    )
+    if delegation
+      form.context.delegation = delegation
+      Decidim::ActionDelegator::VoteDelegation.new(form).call
+    else
+      vote = form.context.current_question.votes.build(
+        author: form.context.current_user,
+        response: form.response
+      )
+      Decidim::ActionDelegator::UnversionedVote.new(vote)
+    end
   end
 
   def delegation

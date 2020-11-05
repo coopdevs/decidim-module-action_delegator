@@ -3,15 +3,28 @@
 Decidim::Consultations::QuestionVotesController.class_eval do
   def destroy
     enforce_permission_to_unvote
-    Decidim::Consultations::UnvoteQuestion.call(current_question, delegation.present? ? delegation.granter : current_user) do
-      on(:ok) do
-        current_question.reload
-        render :update_vote_button
+
+    user = delegation.blank? ? current_user : delegation.granter
+
+    PaperTrail.request(enabled: delegation.present?, whodunnit: current_user.id) do
+      Decidim::Consultations::UnvoteQuestion.call(current_question, user) do
+        on(:ok) do
+          current_question.reload
+          render :update_vote_button
+        end
       end
     end
   end
 
   private
+
+  def info_for_paper_trail
+    if delegation.present?
+      { decidim_action_delegator_delegation_id: delegation.id }
+    else
+      {}
+    end
+  end
 
   def delegation
     @delegation ||= Decidim::ActionDelegator::Delegation.find_by(id: params[:decidim_consultations_delegation_id])
