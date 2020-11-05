@@ -109,7 +109,7 @@ refers to a `Decidim::User` record. This enables joining `versions` and
 `decidim_users` tables although this doesn't follow Decidim's convention of
 using gids, such as `gid://decidim/Decidim::User/1`.
 
-You can use `Decidim::ActionDelegato::DelegatedVotes::Versions` query object for
+You can use `Decidim::ActionDelegato::DelegatedVotesVersions` query object for
 that matter.
 
 ## Contributing
