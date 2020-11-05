@@ -51,10 +51,9 @@ module Decidim
         end
 
         describe "originator", versioning: true do
-          it "tracks who was responsible for the action" do
-            subject.call
-            vote = Vote.last
-            expect(vote.paper_trail.originator).to be_nil
+          it "does not track who was responsible for the action" do
+            expect { subject.call }
+              .not_to change(PaperTrail::Version.where(item_type: "Decidim::Consultations::Vote"), :count)
           end
         end
 

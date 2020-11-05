@@ -8,10 +8,11 @@ Decidim::Consultations::VoteQuestion.class_eval do
       form.context.delegation = delegation
       Decidim::ActionDelegator::VoteDelegation.new(form).call
     else
-      form.context.current_question.votes.build(
+      vote = form.context.current_question.votes.build(
         author: form.context.current_user,
         response: form.response
       )
+      Decidim::ActionDelegator::UnversionedVote.new(vote)
     end
   end
 
