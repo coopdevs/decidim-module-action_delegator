@@ -9,6 +9,27 @@ describe "Admin manages delegations", type: :system do
 
   let(:consultation_translated_title) { Decidim::ActionDelegator::Admin::ConsultationPresenter.new(consultation).translated_title }
 
+  context "when listing delegations" do
+    let(:consultation) { create(:consultation, organization: organization) }
+    let(:setting) { create(:setting, consultation: consultation) }
+    let!(:delegation) { create(:delegation, setting: setting) }
+
+    let!(:collection) { create_list :delegation, collection_size, setting: setting }
+    let!(:resource_selector) { "[data-delegation-id]" }
+    let(:collection_size) { 30 }
+
+    before do
+      switch_to_host(organization.host)
+      login_as user, scope: :user
+      visit decidim_admin_action_delegator.setting_delegations_path(setting)
+    end
+
+    it "lists 20 resources per page by default" do
+      expect(page).to have_css(resource_selector, count: 20)
+      expect(page).to have_css(".pagination .page", count: 2)
+    end
+  end
+
   context "when creating a delegation" do
     let!(:granter) { create(:user, organization: organization) }
     let!(:grantee) { create(:user, organization: organization) }
