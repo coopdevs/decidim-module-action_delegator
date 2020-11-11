@@ -5,7 +5,7 @@ module Decidim
     module Admin
       class DelegationsController < ActionDelegator::Admin::ApplicationController
         include NeedsPermission
-        include Filterable
+        include Paginable
 
         helper DelegationHelper
         helper_method :current_setting
@@ -15,9 +15,7 @@ module Decidim
         def index
           enforce_permission_to :index, :delegation
 
-          @delegations = filtered_collection.map do |delegation|
-            DelegationPresenter.new(delegation)
-          end
+          @delegations = paginate(collection)
         end
 
         def new
