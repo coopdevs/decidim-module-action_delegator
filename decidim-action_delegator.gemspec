@@ -4,6 +4,9 @@ $LOAD_PATH.push File.expand_path("lib", __dir__)
 
 require "decidim/action_delegator/version"
 
+MIN_DECIDIM_VERSION = Decidim::ActionDelegator::MIN_DECIDIM_VERSION
+MAX_DECIDIM_VERSION = Decidim::ActionDelegator::MAX_DECIDIM_VERSION
+
 Gem::Specification.new do |s|
   s.version = Decidim::ActionDelegator::VERSION
   s.authors = ["Pau Pérez Fabregat", "Ivan Vergés"]
@@ -18,11 +21,11 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
-  s.add_dependency "decidim-admin", Decidim::ActionDelegator::DECIDIM_VERSION
-  s.add_dependency "decidim-consultations", Decidim::ActionDelegator::DECIDIM_VERSION
-  s.add_dependency "decidim-core", Decidim::ActionDelegator::DECIDIM_VERSION
+  s.add_dependency "decidim-admin", [MIN_DECIDIM_VERSION, MAX_DECIDIM_VERSION]
+  s.add_dependency "decidim-consultations", [MIN_DECIDIM_VERSION, MAX_DECIDIM_VERSION]
+  s.add_dependency "decidim-core", [MIN_DECIDIM_VERSION, MAX_DECIDIM_VERSION]
   s.add_dependency "savon"
   s.add_dependency "twilio-ruby"
 
-  s.add_development_dependency "decidim-dev", Decidim::ActionDelegator::DECIDIM_VERSION
+  s.add_development_dependency "decidim-dev", [MIN_DECIDIM_VERSION, MAX_DECIDIM_VERSION]
 end
