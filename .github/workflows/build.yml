@@ -32,9 +32,6 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Set env
-        run: echo ::set-env name=workspace::$GITHUB_WORKSPACE
-
       - uses: ruby/setup-ruby@master
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
@@ -57,7 +54,10 @@ jobs:
       - name: Lint and Rubocop
         run: |
           bundle exec rubocop
-          bundle exec erblint app/{cells,views}/**/*.erb
+          # Disable erblint until we get to Decidim using 0.0.35. See
+          # https://github.com/decidim/decidim/pull/6938 for details.
+          #
+          # bundle exec erblint app/{cells,views}/**/*.erb
 
       - name: Setup Database
         run: bundle exec rake test_app

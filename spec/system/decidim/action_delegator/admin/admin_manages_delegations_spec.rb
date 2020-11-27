@@ -9,6 +9,11 @@ describe "Admin manages delegations", type: :system do
 
   let(:consultation_translated_title) { Decidim::ActionDelegator::Admin::ConsultationPresenter.new(consultation).translated_title }
 
+  before do
+    switch_to_host(organization.host)
+    login_as user, scope: :user
+  end
+
   context "when listing delegations" do
     let(:consultation) { create(:consultation, organization: organization) }
     let(:setting) { create(:setting, consultation: consultation) }
@@ -19,8 +24,6 @@ describe "Admin manages delegations", type: :system do
     let(:collection_size) { 30 }
 
     before do
-      switch_to_host(organization.host)
-      login_as user, scope: :user
       visit decidim_admin_action_delegator.setting_delegations_path(setting)
     end
 
@@ -37,8 +40,6 @@ describe "Admin manages delegations", type: :system do
     let!(:setting) { create(:setting, consultation: consultation) }
 
     before do
-      switch_to_host(organization.host)
-      login_as user, scope: :user
       visit decidim_admin_action_delegator.setting_delegations_path(setting)
     end
 
@@ -65,8 +66,6 @@ describe "Admin manages delegations", type: :system do
     let!(:delegation) { create(:delegation, setting: setting) }
 
     before do
-      switch_to_host(organization.host)
-      login_as user, scope: :user
       visit decidim_admin_action_delegator.setting_delegations_path(setting)
     end
 
