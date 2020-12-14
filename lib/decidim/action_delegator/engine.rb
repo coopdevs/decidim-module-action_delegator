@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "savon"
 require "rails"
 require "decidim/core"
 require "decidim/consultations"
@@ -39,6 +40,10 @@ module Decidim
                     position: 5.0,
                     active: :exact
         end
+      end
+
+      initializer "decidim_action_delegator.permissions" do
+        Decidim::Consultations::Permissions.prepend(ConsultationsPermissionsExtension)
       end
     end
   end

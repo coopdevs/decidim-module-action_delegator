@@ -3,12 +3,12 @@
 require "spec_helper"
 
 describe "Admin manages settings", type: :system do
+  include Decidim::TranslationsHelper
+
   let(:i18n_scope) { "decidim.action_delegator.admin" }
   let(:organization) { create(:organization) }
   let!(:consultation) { create(:consultation, organization: organization) }
   let!(:user) { create(:user, :admin, :confirmed, organization: organization) }
-
-  let(:consultation_translated_title) { Decidim::ActionDelegator::Admin::ConsultationPresenter.new(consultation).translated_title }
 
   context "when creating settings" do
     before do
@@ -23,13 +23,13 @@ describe "Admin manages settings", type: :system do
     it "creates a new setting" do
       within ".new_setting" do
         fill_in :setting_max_grants, with: 5
-        select consultation_translated_title, from: :setting_decidim_consultation_id
+        select translated_attribute(consultation.title), from: :setting_decidim_consultation_id
 
         find("*[type=submit]").click
       end
 
       expect(page).to have_admin_callout("successfully")
-      expect(page).to have_content(consultation_translated_title)
+      expect(page).to have_content(translated_attribute(consultation.title))
       expect(page).to have_current_path(decidim_admin_action_delegator.settings_path)
     end
   end
@@ -45,17 +45,17 @@ describe "Admin manages settings", type: :system do
     end
 
     it "renders the list of settings in a table" do
-      expect(page).to have_content(I18n.t("decidim.action_delegator.admin.delegations.index.title").upcase)
+      expect(page).to have_content(I18n.t("decidim.action_delegator.admin.delegations.index.title"))
 
-      expect(page).to have_content(I18n.t("settings.index.consultation", scope: i18n_scope).upcase)
-      expect(page).to have_content(I18n.t("settings.index.created_at", scope: i18n_scope).upcase)
+      expect(page).to have_content(I18n.t("settings.index.consultation", scope: i18n_scope))
+      expect(page).to have_content(I18n.t("settings.index.created_at", scope: i18n_scope))
 
-      expect(page).to have_content(consultation_translated_title)
+      expect(page).to have_content(translated_attribute(consultation.title))
       expect(page).to have_content(I18n.l(setting.created_at, format: :short))
     end
 
     it "links to the setting" do
-      click_link consultation_translated_title
+      click_link translated_attribute(consultation.title)
       expect(page).to have_current_path(decidim_admin_action_delegator.setting_delegations_path(setting))
     end
   end
@@ -77,7 +77,7 @@ describe "Admin manages settings", type: :system do
       end
 
       expect(page).to have_current_path(decidim_admin_action_delegator.settings_path)
-      expect(page).to have_no_content(consultation_translated_title)
+      expect(page).to have_no_content(translated_attribute(consultation.title))
     end
   end
 end

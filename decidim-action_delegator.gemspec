@@ -21,6 +21,8 @@ Gem::Specification.new do |s|
   s.add_dependency "decidim-admin", Decidim::ActionDelegator::DECIDIM_VERSION
   s.add_dependency "decidim-consultations", Decidim::ActionDelegator::DECIDIM_VERSION
   s.add_dependency "decidim-core", Decidim::ActionDelegator::DECIDIM_VERSION
+  s.add_dependency "savon"
+  s.add_dependency "twilio-ruby"
 
   s.add_development_dependency "decidim-dev", Decidim::ActionDelegator::DECIDIM_VERSION
 end

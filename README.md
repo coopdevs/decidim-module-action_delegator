@@ -17,7 +17,9 @@ Initially, only votes can be delegated.
 
 ## Dependencies
 
-In order to use `decidim-action_delegator` you also need to install the [decidim-consultations](https://github.com/decidim/decidim/tree/develop/decidim-consultations) module.
+* [decidim-consultations](https://github.com/decidim/decidim/tree/release/0.22-stable/decidim-consultations) v0.22.0
+* [decidim-admin](https://github.com/decidim/decidim/tree/release/0.22-stable/decidim-admin) v0.22.0
+* [decidim-core](https://github.com/decidim/decidim/tree/release/0.22-stable/decidim-core) v0.22.0
 
 ## Installation
 
@@ -47,11 +49,68 @@ that creates `decidim_authorizations` records which include the following JSON
 structure in the `metadata` column:
 
 ```json
-"{ metadata_type: '',   metadata_weight: '' }"
+"{ membership_type: '', membership_weight: '' }"
 ```
 
 See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
 as an example of such verification.
+
+### SMS gateway setup
+
+In order to use this new sms gateway you need to configure your application. In config/initializers/decidim.rb set:
+
+```ruby
+config.sms_gateway_service = 'Decidim::ActionDelegator::SmsGateway'
+
+```
+#### Som Connexió
+
+You can use Som Connexió as SMS provider which uses [this SOAP API](https://websms.masmovil.com/api_php/smsvirtual.wsdl). Reach out to Som Connexió to sign up first.
+
+Then you'll need to set the following ENV vars:
+
+```bash
+SMS_USER= # Username provided by Som Connexió
+SMS_PASS= # Password provided by Som Connexió
+SMS_SENDER= # (optional) Name or phone number used as sender of the SMS
+```
+
+#### Twilio
+
+Alternatively, you can use Twilio as provider by specifying the folowing ENV vars
+
+```bash
+TWILIO_ACCOUNT_SID # SID from your Twilio account
+TWILIO_AUTH_TOKEN # Token from your Twilio account
+SMS_SENDER # Twilio's phone number. You need to purchase one there with SMS capability.
+```
+
+### Track delegated votes and unvotes
+
+Votes and revocations done on behalf of other members are tracked through the
+`versions` table using `PaperTrail`. This enables fetching a log of actions
+involving a particular delegation or consultation for auditing purposes. This
+keeps out regular votes and unvotes.
+
+When performing votes and unvotes of delegations you'll see things like the
+following in your `versions` table:
+
+```sql
+  id  |          item_type           | item_id |  event  | whodunnit | decidim_action_delegator_delegation_id 
+------+------------------------------+---------+---------+-----------+----------------------------------------
+ 2019 | Decidim::Consultations::Vote |     143 | destroy | 1         |                                     22
+ 2018 | Decidim::Consultations::Vote |     143 | create  | 1         |                                     22
+ 2017 | Decidim::Consultations::Vote |     142 | create  | 1         |                                     23
+ 2016 | Decidim::Consultations::Vote |     138 | destroy | 1         |                                     23
+```
+
+Note that the `item_type` is `Decidim::Consultations::Vote` and `whoddunit`
+refers to a `Decidim::User` record. This enables joining `versions` and
+`decidim_users` tables although this doesn't follow Decidim's convention of
+using gids, such as `gid://decidim/Decidim::User/1`.
+
+You can use `Decidim::ActionDelegato::DelegatedVotesVersions` query object for
+that matter.
 
 ## Contributing
 

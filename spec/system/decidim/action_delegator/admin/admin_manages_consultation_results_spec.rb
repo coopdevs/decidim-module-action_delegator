@@ -24,11 +24,11 @@ describe "Admin manages consultation results", type: :system do
     question.votes.create(author: another_user, response: response)
     question.votes.create(author: yet_another_user, response: other_response)
 
-    create(:authorization, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
-    create(:authorization, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
-    create(:authorization, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
+    create(:authorization, :direct_verification, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
+    create(:authorization, :direct_verification, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
+    create(:authorization, :direct_verification, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
 
-    create(:authorization, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
+    create(:authorization, :direct_verification, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
 
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -46,6 +46,18 @@ describe "Admin manages consultation results", type: :system do
     end
   end
 
+  context "when in question page" do
+    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+
+    before { visit decidim_admin_consultations.edit_question_path(question) }
+
+    it "enables navigating to the results page" do
+      click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
+
+      expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(question.consultation))
+    end
+  end
+
   context "when viewing a finished consultation with votes" do
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
@@ -59,8 +71,8 @@ describe "Admin manages consultation results", type: :system do
     it "shows votes by membership and weight type" do
       visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type").upcase)
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight").upcase)
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
 
       expect(nth_row(1).find(".response-title")).to have_content("A")
       expect(nth_row(1).find(".membership-type")).to have_content("consumer")

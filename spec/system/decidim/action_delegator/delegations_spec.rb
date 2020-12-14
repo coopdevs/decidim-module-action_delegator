@@ -10,48 +10,116 @@ describe "Delegation vote", type: :system do
     let(:consultation) { create(:consultation, :active, organization: organization) }
     let(:user) { create(:user, :confirmed, organization: organization) }
 
+    context "and unauthenticated user" do
+      before do
+        switch_to_host(organization.host)
+      end
+
+      it "renders the question page" do
+        visit decidim_consultations.question_path(question)
+        expect(page).to have_content(I18n.t("decidim.questions.vote_button.vote").upcase)
+      end
+    end
+
     context "and authenticated user" do
       let!(:response) { create :response, question: question }
       let(:setting) { create(:setting, consultation: consultation) }
       let(:granter) { create(:user, :confirmed, organization: organization) }
       let!(:delegation) { create(:delegation, setting: setting, granter: granter, grantee: user) }
+      let(:permissions) { { "vote" => { "authorization_handlers" => { "dummy_authorization_workflow" => {} } } } }
 
-      context "and never voted before" do
-        before do
-          switch_to_host(organization.host)
-          login_as user, scope: :user
-          visit decidim_consultations.question_path(question)
+      before do
+        switch_to_host(organization.host)
+        login_as user, scope: :user
+      end
+
+      context "and delegation is not voted" do
+        context "and the user didn't vote" do
+          before do
+            question.build_resource_permission.update!(permissions: permissions)
+          end
+
+          context "and the questions verification is not fulfilled" do
+            before do
+              visit decidim_consultations.question_path(question)
+            end
+
+            it "requires verification first" do
+              click_link(id: "delegations-button")
+              within "#delegations-modal" do
+                expect(page).to have_content(t("decidim.questions.vote_button.verification_required").upcase)
+              end
+            end
+          end
+
+          context "and the questions verification is fulfilled" do
+            before do
+              Decidim::Authorization.create!(name: "dummy_authorization_workflow", decidim_user_id: user.id, granted_at: Time.zone.now)
+              visit decidim_consultations.question_path(question)
+            end
+
+            it "lets the user vote on behalf of another member" do
+              click_link(id: "delegations-button")
+              within "#delegations-modal" do
+                click_link(I18n.t("decidim.questions.vote_button.vote"))
+              end
+
+              expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+
+              click_button translated(response.title)
+              click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
+
+              click_link(I18n.t("decidim.action_delegator.delegations.link"))
+              within "#delegations-modal" do
+                expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
+              end
+            end
+          end
         end
 
-        it "lets the user vote on behalf of some other member" do
-          click_link(id: "delegations-button")
-          click_link(class: "delegation-vote-button")
+        context "and the user already voted" do
+          before do
+            create(:vote, author: user, question: question)
+            visit decidim_consultations.question_path(question)
+          end
 
-          expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
+          it "lets the user vote on behalf of another member" do
+            click_link(id: "delegations-button")
+            within "#delegations-modal" do
+              click_link(I18n.t("decidim.questions.vote_button.vote"))
+            end
 
-          click_button translated(response.title)
-          click_button "Confirm"
+            expect(page).to have_content(I18n.t("decidim.action_delegator.delegations_modal.callout"))
 
-          click_link(id: "delegations-button")
-          expect(page).to have_button(class: "delegation_unvote_button")
+            click_button translated(response.title)
+            click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
+
+            click_link(I18n.t("decidim.action_delegator.delegations.link"))
+            within "#delegations-modal" do
+              expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
+            end
+          end
         end
       end
 
-      context "and voted before" do
+      context "and delegation is voted" do
         let!(:vote) { create(:vote, author: granter, question: question, response: response) }
+        let(:permissions) { { "vote" => { "authorization_handlers" => { "dummy_authorization_workflow" => {} } } } }
 
         before do
-          switch_to_host(organization.host)
-          login_as user, scope: :user
+          question.build_resource_permission.update!(permissions: permissions)
+          Decidim::Authorization.create!(name: "dummy_authorization_workflow", decidim_user_id: user.id, granted_at: Time.zone.now)
           visit decidim_consultations.question_path(question)
         end
 
-        it "lets the user unvote on behalf of some other member" do
+        it "lets the user unvote on behalf of another member" do
           click_link(id: "delegations-button")
-          click_button(class: "delegation_unvote_button")
+          within "#delegations-modal" do
+            click_button(class: "delegation_unvote_button")
+          end
 
-          click_link(id: "delegations-button")
-          expect(page).to have_link(class: "delegation-vote-button")
+          click_link(I18n.t("decidim.action_delegator.delegations.link"))
+          expect(page).to have_link(I18n.t("decidim.questions.vote_button.vote"))
         end
       end
     end

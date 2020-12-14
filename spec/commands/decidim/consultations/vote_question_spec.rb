@@ -50,6 +50,13 @@ module Decidim
           end.to change(response, :votes_count).by(1)
         end
 
+        describe "originator", versioning: true do
+          it "does not track who was responsible for the action" do
+            expect { subject.call }
+              .not_to change(PaperTrail::Version.where(item_type: "Decidim::Consultations::Vote"), :count)
+          end
+        end
+
         context "when there is a delegation available" do
           let(:setting) { create(:setting, consultation: consultation) }
           let(:granter) { create(:user, organization: organization) }
@@ -71,6 +78,14 @@ module Decidim
             expect do
               subject.call
             end.to change(Vote.where(author: delegation.granter), :count).by(1)
+          end
+
+          describe "originator", versioning: true do
+            it "tracks who was responsible for the action" do
+              subject.call
+              vote = Vote.last
+              expect(vote.paper_trail.originator).to eq(delegation.grantee.id.to_s)
+            end
           end
         end
       end
