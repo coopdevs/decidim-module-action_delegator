@@ -15,6 +15,7 @@ gem "decidim-action_delegator", path: "."
 gem "decidim-consultations", Decidim::ActionDelegator::DECIDIM_VERSION
 
 gem "bootsnap", "~> 1.4"
+gem "deface", "~> 1.5.3"
 gem "puma", ">= 4.3"
 gem "savon", "~> 2.12"
 gem "twilio-ruby", "~> 5.41"
