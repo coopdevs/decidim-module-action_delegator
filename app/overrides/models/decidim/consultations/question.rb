@@ -5,7 +5,7 @@ Decidim::Consultations::Question.class_eval do
     total_votes = 0
 
     authors = votes.select(:decidim_author_id).map(&:decidim_author_id)
-    granters_ids = Decidim::ActionDelegator::Delegation.where(granter: authors).map(&:granter_id).uniq!
+    granters_ids = Decidim::ActionDelegator::Delegation.select(:granter_id).where(granter: authors).group(:granter_id).pluck(:granter_id)
     granters = Decidim::User.where(id: granters_ids)
 
     granters.each do |granter|
