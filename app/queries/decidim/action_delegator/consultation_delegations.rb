@@ -8,7 +8,7 @@ module Decidim
       end
 
       def self.granter_for(consultation, user)
-        new(user, consultation).query_granter
+        new(consultation, user).query_granter
       end
 
       def initialize(consultation, user)
