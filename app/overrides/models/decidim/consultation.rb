@@ -9,7 +9,7 @@ Decidim::Consultation.class_eval do
 
     votes_authors_ids = questions.published.map(&:votes).flatten.map(&:decidim_author_id)
     votes_from_authors = votes_authors_ids.group_by(&:itself).transform_values(&:count) # { id -> num of votes }
-    granters = Decidim::User.where(id: Decidim::ActionDelegator::Delegation.where(granter: votes_authors_ids).map(&:granter_id).uniq!)
+    granters = Decidim::User.where(id: Decidim::ActionDelegator::Delegation.where(granter: votes_authors_ids).map(&:granter_id).uniq)
     granters.select { |g| Decidim::ActionDelegator::Delegation.granter_to?(self, g) }
 
     granters.each do |user|
