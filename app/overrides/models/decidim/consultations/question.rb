@@ -2,16 +2,11 @@
 
 Decidim::Consultations::Question.class_eval do
   def total_delegates
-    total_votes = 0
-
-    authors = votes.select(:decidim_author_id).map(&:decidim_author_id)
-    granters_ids = Decidim::ActionDelegator::Delegation.select(:granter_id).where(granter: authors).group(:granter_id).pluck(:granter_id)
-    granters = Decidim::User.where(id: granters_ids)
-
-    granters.each do |granter|
-      total_votes += 1 if Decidim::ActionDelegator::Delegation.granter_to?(consultation, granter)
-    end
-
-    total_votes
+    Decidim::User
+      .joins("INNER JOIN decidim_action_delegator_delegations
+                ON decidim_users.id = decidim_action_delegator_delegations.granter_id
+              INNER JOIN decidim_consultations_votes
+                ON decidim_consultations_votes.decidim_author_id = decidim_action_delegator_delegations.granter_id")
+      .where(decidim_action_delegator_delegations: { granter_id: votes.pluck(:decidim_author_id) }).distinct.count
   end
 end
