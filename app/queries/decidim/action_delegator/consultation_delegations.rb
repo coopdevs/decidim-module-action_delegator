@@ -7,10 +7,6 @@ module Decidim
         new(consultation, user).query
       end
 
-      def self.granter_for(consultation, user)
-        new(consultation, user).query_granter
-      end
-
       def initialize(consultation, user)
         @consultation = consultation
         @user = user
@@ -21,13 +17,6 @@ module Decidim
           .joins(setting: :consultation)
           .where(decidim_consultations: { id: consultation.id })
           .where(grantee_id: user.id)
-      end
-
-      def query_granter
-        Delegation
-          .joins(setting: :consultation)
-          .where(decidim_consultations: { id: consultation.id })
-          .where(granter_id: user.id)
       end
 
       private

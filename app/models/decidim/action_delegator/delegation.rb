@@ -19,10 +19,6 @@ module Decidim
       def self.granted_to?(user, consultation)
         ConsultationDelegations.for(consultation, user).exists?
       end
-
-      def self.granter_to?(user, consultation)
-        ConsultationDelegations.granter_for(consultation, user).exists?
-      end
     end
   end
 end
