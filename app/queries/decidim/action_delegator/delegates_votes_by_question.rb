@@ -9,7 +9,7 @@ module Decidim
       end
 
       def query
-        relation.new.query.merge(question.votes).distinct.count
+        relation.new.query.merge(question.votes).distinct.count(:granter_id)
       end
 
       private
