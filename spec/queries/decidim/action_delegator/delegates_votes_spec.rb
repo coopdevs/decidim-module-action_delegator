@@ -2,9 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::ActionDelegator::DelegatesVotesByConsultation do
-  subject { described_class.new(consultation) }
-
+describe Decidim::ActionDelegator::DelegatesVotes do
   let(:organization) { create(:organization) }
   let(:consultation) { create(:consultation, organization: organization) }
   let(:question) { create(:question, consultation: consultation) }
@@ -13,10 +11,11 @@ describe Decidim::ActionDelegator::DelegatesVotesByConsultation do
   let(:granter) { create(:user, organization: organization) }
   let!(:delegation) { create(:delegation, setting: setting, granter: granter) }
   let!(:delegated_vote) { create(:vote, author: granter, question: question) }
+  let(:authors_ids_votes) { [granter.id] }
 
   describe "#query" do
-    it "total votes count is correct" do
-      expect(subject.query).to eq(1)
+    it "return some users" do
+      expect(Decidim::ActionDelegator::DelegatesVotes.new(authors_ids_votes).query.count).to eq(1)
     end
   end
 end
