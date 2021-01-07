@@ -3,18 +3,18 @@
 module Decidim
   module ActionDelegator
     class DelegatesVotesByQuestion < Rectify::Query
-      def initialize(question, relation = nil)
-        @authors_ids_votes = question.votes.pluck(:decidim_author_id)
-        @relation = relation.presence || Decidim::ActionDelegator::DelegatesVotes
+      def initialize(question, relation = Decidim::ActionDelegator::DelegatesVotes)
+        @question = question
+        @relation = relation
       end
 
       def query
-        relation.new(authors_ids_votes).query.distinct.count
+        relation.new.query.merge(question.votes).distinct.count
       end
 
       private
 
-      attr_reader :authors_ids_votes, :relation
+      attr_reader :question, :relation
     end
   end
 end

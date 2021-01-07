@@ -14,9 +14,13 @@ describe Decidim::ActionDelegator::DelegatesVotesByConsultation do
   let!(:delegation) { create(:delegation, setting: setting, granter: granter) }
   let!(:delegated_vote) { create(:vote, author: granter, question: question) }
 
+  let(:another_granter) { create(:user, organization: organization) }
+  let!(:another_delegation) { create(:delegation, setting: setting, granter: another_granter) }
+  let!(:another_delegated_vote) { create(:vote, author: another_granter, question: question) }
+
   describe "#query" do
     it "total votes count is correct" do
-      expect(subject.query).to eq(1)
+      expect(subject.query).to eq(2)
     end
   end
 end
