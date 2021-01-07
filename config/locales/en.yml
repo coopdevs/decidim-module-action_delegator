@@ -78,6 +78,7 @@ en:
           export_filename: consultation_results
           membership_type: Membership type
           membership_weight: Weight
+          total_delegates: "%{count} delegated votes"
     authorization_handlers:
       admin:
         delegations_verifier:

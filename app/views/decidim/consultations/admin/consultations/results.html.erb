@@ -5,6 +5,8 @@
       <span class="label button--title">
         <%= t "decidim.admin.consultations.results.total_votes", count: current_consultation.total_votes %>
         /
+        <%= t 'decidim.admin.consultations.results.total_delegates', count: Decidim::ActionDelegator::DelegatesVotesByConsultation.new(current_consultation).query %>
+        /
         <%= t "decidim.admin.consultations.results.participants", count: current_consultation.total_participants %>
       </span>
       <span id="export-consultation-results" class="button--title">
@@ -27,6 +29,8 @@
               <th><%= I18n.t("decidim.admin.consultations.results.membership_weight") %></th>
               <th class="table-list__actions">
                 <%= t "decidim.admin.consultations.results.total_votes", count: question.total_votes %>
+                /
+                <%= t 'decidim.admin.consultations.results.total_delegates', count: Decidim::ActionDelegator::DelegatesVotesByQuestion.new(question).query %>
                 /
                 <%= t "decidim.admin.consultations.results.participants", count: question.total_participants %>
               </th>
