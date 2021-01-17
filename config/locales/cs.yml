@@ -75,7 +75,7 @@ cs:
           export_filename: výsledky konzultací
           membership_type: Typ členství
           membership_weight: Váha
-          total_delegates: "%{count} delegated votes"
+          total_delegates: "%{count} delegovaných hlasů"
     authorization_handlers:
       admin:
         delegations_verifier:
