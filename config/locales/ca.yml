@@ -75,7 +75,7 @@ ca:
           export_filename: consulta_resultats
           membership_type: Tipus de membre
           membership_weight: Ponderació
-          total_delegates: "%{count} delegated votes"
+          total_delegates: "%{count} vots delegats"
     authorization_handlers:
       admin:
         delegations_verifier:
