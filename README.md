@@ -13,8 +13,6 @@ Admin can set limits to the number of delegation per users an other characterist
 
 Initially, only votes can be delegated.
 
-> **NOTE** THIS IS IN DEVELOPMENT, NOT READY FOR USE IN PRODUCTION
-
 ## Dependencies
 
 * [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) >= v0.22.0
