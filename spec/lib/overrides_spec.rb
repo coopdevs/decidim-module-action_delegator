@@ -22,7 +22,7 @@ module Decidim::ActionDelegator
         # NOTE: _vote_button.html.erb is copied into _delegations_modal.html.erb, double check that view if _vote_button.html.erb changed
         "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "ac4b6314c4f11216764fa8977d4f829f",
         "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "ae7c38afcc6588a00f8298ea69769da7",
-        "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "011300b9001c6eb3eb4384849609e90a",
+        "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "a0d033ed6593f15c957393afa128ca12",
         "/app/views/decidim/consultations/admin/consultations/results.html.erb" => "1a2f7afd79b20b1fcf66bdece660e8ae",
         "/app/views/layouts/decidim/admin/consultation.html.erb" => "7f70f790cf474389f327528136d366a3",
         "/app/views/layouts/decidim/admin/question.html.erb" => "e844ffab48c19671583e9cb4eaf4e1dc",

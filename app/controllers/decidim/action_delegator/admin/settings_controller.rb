@@ -63,7 +63,7 @@ module Decidim
         end
 
         def collection
-          @collection ||= OrganizationSettings.new(current_organization).query
+          @collection ||= ActionDelegator::OrganizationSettings.new(current_organization).query
         end
       end
     end

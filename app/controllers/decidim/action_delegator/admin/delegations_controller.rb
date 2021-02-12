@@ -71,7 +71,7 @@ module Decidim
         end
 
         def organization_settings
-          OrganizationSettings.new(current_organization).query
+          ActionDelegator::OrganizationSettings.new(current_organization).query
         end
       end
     end
