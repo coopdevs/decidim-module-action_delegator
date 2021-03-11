@@ -32,7 +32,8 @@ en:
             title: New delegation
         menu:
           consultations_submenu:
-            results: Results by membership type and weight
+            by_answer: By answer
+            by_type_and_weight: By type and weight
           delegations: User delegations
           participants: Participants
         settings:

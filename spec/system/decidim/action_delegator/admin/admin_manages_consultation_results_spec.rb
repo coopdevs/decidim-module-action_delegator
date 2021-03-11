@@ -46,9 +46,15 @@ describe "Admin manages consultation results", type: :system do
     end
 
     it "enables navigating to the by membership type and weight results page" do
-      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.results")
+      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_type_and_weight")
 
       expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
+    end
+
+    it "enables navigating to the default results from the submenu link" do
+      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_answer")
+
+      expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
     end
   end
 
