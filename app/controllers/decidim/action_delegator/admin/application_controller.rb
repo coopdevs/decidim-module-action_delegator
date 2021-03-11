@@ -8,6 +8,7 @@ module Decidim
       class ApplicationController < Decidim::Admin::ApplicationController
         register_permissions(ApplicationController,
                              ActionDelegator::Permissions,
+                             Decidim::Consultations::Permissions,
                              Decidim::Admin::Permissions)
         def permission_class_chain
           Decidim.permissions_registry.chain_for(ApplicationController)

@@ -31,6 +31,8 @@ en:
             select_member: Select member
             title: New delegation
         menu:
+          consultations_submenu:
+            results: Results by membership type and weight
           delegations: User delegations
           participants: Participants
         settings:
