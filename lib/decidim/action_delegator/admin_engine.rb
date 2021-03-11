@@ -17,6 +17,10 @@ module Decidim
         resources :consultations, param: :slug, only: [] do
           get :results, on: :member
           resources :exports, only: [:create], module: :consultations
+
+          namespace :results do
+            resources :sum_of_weights, only: :index
+          end
         end
 
         root to: "delegations#index"

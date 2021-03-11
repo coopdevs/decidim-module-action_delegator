@@ -56,6 +56,16 @@ describe "Admin manages consultation results", type: :system do
 
       expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
     end
+
+    it "enables navigating to the sum of weights" do
+      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.sum_of_weights")
+
+      within ".results-nav" do
+        expect(find(".is-active")).to have_link(href: decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+      end
+
+      expect(page).to have_current_path(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+    end
   end
 
   context "when in question page" do

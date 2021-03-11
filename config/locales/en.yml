@@ -34,6 +34,7 @@ en:
           consultations_submenu:
             by_answer: By answer
             by_type_and_weight: By type and weight
+            sum_of_weights: By sum of weights
           delegations: User delegations
           participants: Participants
         settings:
