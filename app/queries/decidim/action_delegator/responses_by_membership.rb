@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json_key"
+
 module Decidim
   module ActionDelegator
     # Returns total votes of each response by memberships' type and weight.
@@ -53,10 +55,8 @@ module Decidim
         sql("COUNT(*)").as(sql(:votes_count))
       end
 
-      # Retuns the value of the specified key in the `metadata` JSONB PostgreSQL column. More
-      # details: https://www.postgresql.org/docs/current/functions-json.html
       def metadata(name)
-        Arel::Nodes::InfixOperation.new("->>", authorizations[:metadata], sql("'#{name}'"))
+        JSONKey.new(authorizations[:metadata], name)
       end
 
       def authorizations
