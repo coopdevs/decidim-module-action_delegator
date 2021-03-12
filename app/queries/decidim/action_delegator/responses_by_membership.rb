@@ -27,7 +27,7 @@ module Decidim
             responses[:title],
             membership(:type),
             membership(:weight),
-            count_star.as(sql(:votes_count))
+            votes_count
           )
           .where(direct_verification.or(no_authorization))
           .group(
@@ -36,7 +36,7 @@ module Decidim
             metadata(:membership_type),
             metadata(:membership_weight)
           )
-          .order(:title, :membership_type, { membership_weight: :desc }, votes_count)
+          .order(:title, :membership_type, { membership_weight: :desc }, "votes_count DESC")
       end
 
       private
@@ -58,7 +58,7 @@ module Decidim
       end
 
       def votes_count
-        "votes_count DESC"
+        count_star.as(sql(:votes_count))
       end
 
       def count_star
