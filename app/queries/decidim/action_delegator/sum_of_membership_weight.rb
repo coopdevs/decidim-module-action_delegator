@@ -75,7 +75,7 @@ module Decidim
 
       def membership_weight
         field = metadata("membership_weight")
-        "(#{field.to_sql})::INTEGER"
+        "CAST((#{field.to_sql}) AS INTEGER)"
       end
 
       def metadata(name)
