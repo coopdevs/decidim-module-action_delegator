@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Decidim
   module ActionDelegator
     module Admin
@@ -29,7 +31,7 @@ module Decidim
           end
 
           def responses_by_membership
-            ResponsesByMembership.new(published_questions_responses).query
+            SumOfMembershipWeight.new(published_questions_responses).query
           end
 
           def published_questions_responses
