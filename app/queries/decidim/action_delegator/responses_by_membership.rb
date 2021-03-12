@@ -14,14 +14,12 @@ module Decidim
     class ResponsesByMembership < Rectify::Query
       DEFAULT_METADATA = I18n.t("decidim.admin.consultations.results.default_metadata")
 
-      def initialize(relation = nil)
-        @relation = relation.presence || Decidim::Consultations::Response
+      def initialize(relation)
+        @relation = relation
       end
 
       def query
         relation
-          .joins(:votes)
-          .joins(authorizations_on_author)
           .select(
             responses[:decidim_consultations_questions_id],
             responses[:title],
@@ -29,7 +27,6 @@ module Decidim
             membership(:weight),
             votes_count
           )
-          .where(direct_verification.or(no_authorization))
           .group(
             responses[:decidim_consultations_questions_id],
             responses[:title],
@@ -49,34 +46,17 @@ module Decidim
       end
 
       def default_metadata
-        Arel.sql("'#{DEFAULT_METADATA}'")
-      end
-
-      def authorizations_on_author
-        join_on = votes.create_on(authorizations[:decidim_user_id].eq(votes[:decidim_author_id]))
-        authorizations.create_join(authorizations, join_on, Arel::Nodes::OuterJoin)
+        sql("'#{DEFAULT_METADATA}'")
       end
 
       def votes_count
-        count_star.as(sql(:votes_count))
-      end
-
-      def count_star
-        sql("COUNT(*)")
+        sql("COUNT(*)").as(sql(:votes_count))
       end
 
       # Retuns the value of the specified key in the `metadata` JSONB PostgreSQL column. More
       # details: https://www.postgresql.org/docs/current/functions-json.html
       def metadata(name)
         Arel::Nodes::InfixOperation.new("->>", authorizations[:metadata], sql("'#{name}'"))
-      end
-
-      def direct_verification
-        authorizations[:name].eq("direct_verifications")
-      end
-
-      def no_authorization
-        authorizations[:id].eq(nil)
       end
 
       def authorizations
@@ -87,16 +67,8 @@ module Decidim
         Decidim::Consultations::Response.arel_table
       end
 
-      def votes
-        Decidim::Consultations::Vote.arel_table
-      end
-
       def sql(name)
         Arel.sql(name.to_s)
-      end
-
-      def as(left, right)
-        Arel::Nodes::As.new(left, right)
       end
 
       # This method comes with Rails 6. See:

@@ -33,7 +33,8 @@ module Decidim
         end
 
         def responses_by_membership
-          ResponsesByMembership.new(published_questions_responses).query
+          relation = VotedResponses.new(published_questions_responses).query
+          ResponsesByMembership.new(relation).query
         end
 
         def published_questions_responses

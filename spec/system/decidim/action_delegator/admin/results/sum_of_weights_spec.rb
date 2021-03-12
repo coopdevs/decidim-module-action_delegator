@@ -34,7 +34,6 @@ describe "Admin manages sum of weight consultation results", type: :system do
     it "shows total votes taking membership weight into account" do
       visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
 
-      # expect(page).to have_content("Total votes by answer considering weights")
       within_table("results") do
         expect(find(".response-title")).to have_content("A")
         expect(find(".votes-count")).to have_content(4)

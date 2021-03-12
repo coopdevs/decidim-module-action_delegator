@@ -31,7 +31,8 @@ module Decidim
           end
 
           def responses_by_membership
-            SumOfMembershipWeight.new(published_questions_responses).query
+            relation = VotedResponses.new(published_questions_responses).query
+            SumOfMembershipWeight.new(relation).query
           end
 
           def published_questions_responses

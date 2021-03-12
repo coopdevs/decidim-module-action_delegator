@@ -5,7 +5,10 @@ require "spec_helper"
 describe Decidim::ActionDelegator::ResponsesByMembership do
   subject { described_class.new(relation) }
 
-  let(:relation) { Decidim::Consultations::Response.where(question: question) }
+  let(:relation) do
+    relation = Decidim::Consultations::Response.where(question: question)
+    Decidim::ActionDelegator::VotedResponses.new(relation).query
+  end
 
   let(:organization) { create(:organization) }
   let(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
