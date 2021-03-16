@@ -30,8 +30,8 @@ cs:
             title: Nová delegace
         menu:
           consultations_submenu:
-            by_answer: By answer
-            by_type_and_weight: By type and weight
+            by_answer: Podle odpovědi
+            by_type_and_weight: Podle typu a váhy
           delegations: Uživatelské delegace
           participants: Účastníci
         settings:
