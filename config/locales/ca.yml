@@ -29,6 +29,9 @@ ca:
             select_member: Selecciona un membre
             title: Nova delegació
         menu:
+          consultations_submenu:
+            by_answer: By answer
+            by_type_and_weight: By type and weight
           delegations: Delegacions
           participants: Participants
         settings:
