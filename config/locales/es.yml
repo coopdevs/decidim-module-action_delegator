@@ -29,6 +29,9 @@ es:
             select_member: Select member
             title: New delegation
         menu:
+          consultations_submenu:
+            by_answer: By answer
+            by_type_and_weight: By type and weight
           delegations: User delegations
           participants: Participants
         settings:
