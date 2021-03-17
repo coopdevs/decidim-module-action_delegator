@@ -29,6 +29,9 @@ cs:
             select_member: Vybrat člena
             title: Nová delegace
         menu:
+          consultations_submenu:
+            by_answer: Podle odpovědi
+            by_type_and_weight: Podle typu a váhy
           delegations: Uživatelské delegace
           participants: Účastníci
         settings:
