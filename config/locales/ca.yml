@@ -30,8 +30,8 @@ ca:
             title: Nova delegació
         menu:
           consultations_submenu:
-            by_answer: By answer
-            by_type_and_weight: By type and weight
+            by_answer: Per resposta
+            by_type_and_weight: Per tipus i ponderació
           delegations: Delegacions
           participants: Participants
         settings:
