@@ -5,13 +5,13 @@ module Decidim
     module Admin
       module Results
         class SumOfWeightsController < Decidim::Consultations::Admin::ConsultationsController
-          helper_method :responses_for
-
           def index
             params[:slug] = params[:consultation_slug]
 
             enforce_permission_to :read, :consultation, consultation: current_consultation
+
             @questions = questions
+            @responses = responses.group_by(&:decidim_consultations_questions_id)
 
             render layout: "decidim/admin/consultation"
           end
@@ -26,21 +26,12 @@ module Decidim
             current_consultation.questions.published.includes(:responses)
           end
 
-          def responses_for(question)
-            responses.fetch(question.id, [])
-          end
-
           def responses
-            @responses ||= responses_by_membership.group_by(&:decidim_consultations_questions_id)
-          end
-
-          def responses_by_membership
-            relation = VotedResponses.new(published_questions_responses).query
-            SumOfMembershipWeight.new(relation).query
+            SumOfMembershipWeight.new(published_questions_responses).query
           end
 
           def published_questions_responses
-            PublishedResponses.new(current_consultation).query
+            VotedResponses.new(PublishedResponses.new(current_consultation).query).query
           end
         end
       end
