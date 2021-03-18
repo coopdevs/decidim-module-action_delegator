@@ -18,6 +18,10 @@ module Decidim
 
           private
 
+          def permission_class_chain
+            Decidim.permissions_registry.chain_for(ActionDelegator::Admin::ApplicationController)
+          end
+
           def questions
             current_consultation.questions.published.includes(:responses)
           end
