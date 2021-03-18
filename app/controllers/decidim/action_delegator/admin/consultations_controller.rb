@@ -28,7 +28,7 @@ module Decidim
         end
 
         def published_questions_responses
-          VotedResponses.new(PublishedResponses.new(current_consultation).query).query
+          VotedWithDirectVerification.new(PublishedResponses.new(current_consultation).query).query
         end
       end
     end

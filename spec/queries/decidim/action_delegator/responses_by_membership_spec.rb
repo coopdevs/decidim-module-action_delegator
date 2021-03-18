@@ -7,7 +7,7 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
 
   let(:relation) do
     relation = Decidim::Consultations::Response.where(question: question)
-    Decidim::ActionDelegator::VotedResponses.new(relation).query
+    Decidim::ActionDelegator::VotedWithDirectVerification.new(relation).query
   end
 
   let(:organization) { create(:organization) }

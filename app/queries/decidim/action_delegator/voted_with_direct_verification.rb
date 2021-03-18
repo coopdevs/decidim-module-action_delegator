@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class VotedResponses < Rectify::Query
+    class VotedWithDirectVerification < Rectify::Query
       def initialize(relation)
         @relation = relation
       end

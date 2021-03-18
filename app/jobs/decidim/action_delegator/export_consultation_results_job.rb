@@ -17,7 +17,7 @@ module Decidim
       attr_reader :consultation
 
       def collection
-        relation = VotedResponses.new(published_questions_responses).query
+        relation = VotedWithDirectVerification.new(published_questions_responses).query
         ResponsesByMembership.new(relation).query
       end
 

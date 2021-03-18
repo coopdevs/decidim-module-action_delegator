@@ -4,7 +4,7 @@ require "spec_helper"
 
 module Decidim
   module ActionDelegator
-    describe VotedResponses do
+    describe VotedWithDirectVerification do
       subject(:query_object) { described_class.new(relation) }
 
       let(:relation) { Decidim::Consultations::Response.where(question: question) }
