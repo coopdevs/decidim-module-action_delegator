@@ -3,6 +3,9 @@ en:
   decidim:
     action_delegator:
       admin:
+        consultations:
+          results:
+            title: Results by answer, membership type and weight
         delegations:
           create:
             error: There was a problem creating the delegation
@@ -37,6 +40,10 @@ en:
             sum_of_weights: By sum of weights
           delegations: User delegations
           participants: Participants
+        results:
+          sum_of_weights:
+            index:
+              title: Results by answer summing membership weights
         settings:
           create:
             error: There was a problem creating the settings
