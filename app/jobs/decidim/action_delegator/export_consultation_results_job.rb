@@ -17,7 +17,8 @@ module Decidim
       attr_reader :consultation
 
       def collection
-        ResponsesByMembership.new.query.merge(published_questions_responses)
+        relation = VotedWithDirectVerification.new(published_questions_responses).query
+        ResponsesByMembership.new(relation).query
       end
 
       # Returns the published questions' responses of the given consultation as an ActiveRecord

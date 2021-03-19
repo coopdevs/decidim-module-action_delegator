@@ -24,11 +24,30 @@ describe "Admin manages consultation results", type: :system do
     question.votes.create(author: another_user, response: response)
     question.votes.create(author: yet_another_user, response: other_response)
 
-    create(:authorization, :direct_verification, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
-    create(:authorization, :direct_verification, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
-    create(:authorization, :direct_verification, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
-
-    create(:authorization, :direct_verification, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
+    create(
+      :authorization,
+      :direct_verification,
+      user: user,
+      metadata: { membership_type: "producer", membership_weight: 2 }
+    )
+    create(
+      :authorization,
+      :direct_verification,
+      user: other_user,
+      metadata: { membership_type: "consumer", membership_weight: 3 }
+    )
+    create(
+      :authorization,
+      :direct_verification,
+      user: another_user,
+      metadata: { membership_type: "consumer", membership_weight: 1 }
+    )
+    create(
+      :authorization,
+      :direct_verification,
+      user: yet_another_user,
+      metadata: { membership_type: "consumer", membership_weight: 1 }
+    )
 
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -55,6 +74,16 @@ describe "Admin manages consultation results", type: :system do
       click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_answer")
 
       expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
+    end
+
+    it "enables navigating to the sum of weights" do
+      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.sum_of_weights")
+
+      within ".results-nav" do
+        expect(find(".is-active")).to have_link(href: decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+      end
+
+      expect(page).to have_current_path(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
     end
   end
 

@@ -19,14 +19,12 @@
     </h2>
   </div>
   <div class="card-section">
-    <table class="table-list">
+    <table id="results" class="table-list">
       <% @questions.each do |question| %>
         <% unless question.external_voting %>
           <thead>
             <tr>
               <th><%= strip_tags translated_attribute question.title %></th>
-              <th><%= I18n.t("decidim.admin.consultations.results.membership_type") %></th>
-              <th><%= I18n.t("decidim.admin.consultations.results.membership_weight") %></th>
               <th class="table-list__actions">
                 <%= t "decidim.admin.consultations.results.total_votes", count: question.total_votes %>
                 /
@@ -41,8 +39,6 @@
               <% @responses.fetch(question.id, []).each do |row| %>
               <tr>
                 <td class="response-title"><%= strip_tags translated_attribute row.title %></td>
-                <td class="membership-type"><%= row.membership_type %></td>
-                <td class="membership-weight"><%= row.membership_weight %></td>
                 <td class="votes-count"><%= row.votes_count %></td>
               </tr>
               <% end %>
