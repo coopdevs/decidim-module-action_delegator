@@ -2,6 +2,9 @@ cs:
   decidim:
     action_delegator:
       admin:
+        consultations:
+          results:
+            title: Results by answer, membership type and weight
         delegations:
           create:
             error: Při vytváření delegace došlo k chybě
@@ -32,8 +35,13 @@ cs:
           consultations_submenu:
             by_answer: Podle odpovědi
             by_type_and_weight: Podle typu a váhy
+            sum_of_weights: By sum of weights
           delegations: Uživatelské delegace
           participants: Účastníci
+        results:
+          sum_of_weights:
+            index:
+              title: Results by answer summing membership weights
         settings:
           create:
             error: Při vytváření nastavení se vyskytl problém

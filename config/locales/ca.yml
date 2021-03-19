@@ -2,6 +2,9 @@ ca:
   decidim:
     action_delegator:
       admin:
+        consultations:
+          results:
+            title: Results by answer, membership type and weight
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
@@ -32,8 +35,13 @@ ca:
           consultations_submenu:
             by_answer: Per resposta
             by_type_and_weight: Per tipus i ponderació
+            sum_of_weights: By sum of weights
           delegations: Delegacions
           participants: Participants
+        results:
+          sum_of_weights:
+            index:
+              title: Results by answer summing membership weights
         settings:
           create:
             error: S'ha produït un error en crear la configuració
