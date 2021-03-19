@@ -4,7 +4,7 @@ ca:
       admin:
         consultations:
           results:
-            title: Results by answer, membership type and weight
+            title: Resultats per resposta, tipus de soci i pes
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
@@ -35,13 +35,13 @@ ca:
           consultations_submenu:
             by_answer: Per resposta
             by_type_and_weight: Per tipus i ponderació
-            sum_of_weights: By sum of weights
+            sum_of_weights: Per suma ponderada
           delegations: Delegacions
           participants: Participants
         results:
           sum_of_weights:
             index:
-              title: Results by answer summing membership weights
+              title: Resultats per resposta sumant ponderació de vot
         settings:
           create:
             error: S'ha produït un error en crear la configuració
