@@ -4,7 +4,7 @@ cs:
       admin:
         consultations:
           results:
-            title: Results by answer, membership type and weight
+            title: Výsledky podle odpovědi, typu členství a váhy
         delegations:
           create:
             error: Při vytváření delegace došlo k chybě
@@ -35,13 +35,13 @@ cs:
           consultations_submenu:
             by_answer: Podle odpovědi
             by_type_and_weight: Podle typu a váhy
-            sum_of_weights: By sum of weights
+            sum_of_weights: Podle součtu vah
           delegations: Uživatelské delegace
           participants: Účastníci
         results:
           sum_of_weights:
             index:
-              title: Results by answer summing membership weights
+              title: Výsledky na základě součtu váh členů
         settings:
           create:
             error: Při vytváření nastavení se vyskytl problém
