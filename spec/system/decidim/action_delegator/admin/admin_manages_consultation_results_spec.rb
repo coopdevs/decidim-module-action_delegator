@@ -58,32 +58,47 @@ describe "Admin manages consultation results", type: :system do
 
     before { visit decidim_admin_consultations.edit_consultation_path(consultation) }
 
-    it "enables navigating to the default results page" do
-      click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
-
-      expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
-    end
-
-    it "enables navigating to the by membership type and weight results page" do
-      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_type_and_weight")
-
-      expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
-    end
-
-    it "enables navigating to the default results from the submenu link" do
-      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_answer")
-
-      expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
-    end
-
-    it "enables navigating to the sum of weights" do
-      click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.sum_of_weights")
-
-      within ".results-nav" do
-        expect(find(".is-active")).to have_link(href: decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+    context "when RESULTS_NAV is on" do
+      around do |example|
+        ENV["RESULTS_NAV"] = "1"
+        example.run
+        ENV["RESULTS_NAV"] = nil
       end
 
-      expect(page).to have_current_path(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+      it "enables navigating to the default results page" do
+        click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
+
+        expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
+      end
+
+      it "enables navigating to the by membership type and weight results page" do
+        click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_type_and_weight")
+
+        expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
+      end
+
+      it "enables navigating to the default results from the submenu link" do
+        click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_answer")
+
+        expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(consultation))
+      end
+
+      it "enables navigating to the sum of weights" do
+        click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.sum_of_weights")
+
+        within ".results-nav" do
+          expect(find(".is-active")).to have_link(href: decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+        end
+
+        expect(page).to have_current_path(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+      end
+    end
+
+    context "when RESULTS_NAV is off" do
+      it "enables navigating to the results page" do
+        click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
+        expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
+      end
     end
   end
 
