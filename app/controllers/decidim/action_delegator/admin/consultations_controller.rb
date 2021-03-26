@@ -20,7 +20,14 @@ module Decidim
         end
 
         def questions
-          current_consultation.questions.published.includes(:responses)
+          current_consultation
+            .questions
+            .published
+            .includes(:responses)
+            .left_joins(:votes)
+            .group("decidim_consultations_questions.id")
+            .select("decidim_consultations_questions.*")
+            .select("COUNT(DISTINCT(decidim_consultations_votes.decidim_author_id)) as num_participants")
         end
 
         def responses

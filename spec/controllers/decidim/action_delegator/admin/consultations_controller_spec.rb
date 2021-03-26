@@ -41,6 +41,12 @@ module Decidim
         context "when the consultation is finished" do
           let(:consultation) { create(:consultation, :finished, organization: organization) }
 
+          it "loads the question's total participants without an N+1" do
+            get :results, params: { slug: consultation.slug }
+            questions = assigns(:questions)
+            expect(questions.first.num_participants).to eq(1)
+          end
+
           it "loads the responses" do
             get :results, params: { slug: consultation.slug }
             expect(assigns(:responses)).not_to be_empty
