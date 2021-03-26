@@ -8,9 +8,9 @@ describe "Admin manages consultation results", type: :system do
 
   let(:total_votes) { I18n.t("decidim.admin.consultations.results.total_votes", count: votes) }
 
-  let!(:question) { create(:question, consultation: consultation) }
-  let!(:response) { create(:response, question: question, title: { "ca" => "A" }) }
-  let!(:other_response) { create(:response, question: question, title: { "ca" => "B" }) }
+  let(:question) { create(:question, consultation: consultation) }
+  let(:response) { create(:response, question: question, title: { "ca" => "A" }) }
+  let(:other_response) { create(:response, question: question, title: { "ca" => "B" }) }
 
   let!(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
   let!(:another_user) { create(:user, :admin, :confirmed, organization: organization) }
