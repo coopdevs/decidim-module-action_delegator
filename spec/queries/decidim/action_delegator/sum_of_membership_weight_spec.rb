@@ -28,13 +28,13 @@ module Decidim
 
       describe "#query" do
         it "returns responses and questions data" do
-          expect(query_object.query.first.attributes).to eq({
+          expect(query_object.query.first.attributes).to eq(
             "id" => nil,
             "question_id" => question.id,
             "question_title" => question.title,
             "title" => response.title,
             "votes_count" => 2
-          })
+          )
         end
 
         context "when all users have membership" do

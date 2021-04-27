@@ -10,7 +10,7 @@ module Decidim::ActionDelegator
         :result,
         question_title: "question title",
         title: { "ca" => "A" },
-        votes_count: 2,
+        votes_count: 2
       )
     end
 

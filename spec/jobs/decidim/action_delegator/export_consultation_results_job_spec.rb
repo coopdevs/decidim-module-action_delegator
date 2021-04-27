@@ -77,7 +77,7 @@ module Decidim::ActionDelegator
             )
             .and_return(mailer)
 
-            subject.perform_now(user, consultation, :type_and_weight)
+          subject.perform_now(user, consultation, :type_and_weight)
         end
 
         context "when the consultation is active" do
@@ -144,7 +144,7 @@ module Decidim::ActionDelegator
             )
             .and_return(mailer)
 
-            subject.perform_now(user, consultation, :sum_of_weights)
+          subject.perform_now(user, consultation, :sum_of_weights)
         end
 
         context "when the consultation is active" do
