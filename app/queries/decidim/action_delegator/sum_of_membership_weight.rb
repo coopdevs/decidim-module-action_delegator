@@ -12,20 +12,26 @@ module Decidim
       def query
         relation
           .select(
-            responses[:decidim_consultations_questions_id],
+            questions[:id].as("question_id"),
+            questions[:title].as("question_title"),
             responses[:title],
             votes_count
           )
           .group(
-            responses[:decidim_consultations_questions_id],
+            questions[:id],
+            questions[:title],
             responses[:title]
           )
-          .order(:title)
+          .order(responses[:title])
       end
 
       private
 
       attr_reader :relation
+
+      def questions
+        Consultations::Question.arel_table
+      end
 
       def responses
         Decidim::Consultations::Response.arel_table

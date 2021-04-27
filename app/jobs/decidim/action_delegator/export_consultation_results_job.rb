@@ -5,30 +5,46 @@ module Decidim
     class ExportConsultationResultsJob < ApplicationJob
       queue_as :default
 
-      def perform(user, consultation)
+      def perform(user, consultation, results_type)
         @consultation = consultation
+        @results_type = results_type.to_sym
 
-        export_data = Decidim::Exporters.find_exporter("CSV").new(collection, serializer).export
-        ExportMailer.export(user, I18n.t("decidim.admin.consultations.results.export_filename"), export_data).deliver_now
+        export_data = Decidim::Exporters
+          .find_exporter("CSV")
+          .new(collection, serializer)
+          .export
+
+        ExportMailer.export(user, filename, export_data).deliver_now
       end
 
       private
 
-      attr_reader :consultation
+      attr_reader :consultation, :results_type
 
       def collection
-        relation = VotedWithDirectVerification.new(published_questions_responses).query
-        ResponsesByMembership.new(relation).query
+        query_class.new(consultation).query
       end
 
-      # Returns the published questions' responses of the given consultation as an ActiveRecord
-      # Relation. Note this enables us to the chain it with other AR Relation objects.
-      def published_questions_responses
-        PublishedResponses.new(consultation).query
+      def query_class
+        case results_type
+        when :sum_of_weights
+          SumOfWeights
+        when :type_and_weight
+          TypeAndWeight
+        end
       end
 
       def serializer
-        ConsultationResultsSerializer
+        case results_type
+        when :sum_of_weights
+          SumOfWeightsSerializer
+        when :type_and_weight
+          ConsultationResultsSerializer
+        end
+      end
+
+      def filename
+        I18n.t("decidim.admin.consultations.results.export_filename")
       end
     end
   end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "support/shared_examples/export_controller"
 
 module Decidim
   module ActionDelegator
@@ -9,7 +10,7 @@ module Decidim
 
       let(:organization) { create(:organization) }
       let(:user) { create(:user, :admin, :confirmed, organization: organization) }
-      let(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
+      let(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
       before do
         request.env["decidim.current_organization"] = organization
@@ -17,11 +18,7 @@ module Decidim
       end
 
       describe "#create" do
-        it "authorizes the action" do
-          expect(controller).to receive(:allowed_to?).with(:export_consultation_results, :consultation, consultation: consultation)
-
-          post :create, params: { consultation_slug: consultation.slug }
-        end
+        it_behaves_like "results export controller", "type_and_weight"
       end
     end
   end

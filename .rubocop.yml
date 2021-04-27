@@ -716,7 +716,7 @@ Layout/MultilineMethodCallBraceLayout:
     - same_line
 
 Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: aligned
+  EnforcedStyle: indented
   SupportedStyles:
     - aligned
     - indented

@@ -11,7 +11,7 @@ module Decidim
             enforce_permission_to :read, :consultation, consultation: current_consultation
 
             @questions = questions
-            @responses = responses.group_by(&:decidim_consultations_questions_id)
+            @responses = responses.group_by(&:question_id)
 
             render layout: "decidim/admin/consultation"
           end
@@ -27,11 +27,7 @@ module Decidim
           end
 
           def responses
-            SumOfMembershipWeight.new(published_questions_responses).query
-          end
-
-          def published_questions_responses
-            VotedWithDirectVerification.new(PublishedResponses.new(current_consultation).query).query
+            SumOfWeights.new(current_consultation).query
           end
         end
       end
