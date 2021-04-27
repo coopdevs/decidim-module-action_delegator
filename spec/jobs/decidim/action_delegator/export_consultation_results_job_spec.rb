@@ -41,45 +41,96 @@ module Decidim::ActionDelegator
 
     describe "#perform" do
       let(:mailer) { double(:mailer, deliver_now: true) }
+      let(:serializer) { ConsultationResultsSerializer }
 
-      it "sends an export mail" do
-        expect(Decidim::ExportMailer)
-          .to receive(:export)
-          .with(user, I18n.t("decidim.admin.consultations.results.export_filename"), kind_of(Decidim::Exporters::ExportData))
-          .and_return(mailer)
+      context "when a relation is not passed" do
+        let(:collection) { double(:collection) }
 
-        subject.perform_now(user, consultation)
-      end
-
-      context "when the consultation is active" do
-        let!(:consultation) { create(:consultation, :active, organization: organization) }
-
-        it "does not export anything" do
-          expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-            expect(export_data.read).to eq("\n")
-          end.and_return(mailer)
-
-          subject.perform_now(user, consultation)
+        let(:exporter_class) { class_double(Decidim::Exporters::CSV) }
+        let(:exporter) { instance_double(Decidim::Exporters::CSV, export: export_data) }
+        let(:export_data) do
+          double(
+            :export_data,
+            read: "question;response;membership_type;membership_weight;votes_count\nquestion_title;A;consumer;3;1\nquestion_title;A;consumer;1;1\nquestion_title;A;producer;2;1\nquestion_title;B;consumer;1;1\n"
+          )
         end
-      end
 
-      context "when the consultation is finished" do
-        context "and the results are published" do
-          let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+        before do
+          allow_any_instance_of(ResponsesByMembership).to receive(:query).and_return(collection)
+          allow(exporter_class).to receive(:new).with(collection, serializer).and_return(exporter)
+          allow(Decidim::Exporters).to receive(:find_exporter).with("CSV").and_return(exporter_class)
+        end
 
-          it "exports consultation's by membership" do
+        it "sends an export mail from the collection data" do
+          expect(Decidim::ExportMailer)
+            .to receive(:export)
+            .with(
+              user,
+              I18n.t("decidim.admin.consultations.results.export_filename"),
+              export_data
+            )
+            .and_return(mailer)
+
+            subject.perform_now(user, consultation)
+        end
+
+        context "when the consultation is active" do
+          let!(:consultation) { create(:consultation, :active, organization: organization) }
+          let(:export_data) { double(:export_data, read: "\n") }
+
+          it "does not export anything" do
             expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-              expect(export_data.read).to eq(<<-CSV.strip_heredoc)
+              expect(export_data.read).to eq("\n")
+            end.and_return(mailer)
+
+            subject.perform_now(user, consultation)
+          end
+        end
+
+        context "when the consultation is finished" do
+          context "and the results are published" do
+            let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+
+            it "exports consultation's by membership" do
+              expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
+                expect(export_data.read).to eq(<<-CSV.strip_heredoc)
                 question;response;membership_type;membership_weight;votes_count
                 question_title;A;consumer;3;1
                 question_title;A;consumer;1;1
                 question_title;A;producer;2;1
                 question_title;B;consumer;1;1
-              CSV
-            end.and_return(mailer)
+                CSV
+              end.and_return(mailer)
 
-            subject.perform_now(user, consultation)
+              subject.perform_now(user, consultation)
+            end
           end
+        end
+      end
+
+      context "when a relation is passed" do
+        let(:relation) { ["thing"] }
+
+        let(:exporter_class) { class_double(Decidim::Exporters::CSV) }
+        let(:exporter) { instance_double(Decidim::Exporters::CSV, export: export_data) }
+        let(:export_data) { double(:export_data, read: "thing\n") }
+
+        before do
+          allow(exporter_class).to receive(:new).with(relation, serializer).and_return(exporter)
+          allow(Decidim::Exporters).to receive(:find_exporter).with("CSV").and_return(exporter_class)
+        end
+
+        it "sends an export mail with the collection data" do
+          expect(Decidim::ExportMailer)
+            .to receive(:export)
+            .with(
+              user,
+              I18n.t("decidim.admin.consultations.results.export_filename"),
+              export_data
+            )
+            .and_return(mailer)
+
+            subject.perform_now(user, consultation, relation)
         end
       end
     end
