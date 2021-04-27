@@ -92,6 +92,18 @@ describe "Admin manages consultation results", type: :system do
 
         expect(page).to have_current_path(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
       end
+
+      context "when viewing a finished consultation from the sum of weights page" do
+        it "enables exporting to CSV" do
+          click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.sum_of_weights")
+          perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
+
+          expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
+
+          expect(last_email.subject).to include("results", "csv")
+          expect(last_email.attachments.first.filename).to match(/^consultation_results.*\.zip$/)
+        end
+      end
     end
 
     context "when RESULTS_NAV is off" do

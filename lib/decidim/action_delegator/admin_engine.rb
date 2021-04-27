@@ -18,6 +18,10 @@ module Decidim
           get :results, on: :member
           resources :exports, only: [:create], module: :consultations
 
+          namespace :exports do
+            resources :sum_of_weights, only: :create
+          end
+
           namespace :results do
             resources :sum_of_weights, only: :index
           end
