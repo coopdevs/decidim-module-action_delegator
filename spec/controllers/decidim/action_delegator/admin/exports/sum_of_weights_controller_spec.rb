@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require "support/shared_examples/export_controller"
 
 module Decidim
   module ActionDelegator
@@ -18,31 +19,7 @@ module Decidim
         end
 
         describe "#create" do
-          it "authorizes the action" do
-            expect(controller).to receive(:allowed_to?)
-              .with(:export_consultation_results, :consultation, consultation: consultation)
-
-            post :create, params: { consultation_slug: consultation.slug }
-          end
-
-          it "enqueues a ExportConsultationResultsJob" do
-            expect(ExportConsultationResultsJob).to receive(:perform_later)
-              .with(user, consultation, "sum_of_weights")
-
-            post :create, params: { consultation_slug: consultation.slug }
-          end
-
-          it "redirects back" do
-            request.env["HTTP_REFERER"] = "referer"
-            post :create, params: { consultation_slug: consultation.slug }
-
-            expect(response).to redirect_to("referer")
-          end
-
-          it "returns a flash notice" do
-            post :create, params: { consultation_slug: consultation.slug }
-            expect(flash[:notice]).to eq(I18n.t("decidim.admin.exports.notice"))
-          end
+          it_behaves_like "results export controller", "sum_of_weights"
         end
       end
     end
