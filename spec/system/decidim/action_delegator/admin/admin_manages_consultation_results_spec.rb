@@ -99,6 +99,11 @@ describe "Admin manages consultation results", type: :system do
         click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
         expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(consultation))
       end
+
+      it "disables navigation to any other results page" do
+        expect(page)
+          .not_to have_link(I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.by_answer"))
+      end
     end
   end
 
