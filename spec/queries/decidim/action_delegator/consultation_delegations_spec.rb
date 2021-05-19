@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::ActionDelegator::ConsultationDelegations do
-  subject { described_class.new(consultation, user) }
+  subject { described_class.new(consultation) }
 
   let(:consultation) { create(:consultation) }
   let(:user) { create(:user) }
@@ -15,7 +15,7 @@ describe Decidim::ActionDelegator::ConsultationDelegations do
 
   describe "#query" do
     it "returns delegations of the specified consultation only" do
-      expect(subject.query).to match_array([consultation_delegation])
+      expect(subject.query).to match_array([consultation_delegation, other_user_delegation])
     end
   end
 end
