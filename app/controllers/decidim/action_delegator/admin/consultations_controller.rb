@@ -9,6 +9,7 @@ module Decidim
 
           @questions = questions
           @responses = responses.group_by(&:decidim_consultations_questions_id)
+          @total_delegates = DelegatesVotesByConsultation.new(current_consultation).query
 
           render layout: "decidim/admin/consultation"
         end
