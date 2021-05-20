@@ -44,7 +44,7 @@ module Decidim::ActionDelegator
             granter_id: granter.id,
             decidim_action_delegator_setting_id: delegation.setting.id
           },
-          {
+          { # rubocop:disable Style/BracesAroundHashParameters
             id: other_delegation.id,
             granter_id: granter.id,
             decidim_action_delegator_setting_id: other_delegation.setting.id
