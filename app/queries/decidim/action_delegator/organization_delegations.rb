@@ -9,9 +9,9 @@ module Decidim
 
       def query
         Delegation
-          .includes(:grantee, :granter)
           .joins(setting: :consultation)
           .merge(organization_consultations)
+          .includes(:grantee, :granter)
       end
 
       private

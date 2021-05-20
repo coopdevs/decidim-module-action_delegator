@@ -5,7 +5,7 @@
       <span class="label button--title">
         <%= t "decidim.admin.consultations.results.total_votes", count: current_consultation.total_votes %>
         /
-        <%= t 'decidim.admin.consultations.results.total_delegates', count: Decidim::ActionDelegator::DelegatesVotesByConsultation.new(current_consultation).query %>
+        <%= t 'decidim.admin.consultations.results.total_delegates', count: @total_delegates %>
         /
         <%= t "decidim.admin.consultations.results.participants", count: current_consultation.total_participants %>
       </span>
