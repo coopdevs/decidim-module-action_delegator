@@ -12,7 +12,7 @@
   <div class="card card--secondary">
     <div class="card__content">
 
-      <% signed_in? && Decidim::ActionDelegator::ConsultationDelegations.for(question.consultation).where(grantee_id: current_user.id).each do |delegation| %>
+      <% signed_in? && Decidim::ActionDelegator::GranteeDelegations.for(question.consultation, current_user).each do |delegation| %>
         <div class="row">
           <div class="columns medium-5 medium-offset-1">
             <%= delegation.granter.name %>

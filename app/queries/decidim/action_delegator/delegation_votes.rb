@@ -7,8 +7,9 @@ module Decidim
     # association so this aims to replace `delegation.votes`.
     class DelegationVotes < Rectify::Query
       def query
-        Delegation
-          .joins(votes.join(delegations).on(vote_author_eq_granter))
+        Delegation.joins(
+          delegations.join(votes).on(vote_author_eq_granter).join_sources
+        )
       end
 
       private

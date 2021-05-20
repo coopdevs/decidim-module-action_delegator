@@ -17,10 +17,9 @@ Decidim::Consultations::VoteQuestion.class_eval do
   end
 
   def delegation
-    @delegation ||= Decidim::ActionDelegator::ConsultationDelegations.for(
-      form.context.current_question.consultation
-    )
-      .where(grantee_id: form.context.current_user.id)
-      .find_by(id: form.decidim_consultations_delegation_id)
+    @delegation ||= Decidim::ActionDelegator::GranteeDelegations.for(
+      form.context.current_question.consultation,
+      form.context.current_user
+    ).find_by(id: form.decidim_consultations_delegation_id)
   end
 end

@@ -28,7 +28,7 @@ module Decidim::ActionDelegator
           result.slice(:id, :granter_id, :decidim_action_delegator_setting_id).symbolize_keys
         end
 
-        expect(results).to eq([
+        expect(results).to contain_exactly(
           {
             id: delegation.id,
             granter_id: granter.id,
@@ -49,7 +49,7 @@ module Decidim::ActionDelegator
             granter_id: granter.id,
             decidim_action_delegator_setting_id: other_delegation.setting.id
           }
-        ])
+        )
       end
     end
   end
