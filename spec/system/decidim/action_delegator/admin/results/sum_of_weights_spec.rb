@@ -54,18 +54,36 @@ describe "Admin manages sum of weight consultation results", type: :system do
   context "when viewing an unfinished consultation" do
     let!(:consultation) { create(:consultation, :active, :unpublished_results, organization: organization) }
 
-    it "disables the export button" do
+    it "enables the export button" do
       visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
 
       within "#export-consultation-results" do
-        expect(page).to have_css(".disabled")
-        expect(page).not_to have_link(I18n.t("decidim.admin.consultations.results.export"))
+        expect(page).not_to have_css(".disabled")
+        expect(page).to have_link(I18n.t("decidim.admin.consultations.results.export"))
       end
     end
 
     it "does not show any response" do
       visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
-      expect(page).not_to have_content(find(:xpath, ".//table/tbody/tr[1]"))
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
+    end
+  end
+
+  context "when viewing a consultation with unpublished results" do
+    let!(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
+
+    it "disables the export button" do
+      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+
+      within "#export-consultation-results" do
+        expect(page).not_to have_css(".disabled")
+        expect(page).to have_link(I18n.t("decidim.admin.consultations.results.export"))
+      end
+    end
+
+    it "shows the responses" do
+      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      expect(page).to have_xpath(".//table/tbody/tr[1]")
     end
   end
 end

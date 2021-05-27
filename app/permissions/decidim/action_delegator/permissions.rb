@@ -12,11 +12,7 @@ module Decidim
         return permission_action unless permission_action.scope == :admin
         return permission_action unless action_delegator_subject?
 
-        if permission_action.action == :export_consultation_results
-          allow! if consultation.results_published?
-        elsif can_perform_action?
-          allow!
-        end
+        allow! if can_perform_action?
 
         permission_action
       end
