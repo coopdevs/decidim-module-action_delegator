@@ -7,7 +7,7 @@ module Decidim
         def results
           enforce_permission_to :read, :consultation, consultation: current_consultation
 
-          @questions = questions
+          @questions = Scrutiny.new(current_consultation).questions
           @responses = responses.group_by(&:decidim_consultations_questions_id)
           @total_delegates = DelegatesVotesByConsultation.new(current_consultation).query
 
@@ -18,10 +18,6 @@ module Decidim
 
         def permission_class_chain
           Decidim.permissions_registry.chain_for(ActionDelegator::Admin::ApplicationController)
-        end
-
-        def questions
-          current_consultation.questions.published.includes(:responses)
         end
 
         def responses
