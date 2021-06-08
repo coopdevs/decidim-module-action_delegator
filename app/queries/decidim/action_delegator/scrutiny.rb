@@ -34,13 +34,20 @@ module Decidim
       # Returns a hash where the key is the question and the value is the numer of delegated votes
       # it got.
       def build_questions_cache
-        question_votes_by_id.each_with_object({}) do |(id, questions), memo|
-          total_delegations = questions.count { |question| question.granter_id.present? }
-          total_participants = questions.map(&:decidim_author_id).uniq.size
+        question_votes_by_id.each_with_object({}) do |(id, question_votes), memo|
+          total_delegations = delegations_count(question_votes)
+          total_participants = participants_count(question_votes)
 
           memo[id] = QuestionStats.new(total_delegations, total_participants)
-          memo
         end
+      end
+
+      def delegations_count(question_votes)
+        question_votes.count { |question| question.granter_id.present? }
+      end
+
+      def participants_count(question_votes)
+        question_votes.map(&:decidim_author_id).uniq.compact.size
       end
 
       def questions_query

@@ -19,9 +19,15 @@ module Decidim
         let!(:unvoted_question) { create(:question, :published, consultation: consultation) }
         let!(:unpublished_question) { create(:question, :unpublished, consultation: consultation) }
 
+        let(:granter) { create(:user, organization: organization) }
+        let(:setting) { create(:setting, consultation: consultation) }
+
         before do
           question.votes.create(author: user, response: response)
           question.votes.create(author: other_user, response: response)
+
+          create(:delegation, granter_id: granter.id, grantee_id: user.id, setting: setting)
+          question.votes.create(author: granter, response: response)
         end
 
         it "returns the consultation's published questions" do
@@ -29,13 +35,15 @@ module Decidim
         end
 
         it "returns each question's stats" do
-          cache = subject.send(:build_questions_cache)
+          questions = subject.questions
 
-          expect(cache[question.id].total_delegates).to eq(1)
-          expect(cache[question.id].total_participants).to eq(3)
+          expect(questions.first.id).to eq(unvoted_question.id)
+          expect(questions.first.total_delegates).to eq(0)
+          expect(questions.first.total_participants).to eq(0)
 
-          expect(cache[unvoted_question.id].total_delegates).to eq(0)
-          expect(cache[unvoted_question.id].total_participants).to eq(0)
+          expect(questions.second.id).to eq(question.id)
+          expect(questions.second.total_delegates).to eq(1)
+          expect(questions.second.total_participants).to eq(3)
         end
       end
     end
