@@ -9,7 +9,11 @@ module Decidim
       end
 
       def total_delegates
-        questions_by_id[id]
+        questions_by_id[id].total_delegates
+      end
+
+      def total_participants
+        questions_by_id[id].total_participants
       end
 
       private

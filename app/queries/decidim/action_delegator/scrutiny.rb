@@ -2,6 +2,15 @@
 
 module Decidim
   module ActionDelegator
+    class QuestionStats
+      attr_reader :total_delegates, :total_participants
+
+      def initialize(total_delegates, total_participants)
+        @total_delegates = total_delegates
+        @total_participants = total_participants
+      end
+    end
+
     class Scrutiny
       def initialize(consultation)
         @consultation = consultation
@@ -27,7 +36,9 @@ module Decidim
       def build_questions_cache
         question_votes_by_id.each_with_object({}) do |(id, questions), memo|
           total_delegations = questions.count { |question| question.granter_id.present? }
-          memo[id] = total_delegations
+          total_participants = questions.map(&:decidim_author_id).uniq.size
+
+          memo[id] = QuestionStats.new(total_delegations, total_participants)
           memo
         end
       end
@@ -36,6 +47,7 @@ module Decidim
         @questions_query ||= Consultations::Question
           .select(
             '"decidim_consultations_questions".*',
+            '"decidim_consultations_votes"."decidim_author_id"',
             '"decidim_action_delegator_delegations"."granter_id"'
           )
           .from(questions_joined_votes_and_delegations)

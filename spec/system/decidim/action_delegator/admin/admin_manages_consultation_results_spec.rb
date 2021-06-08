@@ -135,6 +135,13 @@ describe "Admin manages consultation results", type: :system do
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
     context "without delegated votes" do
+      let(:extra_question) { create(:question, consultation: consultation) }
+      let(:extra_response) { create(:response, question: extra_question) }
+
+      before do
+        extra_question.votes.create(author: user, response: extra_response)
+      end
+
       it "shows votes by membership and weight type" do
         visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
@@ -142,27 +149,31 @@ describe "Admin manages consultation results", type: :system do
         expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
         expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
 
+        expect(page).to have_content("Total: 5 votes / 0 delegated votes / 4 participants")
         expect(page).to have_content("Total: 4 votes / 0 delegated votes / 4 participants")
+        expect(page).to have_content("Total: 1 votes / 0 delegated votes / 1 participants")
 
-        expect(nth_row(1).find(".response-title")).to have_content("A")
-        expect(nth_row(1).find(".membership-type")).to have_content("consumer")
-        expect(nth_row(1).find(".membership-weight")).to have_content(3)
-        expect(nth_row(1).find(".votes-count")).to have_content(1)
+        within ".table-list" do
+          expect(nth_row(1).find(".response-title")).to have_content("A")
+          expect(nth_row(1).find(".membership-type")).to have_content("consumer")
+          expect(nth_row(1).find(".membership-weight")).to have_content(3)
+          expect(nth_row(1).find(".votes-count")).to have_content(1)
 
-        expect(nth_row(2).find(".response-title")).to have_content("A")
-        expect(nth_row(2).find(".membership-type")).to have_content("consumer")
-        expect(nth_row(2).find(".membership-weight")).to have_content(1)
-        expect(nth_row(2).find(".votes-count")).to have_content(1)
+          expect(nth_row(2).find(".response-title")).to have_content("A")
+          expect(nth_row(2).find(".membership-type")).to have_content("consumer")
+          expect(nth_row(2).find(".membership-weight")).to have_content(1)
+          expect(nth_row(2).find(".votes-count")).to have_content(1)
 
-        expect(nth_row(3).find(".response-title")).to have_content("A")
-        expect(nth_row(3).find(".membership-type")).to have_content("producer")
-        expect(nth_row(3).find(".membership-weight")).to have_content(2)
-        expect(nth_row(3).find(".votes-count")).to have_content(1)
+          expect(nth_row(3).find(".response-title")).to have_content("A")
+          expect(nth_row(3).find(".membership-type")).to have_content("producer")
+          expect(nth_row(3).find(".membership-weight")).to have_content(2)
+          expect(nth_row(3).find(".votes-count")).to have_content(1)
 
-        expect(nth_row(4).find(".response-title")).to have_content("B")
-        expect(nth_row(4).find(".membership-type")).to have_content("consumer")
-        expect(nth_row(4).find(".membership-weight")).to have_content(1)
-        expect(nth_row(4).find(".votes-count")).to have_content(1)
+          expect(nth_row(4).find(".response-title")).to have_content("B")
+          expect(nth_row(4).find(".membership-type")).to have_content("consumer")
+          expect(nth_row(4).find(".membership-weight")).to have_content(1)
+          expect(nth_row(4).find(".votes-count")).to have_content(1)
+        end
       end
 
       it "enables exporting to CSV" do
@@ -269,15 +280,11 @@ describe "Admin manages consultation results", type: :system do
 
     it "shows the responses" do
       visit decidim_admin_action_delegator.results_consultation_path(consultation)
-      expect(page).to have_row(4)
+      expect(page).to have_xpath(".//table/tbody[1]/tr[4]")
     end
   end
 
   def nth_row(number)
-    find(:xpath, ".//table/tbody/tr[#{number}]")
-  end
-
-  def have_row(number)
-    have_xpath(".//table/tbody/tr[#{number}]")
+    find(:xpath, ".//tbody[1]/tr[#{number}]")
   end
 end
