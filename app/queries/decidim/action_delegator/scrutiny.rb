@@ -33,11 +33,19 @@ module Decidim
       end
 
       def questions_query
-        @questions_query ||= Decidim::Consultations::Question.find_by_sql(<<-SQL.strip_heredoc)
-          SELECT
-            "decidim_consultations_questions".*,
-            "decidim_action_delegator_delegations"."granter_id"
-          FROM "decidim_consultations_questions"
+        @questions_query ||= Consultations::Question
+          .select(
+            '"decidim_consultations_questions".*',
+            '"decidim_action_delegator_delegations"."granter_id"'
+          )
+          .from(questions_joined_votes_and_delegations)
+          .where(decidim_consultation_id: consultation.id)
+          .merge(Consultations::Question.published)
+      end
+
+      def questions_joined_votes_and_delegations
+        <<-SQL.strip_heredoc
+          "decidim_consultations_questions"
           LEFT OUTER JOIN "decidim_consultations_votes"
             ON "decidim_consultations_votes"."decidim_consultation_question_id" = "decidim_consultations_questions"."id"
           LEFT JOIN "decidim_action_delegator_delegations"
@@ -46,9 +54,6 @@ module Decidim
             ON "decidim_action_delegator_settings"."id" = "decidim_action_delegator_delegations"."decidim_action_delegator_setting_id"
           LEFT JOIN "decidim_consultations"
             ON "decidim_consultations"."id" = "decidim_action_delegator_settings"."decidim_consultation_id"
-          WHERE "decidim_consultations_questions"."decidim_consultation_id" = #{consultation.id}
-            AND "decidim_consultations_questions"."published_at" IS NOT NULL
-          ORDER BY "decidim_consultations_questions"."order" ASC
         SQL
       end
     end
