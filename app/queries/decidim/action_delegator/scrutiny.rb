@@ -58,6 +58,7 @@ module Decidim
       # in Ruby in different ways but reaching out to DB just once.
       def questions_query
         @questions_query ||= Consultations::Question
+          .includes(:responses)
           .select(
             '"decidim_consultations_questions".*',
             '"decidim_consultations_votes"."decidim_author_id"',
