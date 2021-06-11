@@ -31,8 +31,8 @@ module Decidim
 
       attr_reader :consultation, :questions_cache, :question_votes_by_id
 
-      # Returns a hash where the key is the question and the value is the numer of delegated votes
-      # it got.
+      # Returns a hash where the key is the question id and the value is an object that wraps some
+      # question's counts displayed in the view.
       def build_questions_cache
         question_votes_by_id.each_with_object({}) do |(id, question_votes), memo|
           total_delegations = delegations_count(question_votes)
@@ -42,14 +42,20 @@ module Decidim
         end
       end
 
+      # Computes the count of delegated votes out of rows returned by `#questions_query`, named
+      # `question_votes`.
       def delegations_count(question_votes)
         question_votes.count { |question| question.granter_id.present? }
       end
 
+      # Computes the count of participants out of rows returned by `#questions_query`, named
+      # `question_votes`.
       def participants_count(question_votes)
         question_votes.map(&:decidim_author_id).uniq.compact.size
       end
 
+      # Returns questions joined with their votes and delegations so that we can aggregate the data
+      # in Ruby in different ways but reaching out to DB just once.
       def questions_query
         @questions_query ||= Consultations::Question
           .select(
