@@ -114,48 +114,117 @@ describe "Admin manages consultation results", type: :system do
   context "when viewing a finished consultation with votes" do
     let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
-    it "shows votes total" do
-      visit decidim_admin_action_delegator.results_consultation_path(consultation)
+    context "without delegated votes" do
+      let(:extra_question) { create(:question, consultation: consultation) }
+      let(:extra_response) { create(:response, question: extra_question) }
 
-      expect(page).to have_content(/#{total_votes}/i)
-      expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
+      before do
+        extra_question.votes.create(author: user, response: extra_response)
+      end
+
+      it "shows votes by membership and weight type" do
+        visit decidim_admin_action_delegator.results_consultation_path(consultation)
+
+        expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
+        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
+        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
+
+        expect(page).to have_content("Total: 5 votes / 0 delegated votes / 4 participants")
+        expect(page).to have_content("Total: 4 votes / 0 delegated votes / 4 participants")
+        expect(page).to have_content("Total: 1 votes / 0 delegated votes / 1 participants")
+
+        within ".table-list" do
+          expect(nth_row(1).find(".response-title")).to have_content("A")
+          expect(nth_row(1).find(".membership-type")).to have_content("consumer")
+          expect(nth_row(1).find(".membership-weight")).to have_content(3)
+          expect(nth_row(1).find(".votes-count")).to have_content(1)
+
+          expect(nth_row(2).find(".response-title")).to have_content("A")
+          expect(nth_row(2).find(".membership-type")).to have_content("consumer")
+          expect(nth_row(2).find(".membership-weight")).to have_content(1)
+          expect(nth_row(2).find(".votes-count")).to have_content(1)
+
+          expect(nth_row(3).find(".response-title")).to have_content("A")
+          expect(nth_row(3).find(".membership-type")).to have_content("producer")
+          expect(nth_row(3).find(".membership-weight")).to have_content(2)
+          expect(nth_row(3).find(".votes-count")).to have_content(1)
+
+          expect(nth_row(4).find(".response-title")).to have_content("B")
+          expect(nth_row(4).find(".membership-type")).to have_content("consumer")
+          expect(nth_row(4).find(".membership-weight")).to have_content(1)
+          expect(nth_row(4).find(".votes-count")).to have_content(1)
+        end
+      end
+
+      it "enables exporting to CSV" do
+        visit decidim_admin_action_delegator.results_consultation_path(consultation)
+        perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
+
+        expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
+
+        expect(last_email.subject).to include("results", "csv")
+        expect(last_email.attachments.first.filename).to match(/^consultation_results.*\.zip$/)
+      end
     end
 
-    it "shows votes by membership and weight type" do
-      visit decidim_admin_action_delegator.results_consultation_path(consultation)
+    context "with delegated votes" do
+      let(:setting) { create(:setting, consultation: consultation) }
+      let(:granter) { create(:user, :confirmed, organization: organization) }
+      let(:other_granter) { create(:user, :confirmed, organization: organization) }
+      let(:grantee) { create(:user, :confirmed, organization: organization) }
 
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
+      before do
+        create(:delegation, granter_id: granter.id, grantee_id: grantee.id, setting: setting)
+        create(:delegation, granter_id: other_granter.id, grantee_id: grantee.id, setting: setting)
 
-      expect(nth_row(1).find(".response-title")).to have_content("A")
-      expect(nth_row(1).find(".membership-type")).to have_content("consumer")
-      expect(nth_row(1).find(".membership-weight")).to have_content(3)
-      expect(nth_row(1).find(".votes-count")).to have_content(1)
+        question.votes.create(author: granter, response: response)
+        question.votes.create(author: other_granter, response: other_response)
+      end
 
-      expect(nth_row(2).find(".response-title")).to have_content("A")
-      expect(nth_row(2).find(".membership-type")).to have_content("consumer")
-      expect(nth_row(2).find(".membership-weight")).to have_content(1)
-      expect(nth_row(2).find(".votes-count")).to have_content(1)
+      it "shows votes by membership and weight type" do
+        visit decidim_admin_action_delegator.results_consultation_path(consultation)
 
-      expect(nth_row(3).find(".response-title")).to have_content("A")
-      expect(nth_row(3).find(".membership-type")).to have_content("producer")
-      expect(nth_row(3).find(".membership-weight")).to have_content(2)
-      expect(nth_row(3).find(".votes-count")).to have_content(1)
+        expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
+        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
+        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
 
-      expect(nth_row(4).find(".response-title")).to have_content("B")
-      expect(nth_row(4).find(".membership-type")).to have_content("consumer")
-      expect(nth_row(4).find(".membership-weight")).to have_content(1)
-      expect(nth_row(4).find(".votes-count")).to have_content(1)
-    end
+        expect(page).to have_content("Total: 6 votes / 2 delegated votes / 6 participants")
 
-    it "enables exporting to CSV" do
-      visit decidim_admin_action_delegator.results_consultation_path(consultation)
-      perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
+        expect(nth_row(1).find(".response-title")).to have_content("A")
+        expect(nth_row(1).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(1).find(".membership-weight")).to have_content(3)
+        expect(nth_row(1).find(".votes-count")).to have_content(1)
 
-      expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
+        expect(nth_row(2).find(".response-title")).to have_content("A")
+        expect(nth_row(2).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(2).find(".membership-weight")).to have_content(1)
+        expect(nth_row(2).find(".votes-count")).to have_content(1)
 
-      expect(last_email.subject).to include("results", "csv")
-      expect(last_email.attachments.first.filename).to match(/^consultation_results.*\.zip$/)
+        expect(nth_row(3).find(".response-title")).to have_content("A")
+        expect(nth_row(3).find(".membership-type")).to have_content("membership data not available")
+        expect(nth_row(3).find(".membership-weight")).to have_content("membership data not available")
+        expect(nth_row(3).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(4).find(".response-title")).to have_content("A")
+        expect(nth_row(4).find(".membership-type")).to have_content("producer")
+        expect(nth_row(4).find(".membership-weight")).to have_content(2)
+        expect(nth_row(4).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(5).find(".response-title")).to have_content("B")
+        expect(nth_row(5).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(5).find(".membership-weight")).to have_content(1)
+        expect(nth_row(5).find(".votes-count")).to have_content(1)
+      end
+
+      it "enables exporting to CSV" do
+        visit decidim_admin_action_delegator.results_consultation_path(consultation)
+        perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
+
+        expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
+
+        expect(last_email.subject).to include("results", "csv")
+        expect(last_email.attachments.first.filename).to match(/^consultation_results.*\.zip$/)
+      end
     end
   end
 
@@ -191,15 +260,11 @@ describe "Admin manages consultation results", type: :system do
 
     it "shows the responses" do
       visit decidim_admin_action_delegator.results_consultation_path(consultation)
-      expect(page).to have_row(4)
+      expect(page).to have_xpath(".//table/tbody[1]/tr[4]")
     end
   end
 
   def nth_row(number)
-    find(:xpath, ".//table/tbody/tr[#{number}]")
-  end
-
-  def have_row(number)
-    have_xpath(".//table/tbody/tr[#{number}]")
+    find(:xpath, ".//tbody[1]/tr[#{number}]")
   end
 end
