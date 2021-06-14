@@ -10,7 +10,7 @@ module Decidim
 
             enforce_permission_to :read, :consultation, consultation: current_consultation
 
-            @questions = questions
+            @questions = Scrutiny.new(current_consultation).questions
             @responses = responses.group_by(&:question_id)
             @total_delegates = DelegatesVotesByConsultation.new(current_consultation).query
 
