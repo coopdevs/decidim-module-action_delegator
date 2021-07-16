@@ -17,7 +17,7 @@ module Decidim
       }
 
       def self.granted_to?(user, consultation)
-        ConsultationDelegations.for(consultation, user).exists?
+        GranteeDelegations.for(consultation, user).exists?
       end
     end
   end

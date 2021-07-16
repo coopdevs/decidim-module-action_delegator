@@ -24,29 +24,38 @@ module Decidim::ActionDelegator
         end
       end
 
-      context "when the consultation is finished" do
+      context "when the consultation is not published but ended" do
+        let(:consultation) do
+          create(:consultation, :unpublished, end_voting_date: 1.day.ago, organization: organization)
+        end
+
+        it "returns empty" do
+          expect(subject.query).to be_empty
+        end
+      end
+
+      context "when the consultation is published but not ended" do
+        let(:consultation) do
+          create(:consultation, :published, end_voting_date: 1.day.from_now, organization: organization)
+        end
+
+        it "returns empty" do
+          expect(subject.query).to be_empty
+        end
+      end
+
+      context "when the consultation is published and ended" do
+        let(:consultation) { create(:consultation, :finished, organization: organization) }
+
         context "and the questions are published" do
           let!(:question) { create(:question, :published, consultation: consultation) }
 
-          context "and the results are published" do
-            let(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
-
-            it "returns the responses to its questions" do
-              expect(subject.query).to match_array([response])
-            end
-          end
-
-          context "and the results are not published" do
-            let(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
-
-            it "returns empty" do
-              expect(subject.query).to be_empty
-            end
+          it "returns the responses to its questions" do
+            expect(subject.query).to match_array([response])
           end
         end
 
         context "and the questions are not published" do
-          let(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
           let!(:question) { create(:question, :unpublished, consultation: consultation) }
 
           it "returns empty" do
