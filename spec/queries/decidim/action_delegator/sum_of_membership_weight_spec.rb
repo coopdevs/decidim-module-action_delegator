@@ -9,8 +9,8 @@ module Decidim
 
       let(:relation) do
         relation = Decidim::Consultations::Response
-          .joins(:question)
-          .where(question: question)
+                   .joins(:question)
+                   .where(question: question)
         Decidim::ActionDelegator::VotedWithDirectVerification.new(relation).query
       end
 

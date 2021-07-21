@@ -9,9 +9,9 @@ module Decidim
 
       def query
         DelegationVotes.new.query
-          .merge(question.votes)
-          .merge(consultation_delegations)
-          .distinct.count(:granter_id)
+                       .merge(question.votes)
+                       .merge(consultation_delegations)
+                       .distinct.count(:granter_id)
       end
 
       private
