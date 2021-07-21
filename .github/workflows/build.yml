@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  RUBY_VERSION: 2.6.6
+  RUBY_VERSION: 2.7.1
 
 jobs:
   test:
@@ -48,7 +48,7 @@ jobs:
 
       - name: Install Ruby deps
         run: |
-          gem install bundler:2.1.4
+          gem install bundler:2.2.8
           bundle install --path vendor/bundle --jobs 4 --retry 3
 
       - name: Lint and Rubocop
