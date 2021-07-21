@@ -35,6 +35,14 @@ bundle exec rails decidim_action_delegator:install:migrations
 bundle exec rails db:migrate
 ```
 
+Depending on your Decidim version, choose the corresponding version to ensure compatibility:
+
+| Version | Compatible Decidim versions |
+|---|---|
+| 0.1 | 0.22.0 |
+| 0.2 | 0.23.x |
+| 0.3 | 0.24.x |
+
 ## Usage
 
 ActionDelegator does not provides new Components or Participatory Spaces but enhances some functionalities in them.
