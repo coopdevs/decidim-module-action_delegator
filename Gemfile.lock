@@ -2,9 +2,9 @@ PATH
   remote: .
   specs:
     decidim-action_delegator (0.3)
-      decidim-admin (> 0.23, <= 0.24.3)
-      decidim-consultations (> 0.23, <= 0.24.3)
-      decidim-core (> 0.23, <= 0.24.3)
+      decidim-admin (>= 0.24.0, <= 0.24.3)
+      decidim-consultations (>= 0.24.0, <= 0.24.3)
+      decidim-core (>= 0.24.0, <= 0.24.3)
       savon
       twilio-ruby
 
