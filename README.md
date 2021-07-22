@@ -15,9 +15,9 @@ Initially, only votes can be delegated.
 
 ## Dependencies
 
-* [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) >= v0.22.0
-* [decidim-admin](https://github.com/decidim/decidim/tree/master/decidim-admin) >= v0.22.0
-* [decidim-core](https://github.com/decidim/decidim/tree/master/decidim-core) >= v0.22.0
+* [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) = v0.24.3
+* [decidim-admin](https://github.com/decidim/decidim/tree/master/decidim-admin) = v0.24.3
+* [decidim-core](https://github.com/decidim/decidim/tree/master/decidim-core) = v0.24.3
 
 ## Installation
 
@@ -42,6 +42,8 @@ Depending on your Decidim version, choose the corresponding version to ensure co
 | 0.1 | 0.22.0 |
 | 0.2 | 0.23.x |
 | 0.3 | 0.24.x |
+
+> *Heads up!*  [Consultations module will be deprecated in the near future.](https://github.com/decidim/decidim/issues/7097)
 
 ## Usage
 
