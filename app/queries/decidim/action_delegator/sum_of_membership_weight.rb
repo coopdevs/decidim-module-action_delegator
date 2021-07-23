@@ -37,17 +37,8 @@ module Decidim
         Decidim::Consultations::Response.arel_table
       end
 
-      def authorizations
-        Decidim::Authorization.arel_table
-      end
-
       def votes_count
-        field = metadata("membership_weight")
-        VotesCountAggregation.new(field, "votes_count").to_sql
-      end
-
-      def metadata(name)
-        JSONKey.new(authorizations[:metadata], name)
+        VotesCountAggregation.new(relation, "votes_count").to_sql
       end
     end
   end
