@@ -5,11 +5,11 @@ require "spec_helper"
 module Decidim
   module ActionDelegator
     describe VotesCountAggregation do
-      subject(:aggregation) { described_class.new(Arel.sql("foo"), "alias") }
+      subject(:aggregation) { described_class.new({ 1 => 0, 2 => 0 }, Arel.sql("foo"), "alias") }
 
       describe "#to_sql" do
-        it "returns the SUM of the specified field" do
-          expect(aggregation.to_sql).to eq("SUM(COALESCE(CAST((foo) AS INTEGER), 1)) AS alias")
+        it "returns JSON query of the specified array and field" do
+          expect(aggregation.to_sql).to eq("JSON_BUILD_OBJECT(1, 0, 2, 0) ->> CAST((foo) AS TEXT) AS alias")
         end
       end
     end
