@@ -31,6 +31,8 @@ module Decidim
           )
           .group(
             responses[:decidim_consultations_questions_id],
+            votes[:id],
+            responses[:id],
             responses[:title],
             metadata(:membership_type),
             metadata(:membership_weight)
@@ -44,7 +46,36 @@ module Decidim
 
       def membership(field)
         full_field = "membership_#{field}"
-        coalesce(metadata(full_field), default_metadata).as(full_field)
+        json_args = membership_field_by_question_id(full_field)
+        field = votes[:id]
+        JsonBuildObjectQuery.new(json_args, field, full_field).to_sql
+      end
+
+      def membership_field_by_question_id(membership_field)
+        subquery.map do |row|
+          [
+            row.vote_id,
+            row.send(membership_field).nil? ? default_metadata : sql("'#{JSON.parse(decrypt_value(row.send(membership_field)))}'")
+          ]
+        end
+      end
+
+      def subquery
+        @subquery ||=
+          relation
+          .select(
+            responses[:decidim_consultations_questions_id],
+            votes[:id].as("vote_id"),
+            metadata(:membership_type).as("membership_type"),
+            metadata(:membership_weight).as("membership_weight")
+          )
+          .group(
+            votes[:id],
+            responses[:id],
+            responses[:decidim_consultations_questions_id],
+            metadata(:membership_type),
+            metadata(:membership_weight)
+          )
       end
 
       def default_metadata
@@ -67,6 +98,10 @@ module Decidim
         Decidim::Consultations::Response.arel_table
       end
 
+      def votes
+        Decidim::Consultations::Vote.arel_table
+      end
+
       def sql(name)
         Arel.sql(name.to_s)
       end
@@ -75,6 +110,13 @@ module Decidim
       # https://github.com/rails/rails/commit/e5190acacd1088211cfe6f128b782af216aa6570
       def coalesce(*exprs)
         Arel::Nodes::NamedFunction.new("COALESCE", exprs)
+      end
+
+      def decrypt_value(value)
+        Decidim::AttributeEncryptor.decrypt(value)
+      rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature
+        # Support for legacy unencrypted values.
+        value
       end
     end
   end

@@ -2,9 +2,9 @@
 
 module Decidim
   module ActionDelegator
-    class VotesCountAggregation
-      def initialize(votes_count_by_field, field, aliaz)
-        @votes_count_by_field = votes_count_by_field
+    class JsonBuildObjectQuery
+      def initialize(json_args, field, aliaz)
+        @json_args = json_args
         @field = field
         @aliaz = aliaz
       end
@@ -12,14 +12,14 @@ module Decidim
       def to_sql
         Arel::Nodes::InfixOperation.new(
           "->>",
-          json_build_object(votes_count_by_field.to_a.flatten),
+          json_build_object(json_args.to_a.flatten),
           cast(field, :text)
         ).as(aliaz).to_sql
       end
 
       private
 
-      attr_reader :votes_count_by_field, :field, :aliaz
+      attr_reader :json_args, :field, :aliaz
 
       # Returns the equivalent of `JSON_BUILD_OBJECT (ARRAY)` in Arel
       def json_build_object(array)
@@ -35,6 +35,10 @@ module Decidim
           "CAST",
           [Arel::Nodes::As.new(Arel::Nodes::Grouping.new(exprs), Arel.sql(type.to_s.upcase))]
         )
+      end
+
+      def coalesce(*exprs)
+        Arel::Nodes::NamedFunction.new("COALESCE", exprs)
       end
     end
   end

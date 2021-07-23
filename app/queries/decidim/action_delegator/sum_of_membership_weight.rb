@@ -42,7 +42,9 @@ module Decidim
       end
 
       def votes_count
-        VotesCountAggregation.new(votes_count_by_question_id, questions[:id], "votes_count").to_sql
+        json_args = votes_count_by_question_id
+        field = questions[:id]
+        JsonBuildObjectQuery.new(json_args, field, "votes_count").to_sql
       end
 
       def votes_count_by_question_id
