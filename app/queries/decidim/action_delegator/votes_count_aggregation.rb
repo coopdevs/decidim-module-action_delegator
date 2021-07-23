@@ -9,14 +9,32 @@ module Decidim
       end
 
       def to_sql
-        <<-SQL
-          JSON_BUILD_OBJECT(#{votes_count_by_question_id.flatten.join(", ")}) ->> (decidim_consultations_questions.id :: TEXT) AS #{aliaz}
-        SQL
+        Arel::Nodes::InfixOperation.new(
+          "->>",
+          json_build_object(votes_count_by_question_id.flatten),
+          cast(questions[:id], :text)
+        ).as(aliaz).to_sql
       end
 
       private
 
       attr_reader :relation, :aliaz
+
+      # Returns the equivalent of `JSON_BUILD_OBJECT (ARRAY)` in Arel
+      def json_build_object(array)
+        Arel::Nodes::NamedFunction.new(
+          "JSON_BUILD_OBJECT",
+          [array]
+        )
+      end
+
+      # Returns the equivalent of `CAST ((<exprs>) AS <type>)` in Arel
+      def cast(*exprs, type)
+        Arel::Nodes::NamedFunction.new(
+          "CAST",
+          [Arel::Nodes::As.new(Arel::Nodes::Grouping.new(exprs), Arel.sql(type.to_s.upcase))]
+        )
+      end
 
       def votes_count_by_question_id
         query.map do |row|
