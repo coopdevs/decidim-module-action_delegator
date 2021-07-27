@@ -170,7 +170,7 @@ project is set to follow the same rules that Decidim itself follows.
 You can run the code styling checks by running the following commands from the
 console:
 
-```
+```bash
 bundle exec rubocop
 ```
 
