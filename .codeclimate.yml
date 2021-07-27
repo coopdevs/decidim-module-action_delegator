@@ -59,7 +59,7 @@ plugins:
     enabled: true
 
     exclude_patterns:
-      - .rubocop.yml
+      - .rubocop_ruby.yml
 
   grep:
     enabled: true
