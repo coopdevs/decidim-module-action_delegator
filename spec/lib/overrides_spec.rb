@@ -47,7 +47,9 @@ module Decidim::ActionDelegator
 
   describe "Overriden files", type: :view do
     checksums.each do |item|
-      spec = ::Gem::Specification.find_by(name: item[:package])
+      # rubocop:disable Rails/DynamicFindBy
+      spec = ::Gem::Specification.find_by_name(item[:package])
+      # rubocop:enable Rails/DynamicFindBy
       item[:files].each do |file, signature|
         it "#{spec.gem_dir}#{file} matches checksum" do
           expect(md5("#{spec.gem_dir}#{file}")).to eq(signature)
