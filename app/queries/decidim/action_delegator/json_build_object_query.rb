@@ -3,23 +3,23 @@
 module Decidim
   module ActionDelegator
     class JsonBuildObjectQuery
-      def initialize(json_args, field, aliaz)
+      def initialize(json_args, query_field, aliaz)
         @json_args = json_args
-        @field = field
+        @query_field = query_field
         @aliaz = aliaz
       end
 
       def to_sql
         Arel::Nodes::InfixOperation.new(
           "->>",
-          json_build_object(json_args.to_a.flatten),
-          cast(field, :text)
+          json_build_object(json_args),
+          cast(query_field, :text)
         ).as(aliaz).to_sql
       end
 
       private
 
-      attr_reader :json_args, :field, :aliaz
+      attr_reader :json_args, :query_field, :aliaz
 
       # Returns the equivalent of `JSON_BUILD_OBJECT (ARRAY)` in Arel
       def json_build_object(array)

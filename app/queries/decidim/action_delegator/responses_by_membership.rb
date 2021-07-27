@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json_key"
-
 module Decidim
   module ActionDelegator
     # Returns total votes of each response by memberships' type and weight.
@@ -31,11 +29,9 @@ module Decidim
           )
           .group(
             responses[:decidim_consultations_questions_id],
-            votes[:id],
-            responses[:id],
             responses[:title],
-            metadata(:membership_type),
-            metadata(:membership_weight)
+            sql(:membership_type),
+            sql(:membership_weight)
           )
           .order(:title, :membership_type, { membership_weight: :desc }, "votes_count DESC")
       end
@@ -46,36 +42,11 @@ module Decidim
 
       def membership(field)
         full_field = "membership_#{field}"
-        json_args = membership_field_by_question_id(full_field)
-        field = votes[:id]
-        JsonBuildObjectQuery.new(json_args, field, full_field).to_sql
+        coalesce(sql(full_field), default_metadata).as(full_field)
       end
 
-      def membership_field_by_question_id(membership_field)
-        subquery.map do |row|
-          [
-            row.vote_id,
-            row.send(membership_field).nil? ? default_metadata : sql("'#{JSON.parse(decrypt_value(row.send(membership_field)))}'")
-          ]
-        end
-      end
-
-      def subquery
-        @subquery ||=
-          relation
-          .select(
-            responses[:decidim_consultations_questions_id],
-            votes[:id].as("vote_id"),
-            metadata(:membership_type).as("membership_type"),
-            metadata(:membership_weight).as("membership_weight")
-          )
-          .group(
-            votes[:id],
-            responses[:id],
-            responses[:decidim_consultations_questions_id],
-            metadata(:membership_type),
-            metadata(:membership_weight)
-          )
+      def memberships
+        Arel::Table.new(:memberships)
       end
 
       def default_metadata
@@ -86,20 +57,8 @@ module Decidim
         sql("COUNT(*)").as(sql(:votes_count))
       end
 
-      def metadata(name)
-        JSONKey.new(authorizations[:metadata], name)
-      end
-
-      def authorizations
-        Decidim::Authorization.arel_table
-      end
-
       def responses
         Decidim::Consultations::Response.arel_table
-      end
-
-      def votes
-        Decidim::Consultations::Vote.arel_table
       end
 
       def sql(name)
@@ -110,13 +69,6 @@ module Decidim
       # https://github.com/rails/rails/commit/e5190acacd1088211cfe6f128b782af216aa6570
       def coalesce(*exprs)
         Arel::Nodes::NamedFunction.new("COALESCE", exprs)
-      end
-
-      def decrypt_value(value)
-        Decidim::AttributeEncryptor.decrypt(value)
-      rescue ActiveSupport::MessageEncryptor::InvalidMessage, ActiveSupport::MessageVerifier::InvalidSignature
-        # Support for legacy unencrypted values.
-        value
       end
     end
   end
