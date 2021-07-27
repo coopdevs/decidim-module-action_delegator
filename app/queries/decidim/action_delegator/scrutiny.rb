@@ -70,7 +70,7 @@ module Decidim
       end
 
       def questions_joined_votes_and_delegations
-        <<-SQL.strip_heredoc
+        <<-SQL.squish
           "decidim_consultations_questions"
           LEFT OUTER JOIN "decidim_consultations_votes"
             ON "decidim_consultations_votes"."decidim_consultation_question_id" = "decidim_consultations_questions"."id"

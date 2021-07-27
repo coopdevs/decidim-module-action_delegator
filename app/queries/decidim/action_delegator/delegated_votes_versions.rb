@@ -10,7 +10,7 @@ module Decidim
       end
 
       def query
-        statement = <<-SQL.strip_heredoc
+        statement = <<-SQL.squish
           SELECT *
           FROM versions
           INNER JOIN decidim_action_delegator_delegations
