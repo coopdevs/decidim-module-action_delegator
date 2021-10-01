@@ -10,7 +10,7 @@ if ENV["CODECOV"]
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-if ENV["COBERTURA"]
+if ENV["SIMPLECOV"]
   require "simplecov-cobertura"
   SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
 end
