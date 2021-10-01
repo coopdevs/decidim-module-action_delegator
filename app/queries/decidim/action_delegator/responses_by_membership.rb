@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json_key"
-
 module Decidim
   module ActionDelegator
     # Returns total votes of each response by memberships' type and weight.
@@ -32,8 +30,8 @@ module Decidim
           .group(
             responses[:decidim_consultations_questions_id],
             responses[:title],
-            metadata(:membership_type),
-            metadata(:membership_weight)
+            sql(:membership_type),
+            sql(:membership_weight)
           )
           .order(:title, :membership_type, { membership_weight: :desc }, "votes_count DESC")
       end
@@ -44,7 +42,11 @@ module Decidim
 
       def membership(field)
         full_field = "membership_#{field}"
-        coalesce(metadata(full_field), default_metadata).as(full_field)
+        coalesce(sql(full_field), default_metadata).as(full_field)
+      end
+
+      def memberships
+        Arel::Table.new(:memberships)
       end
 
       def default_metadata
@@ -53,14 +55,6 @@ module Decidim
 
       def votes_count
         sql("COUNT(*)").as(sql(:votes_count))
-      end
-
-      def metadata(name)
-        JSONKey.new(authorizations[:metadata], name)
-      end
-
-      def authorizations
-        Decidim::Authorization.arel_table
       end
 
       def responses

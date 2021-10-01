@@ -10,9 +10,9 @@ module Decidim
         @results_type = results_type.to_sym
 
         export_data = Decidim::Exporters
-          .find_exporter("CSV")
-          .new(collection, serializer)
-          .export
+                      .find_exporter("CSV")
+                      .new(collection, serializer)
+                      .export
 
         ExportMailer.export(user, filename, export_data).deliver_now
       end

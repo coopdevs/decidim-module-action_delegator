@@ -58,19 +58,19 @@ module Decidim
       # in Ruby in different ways but reaching out to DB just once.
       def questions_query
         @questions_query ||= Consultations::Question
-          .includes(:responses)
-          .select(
-            '"decidim_consultations_questions".*',
-            '"decidim_consultations_votes"."decidim_author_id"',
-            '"decidim_action_delegator_delegations"."granter_id"'
-          )
-          .from(questions_joined_votes_and_delegations)
-          .where(decidim_consultation_id: consultation.id)
-          .merge(Consultations::Question.published)
+                             .includes(:responses)
+                             .select(
+                               '"decidim_consultations_questions".*',
+                               '"decidim_consultations_votes"."decidim_author_id"',
+                               '"decidim_action_delegator_delegations"."granter_id"'
+                             )
+                             .from(questions_joined_votes_and_delegations)
+                             .where(decidim_consultation_id: consultation.id)
+                             .merge(Consultations::Question.published)
       end
 
       def questions_joined_votes_and_delegations
-        <<-SQL.strip_heredoc
+        <<-SQL.squish
           "decidim_consultations_questions"
           LEFT OUTER JOIN "decidim_consultations_votes"
             ON "decidim_consultations_votes"."decidim_consultation_question_id" = "decidim_consultations_questions"."id"

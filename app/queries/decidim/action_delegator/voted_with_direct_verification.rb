@@ -10,7 +10,7 @@ module Decidim
       def query
         relation
           .joins(:votes)
-          .joins(authorizations_on_author)
+          .joins(join_on_votes_author(decrypted_authorizations))
           .where(direct_verification.or(no_authorization))
       end
 
@@ -18,13 +18,23 @@ module Decidim
 
       attr_reader :relation
 
-      def authorizations_on_author
-        join_on = votes.create_on(authorizations[:decidim_user_id].eq(votes[:decidim_author_id]))
-        authorizations.create_join(authorizations, join_on, Arel::Nodes::OuterJoin)
+      def join_on_votes_author(arel_table)
+        join_on = votes.create_on(arel_table[:decidim_user_id].eq(votes[:decidim_author_id]))
+        arel_table.create_join(arel_table, join_on, Arel::Nodes::OuterJoin)
       end
 
       def votes
         Decidim::Consultations::Vote.arel_table
+      end
+
+      def decrypted_authorizations
+        @decrypted_authorizations ||= DecryptedAuthorizations.new(subquery).query.as("decrypted_authorizations")
+      end
+
+      def subquery
+        relation
+          .joins(:votes)
+          .joins(join_on_votes_author(authorizations))
       end
 
       def authorizations
@@ -32,11 +42,11 @@ module Decidim
       end
 
       def direct_verification
-        authorizations[:name].eq("direct_verifications")
+        decrypted_authorizations[:name].eq("direct_verifications")
       end
 
       def no_authorization
-        authorizations[:id].eq(nil)
+        decrypted_authorizations[:id].eq(nil)
       end
     end
   end

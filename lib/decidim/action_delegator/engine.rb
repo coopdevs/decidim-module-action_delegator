@@ -23,7 +23,7 @@ module Decidim
       # Initializer must go here otherwise every engine triggers config/initializers/ files
       initializer "decidim_action_delegator.overrides" do |_app|
         Rails.application.config.to_prepare do
-          Dir.glob(Decidim::ActionDelegator::Engine.root + "app/overrides/**/*.rb").each do |c|
+          Dir.glob(Decidim::ActionDelegator::Engine.root + "app/overrides/**/*.rb").each do |c| # rubocop:disable Style/StringConcatenation
             require_dependency(c)
           end
         end

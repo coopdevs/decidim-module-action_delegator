@@ -5,7 +5,7 @@
       <span class="label button--title">
         <%= t "decidim.admin.consultations.results.total_votes", count: current_consultation.total_votes %>
         /
-        <%= t 'decidim.admin.consultations.results.total_delegates', count: @total_delegates %>
+        <%= t "decidim.admin.consultations.results.total_delegates", count: @total_delegates %>
         /
         <%= t "decidim.admin.consultations.results.participants", count: current_consultation.total_participants %>
       </span>
@@ -30,7 +30,7 @@
               <th class="table-list__actions">
                 <%= t "decidim.admin.consultations.results.total_votes", count: question.total_votes %>
                 /
-                <%= t 'decidim.admin.consultations.results.total_delegates', count: question.total_delegates %>
+                <%= t "decidim.admin.consultations.results.total_delegates", count: question.total_delegates %>
                 /
                 <%= t "decidim.admin.consultations.results.participants", count: question.total_participants %>
               </th>

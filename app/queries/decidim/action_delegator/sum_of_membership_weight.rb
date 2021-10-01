@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json_key"
-
 module Decidim
   module ActionDelegator
     class SumOfMembershipWeight < Rectify::Query
@@ -42,12 +40,8 @@ module Decidim
       end
 
       def votes_count
-        field = metadata("membership_weight")
+        field = Arel.sql("membership_weight")
         VotesCountAggregation.new(field, "votes_count").to_sql
-      end
-
-      def metadata(name)
-        JSONKey.new(authorizations[:metadata], name)
       end
     end
   end

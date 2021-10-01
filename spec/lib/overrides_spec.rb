@@ -10,7 +10,7 @@ module Decidim::ActionDelegator
     {
       package: "decidim-admin",
       files: {
-        "/app/views/layouts/decidim/admin/users.html.erb" => "8d2622bcea84aa844896123499619bc3"
+        "/app/views/layouts/decidim/admin/users.html.erb" => "8619efbe43e3cd9c2a96a9d70c459366"
       }
     }, {
       package: "decidim-consultations",
@@ -24,7 +24,7 @@ module Decidim::ActionDelegator
         "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "ae7c38afcc6588a00f8298ea69769da7",
         "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "a0d033ed6593f15c957393afa128ca12",
         "/app/views/decidim/consultations/admin/consultations/results.html.erb" => "1a2f7afd79b20b1fcf66bdece660e8ae",
-        "/app/views/layouts/decidim/admin/consultation.html.erb" => "7f70f790cf474389f327528136d366a3",
+        "/app/views/layouts/decidim/admin/consultation.html.erb" => "06933ad23397ad9eb9313d9d8b71685a",
         "/app/views/layouts/decidim/admin/question.html.erb" => "e844ffab48c19671583e9cb4eaf4e1dc",
 
         # monkeypatches
