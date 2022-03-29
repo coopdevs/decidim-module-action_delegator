@@ -3,7 +3,7 @@
 module Decidim
   module ActionDelegator
     module Consultations
-      module QestionVotesControllerOverride
+      module QuestionVotesControllerOverride
         extend ActiveSupport::Concern
 
         included do
