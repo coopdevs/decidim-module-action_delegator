@@ -2,9 +2,9 @@
 
 module Decidim
   module ActionDelegator
-    module Verification
+    module Verifications
       module Admin
-        class MembersController < ActionDelegator::Verification::Admin::ApplicationController
+        class MembersController < ActionDelegator::Verifications::Admin::ApplicationController
           include NeedsPermission
 
           layout "decidim/admin/users"
