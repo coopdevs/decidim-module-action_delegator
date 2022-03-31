@@ -13,7 +13,7 @@ module Decidim
           def build_vote
             if delegation
               form.context.delegation = delegation
-              Decidim::ActionDelegator::VoteDelegation.new(form).call
+              Decidim::ActionDelegator::VoteDelegation.new(form.response, form.context).call
             else
               vote = form.context.current_question.votes.build(
                 author: form.context.current_user,

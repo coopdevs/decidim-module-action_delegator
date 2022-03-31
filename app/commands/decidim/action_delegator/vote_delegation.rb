@@ -3,9 +3,9 @@
 module Decidim
   module ActionDelegator
     class VoteDelegation
-      def initialize(form)
-        @context = form.context
-        @response = form.response
+      def initialize(response, context)
+        @response = response
+        @context = context
       end
 
       def call

@@ -55,7 +55,7 @@
                 <% end %>
               <% elsif allowed_to? :vote_delegation, :question, { question: question, delegation: delegation }, [Decidim::ActionDelegator::Permissions, Decidim::Admin::Permissions, Decidim::Permissions] %>
                 <% if question.multiple? %>
-                  <%= link_to decidim_consultations.question_question_multiple_votes_path(question),
+                  <%= link_to decidim_consultations.question_question_multiple_votes_path(question, delegation: delegation.id),
                               class: "button expanded",
                               id: "multivote_button" do %>
                     <div class="vote-button-caption"><%= t "questions.vote_button.vote", scope: "decidim" %></div>

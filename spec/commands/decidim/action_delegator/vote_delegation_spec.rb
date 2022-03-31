@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::ActionDelegator::VoteDelegation do
-  subject { described_class.new(form) }
+  subject { described_class.new(response, context) }
 
   let(:organization) { build(:organization) }
   let(:consultation) { build(:consultation, :active, organization: organization) }
@@ -13,7 +13,6 @@ describe Decidim::ActionDelegator::VoteDelegation do
   let(:response) { build(:response, question: question) }
 
   let(:context) { double(:context, delegation: delegation, current_question: question, current_user: delegation.grantee) }
-  let(:form) { instance_double(Decidim::Consultations::VoteForm, context: context, response: response) }
 
   describe "#call" do
     it "builds a vote with the granter as author" do
@@ -21,9 +20,9 @@ describe Decidim::ActionDelegator::VoteDelegation do
       expect(vote.author).to eq(delegation.granter)
     end
 
-    it "builds a vote with the response taken from the form" do
+    it "builds a vote with the response taken from the initializer" do
       vote = subject.call
-      expect(vote.response).to eq(form.response)
+      expect(vote.response).to eq(response)
     end
 
     it "builds a valid vote" do
