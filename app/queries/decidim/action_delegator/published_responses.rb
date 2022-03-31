@@ -10,7 +10,7 @@ module Decidim
       # The Question's default_scope, `order(order: :asc)`, messes up the ordering in our queries so
       # we have to explicitly remove the ORDER BY close using `#reorder`.
       def query
-        Consultations::Response
+        Decidim::Consultations::Response
           .joins(question: :consultation)
           .merge(Consultation.finished)
           .where(decidim_consultations_questions: { decidim_consultation_id: consultation.id })

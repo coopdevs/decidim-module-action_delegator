@@ -28,7 +28,7 @@ module Decidim
       attr_reader :relation
 
       def questions
-        Consultations::Question.arel_table
+        Decidim::Consultations::Question.arel_table
       end
 
       def responses

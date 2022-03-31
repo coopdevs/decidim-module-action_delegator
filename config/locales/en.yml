@@ -56,11 +56,13 @@ en:
               new_setting: New delegation
             consultation: Consultation
             created_at: Created at
+            max_grants: Max delegations/user
+            delegations: Total delegations
             title: Delegations
           new:
             form:
               title: General information
-            max_grants: Maximum delegations
+            max_grants: Maximum delegations per user
             save: Save
             title: Delegation settings
       authorizations:
