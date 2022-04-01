@@ -14,6 +14,25 @@ describe Decidim::ActionDelegator::VoteDelegation do
 
   let(:context) { double(:context, delegation: delegation, current_question: question, current_user: delegation.grantee) }
 
+  shared_examples "delegation tracking" do |save_method|
+    it "tracks who performed the vote", versioning: true do
+      vote = subject.call
+      vote.send(save_method)
+
+      expect(vote.versions.last.whodunnit).to eq(context.current_user.id.to_s)
+    end
+
+    it "tracks the delegation the vote is related to", versioning: true do
+      delegation.save
+      question.save
+
+      vote = subject.call
+      vote.send(save_method)
+
+      expect(vote.versions.last.decidim_action_delegator_delegation_id).to eq(delegation.id)
+    end
+  end
+
   describe "#call" do
     it "builds a vote with the granter as author" do
       vote = subject.call
@@ -30,21 +49,7 @@ describe Decidim::ActionDelegator::VoteDelegation do
       expect(vote).to be_valid
     end
 
-    it "tracks who performed the vote", versioning: true do
-      vote = subject.call
-      vote.save
-
-      expect(vote.versions.last.whodunnit).to eq(context.current_user.id.to_s)
-    end
-
-    it "tracks the delegation the vote is related to", versioning: true do
-      delegation.save
-      question.save
-
-      vote = subject.call
-      vote.save
-
-      expect(vote.versions.last.decidim_action_delegator_delegation_id).to eq(delegation.id)
-    end
+    it_behaves_like "delegation tracking", "save"
+    it_behaves_like "delegation tracking", "save!"
   end
 end

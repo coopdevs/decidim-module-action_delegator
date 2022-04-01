@@ -9,6 +9,10 @@ module Decidim
 
       let(:organization) { create :organization }
       let(:user) { create(:user, :confirmed, organization: organization) }
+      let(:granter) { create(:user, :confirmed, organization: organization) }
+      let(:consultation) { create(:consultation, organization: organization) }
+      let(:setting) { create(:setting, consultation: consultation) }
+      let!(:delegation) { create(:delegation, setting: setting, granter: granter, grantee: user) }
 
       before do
         request.env["decidim.current_organization"] = organization
@@ -19,6 +23,7 @@ module Decidim
         it "show the list of delegations for the user" do
           get :index
           expect(response).to have_http_status(:ok)
+          expect(controller.helpers.delegations).to eq([delegation])
         end
       end
     end
