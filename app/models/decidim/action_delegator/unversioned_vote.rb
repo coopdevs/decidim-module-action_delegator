@@ -8,6 +8,12 @@ module Decidim
           super
         end
       end
+
+      def save!
+        PaperTrail.request(enabled: false) do
+          super
+        end
+      end
     end
   end
 end

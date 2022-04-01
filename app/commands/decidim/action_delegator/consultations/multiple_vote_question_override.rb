@@ -16,7 +16,7 @@ module Decidim
                      form.context.delegation = delegation
                      Decidim::ActionDelegator::VoteDelegation.new(vote_form.response, form.context).call
                    else
-                     normal_vote = vote_form.context.current_question.votes.build(
+                     normal_vote = form.context.current_question.votes.build(
                        author: @current_user,
                        response: vote_form.response
                      )
