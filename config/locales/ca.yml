@@ -54,6 +54,8 @@ ca:
               new_setting: Nova delegació
             consultation: Consulta
             created_at: Creat el
+            delegations: Total delegations
+            max_grants: Max delegations/user
             title: Delegacions
           new:
             form:
@@ -73,6 +75,9 @@ ca:
         title: 'Consulta: delegacions atorgades'
       name: Mòdul Decidim ActionDelegator per a cooperatives
       sms_message: El teu codi de verificació és %{code}
+      user_delegations:
+        index:
+          vote_delegated: You can vote on behalf of %{name} in this consultation
       verification:
         admin:
           members:
