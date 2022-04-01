@@ -7,11 +7,6 @@ module Decidim
         extend ActiveSupport::Concern
 
         included do
-          helper_method :delegation
-          before_action do
-            session[:delegation_id] = params[:delegation] if params.has_key?(:delegation)
-          end
-
           def destroy
             enforce_permission_to_unvote
 
