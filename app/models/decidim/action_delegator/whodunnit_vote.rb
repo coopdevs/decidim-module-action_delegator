@@ -14,6 +14,12 @@ module Decidim
         end
       end
 
+      def save!
+        PaperTrail.request(whodunnit: user.id) do
+          super
+        end
+      end
+
       private
 
       attr_reader :user

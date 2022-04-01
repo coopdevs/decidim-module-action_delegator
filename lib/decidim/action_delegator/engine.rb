@@ -20,13 +20,16 @@ module Decidim
         end
       end
 
-      # Initializer must go here otherwise every engine triggers config/initializers/ files
-      initializer "decidim_action_delegator.overrides" do |_app|
-        Rails.application.config.to_prepare do
-          Dir.glob(Decidim::ActionDelegator::Engine.root + "app/overrides/**/*.rb").each do |c| # rubocop:disable Style/StringConcatenation
-            require_dependency(c)
-          end
-        end
+      config.to_prepare do
+        # override votes questions
+        Decidim::Consultations::VoteQuestion.include(Decidim::ActionDelegator::Consultations::VoteQuestionOverride)
+        Decidim::Consultations::MultipleVoteQuestion.include(Decidim::ActionDelegator::Consultations::MultipleVoteQuestionOverride)
+        Decidim::Consultations::QuestionVotesController.include(Decidim::ActionDelegator::Consultations::QuestionVotesControllerOverride)
+        Decidim::Consultations::QuestionMultipleVotesController.include(Decidim::ActionDelegator::Consultations::QuestionMultipleVotesControllerOverride)
+        Decidim::Consultations::VoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
+        Decidim::Consultations::MultiVoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
+        Decidim::Consultations::Vote.include(Decidim::ActionDelegator::Consultations::VoteOverride)
+        Decidim::Verifications::Sms::AuthorizationsController.include(Decidim::ActionDelegator::Verifications::Sms::AuthorizationsControllerOverride)
       end
 
       initializer "decidim_action_delegator.assets" do |app|

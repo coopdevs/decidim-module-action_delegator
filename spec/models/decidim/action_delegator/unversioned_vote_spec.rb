@@ -14,6 +14,12 @@ module Decidim
 
         expect(unversioned_vote.versions).to be_empty
       end
+
+      it "disables PaperTrail on save!", versioning: true do
+        subject.save!
+
+        expect(unversioned_vote.versions).to be_empty
+      end
     end
   end
 end

@@ -11,6 +11,8 @@
         <thead>
           <tr>
             <th><%= t(".consultation") %></th>
+            <th><%= t(".max_grants") %></th>
+            <th><%= t(".delegations") %></th>
             <th><%= t(".created_at") %></th>
             <th>&nbsp;</th>
           </tr>
@@ -19,10 +21,14 @@
           <% @settings.each do |setting| %>
             <tr data-setting-id="<%= setting.id %>">
               <td><%= link_to translated_attribute(setting.consultation.title), decidim_admin_action_delegator.setting_delegations_path(setting) %></td>
+              <td><%= setting.max_grants %></td>
+              <td><%= setting.delegations.count %></td>
               <td><%= l setting.created_at, format: :short %></td>
 
               <td class="table-list__actions">
+                <%= icon_link_to "people", decidim_admin_action_delegator.setting_delegations_path(setting), t("actions.manage", scope: "decidim.admin"), class: "action-icon--edit" %>
                 <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_path(setting), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
+                <%= icon_link_to "eye", decidim_consultations.consultation_path(setting.consultation), t("actions.preview", scope: "decidim.admin"), class: "action-icon--edit" %>
               </td>
             </tr>
           <% end %>

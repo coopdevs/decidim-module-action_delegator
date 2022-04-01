@@ -15,7 +15,7 @@ module Decidim
       private
 
       def votes
-        Consultations::Vote.arel_table
+        Decidim::Consultations::Vote.arel_table
       end
 
       def delegations

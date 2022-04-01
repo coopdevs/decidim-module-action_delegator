@@ -13,5 +13,10 @@ describe Decidim::ActionDelegator::WhodunnitVote do
       expect(PaperTrail).to receive(:request).with(whodunnit: user.id).and_yield
       subject.save
     end
+
+    it "sets PaperTrail's whodunnit on save!" do
+      expect(PaperTrail).to receive(:request).with(whodunnit: user.id).and_yield
+      subject.save!
+    end
   end
 end

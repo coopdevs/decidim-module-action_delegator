@@ -57,7 +57,7 @@ module Decidim
       # Returns questions joined with their votes and delegations so that we can aggregate the data
       # in Ruby in different ways but reaching out to DB just once.
       def questions_query
-        @questions_query ||= Consultations::Question
+        @questions_query ||= Decidim::Consultations::Question
                              .includes(:responses)
                              .select(
                                '"decidim_consultations_questions".*',
@@ -66,7 +66,7 @@ module Decidim
                              )
                              .from(questions_joined_votes_and_delegations)
                              .where(decidim_consultation_id: consultation.id)
-                             .merge(Consultations::Question.published)
+                             .merge(Decidim::Consultations::Question.published)
       end
 
       def questions_joined_votes_and_delegations
