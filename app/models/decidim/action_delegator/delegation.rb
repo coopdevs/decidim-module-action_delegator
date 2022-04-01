@@ -16,6 +16,8 @@ module Decidim
         message: I18n.t("delegations.create.error_granter_unique", scope: "decidim.action_delegator.admin")
       }
 
+      delegate :consultation, to: :setting
+
       def self.granted_to?(user, consultation)
         GranteeDelegations.for(consultation, user).exists?
       end
