@@ -24,7 +24,7 @@ Initially, only votes can be delegated.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "decidim-action_delegator", git: "https://github.com/coopdevs/decidim-module-action_delegator"
+gem "decidim-action_delegator"
 ```
 
 And then execute:
@@ -39,9 +39,10 @@ Depending on your Decidim version, choose the corresponding version to ensure co
 
 | Version | Compatible Decidim versions |
 |---|---|
-| 0.1 | 0.22.0 |
-| 0.2 | 0.23.x |
+| 0.4 | 0.24.x |
 | 0.3 | 0.24.x |
+| 0.2 | 0.23.x |
+| 0.1 | 0.22.0 |
 
 > *Heads up!*  [Consultations module will be deprecated in the near future.](https://github.com/decidim/decidim/issues/7097)
 
@@ -208,6 +209,13 @@ the `SIMPLECOV=1` environment variable in the rspec command as follows:
 ```bash
 SIMPLECOV=1 bundle exec rspec
 ```
+
+### Localization
+
+If you would like to see this module in your own language, you can help with its
+translation at Crowdin:
+
+https://crowdin.com/project/decidim-action-delegator-vote
 
 This will generate a folder named `coverage` in the project root which contains
 the code coverage report.

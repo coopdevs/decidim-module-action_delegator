@@ -5,6 +5,6 @@ module Decidim
   module ActionDelegator
     MIN_DECIDIM_VERSION = ">= 0.24.0"
     MAX_DECIDIM_VERSION = "<= 0.24.3"
-    VERSION = "0.3"
+    VERSION = "0.4"
   end
 end

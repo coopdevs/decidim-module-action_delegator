@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.summary = "A Decidim ActionDelegator module"
   s.description = "A tool for Decidim that provides extended functionalities for cooperatives and allows delegated voting."
 
-  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,lib,db}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
 
   s.add_dependency "decidim-admin", [MIN_DECIDIM_VERSION, MAX_DECIDIM_VERSION]
   s.add_dependency "decidim-consultations", [MIN_DECIDIM_VERSION, MAX_DECIDIM_VERSION]
