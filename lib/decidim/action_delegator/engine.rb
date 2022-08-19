@@ -32,8 +32,8 @@ module Decidim
         Decidim::Verifications::Sms::AuthorizationsController.include(Decidim::ActionDelegator::Verifications::Sms::AuthorizationsControllerOverride)
       end
 
-      initializer "decidim_action_delegator.assets" do |app|
-        app.config.assets.precompile += %w(decidim_action_delegator_manifest.js decidim_action_delegator_manifest.css)
+      initializer "decidim_action_delegator.webpacker.assets_path" do |app|
+        Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
       initializer "decidim.user_menu" do

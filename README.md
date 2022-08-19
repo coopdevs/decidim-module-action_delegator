@@ -188,7 +188,11 @@ To run the tests run the following in the gem development path:
 
 ```bash
 bundle
-DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake decidim:generate_external_test_app
+cd spec/decidim_dummy_app
+bundle exec rails decidim_action_delegator:install:migrations
+RAILS_ENV=test bundle exec rails db:migrate
+cd -
 DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rspec
 ```
 
