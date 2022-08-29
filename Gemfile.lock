@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-action_delegator (0.4.2)
+    decidim-action_delegator (0.5.0)
       decidim-admin (>= 0.25.0, < 0.26.0)
       decidim-consultations (>= 0.25.0, < 0.26.0)
       decidim-core (>= 0.25.0, < 0.26.0)
