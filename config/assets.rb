@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This file is located at `config/assets.rb` of your module.
 
 # Define the base path of your module. Please note that `Rails.root` may not be
@@ -20,7 +21,7 @@ Decidim::Webpacker.register_path("#{base_path}/app/packs")
 Decidim::Webpacker.register_entrypoints(
   decidim_action_delegator_questions: "#{base_path}/app/packs/entrypoints/decidim_action_delegator_questions.js",
   decidim_action_delegator_questions_js: "#{base_path}/app/packs/entrypoints/decidim_action_delegator_questions_js.js",
-  decidim_action_delegator_admin_action_delegator_js: "#{base_path}/app/packs/entrypoints/decidim_action_delegator_admin_action_delegator_js.js",
+  decidim_action_delegator_admin_action_delegator_js: "#{base_path}/app/packs/entrypoints/decidim_action_delegator_admin_action_delegator_js.js"
 )
 
 # If you want to import some extra SCSS files in the Decidim main SCSS file

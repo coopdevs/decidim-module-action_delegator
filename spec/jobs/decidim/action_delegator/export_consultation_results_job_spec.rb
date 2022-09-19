@@ -39,7 +39,6 @@ module Decidim::ActionDelegator
       end
     end
 
-    # rubocop:disable RSpec/StubbedMock
     describe "#perform" do
       let(:mailer) { double(:mailer, deliver_now: true) }
       let(:exporter_class) { class_double(Decidim::Exporters::CSV) }
@@ -179,6 +178,5 @@ module Decidim::ActionDelegator
         end
       end
     end
-    # rubocop:enable RSpec/StubbedMock
   end
 end

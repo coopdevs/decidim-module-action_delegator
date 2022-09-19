@@ -32,7 +32,7 @@ module Decidim
         Decidim::Verifications::Sms::AuthorizationsController.include(Decidim::ActionDelegator::Verifications::Sms::AuthorizationsControllerOverride)
       end
 
-      initializer "decidim_action_delegator.webpacker.assets_path" do |app|
+      initializer "decidim_action_delegator.webpacker.assets_path" do |_app|
         Decidim.register_assets_path File.expand_path("app/packs", root)
       end
 
