@@ -104,3 +104,7 @@ ca:
     decidim:
       user_profile:
         vote_delegations: Delegacions de vot
+      admin:
+        question:
+          attachments: Adjunts
+          categories: Categories
