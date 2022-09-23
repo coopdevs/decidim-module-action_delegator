@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe "Delegation vote", type: :system do
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, available_authorizations: ["dummy_authorization_workflow"]) }
   let(:question) { create :question, :published, consultation: consultation }
 
   context "when active consultation" do
