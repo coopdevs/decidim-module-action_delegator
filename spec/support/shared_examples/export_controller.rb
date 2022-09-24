@@ -17,10 +17,10 @@ RSpec.shared_examples "results export controller" do |type|
   end
 
   it "redirects back" do
-    request.env["HTTP_REFERER"] = "referer"
+    request.env["HTTP_REFERER"] = "http://#{request.host}/referer"
     post :create, params: { consultation_slug: consultation.slug }
 
-    expect(response).to redirect_to("referer")
+    expect(response).to redirect_to("/referer")
   end
 
   it "returns a flash notice" do
