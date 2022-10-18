@@ -68,6 +68,7 @@ es:
           missing_phone_error: Falta el teléfono de miembro
           phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
       delegations:
+        has_delegations: Voto delegado realizado
         link: Tienes delegaciones concedidas
       delegations_modal:
         callout: Recuerda, estás votando en nombre de

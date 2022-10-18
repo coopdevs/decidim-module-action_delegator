@@ -70,7 +70,7 @@
           <% end %>
         <% end %>
 
-        <%= render partial: "decidim/action_delegator/link_to_delegations", locals: { consultation: question.consultation } %>
+        <%= render partial: "decidim/action_delegator/link_to_delegations", locals: { question: question } %>
 
       <% elsif question.consultation.active? %>
         <%= logged_button_to decidim_consultations.question_question_votes_path(question),

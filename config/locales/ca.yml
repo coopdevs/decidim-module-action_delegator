@@ -68,6 +68,7 @@ ca:
           missing_phone_error: No s'ha trobat telèfon del membre
           phone_warning: Aquest número de telèfon s'ha importat per l'administrador. Si us plau, poseu-vos-hi en contacte si no és correcte.
       delegations:
+        has_delegations: Vot delegat realitzat
         link: Tens delegacions disponibles
       delegations_modal:
         callout: Recorda, estàs votant en nom de

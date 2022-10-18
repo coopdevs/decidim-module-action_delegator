@@ -26,6 +26,8 @@ module Decidim
         Decidim::Consultations::MultipleVoteQuestion.include(Decidim::ActionDelegator::Consultations::MultipleVoteQuestionOverride)
         Decidim::Consultations::QuestionVotesController.include(Decidim::ActionDelegator::Consultations::QuestionVotesControllerOverride)
         Decidim::Consultations::QuestionMultipleVotesController.include(Decidim::ActionDelegator::Consultations::QuestionMultipleVotesControllerOverride)
+        Decidim::Consultations::QuestionsController.include(Decidim::ActionDelegator::Consultations::QuestionsControllerOverride)
+        Decidim::Consultations::ConsultationsController.include(Decidim::ActionDelegator::Consultations::ConsultationsControllerOverride)
         Decidim::Consultations::VoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
         Decidim::Consultations::MultiVoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
         Decidim::Consultations::Vote.include(Decidim::ActionDelegator::Consultations::VoteOverride)

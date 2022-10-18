@@ -7,6 +7,8 @@ module Decidim
         extend ActiveSupport::Concern
 
         included do
+          helper ::Decidim::ActionDelegator::DelegationHelper
+
           def destroy
             enforce_permission_to_unvote
 

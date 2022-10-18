@@ -68,6 +68,7 @@ cs:
           missing_phone_error: Chybějící členský telefon
           phone_warning: Toto telefonní číslo bylo importováno administrátorem. Pokud není správné, obraťte se na něj.
       delegations:
+        has_delegations: Delegate vote made
         link: Máte udělené delegace
       delegations_modal:
         callout: Pamatujte, že hlasujete jménem
