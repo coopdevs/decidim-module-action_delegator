@@ -69,7 +69,7 @@ describe "Delegation vote", type: :system do
               click_button translated(response.title)
               click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
 
-              click_link(I18n.t("decidim.action_delegator.delegations.link"))
+              click_link(I18n.t("decidim.action_delegator.delegations.has_delegations"))
               within "#delegations-modal" do
                 expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
               end
@@ -94,7 +94,7 @@ describe "Delegation vote", type: :system do
             click_button translated(response.title)
             click_button I18n.t("decidim.questions.vote_modal_confirm.confirm")
 
-            click_link(I18n.t("decidim.action_delegator.delegations.link"))
+            click_link(I18n.t("decidim.action_delegator.delegations.has_delegations"))
             within "#delegations-modal" do
               expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
             end
