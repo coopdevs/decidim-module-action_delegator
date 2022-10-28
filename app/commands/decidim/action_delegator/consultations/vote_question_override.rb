@@ -27,7 +27,15 @@ module Decidim
             @delegation ||= Decidim::ActionDelegator::GranteeDelegations.for(
               form.context.current_question.consultation,
               form.context.current_user
-            ).find_by(id: form.decidim_consultations_delegation_id)
+            ).find_by(id: delegation_id)
+          end
+
+          def delegation
+            @delegation ||= Decidim::ActionDelegator::Delegation.find_by(id: delegation_id)
+          end
+
+          def delegation_id
+            @delegation_id ||= session[:delegation_id]
           end
         end
       end
