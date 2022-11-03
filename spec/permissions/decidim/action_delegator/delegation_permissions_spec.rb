@@ -8,7 +8,7 @@ describe Decidim::ActionDelegator::Permissions do # rubocop:disable RSpec/FilePa
   let(:permission_action) { Decidim::PermissionAction.new(action) }
   let(:context) { {} }
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, available_authorizations: ["dummy_authorization_workflow"]) }
   let(:consultation) { create(:consultation, :active, organization: organization) }
   let(:question) { create(:question, consultation: consultation) }
   let(:setting) { create(:setting, consultation: consultation) }

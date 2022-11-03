@@ -10,7 +10,7 @@ module Decidim::ActionDelegator
     {
       package: "decidim-admin",
       files: {
-        "/app/views/layouts/decidim/admin/users.html.erb" => "8619efbe43e3cd9c2a96a9d70c459366"
+        "/app/views/layouts/decidim/admin/users.html.erb" => "335a46bcffe8dd71477c7167eaf1cbae"
       }
     }, {
       package: "decidim-consultations",
@@ -20,13 +20,13 @@ module Decidim::ActionDelegator
         "/app/views/decidim/consultations/consultations/show.html.erb" => "84a1569b796f724efa304b9dfc40f68a",
         "/app/views/decidim/consultations/question_votes/update_vote_button.js.erb" => "a675fe780e77e8766beef999112a8fcb",
         # NOTE: _vote_button.html.erb is copied into _delegations_modal.html.erb, double check that view if _vote_button.html.erb changed
-        "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "ac4b6314c4f11216764fa8977d4f829f",
+        "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "a339b7639e8d36b0699ab3f7763872fb",
         "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "ae7c38afcc6588a00f8298ea69769da7",
         "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "a0d033ed6593f15c957393afa128ca12",
         "/app/views/decidim/consultations/question_multiple_votes/_form.html.erb" => "af610283ce7ee20f5ef786228a263d4a",
         "/app/views/decidim/consultations/admin/consultations/results.html.erb" => "1a2f7afd79b20b1fcf66bdece660e8ae",
-        "/app/views/layouts/decidim/admin/consultation.html.erb" => "06933ad23397ad9eb9313d9d8b71685a",
-        "/app/views/layouts/decidim/admin/question.html.erb" => "e844ffab48c19671583e9cb4eaf4e1dc",
+        "/app/views/layouts/decidim/admin/consultation.html.erb" => "c07fb6384e10ad23f7d7510a62ae6b24",
+        "/app/views/layouts/decidim/admin/question.html.erb" => "ae4b3e289a8d7ec0243a53482ce7844b",
 
         # monkeypatches
         "/app/commands/decidim/consultations/vote_question.rb" => "8d89031039a1ba2972437d13687a72b5",

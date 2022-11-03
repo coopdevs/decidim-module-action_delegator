@@ -104,3 +104,7 @@ es:
     decidim:
       user_profile:
         vote_delegations: Vote delegations
+      admin:
+        question:
+          attachments: Adjuntos
+          categories: Categorías
