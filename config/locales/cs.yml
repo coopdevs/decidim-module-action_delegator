@@ -102,5 +102,9 @@ cs:
         name: Ověřovatel delegací
   layouts:
     decidim:
+      admin:
+        question:
+          attachments: Attachments
+          categories: Categories
       user_profile:
         vote_delegations: Delegace hlasů
