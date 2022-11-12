@@ -104,7 +104,7 @@ cs:
     decidim:
       admin:
         question:
-          attachments: Attachments
-          categories: Categories
+          attachments: Přílohy
+          categories: Kategorie
       user_profile:
         vote_delegations: Delegace hlasů
