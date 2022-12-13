@@ -39,6 +39,8 @@ Depending on your Decidim version, choose the corresponding version to ensure co
 
 | Version | Compatible Decidim versions |
 |---|---|
+| 0.6 | 0.26.x |
+| 0.5 | 0.25.x |
 | 0.4 | 0.24.x |
 | 0.3 | 0.24.x |
 | 0.2 | 0.23.x |
