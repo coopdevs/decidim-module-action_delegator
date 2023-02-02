@@ -29,11 +29,11 @@ module Decidim
           .with_context(current_user: user, current_question: question)
       end
 
-      before do
-        allow(subject).to receive(:session).and_return({})
-      end
-
       context "when user votes the question" do
+        before do
+          allow(subject).to receive(:session).and_return({})
+        end
+
         it "broadcasts ok" do
           expect { subject.call }.to broadcast :ok
         end

@@ -35,7 +35,7 @@ module Decidim
           end
 
           def delegation_id
-            @delegation_id ||= session[:delegation_id]
+            @delegation_id ||= session[:delegation_id] || form.decidim_consultations_delegation_id
           end
         end
       end
