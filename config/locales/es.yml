@@ -103,6 +103,10 @@ es:
         name: Delegations Verifier
   layouts:
     decidim:
+      admin:
+        question:
+          attachments: Attachments
+          categories: Categories
       user_profile:
         vote_delegations: Vote delegations
       admin:

@@ -103,6 +103,10 @@ ca:
         name: Verificador de Delegacions
   layouts:
     decidim:
+      admin:
+        question:
+          attachments: Attachments
+          categories: Categories
       user_profile:
         vote_delegations: Delegacions de vot
       admin:
