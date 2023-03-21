@@ -71,6 +71,7 @@ en:
           phone_warning: This phone number has been imported by the admin. Please,
             reach out if it's not correct.
       delegations:
+        has_delegations: Delegate vote made
         link: You have delegations granted
       delegations_modal:
         callout: Remember, you are voting on behalf of

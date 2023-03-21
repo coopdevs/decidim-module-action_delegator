@@ -4,7 +4,7 @@ module Decidim
   module ActionDelegator
     module Admin
       class SettingsController < ActionDelegator::Admin::ApplicationController
-        helper DelegationHelper
+        helper ::Decidim::ActionDelegator::Admin::DelegationHelper
         include Filterable
 
         layout "decidim/admin/users"

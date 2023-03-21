@@ -7,6 +7,7 @@ module Decidim
         extend ActiveSupport::Concern
 
         included do
+          helper ::Decidim::ActionDelegator::DelegationHelper
           helper_method :delegation
           before_action do
             session[:delegation_id] = params[:delegation] if params[:delegation]

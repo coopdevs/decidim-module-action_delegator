@@ -1,5 +1,11 @@
-<% if Decidim::ActionDelegator::Delegation.granted_to?(current_user, consultation) %>
-  <div class="delegations-notice flex--cc">
-    <%= link_to t("action_delegator.delegations.link", scope: "decidim"), "#", id: "delegations-button" %>
-  </div>
+<% if Decidim::ActionDelegator::Delegation.granted_to?(current_user, question.consultation) %>
+  <% if has_any_delegate_vote?(question) %>
+    <div class="delegations-notice flex--cc">
+      <%= link_to t("action_delegator.delegations.has_delegations", scope: "decidim"), "#", id: "delegations-button" %>
+    </div>
+  <% else %>
+    <div class="delegations-notice flex--cc">
+      <%= link_to t("action_delegator.delegations.link", scope: "decidim"), "#", id: "delegations-button" %>
+    </div>
+  <% end %>
 <% end %>
