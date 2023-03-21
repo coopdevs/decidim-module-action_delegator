@@ -1,9 +1,10 @@
 # Decidim::ActionDelegator
 
-[![Test](https://github.com/coopdevs/decidim-module-action_delegator/actions/workflows/test.yml/badge.svg)](https://github.com/coopdevs/decidim-module-action_delegator/actions/workflows/test.yml)
+[![[CI] Lint](https://github.com/coopdevs/decidim-module-action_delegator/actions/workflows/lint.yml/badge.svg)](https://github.com/coopdevs/decidim-module-action_delegator/actions/workflows/lint.yml)
+[![[CI] Test](https://github.com/coopdevs/decidim-module-action_delegator/actions/workflows/test.yml/badge.svg)](https://github.com/coopdevs/decidim-module-action_delegator/actions/workflows/test.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6ec3c39e8dc2075808e1/maintainability)](https://codeclimate.com/github/coopdevs/decidim-module-action_delegator/maintainability)
 [![Codecov](https://codecov.io/gh/coopdevs/decidim-module-action_delegator/branch/master/graph/badge.svg)](https://codecov.io/gh/coopdevs/decidim-module-action_delegator)
-
+[![Gem Version](https://badge.fury.io/rb/decidim-action_delegator.svg)](https://badge.fury.io/rb/decidim-action_delegator)
 
 A tool for Decidim that provides extended functionalities for cooperatives.
 
@@ -27,6 +28,12 @@ Add this line to your application's Gemfile:
 gem "decidim-action_delegator"
 ```
 
+Or, if you want to stay up to date with the latest changes use this line instead:
+
+```ruby
+gem 'decidim-reporting_proposals', git: "https://github.com/openpoke/decidim-module-reporting_proposals"
+```
+
 And then execute:
 
 ```bash
@@ -39,7 +46,7 @@ Depending on your Decidim version, choose the corresponding version to ensure co
 
 | Version | Compatible Decidim versions |
 |---|---|
-| 0.6 | 0.26.x |
+| 0.6.x | 0.26.x |
 | 0.5 | 0.25.x |
 | 0.4 | 0.24.x |
 | 0.3 | 0.24.x |
@@ -125,7 +132,7 @@ that matter.
 
 ## Contributing
 
-See [Decidim](https://github.com/decidim/decidim).
+Bug reports and pull requests are welcome on GitHub at https://github.com/coopdevs/decidim-module-action_delegator.
 
 ### Developing
 
@@ -152,15 +159,29 @@ order to create the dummy test app database.
 Then to test how the module works in Decidim, start the development server:
 
 ```bash
-cd development_app
-DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rails s
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bin/rails s
 ```
+
+Note that `bin/rails` is a convenient wrapper around the command `cd development_app; bundle exec rails`.
 
 In case you are using [rbenv](https://github.com/rbenv/rbenv) and have the
 [rbenv-vars](https://github.com/rbenv/rbenv-vars) plugin installed for it, you
 can add the environment variables to the root directory of the project in a file
 named `.rbenv-vars`. If these are defined for the environment, you can omit
 defining these in the commands shown above.
+
+#### Webpacker notes
+
+As latests versions of Decidim, this repository uses Webpacker for Rails. This means that compilation
+of assets is required everytime a Javascript or CSS file is modified. Usually, this happens
+automatically, but in some cases (specially when actively changes that type of files) you want to 
+speed up the process. 
+
+To do that, start in a separate terminal than the one with `bin/rails s`, and BEFORE it, the following command:
+
+```bash
+bin/webpack-dev-server
+```
 
 #### Code Styling
 
@@ -180,9 +201,18 @@ bundle exec rubocop
 To ease up following the style guide, you should install the plugin to your
 favorite editor, such as:
 
-- Atom - [linter-rubocop](https://atom.io/packages/linter-rubocop)
 - Sublime Text - [Sublime RuboCop](https://github.com/pderichs/sublime_rubocop)
 - Visual Studio Code - [Rubocop for Visual Studio Code](https://github.com/misogi/vscode-ruby-rubocop)
+
+#### Non-Ruby Code Styling
+
+There are other linters for Javascript and CSS. These run using NPM packages. You can
+run the following commands:
+
+1. `npm run lint`: Runs the linter for Javascript files.
+2. `npm run lint-fix`: Automatically fix issues for Javascript files (if possible).
+3. `npm run stylelint`: Runs the linter for SCSS files.
+4. `npm run stylelint-fix`: Automatically fix issues for SCSS files (if possible).
 
 ### Testing
 
@@ -190,11 +220,7 @@ To run the tests run the following in the gem development path:
 
 ```bash
 bundle
-DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake decidim:generate_external_test_app
-cd spec/decidim_dummy_app
-bundle exec rails decidim_action_delegator:install:migrations
-RAILS_ENV=test bundle exec rails db:migrate
-cd -
+DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rake test_app
 DATABASE_USERNAME=<username> DATABASE_PASSWORD=<password> bundle exec rspec
 ```
 
@@ -209,12 +235,14 @@ commands shown above.
 
 ### Test code coverage
 
-If you want to generate the code coverage report for the tests, you can use
-the `SIMPLECOV=1` environment variable in the rspec command as follows:
+Running tests automatically generates a code coverage report. To generate the complete report run all the tests using this command:
 
 ```bash
-SIMPLECOV=1 bundle exec rspec
+bundle exec rspec
 ```
+
+This will generate a folder named `coverage` in the project root which contains
+the code coverage report.
 
 ### Localization
 
@@ -222,9 +250,6 @@ If you would like to see this module in your own language, you can help with its
 translation at Crowdin:
 
 https://crowdin.com/project/decidim-action-delegator-vote
-
-This will generate a folder named `coverage` in the project root which contains
-the code coverage report.
 
 ## License
 

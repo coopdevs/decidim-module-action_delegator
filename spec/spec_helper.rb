@@ -10,11 +10,6 @@ if ENV["CODECOV"]
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-if ENV["SIMPLECOV"]
-  require "simplecov-cobertura"
-  SimpleCov.formatter = SimpleCov::Formatter::CoberturaFormatter
-end
-
 ENV["ENGINE_ROOT"] = File.dirname(__dir__)
 
 Decidim::Dev.dummy_app_path =
