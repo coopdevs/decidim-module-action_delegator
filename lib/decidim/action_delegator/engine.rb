@@ -24,20 +24,23 @@ module Decidim
         # override votes questions
         Decidim::Consultations::VoteQuestion.include(Decidim::ActionDelegator::Consultations::VoteQuestionOverride)
         Decidim::Consultations::MultipleVoteQuestion.include(Decidim::ActionDelegator::Consultations::MultipleVoteQuestionOverride)
-        Decidim::Consultations::QuestionVotesController.include(Decidim::ActionDelegator::Consultations::QuestionVotesControllerOverride)
-        Decidim::Consultations::QuestionMultipleVotesController.include(Decidim::ActionDelegator::Consultations::QuestionMultipleVotesControllerOverride)
-        Decidim::Consultations::QuestionsController.include(Decidim::ActionDelegator::Consultations::QuestionsControllerOverride)
-        Decidim::Consultations::ConsultationsController.include(Decidim::ActionDelegator::Consultations::ConsultationsControllerOverride)
         Decidim::Consultations::VoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
         Decidim::Consultations::MultiVoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
         Decidim::Consultations::Vote.include(Decidim::ActionDelegator::Consultations::VoteOverride)
-        Decidim::Verifications::Sms::AuthorizationsController.include(Decidim::ActionDelegator::Verifications::Sms::AuthorizationsControllerOverride)
       end
 
-      initializer "decidim_action_delegator.layout_helper" do |_app|
-        # activate Decidim LayoutHelper for the overriden views
-        ::Decidim::Admin::ApplicationController.helper ::Decidim::LayoutHelper
-        ::Decidim::ApplicationController.helper ::Decidim::LayoutHelper
+      initializer "decidim_action_delegator.overrides", after: "decidim.action_controller" do
+        config.to_prepare do
+          Decidim::Consultations::QuestionVotesController.include(Decidim::ActionDelegator::Consultations::QuestionVotesControllerOverride)
+          Decidim::Consultations::QuestionsController.include(Decidim::ActionDelegator::Consultations::QuestionsControllerOverride)
+          Decidim::Consultations::ConsultationsController.include(Decidim::ActionDelegator::Consultations::ConsultationsControllerOverride)
+          Decidim::Consultations::QuestionMultipleVotesController.include(Decidim::ActionDelegator::Consultations::QuestionMultipleVotesControllerOverride)
+          Decidim::Verifications::Sms::AuthorizationsController.include(Decidim::ActionDelegator::Verifications::Sms::AuthorizationsControllerOverride)
+        end
+      end
+
+      initializer "decidim_action_delegator.permissions" do
+        Decidim::Consultations::Permissions.prepend(ConsultationsPermissionsExtension)
       end
 
       initializer "decidim_action_delegator.webpacker.assets_path" do |_app|
@@ -51,10 +54,6 @@ module Decidim
                     position: 5.0,
                     active: :exact
         end
-      end
-
-      initializer "decidim_action_delegator.permissions" do
-        Decidim::Consultations::Permissions.prepend(ConsultationsPermissionsExtension)
       end
     end
   end
