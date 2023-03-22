@@ -4,6 +4,7 @@ require "savon"
 require "rails"
 require "decidim/core"
 require "decidim/consultations"
+require "deface"
 
 module Decidim
   module ActionDelegator

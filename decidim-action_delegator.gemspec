@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "decidim-admin", Decidim::ActionDelegator::COMPAT_DECIDIM_VERSION
   s.add_dependency "decidim-consultations", Decidim::ActionDelegator::COMPAT_DECIDIM_VERSION
   s.add_dependency "decidim-core", Decidim::ActionDelegator::COMPAT_DECIDIM_VERSION
+  s.add_dependency "deface", ">= 1.9"
   s.add_dependency "savon"
   s.add_dependency "twilio-ruby"
 

@@ -17,6 +17,7 @@ describe "Admin manages consultation results", type: :system do
   let!(:yet_another_user) { create(:user, :admin, :confirmed, organization: organization) }
 
   let(:votes) { consultation.questions.first.total_votes }
+  let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
   before do
     question.votes.create(author: user, response: response)
@@ -53,10 +54,20 @@ describe "Admin manages consultation results", type: :system do
     login_as user, scope: :user
   end
 
-  context "when in the consultation page" do
-    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+  shared_examples "handles the deprecation warning" do
+    it "does not show the warning" do
+      expect(page).not_to have_content("Consultations module will be deprecated in the near future.")
+    end
+  end
 
+  it_behaves_like "handles the deprecation warning" do
+    before { visit decidim_admin_consultations.consultations_path }
+  end
+
+  context "when in the consultation page" do
     before { visit decidim_admin_consultations.edit_consultation_path(consultation) }
+
+    it_behaves_like "handles the deprecation warning"
 
     it "enables navigating to the default results page" do
       click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
@@ -100,8 +111,6 @@ describe "Admin manages consultation results", type: :system do
   end
 
   context "when in question page" do
-    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
-
     before { visit decidim_admin_consultations.edit_question_path(question) }
 
     it "enables navigating to the results page" do
@@ -112,8 +121,6 @@ describe "Admin manages consultation results", type: :system do
   end
 
   context "when viewing a finished consultation with votes" do
-    let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
-
     context "without delegated votes" do
       let(:extra_question) { create(:question, consultation: consultation) }
       let(:extra_response) { create(:response, question: extra_question) }
