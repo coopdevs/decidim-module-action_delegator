@@ -1,10 +1,11 @@
 PATH
   remote: .
   specs:
-    decidim-action_delegator (0.6.1)
+    decidim-action_delegator (0.7.0)
       decidim-admin (>= 0.26.0, < 0.27)
       decidim-consultations (>= 0.26.0, < 0.27)
       decidim-core (>= 0.26.0, < 0.27)
+      deface (>= 1.9)
       savon
       twilio-ruby
 
@@ -334,6 +335,12 @@ GEM
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
     declarative-option (0.1.0)
+    deface (1.9.0)
+      actionview (>= 5.2)
+      nokogiri (>= 1.6)
+      polyglot
+      railties (>= 5.2)
+      rainbow (>= 2.1.0)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     devise (4.8.1)
@@ -543,6 +550,7 @@ GEM
     pg_search (2.3.6)
       activerecord (>= 5.2)
       activesupport (>= 5.2)
+    polyglot (0.3.5)
     premailer (1.18.0)
       addressable
       css_parser (>= 1.12.0)

@@ -5,6 +5,7 @@ module Decidim
     module Consultations
       module ConsultationsControllerOverride
         extend ActiveSupport::Concern
+        include ::Decidim::ActionDelegator::NeedsConsultationSnippets
 
         included do
           helper ::Decidim::ActionDelegator::DelegationHelper

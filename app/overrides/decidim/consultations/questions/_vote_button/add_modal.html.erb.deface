@@ -1,0 +1,3 @@
+<!-- insert_before "erb[loud]:contains('javascript_pack_tag')" -->
+
+<%= render partial: "decidim/action_delegator/delegations_modal", locals: { question: question } %>

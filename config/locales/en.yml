@@ -1,5 +1,10 @@
 ---
 en:
+  activerecord:
+    attributes:
+      decidim/action_delegator/setting:
+        decidim_consultation_id: Consultation
+        max_grants: Maximum vote delegations a user can receive
   decidim:
     action_delegator:
       admin:

@@ -7,6 +7,14 @@ require "decidim/action_delegator/engine"
 module Decidim
   # This namespace holds the logic of the `ActionDelegator` module
   module ActionDelegator
+    include ActiveSupport::Configurable
+
+    # Consultations has an annoying and totally useless deprecation warning
+    # This plugin removes it by default.
+    # If you want to keep it, you can set this config to false
+    config_accessor :remove_consultation_deprecation_warning do
+      true
+    end
   end
 end
 
