@@ -8,31 +8,57 @@ module Decidim
         include Filterable
 
         layout "decidim/admin/users"
+        helper_method :settings
 
         def index
           enforce_permission_to :index, :setting
-
-          @settings = filtered_collection.map do |setting|
-            SettingPresenter.new(setting)
-          end
         end
 
         def new
           enforce_permission_to :create, :setting
 
-          @setting = Setting.new(max_grants: 1)
+          @form = form(SettingForm).instance
         end
 
         def create
           enforce_permission_to :create, :setting
 
-          @setting = build_setting
+          @form = form(SettingForm).from_params(params)
 
-          if @setting.save
-            flash[:notice] = I18n.t("settings.create.success", scope: "decidim.action_delegator.admin")
-            redirect_to decidim_admin_action_delegator.settings_path
-          else
-            flash.now[:error] = I18n.t("settings.create.error", scope: "decidim.action_delegator.admin")
+          CreateSetting.call(@form) do
+            on(:ok) do
+              notice = I18n.t("settings.create.success", scope: "decidim.action_delegator.admin")
+              redirect_to decidim_admin_action_delegator.settings_path, notice: notice
+            end
+
+            on(:invalid) do |_error|
+              flash.now[:error] = I18n.t("settings.create.error", scope: "decidim.action_delegator.admin")
+              render :new
+            end
+          end
+        end
+
+        def edit
+          enforce_permission_to :update, :setting
+
+          @form = form(SettingForm).from_model(setting)
+        end
+
+        def update
+          enforce_permission_to :update, :setting
+
+          @form = form(SettingForm).from_params(params)
+
+          UpdateSetting.call(@form, setting) do
+            on(:ok) do
+              notice = I18n.t("settings.update.success", scope: "decidim.action_delegator.admin")
+              redirect_to decidim_admin_action_delegator.settings_path, notice: notice
+            end
+
+            on(:invalid) do |_error|
+              flash.now[:error] = I18n.t("settings.update.error", scope: "decidim.action_delegator.admin")
+              render :edit
+            end
           end
         end
 
@@ -60,6 +86,12 @@ module Decidim
 
         def setting
           @setting ||= collection.find_by(id: params[:id])
+        end
+
+        def settings
+          @settings ||= filtered_collection.map do |setting|
+            SettingPresenter.new(setting)
+          end
         end
 
         def collection

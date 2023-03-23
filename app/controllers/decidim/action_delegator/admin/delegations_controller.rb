@@ -7,7 +7,7 @@ module Decidim
         include NeedsPermission
         include Paginable
 
-        helper ::Decidim::ActionDelegator::DelegationHelper
+        helper ::Decidim::ActionDelegator::Admin::DelegationHelper
         helper_method :current_setting
 
         layout "decidim/action_delegator/admin/delegations"
@@ -45,14 +45,12 @@ module Decidim
         def destroy
           enforce_permission_to :destroy, :delegation, resource: delegation
 
-          setting_id = delegation.setting.id
-
           if delegation.destroy
             notice = I18n.t("delegations.destroy.success", scope: "decidim.action_delegator.admin")
-            redirect_to setting_delegations_path(setting_id), notice: notice
+            redirect_to setting_delegations_path(current_setting), notice: notice
           else
             error = I18n.t("delegations.destroy.error", scope: "decidim.action_delegator.admin")
-            redirect_to setting_delegations_path(setting_id), flash: { error: error }
+            redirect_to setting_delegations_path(current_setting), flash: { error: error }
           end
         end
 

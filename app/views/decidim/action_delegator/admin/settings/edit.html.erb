@@ -7,7 +7,7 @@
   </div>
 
   <div class="card-section">
-    <%= form_for @form, url: { action: "create" }, html: { class: "form new_setting" } do |f| %>
+    <%= form_for @form, url: { action: "update" }, html: { class: "form edit_setting" } do |f| %>
       <%= render partial: "form", object: f %>
 
       <div class="button--double form-general-submit">

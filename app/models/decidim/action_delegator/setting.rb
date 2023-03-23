@@ -13,10 +13,32 @@ module Decidim
       has_many :delegations,
                inverse_of: :setting,
                foreign_key: "decidim_action_delegator_setting_id",
+               class_name: "Decidim::ActionDelegator::Delegation",
+               dependent: :destroy
+      has_many :ponderations,
+               inverse_of: :setting,
+               foreign_key: "decidim_action_delegator_setting_id",
+               class_name: "Decidim::ActionDelegator::Ponderation",
+               dependent: :destroy
+      has_many :participants,
+               inverse_of: :setting,
+               foreign_key: "decidim_action_delegator_setting_id",
+               class_name: "Decidim::ActionDelegator::Participant",
                dependent: :destroy
 
       validates :max_grants, presence: true
       validates :max_grants, numericality: { greater_than: 0 }
+      validates :consultation, uniqueness: true
+
+      delegate :title, to: :consultation
+
+      def state
+        @state ||= consultation.start_voting_date <= Time.zone.now ? :closed : :open
+      end
+
+      def editable?
+        state == :open
+      end
     end
   end
 end

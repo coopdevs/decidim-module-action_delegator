@@ -1,0 +1,7 @@
+<div class="row column">
+  <%= form.select :decidim_consultation_id, consultations_for_select %>
+</div>
+
+<div class="row column">
+  <%= form.number_field :max_grants, min: 1, autofocus: true %>
+</div>
