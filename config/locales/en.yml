@@ -2,47 +2,22 @@
 en:
   activemodel:
     attributes:
-      setting:
-        decidim_consultation_id: Consultation
-        max_grants: Maximum vote delegations a user can receive
+      participant:
+        decidim_action_delegator_ponderation_id: Ponderation
+        email: Email
+        phone: Phone
       ponderation:
         name: Membership type
         name_help: Membership type
-      participant:
-        email: Email
-        phone: Phone
-        decidim_action_delegator_ponderation_id: Ponderation
+      setting:
+        decidim_consultation_id: Consultation
+        max_grants: Maximum vote delegations a user can receive
   decidim:
     action_delegator:
       admin:
         consultations:
           results:
             title: Results by answer, membership type and weight
-        ponderations:
-          create:
-            success: New ponderation created successfully
-            error: There's been and error creating the ponderation
-          update:
-            success: Ponderation updated successfully
-            error: There's been and error updating the ponderation
-          index:
-            title: Ponderations
-            actions:
-              new_ponderation: New ponderation
-            name: Membership Type
-            weight: Vote weight
-            num_users: Census total
-            created_at: Created at
-          new:
-            title: New ponderation type
-            save: Create
-          edit:
-            title: Edit ponderation type
-            save: Save
-          form:
-            name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
-            name_help: User type, e.g. "member", "associate", "supporter". Must be unique.
-            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the users in this ponderation type. 
         delegations:
           create:
             error: There was a problem creating the delegation
@@ -68,33 +43,6 @@ en:
             save: Create
             select_member: Select member
             title: New delegation
-        participants:
-          index:
-            title: Census
-            ponderation: Ponderation
-            created_at: Created at
-            email: Email
-            phone: Phone
-            user: User
-            last_login: Last login
-            never_logged: Never logged yet
-            actions:
-              new_participant: New participant
-          new:
-            title: New participant
-            save: Create
-          edit:
-            title: Edit participant
-            save: Save
-          create:
-            error: There was a problem creating the participants
-            success: Participants created successfully
-          update:
-            error: There was a problem updating the participants
-            success: Participants saved successfully
-          destroy:
-            error: There was a problem destroying this participant
-            success: Participant successfully destroyed
         menu:
           consultations_submenu:
             by_answer: By answer
@@ -102,6 +50,60 @@ en:
             sum_of_weights: By sum of weights
           delegations: Delegations & Weights
           participants: Participants
+        participants:
+          create:
+            error: There was a problem creating the participants
+            success: Participants created successfully
+          destroy:
+            error: There was a problem destroying this participant
+            success: Participant successfully destroyed
+          edit:
+            save: Save
+            title: Edit participant
+          index:
+            actions:
+              new_participant: New participant
+            created_at: Created at
+            email: Email
+            last_login: Last login
+            never_logged: Never logged yet
+            phone: Phone
+            ponderation: Ponderation
+            title: Census
+            user: User
+          new:
+            save: Create
+            title: New participant
+          update:
+            error: There was a problem updating the participants
+            success: Participants saved successfully
+        ponderations:
+          create:
+            error: There's been and error creating the ponderation
+            success: New ponderation created successfully
+          edit:
+            save: Save
+            title: Edit ponderation type
+          form:
+            name_help: User type, e.g. "member", "associate", "supporter". Must be
+              unique.
+            name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
+            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used
+              to ponderate the votes for the users in this ponderation type.
+          index:
+            actions:
+              new_ponderation: New ponderation
+            created_at: Created at
+            name: Membership Type
+            num_users: Census total
+            title: Ponderations
+            weight: Vote weight
+          new:
+            save: Create
+            title: New ponderation type
+          update:
+            error: There's been and error updating the ponderation
+            success: Ponderation updated successfully
         results:
           sum_of_weights:
             index:
@@ -110,27 +112,24 @@ en:
           create:
             error: There was a problem creating the settings
             success: Settings created successfully
-          update:
-            error: There was a problem updating the settings
-            success: Settings saved successfully
           destroy:
             error: There was a problem destroying this setting
             success: Setting successfully destroyed
+          edit:
+            save: Save
+            title: Edit delegation group
+          form:
+            max_grants: Maximum delegations per user
           index:
-            ponderations: Ponderation types
             actions:
+              census: Edit the census
               new_setting: New delegation group
               ponderate: Set weights for vote ponderation
-              census: Edit the census
+            census: Census total
+            closed: Closed
             consultation: Consultation
             created_at: Created at
             delegations: Delegations
-            max_grants: Max delegations/user
-            census: Census total
-            state: State
-            title: Delegation groups
-            open: Open
-            closed: Closed
             description_html: |
               A delegation group is a set of settings to encapsulate the
               configuration of a delegation system. For the moment only consultations are supported.
@@ -139,14 +138,17 @@ en:
               user delegations grants and different sets of ponderation types.
               <br>
               Delegations are linked to the parent element (currently a consultation) and cannot be edited/deleted after a voting has been started.
-          form:
-            max_grants: Maximum delegations per user
+            max_grants: Max delegations/user
+            open: Open
+            ponderations: Ponderation types
+            state: State
+            title: Delegation groups
           new:
             save: Create
             title: New delegation group
-          edit:
-            save: Save
-            title: Edit delegation group
+          update:
+            error: There was a problem updating the settings
+            success: Settings saved successfully
       authorizations:
         new:
           missing_phone_error: Missing membership phone
