@@ -23,7 +23,7 @@
             <tr data-ponderation-id="<%= ponderation.id %>">
               <td><%= ponderation.name %></td>
               <td><%= ponderation.weight %></td>
-              <td><%= 0 %></td>
+              <td><%= ponderation.participants.count %></td>
               <td><%= l ponderation.created_at, format: :short %></td>
 
               <td class="table-list__actions">

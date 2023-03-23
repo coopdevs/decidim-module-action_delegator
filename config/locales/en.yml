@@ -31,7 +31,7 @@ en:
               new_ponderation: New ponderation
             name: Membership Type
             weight: Vote weight
-            num_users: Number of user
+            num_users: Census total
             created_at: Created at
           new:
             title: New ponderation type
@@ -117,14 +117,14 @@ en:
             error: There was a problem destroying this setting
             success: Setting successfully destroyed
           index:
-            ponderations: Num. of ponderation types
+            ponderations: Ponderation types
             actions:
               new_setting: New delegation group
               ponderate: Set weights for vote ponderation
               census: Edit the census
             consultation: Consultation
             created_at: Created at
-            delegations: Total delegations
+            delegations: Delegations
             max_grants: Max delegations/user
             census: Census total
             state: State
