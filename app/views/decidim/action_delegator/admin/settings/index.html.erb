@@ -13,6 +13,7 @@
           <tr>
             <th><%= t(".consultation") %></th>
             <th><%= t(".max_grants") %></th>
+            <th><%= t(".phone") %></th>
             <th><%= t(".delegations") %></th>
             <th><%= t(".ponderations") %></th>
             <th><%= t(".census") %></th>
@@ -24,8 +25,9 @@
         <tbody>
           <% settings.each do |setting| %>
             <tr data-setting-id="<%= setting.id %>">
-              <td><%= link_to translated_attribute(setting.title), decidim_admin_action_delegator.setting_delegations_path(setting) %></td>
+              <td><%= link_to translated_attribute(setting.title), decidim_consultations.consultation_path(setting.consultation), target: :_blank %></td>
               <td><%= setting.max_grants %></td>
+              <td class="text-<%= setting.verify_with_sms ? ( setting.phone_freezed ? "success" : "secondary") : "alert" %>"><%= t setting.phone_config, scope: "decidim.action_delegator.admin.settings.phone" %></td>
               <td><%= setting.delegations.count %></td>
               <td><%= setting.ponderations.count %></td>
               <td><%= setting.participants.count %></td>
@@ -33,11 +35,10 @@
               <td class="text-<%= setting.editable? ? "success" : "alert" %>"><%= t ".#{setting.state}" %></td>
 
               <td class="table-list__actions">
-                <%= icon_link_to "eye", decidim_consultations.consultation_path(setting.consultation), t("actions.preview", scope: "decidim.admin"), class: "action-icon--edit" %>
                 <%= icon_link_to "pencil", decidim_admin_action_delegator.edit_setting_path(setting), t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit" %>
                 <%= icon_link_to "grid-two-up", decidim_admin_action_delegator.setting_ponderations_path(setting), t(".actions.ponderate"), class: "action-icon--edit" %>
                 <%= icon_link_to "people", decidim_admin_action_delegator.setting_participants_path(setting), t(".actions.census"), class: "action-icon--edit" %>
-                <%= icon_link_to "cog", decidim_admin_action_delegator.setting_delegations_path(setting), t("actions.manage", scope: "decidim.admin"), class: "action-icon--edit" %>
+                <%= icon_link_to "loop", decidim_admin_action_delegator.setting_delegations_path(setting), t(".actions.delegations"), class: "action-icon--edit" %>
                 <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_path(setting), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
               </td>
             </tr>

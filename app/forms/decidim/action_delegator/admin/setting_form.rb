@@ -8,6 +8,8 @@ module Decidim
 
         attribute :max_grants, Integer, default: 1
         attribute :decidim_consultation_id, Integer
+        attribute :verify_with_sms, Boolean
+        attribute :phone_freezed, Boolean
 
         validate :consultation_uniqueness
 

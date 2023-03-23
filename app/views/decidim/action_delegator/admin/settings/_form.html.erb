@@ -5,3 +5,11 @@
 <div class="row column">
   <%= form.number_field :max_grants, min: 1, autofocus: true %>
 </div>
+
+<div class="row column">
+  <%= form.check_box :verify_with_sms %>
+</div>
+
+<div class="row column">
+  <%= form.check_box :phone_freezed %>
+</div>

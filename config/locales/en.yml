@@ -12,6 +12,9 @@ en:
       setting:
         decidim_consultation_id: Consultation
         max_grants: Maximum vote delegations a user can receive
+        phone_freezed: Use phone number from the census. Don't allow participants
+          to edit it.
+        verify_with_sms: Verify with SMS
   decidim:
     action_delegator:
       admin:
@@ -30,7 +33,7 @@ en:
             success: Delegation successfully destroyed
           index:
             actions:
-              new_delegation: New participant
+              new_delegation: New delegation
             consultation: Consultation
             created_at: Created at
             delete: Delete
@@ -123,6 +126,7 @@ en:
           index:
             actions:
               census: Edit the census
+              delegations: Edit the delegations
               new_setting: New delegation group
               ponderate: Set weights for vote ponderation
             census: Census total
@@ -140,12 +144,17 @@ en:
               Delegations are linked to the parent element (currently a consultation) and cannot be edited/deleted after a voting has been started.
             max_grants: Max delegations/user
             open: Open
+            phone: Verify phone?
             ponderations: Ponderation types
             state: State
             title: Delegation groups
           new:
             save: Create
             title: New delegation group
+          phone:
+            freezed: Yes, from census
+            none: Not required
+            open: Yes, user editable
           update:
             error: There was a problem updating the settings
             success: Settings saved successfully

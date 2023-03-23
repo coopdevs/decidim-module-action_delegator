@@ -39,6 +39,14 @@ module Decidim
       def editable?
         state == :open
       end
+
+      def phone_config
+        @phone_config ||= if verify_with_sms
+                            phone_freezed ? :freezed : :open
+                          else
+                            :none
+                          end
+      end
     end
   end
 end

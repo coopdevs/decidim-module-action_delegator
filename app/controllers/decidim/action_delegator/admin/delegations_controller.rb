@@ -8,14 +8,12 @@ module Decidim
         include Paginable
 
         helper ::Decidim::ActionDelegator::Admin::DelegationHelper
-        helper_method :current_setting
+        helper_method :current_setting, :delegations
 
         layout "decidim/action_delegator/admin/delegations"
 
         def index
           enforce_permission_to :index, :delegation
-
-          @delegations = paginate(collection)
         end
 
         def new
@@ -58,6 +56,10 @@ module Decidim
 
         def delegation
           @delegation ||= collection.find_by(id: params[:id])
+        end
+
+        def delegations
+          @delegations ||= paginate(collection)
         end
 
         def collection

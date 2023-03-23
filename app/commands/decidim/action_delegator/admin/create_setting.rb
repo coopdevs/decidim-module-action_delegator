@@ -30,7 +30,10 @@ module Decidim
         attr_reader :form, :setting
 
         def create_setting
-          @setting = Setting.create!(max_grants: form.max_grants, decidim_consultation_id: form.decidim_consultation_id)
+          @setting = Setting.create!(max_grants: form.max_grants,
+                                     verify_with_sms: form.verify_with_sms,
+                                     phone_freezed: form.phone_freezed,
+                                     decidim_consultation_id: form.decidim_consultation_id)
         end
       end
     end

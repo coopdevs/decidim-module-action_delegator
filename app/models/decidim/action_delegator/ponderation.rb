@@ -10,9 +10,9 @@ module Decidim
                  class_name: "Decidim::ActionDelegator::Setting"
 
       has_many :participants,
-                foreign_key: "decidim_action_delegator_ponderation_id",
-                class_name: "Decidim::ActionDelegator::Participant",
-                dependent: :nullify
+               foreign_key: "decidim_action_delegator_ponderation_id",
+               class_name: "Decidim::ActionDelegator::Participant",
+               dependent: :nullify
 
       delegate :consultation, to: :setting
 
