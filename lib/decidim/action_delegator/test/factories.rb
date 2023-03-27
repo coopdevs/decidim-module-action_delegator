@@ -10,6 +10,19 @@ FactoryBot.define do
     grantee { association :user, organization: setting.consultation.organization }
   end
 
+  factory :ponderation, class: "Decidim::ActionDelegator::Ponderation" do
+    setting
+    name { Faker::Lorem.sentence }
+    weight { 1 }
+  end
+
+  factory :participant, class: "Decidim::ActionDelegator::Participant" do
+    setting
+    email { Faker::Internet.email }
+    phone { Faker::PhoneNumber.phone_number }
+    ponderation { setting.ponderations.first }
+  end
+
   factory :setting, class: "Decidim::ActionDelegator::Setting" do
     max_grants { 3 }
     consultation
