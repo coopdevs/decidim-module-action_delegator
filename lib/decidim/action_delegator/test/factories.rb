@@ -26,6 +26,16 @@ FactoryBot.define do
   factory :setting, class: "Decidim::ActionDelegator::Setting" do
     max_grants { 3 }
     consultation
+    trait :with_ponderations do
+      after(:create) do |setting|
+        create_list(:ponderation, 3, setting: setting)
+      end
+    end
+    trait :with_participants do
+      after(:create) do |setting|
+        create_list(:participant, 3, setting: setting)
+      end
+    end
   end
 end
 

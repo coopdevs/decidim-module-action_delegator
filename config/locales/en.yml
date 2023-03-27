@@ -29,7 +29,7 @@ en:
               grantee
             success: Delegation created successfully
           destroy:
-            error: There was a problem destroying this delegation
+            error: There was a problem removing this delegation
             success: Delegation successfully destroyed
           index:
             actions:
@@ -58,7 +58,7 @@ en:
             error: There was a problem creating the participants
             success: Participants created successfully
           destroy:
-            error: There was a problem destroying this participant
+            error: There was a problem removing this participant
             success: Participant successfully destroyed
           edit:
             save: Save
@@ -84,6 +84,9 @@ en:
           create:
             error: There's been and error creating the ponderation
             success: New ponderation created successfully
+          destroy:
+            error: There's been and error removing the ponderation
+            success: Ponderation destroyed successfully
           edit:
             save: Save
             title: Edit ponderation type
@@ -116,7 +119,7 @@ en:
             error: There was a problem creating the settings
             success: Settings created successfully
           destroy:
-            error: There was a problem destroying this setting
+            error: There was a problem removing this setting
             success: Setting successfully destroyed
           edit:
             save: Save

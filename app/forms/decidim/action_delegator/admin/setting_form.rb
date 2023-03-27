@@ -6,11 +6,12 @@ module Decidim
       class SettingForm < Form
         mimic :setting
 
-        attribute :max_grants, Integer, default: 1
+        attribute :max_grants, Integer
         attribute :decidim_consultation_id, Integer
         attribute :verify_with_sms, Boolean
         attribute :phone_freezed, Boolean
 
+        validates :max_grants, :decidim_consultation_id, presence: true
         validate :consultation_uniqueness
 
         # TODO: validate consultation vote starting in the future

@@ -25,7 +25,7 @@
         <tbody>
           <% settings.each do |setting| %>
             <tr data-setting-id="<%= setting.id %>">
-              <td><%= link_to translated_attribute(setting.title), decidim_consultations.consultation_path(setting.consultation), target: :_blank %></td>
+              <td><%= link_to translated_attribute(setting.title), decidim_consultations.consultation_path(setting.consultation), target: :blank %></td>
               <td><%= setting.max_grants %></td>
               <td class="text-<%= setting.verify_with_sms ? ( setting.phone_freezed ? "success" : "secondary") : "alert" %>"><%= t setting.phone_config, scope: "decidim.action_delegator.admin.settings.phone" %></td>
               <td><%= setting.delegations.count %></td>

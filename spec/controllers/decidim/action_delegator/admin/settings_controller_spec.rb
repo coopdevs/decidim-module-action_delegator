@@ -34,7 +34,7 @@ module Decidim
 
           get :index
 
-          expect(assigns(:settings)).not_to include(other_setting)
+          expect(controller.helpers.settings).not_to include(other_setting)
         end
       end
 
