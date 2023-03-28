@@ -7,8 +7,7 @@ describe Decidim::ActionDelegator::Admin::UpdateSetting do
 
   let(:setting) { create(:setting, max_grants: 10) }
   let(:max_grants) { 9 }
-  let(:verify_with_sms) { false }
-  let(:phone_freezed) { false }
+  let(:authorization_method) { :both }
   let(:decidim_consultation_id) { create(:consultation).id }
   let(:invalid) { false }
 
@@ -16,8 +15,7 @@ describe Decidim::ActionDelegator::Admin::UpdateSetting do
     double(
       invalid?: invalid,
       max_grants: max_grants,
-      verify_with_sms: verify_with_sms,
-      phone_freezed: phone_freezed,
+      authorization_method: authorization_method,
       decidim_consultation_id: decidim_consultation_id
     )
   end

@@ -10,7 +10,8 @@ describe Decidim::ActionDelegator::Admin::ParticipantForm do
       setting: setting
     }
   end
-  let(:setting) { create(:setting, :with_ponderations) }
+  let(:setting) { create(:setting, :with_ponderations, authorization_method: authorization_method) }
+  let(:authorization_method) { :both }
   let(:attributes) do
     {
       email: email,
@@ -35,7 +36,7 @@ describe Decidim::ActionDelegator::Admin::ParticipantForm do
   context "when phone is not present" do
     let(:phone) { nil }
 
-    it { is_expected.to be_valid }
+    it { is_expected.not_to be_valid }
   end
 
   context "when ponderation is not present" do
@@ -43,8 +44,34 @@ describe Decidim::ActionDelegator::Admin::ParticipantForm do
 
     it { is_expected.to be_valid }
 
-    context "and ponderation belongs to a differnt setting" do
+    context "and ponderation belongs to a different setting" do
       let(:decidim_action_delegator_ponderation_id) { create(:ponderation).id }
+
+      it { is_expected.not_to be_valid }
+    end
+  end
+
+  context "when authorization method is phone" do
+    let(:authorization_method) { :phone }
+    let(:email) { nil }
+
+    it { is_expected.to be_valid }
+
+    context "and phone is not present" do
+      let(:phone) { nil }
+
+      it { is_expected.not_to be_valid }
+    end
+  end
+
+  context "when authorization method is email" do
+    let(:authorization_method) { :email }
+    let(:phone) { nil }
+
+    it { is_expected.to be_valid }
+
+    context "and email is not present" do
+      let(:email) { nil }
 
       it { is_expected.not_to be_valid }
     end

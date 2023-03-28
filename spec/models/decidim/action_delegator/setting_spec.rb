@@ -4,11 +4,10 @@ require "spec_helper"
 
 module Decidim
   module ActionDelegator
-    describe Settings, type: :model do
-      subject { build(:setting, consultation: consultation, verify_with_sms: verify_with_sms, phone_freezed: phone_freezed) }
+    describe Setting, type: :model do
+      subject { build(:setting, consultation: consultation, authorization_method: authorization_method) }
 
-      let(:verify_with_sms) { false }
-      let(:phone_freezed) { false }
+      let(:authorization_method) { :email }
       let(:consultation) { create(:consultation, start_voting_date: start_voting_date, end_voting_date: end_voting_date) }
       let(:start_voting_date) { 1.day.ago }
       let(:end_voting_date) { 1.day.from_now }
@@ -29,10 +28,6 @@ module Decidim
         expect(subject).to be_editable
       end
 
-      it "returns the phone config" do
-        expect(subject.phone_config).to eq(:none)
-      end
-
       context "when the consultation is finished" do
         let(:end_voting_date) { 1.day.ago }
 
@@ -50,22 +45,6 @@ module Decidim
           expect(subject.state).to eq(:pending)
           expect(subject).to be_editable
           expect(subject).not_to be_ongoing
-        end
-      end
-
-      context "when the consultation is configured to verify with sms" do
-        let(:verify_with_sms) { true }
-
-        it "returns the phone config" do
-          expect(subject.phone_config).to eq(:open)
-        end
-
-        context "when the phone is freezed" do
-          let(:phone_freezed) { true }
-
-          it "returns the phone config" do
-            expect(subject.phone_config).to eq(:freezed)
-          end
         end
       end
     end

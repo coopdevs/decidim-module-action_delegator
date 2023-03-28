@@ -6,8 +6,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
   subject { described_class.new(form) }
 
   let(:max_grants) { 10 }
-  let(:verify_with_sms) { true }
-  let(:phone_freezed) { true }
+  let(:authorization_method) { :both }
   let(:decidim_consultation_id) { create(:consultation).id }
   let(:invalid) { false }
 
@@ -15,8 +14,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
     double(
       invalid?: invalid,
       max_grants: max_grants,
-      verify_with_sms: verify_with_sms,
-      phone_freezed: phone_freezed,
+      authorization_method: authorization_method,
       decidim_consultation_id: decidim_consultation_id
     )
   end

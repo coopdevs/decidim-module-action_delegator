@@ -30,6 +30,8 @@ module Decidim
       validates :max_grants, numericality: { greater_than: 0 }
       validates :consultation, uniqueness: true
 
+      enum authorization_method: { phone: 0, email: 1, both: 2 }, _prefix: :verify_with
+
       delegate :title, to: :consultation
 
       default_scope { order(created_at: :desc) }
@@ -52,12 +54,8 @@ module Decidim
         state != :closed
       end
 
-      def phone_config
-        @phone_config ||= if verify_with_sms
-                            phone_freezed ? :freezed : :open
-                          else
-                            :none
-                          end
+      def phone_required?
+        verify_with_phone? || verify_with_both?
       end
     end
   end

@@ -31,8 +31,7 @@ module Decidim
 
         def create_setting
           @setting = Setting.create!(max_grants: form.max_grants,
-                                     verify_with_sms: form.verify_with_sms,
-                                     phone_freezed: form.phone_freezed,
+                                     authorization_method: form.authorization_method,
                                      decidim_consultation_id: form.decidim_consultation_id)
         end
       end
