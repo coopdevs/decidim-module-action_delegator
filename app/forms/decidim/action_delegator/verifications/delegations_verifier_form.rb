@@ -10,8 +10,9 @@ module Decidim
         attribute :email, String
         attribute :phone, String
 
-        validates :phone, :verification_code, :sms_gateway, presence: true
+        validates :email, :phone, :verification_code, :sms_gateway, presence: true
         validate :setting_exists
+        validate :user_in_census
 
         def handler_name
           "delegations_verifier"
@@ -31,7 +32,7 @@ module Decidim
 
         # When there's a phone number, sanitize it allowing only numbers and +.
         def phone
-          return find_phone if setting&.phone_freezed?
+          return find_phone if setting&.verify_with_both?
           return unless super
 
           super.gsub(/[^+0-9]/, "")
@@ -52,10 +53,17 @@ module Decidim
         end
 
         def participants
-          @participants ||= context[:participants]
+          @participants ||= Decidim::ActionDelegator::Participant.where(setting: setting)
+        end
+
+        def email_in_census?
+          participants.exists?(email: current_user.email)
         end
 
         private
+
+        def user_in_census
+        end
 
         def setting_exists
           return if errors.any?

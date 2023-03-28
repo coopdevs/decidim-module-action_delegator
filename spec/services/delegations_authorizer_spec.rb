@@ -20,7 +20,7 @@ module Decidim
     let(:setting) { create(:setting) }
     let(:email) { user.email }
     let(:phone) { "123456" }
-    let(:phone_freezed) { false }
+    let(:authorization_method) { :email }
 
     let!(:authorization) do
       create(:authorization, :granted, user: user, name: "delegations_verifier", metadata: metadata)
@@ -67,7 +67,7 @@ module Decidim
     end
 
     context "when there are settings" do
-      let!(:setting) { create(:setting, consultation: consultation, verify_with_sms: true, phone_freezed: phone_freezed) }
+      let!(:setting) { create(:setting, consultation: consultation, authorization_method: authorization_method) }
       let(:explanations) { %w(not_in_census email) }
       let!(:participants) { [create(:participant, email: email, phone: phone, setting: setting)] }
       let!(:ponderations) { create_list(:ponderation, 2, setting: setting) }
@@ -95,7 +95,7 @@ module Decidim
       end
 
       context "when phone is required and fixed" do
-        let(:phone_freezed) { true }
+        let(:authorization_method) { :both }
         let(:metadata) { { "phone" => phone } }
 
         it_behaves_like "authorized"

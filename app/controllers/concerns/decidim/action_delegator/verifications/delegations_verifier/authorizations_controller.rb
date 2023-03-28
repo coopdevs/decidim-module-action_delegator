@@ -9,24 +9,17 @@ module Decidim
           include Decidim::Verifications::Renewable
 
           helper_method :authorization, :setting
-
-          before_action do
-            if setting.blank? || participants.find_by(email: current_user.email).blank?
-              flash[:alert] = t(".not_in_census")
-              redirect_back(fallback_location: decidim_verifications.authorizations_path)
-            end
-          end
           
           def new
             enforce_permission_to :create, :authorization, authorization: authorization
 
-            @form = form(DelegationsVerifierForm).instance(setting: setting, participants: participants)
+            @form = form(DelegationsVerifierForm).instance(setting: setting)
           end
 
           def create
             enforce_permission_to :create, :authorization, authorization: authorization
 
-            @form = form(DelegationsVerifierForm).from_params(params, setting: setting, participants: participants)
+            @form = form(DelegationsVerifierForm).from_params(params, setting: setting)
 
             Decidim::Verifications::PerformAuthorizationStep.call(authorization, @form) do
               on(:ok) do
@@ -86,10 +79,6 @@ module Decidim
               user: current_user,
               name: "delegations_verifier"
             )
-          end
-
-          def participants
-            @participants ||= Decidim::ActionDelegator::Participant.where(setting: setting)
           end
 
           def setting

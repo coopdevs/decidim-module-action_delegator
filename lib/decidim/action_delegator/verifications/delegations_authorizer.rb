@@ -32,7 +32,7 @@ module Decidim
           return @census_params if @census_params
 
           @census_params = { email: authorization.user.email }
-          @census_params[:phone] = authorization.metadata["phone"] if setting.verify_with_sms? && setting.phone_freezed?
+          @census_params[:phone] = authorization.metadata["phone"] if setting.phone_required?
           @census_params
         end
 
@@ -56,7 +56,7 @@ module Decidim
             params: { scope: "decidim.action_delegator.delegations_authorizer", email: authorization.user.email }
           }
 
-          if setting.verify_with_sms? && setting.phone_freezed?
+          if setting.phone_required?
             @extra_explanations << {
               key: "phone",
               params: { scope: "decidim.action_delegator.delegations_authorizer", phone: authorization.metadata["phone"] || "---" }

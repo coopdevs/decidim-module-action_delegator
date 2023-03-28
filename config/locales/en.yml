@@ -17,19 +17,6 @@ en:
         verify_with_sms: Verify with SMS
   decidim:
     action_delegator:
-      verifications:
-        delegations_verifier:
-          authorizations:
-            new:
-              not_in_census: We're sorry but you cannot be authorized now because you are not in the census. Please contact the admin if you feel this is a mistake.
-              title: Authorize with Delegations Verifier
-              send_code: Send verification code
-              authorize: Authorize my account
-              missing_phone_error: Missing membership phone
-              phone_warning: This phone number has been imported by the admin. Please,
-                reach out if it's not correct.
-              participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
-
       admin:
         consultations:
           results:
@@ -128,18 +115,10 @@ en:
             index:
               title: Results by answer summing membership weights
         settings:
-          check_verifier:
-            not_installed_html: It seems that the "Delegation Verifier" authorization
-              method is not installed. Vote delegations does not work without it.
-              Please install it at <a href="/system">/system</a>.
           authorization_method:
             both: Email and phone number
             email: Only email
             phone: Only phone number
-          state:
-            closed: Closed
-            ongoing: Ongoing
-            pending: Pending
           authorization_method_help: |
             Available options are:
             <ul>
@@ -147,6 +126,10 @@ en:
             <li><b>Only email:</b> User's email must match the census.</li>
             <li><b>Email and phone number:</b> Uses SMS verification. User's email must match the census and phone number will be predefined.</li>
             </ul>
+          check_verifier:
+            not_installed_html: It seems that the "Delegation Verifier" authorization
+              method is not installed. Vote delegations does not work without it.
+              Please install it at <a href="/system">/system</a>.
           create:
             error: There was a problem creating the settings
             success: Settings created successfully
@@ -222,6 +205,21 @@ en:
           members:
             index:
               title: Members management
+      verifications:
+        delegations_verifier:
+          authorizations:
+            new:
+              authorize: Authorize my account
+              missing_phone_error: Missing membership phone
+              not_in_census: We're sorry but you can't be authorized because your
+                email is not in the census. Please contact the admin if you feel this
+                is a mistake.
+              participate_in: 'This authorization allows you to participate in the
+                following consultations: %{consultations}'
+              phone_warning: This phone number has been imported by the admin. Please,
+                reach out if it's not correct.
+              send_code: Send verification code
+              title: Authorize with Delegations Verifier
     admin:
       consultations:
         results:

@@ -13,15 +13,22 @@
             <%= decidim_form_for(@form, url: authorization_path(redirect_url: redirect_url)) do |form| %>
               <%= form_required_explanation %>
 
-              <div class="field">
-                <%= form.text_field :email, readonly: true %>
-              </div>
+              <% if setting&.email_required? %>
+                <% unless @form.email_in_census? %>
+                  <div class="callout announcement mb-sm alert cell-announcement">
+                    <p><%= t(".not_in_census") %></p>
+                  </div>
+                <% end %>
+                <div class="field">
+                  <%= form.text_field :email, readonly: true %>
+                </div>
+              <% end %>
 
-              <% if setting&.verify_with_sms? %>
+              <% if setting&.phone_required? %>
 	              <div class="field">
-	                <%= form.text_field :phone, readonly: setting&.phone_freezed? %>
+	                <%= form.text_field :phone, readonly: setting&.verify_with_both? %>
 	              </div>
-	              <% if setting&.phone_freezed? %>
+	              <% if setting&.verify_with_both? %>
 		              <div class="callout announcement mb-sm warning cell-announcement">
 		                <p><%= t(".phone_warning") %></p>
 		              </div>
@@ -33,7 +40,7 @@
               </div>
 
               <div class="actions">
-                <%= form.submit t(setting&.verify_with_sms? ? ".send_code": ".authorize"), class: "button expanded", "data-disable-with" => "#{t('.send_code')}...", disabled: (setting&.verify_with_sms? && @form.phone.blank?) %>
+                <%= form.submit t(setting&.phone_required? ? ".send_code": ".authorize"), class: "button expanded", "data-disable-with" => "#{t('.send_code')}...", disabled: (setting&.phone_required? && @form.phone.blank? || setting&.email_required? && !@form.email_in_census?) %>
               </div>
             <% end %>
           </div>
