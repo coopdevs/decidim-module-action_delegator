@@ -119,10 +119,6 @@ en:
             both: Email and phone number
             email: Only email
             phone: Only phone number
-          state:
-            closed: Closed
-            ongoing: Ongoing
-            pending: Pending
           authorization_method_help: |
             Available options are:
             <ul>
@@ -169,6 +165,10 @@ en:
           new:
             save: Create
             title: New delegation group
+          state:
+            closed: Closed
+            ongoing: Ongoing
+            pending: Pending
           update:
             error: There was a problem updating the settings
             success: Settings saved successfully
