@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "decidim/action_delegator/verifications/delegations_authorizer"
 require "savon"
 require "rails"
 require "decidim/core"
@@ -42,6 +43,17 @@ module Decidim
 
       initializer "decidim_action_delegator.permissions" do
         Decidim::Consultations::Permissions.prepend(ConsultationsPermissionsExtension)
+      end
+
+      initializer "decidim_action_delegator.authorizations" do
+        next unless Decidim::ActionDelegator.authorization_expiration_time.positive?
+
+        Decidim::Verifications.register_workflow(:delegations_verifier) do |workflow|
+          workflow.form = "Decidim::ActionDelegator::Verifications::DelegationsVerifier"
+          workflow.action_authorizer = "Decidim::ActionDelegator::Verifications::DelegationsAuthorizer"
+          workflow.expires_in = Decidim::ActionDelegator.authorization_expiration_time
+          workflow.time_between_renewals = 1.minute
+        end
       end
 
       initializer "decidim_action_delegator.webpacker.assets_path" do |_app|

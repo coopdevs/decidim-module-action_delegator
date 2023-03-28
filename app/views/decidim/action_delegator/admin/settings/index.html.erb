@@ -7,6 +7,7 @@
   </div>
   <div class="card-section">
     <p class="help-text"><%= t ".description_html" %></p>
+    <%= render "check_verifier" %>
     <div class="table-scroll">
       <table class="table-list">
         <thead>
@@ -32,7 +33,7 @@
               <td><%= setting.ponderations.count %></td>
               <td><%= setting.participants.count %></td>
               <td><%= l setting.created_at, format: :short %></td>
-              <td class="text-<%= setting.editable? ? "success" : "alert" %>"><%= t ".#{setting.state}" %></td>
+              <td class="text-<%= setting.ongoing? ? "warning" : (setting.editable? ? "success" : "alert") %>"><%= t setting.state, scope: "decidim.action_delegator.admin.settings.state" %></td>
 
               <td class="table-list__actions">
                 <%= icon_link_to "pencil", decidim_admin_action_delegator.edit_setting_path(setting), t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit" %>
@@ -42,6 +43,18 @@
                 <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_path(setting), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
               </td>
             </tr>
+            <% if setting.editable? %>
+            <tr>
+              <td colspan="9">
+                <div class="callout primary">
+                  todo:
+                   - check verifier is installed in all questions
+                   - check users are verified
+                   - check users are registered
+                 </div>
+              </td>
+            </tr>
+            <% end %>
           <% end %>
         </tbody>
       </table>

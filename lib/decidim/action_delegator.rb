@@ -9,6 +9,12 @@ module Decidim
   module ActionDelegator
     include ActiveSupport::Configurable
 
+    # The default expiration time for the integrated authorization
+    # if zero, the authorization won't be registered
+    config_accessor :authorization_expiration_time do
+      3.months
+    end
+
     # Consultations has an annoying and totally useless deprecation warning
     # This plugin removes it by default.
     # If you want to keep it, you can set this config to false

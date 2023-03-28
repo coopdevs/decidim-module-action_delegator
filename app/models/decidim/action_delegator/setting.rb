@@ -33,11 +33,21 @@ module Decidim
       delegate :title, to: :consultation
 
       def state
-        @state ||= consultation.start_voting_date <= Time.zone.now ? :closed : :open
+        @state ||= if consultation.end_voting_date < Time.zone.now
+                     :closed
+                   elsif consultation.start_voting_date <= Time.zone.now
+                     :ongoing
+                   else
+                     :pending
+                   end
+      end
+
+      def ongoing?
+        state == :ongoing
       end
 
       def editable?
-        state == :open
+        state != :closed
       end
 
       def phone_config
