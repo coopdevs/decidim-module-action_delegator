@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "decidim/action_delegator/verifications/delegations_authorizer"
 require "savon"
 require "rails"
 require "decidim/core"
@@ -37,7 +36,6 @@ module Decidim
           Decidim::Consultations::QuestionsController.include(Decidim::ActionDelegator::Consultations::QuestionsControllerOverride)
           Decidim::Consultations::ConsultationsController.include(Decidim::ActionDelegator::Consultations::ConsultationsControllerOverride)
           Decidim::Consultations::QuestionMultipleVotesController.include(Decidim::ActionDelegator::Consultations::QuestionMultipleVotesControllerOverride)
-          Decidim::Verifications::Sms::AuthorizationsController.include(Decidim::ActionDelegator::Verifications::Sms::AuthorizationsControllerOverride)
         end
       end
 
@@ -49,8 +47,8 @@ module Decidim
         next unless Decidim::ActionDelegator.authorization_expiration_time.positive?
 
         Decidim::Verifications.register_workflow(:delegations_verifier) do |workflow|
-          workflow.form = "Decidim::ActionDelegator::Verifications::DelegationsVerifier"
           workflow.action_authorizer = "Decidim::ActionDelegator::Verifications::DelegationsAuthorizer"
+          workflow.engine = Decidim::ActionDelegator::Verifications::DelegationsVerifier::Engine
           workflow.expires_in = Decidim::ActionDelegator.authorization_expiration_time
           workflow.time_between_renewals = 1.minute
         end

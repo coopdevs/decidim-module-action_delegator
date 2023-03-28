@@ -17,6 +17,19 @@ en:
         verify_with_sms: Verify with SMS
   decidim:
     action_delegator:
+      verifications:
+        delegations_verifier:
+          authorizations:
+            new:
+              not_in_census: We're sorry but you cannot be authorized now because you are not in the census. Please contact the admin if you feel this is a mistake.
+              title: Authorize with Delegations Verifier
+              send_code: Send verification code
+              authorize: Authorize my account
+              missing_phone_error: Missing membership phone
+              phone_warning: This phone number has been imported by the admin. Please,
+                reach out if it's not correct.
+              participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
+
       admin:
         consultations:
           results:
@@ -167,11 +180,6 @@ en:
           update:
             error: There was a problem updating the settings
             success: Settings saved successfully
-      authorizations:
-        new:
-          missing_phone_error: Missing membership phone
-          phone_warning: This phone number has been imported by the admin. Please,
-            reach out if it's not correct.
       delegations:
         has_delegations: Delegate vote made
         link: You have delegations granted

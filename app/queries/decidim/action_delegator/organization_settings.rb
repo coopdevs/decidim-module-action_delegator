@@ -13,6 +13,12 @@ module Decidim
           .merge(organization_consultations)
       end
 
+      def active
+        Setting
+          .joins(:consultation)
+          .merge(organization_consultations.active)
+      end
+
       private
 
       attr_reader :organization

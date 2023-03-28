@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "decidim/action_delegator/verifications/delegations_authorizer"
+require "decidim/action_delegator/verifications/delegations_verifier"
 require "decidim/action_delegator/admin"
 require "decidim/action_delegator/admin_engine"
 require "decidim/action_delegator/engine"
@@ -8,6 +10,12 @@ module Decidim
   # This namespace holds the logic of the `ActionDelegator` module
   module ActionDelegator
     include ActiveSupport::Configurable
+
+    # this is the SmsGateway provided by this module
+    # Note that it will be ignored if you provide your own SmsGateway in Decidm.sms_gateway_service
+    config_accessor :sms_gateway_service do
+      "Decidim::ActionDelegator::SmsGateway"
+    end
 
     # The default expiration time for the integrated authorization
     # if zero, the authorization won't be registered
