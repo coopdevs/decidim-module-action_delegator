@@ -115,6 +115,21 @@ en:
             index:
               title: Results by answer summing membership weights
         settings:
+          authorization_method:
+            both: Email and phone number
+            email: Only email
+            phone: Only phone number
+          state:
+            closed: Closed
+            ongoing: Ongoing
+            pending: Pending
+          authorization_method_help: |
+            Available options are:
+            <ul>
+            <li><b>Only phone number:</b> Uses SMS verification. Users must input their phone number that matches the census.</li>
+            <li><b>Only email:</b> User's email must match the census.</li>
+            <li><b>Email and phone number:</b> Uses SMS verification. User's email must match the census and phone number will be predefined.</li>
+            </ul>
           create:
             error: There was a problem creating the settings
             success: Settings created successfully
@@ -132,6 +147,7 @@ en:
               delegations: Edit the delegations
               new_setting: New delegation group
               ponderate: Set weights for vote ponderation
+            authorization_method: Authorization method
             census: Census total
             closed: Closed
             consultation: Consultation
@@ -147,17 +163,12 @@ en:
               Delegations are linked to the parent element (currently a consultation) and cannot be edited/deleted after a voting has been started.
             max_grants: Max delegations/user
             open: Open
-            phone: Verify phone?
             ponderations: Ponderation types
             state: State
             title: Delegation groups
           new:
             save: Create
             title: New delegation group
-          phone:
-            freezed: Yes, from census
-            none: Not required
-            open: Yes, user editable
           update:
             error: There was a problem updating the settings
             success: Settings saved successfully

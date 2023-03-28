@@ -33,8 +33,7 @@ module Decidim
         def update_setting
           setting.max_grants = form.max_grants
           setting.decidim_consultation_id = form.decidim_consultation_id
-          setting.verify_with_sms = form.verify_with_sms
-          setting.phone_freezed = form.phone_freezed
+          setting.authorization_method = form.authorization_method
           setting.save!
         end
       end

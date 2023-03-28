@@ -10,10 +10,10 @@ describe Decidim::ActionDelegator::Admin::SettingForm do
     {
       decidim_consultation_id: consultation.id,
       max_grants: 5,
-      verify_with_sms: true,
-      phone_freezed: true
+      authorization_method: authorization_method
     }
   end
+  let(:authorization_method) { :both }
 
   it { is_expected.to be_valid }
 

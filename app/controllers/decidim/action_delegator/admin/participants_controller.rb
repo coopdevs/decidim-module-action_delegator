@@ -19,13 +19,13 @@ module Decidim
         def new
           enforce_permission_to :create, :participant
 
-          @form = form(ParticipantForm).instance
+          @form = form(ParticipantForm).instance(setting: current_setting)
         end
 
         def create
           enforce_permission_to :create, :participant
 
-          @form = ParticipantForm.from_params(params).with_context(setting: current_setting)
+          @form = form(ParticipantForm).from_params(params, setting: current_setting)
 
           CreateParticipant.call(@form) do
             on(:ok) do
@@ -43,13 +43,13 @@ module Decidim
         def edit
           enforce_permission_to :update, :participant
 
-          @form = form(ParticipantForm).from_model(participant)
+          @form = form(ParticipantForm).from_model(participant, setting: current_setting)
         end
 
         def update
           enforce_permission_to :update, :participant
 
-          @form = ParticipantForm.from_params(params).with_context(setting: current_setting)
+          @form = form(ParticipantForm).from_params(params, setting: current_setting)
           UpdateParticipant.call(@form, participant) do
             on(:ok) do
               notice = I18n.t("participants.update.success", scope: "decidim.action_delegator.admin")
