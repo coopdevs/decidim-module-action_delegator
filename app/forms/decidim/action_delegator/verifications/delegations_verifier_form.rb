@@ -14,21 +14,20 @@ module Decidim
         validate :setting_exists
         validate :user_in_census
 
+        alias user current_user
+
         def handler_name
           "delegations_verifier"
         end
 
-        # A mobile phone can only be verified once but it should be private.
         def unique_id
           Digest::MD5.hexdigest(
-            "#{phone}-#{Rails.application.secrets.secret_key_base}"
+            "#{email}-#{phone}-#{Rails.application.secrets.secret_key_base}"
           )
         end
 
         # email is predefined always
-        def email
-          current_user.email
-        end
+        delegate :email, to: :current_user
 
         # When there's a phone number, sanitize it allowing only numbers and +.
         def phone
@@ -36,6 +35,12 @@ module Decidim
           return unless super
 
           super.gsub(/[^+0-9]/, "")
+        end
+
+        def metadata
+          {
+            phone: phone
+          }
         end
 
         # The verification metadata to validate in the next step.
@@ -56,20 +61,33 @@ module Decidim
           @participants ||= Decidim::ActionDelegator::Participant.where(setting: setting)
         end
 
-        def email_in_census?
-          participants.exists?(email: current_user.email)
+        def participant
+          return unless setting
+
+          @participant ||= begin
+            params = { email: current_user.email }
+            params[:phone] = phone if setting.phone_required?
+
+            setting.participants.find_by(params)
+          end
         end
 
         private
 
         def user_in_census
+          return if errors.any?
+          return if participant
+
+          errors.add(:phone, :phone_not_found)
+          errors.add(:email, :email_not_found)
         end
 
         def setting_exists
           return if errors.any?
-          # return if setting
+          return if setting
 
-          errors.add(:base, :invalid)
+          errors.add(:phone, :invalid)
+          errors.add(:email, :invalid)
         end
 
         def verification_code
@@ -90,7 +108,7 @@ module Decidim
         end
 
         def find_phone
-          @find_phone ||= participants.find_by(email: current_user.email)&.phone
+          @find_phone ||= participant&.phone
         end
       end
     end

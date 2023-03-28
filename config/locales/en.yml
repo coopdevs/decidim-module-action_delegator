@@ -15,6 +15,15 @@ en:
         phone_freezed: Use phone number from the census. Don't allow participants
           to edit it.
         verify_with_sms: Verify with SMS
+    errors:
+      models:
+        delegations_verifier:
+          attributes:
+            phone:
+              email_not_found: Sorry, this email is not in the census. Please, contact
+                us if you think this is a mistake.
+              phone_not_found: Sorry, this phone number is not in the census. Please,
+                contact us if you think this is a mistake.
   decidim:
     action_delegator:
       admin:
@@ -208,6 +217,12 @@ en:
       verifications:
         delegations_verifier:
           authorizations:
+            edit:
+              confirm_destroy: Are you sure you want to reset the verification code?
+              destroy: Reset verification code
+              resend: Didn't receive the verification code?
+              send: Confirm
+              title: Introduce the verification code you received
             new:
               authorize: Authorize my account
               missing_phone_error: Missing membership phone

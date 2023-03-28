@@ -14,7 +14,7 @@
               <%= form_required_explanation %>
 
               <% if setting&.email_required? %>
-                <% unless @form.email_in_census? %>
+                <% unless @form.participant %>
                   <div class="callout announcement mb-sm alert cell-announcement">
                     <p><%= t(".not_in_census") %></p>
                   </div>
@@ -40,7 +40,7 @@
               </div>
 
               <div class="actions">
-                <%= form.submit t(setting&.phone_required? ? ".send_code": ".authorize"), class: "button expanded", "data-disable-with" => "#{t('.send_code')}...", disabled: (setting&.phone_required? && @form.phone.blank? || setting&.email_required? && !@form.email_in_census?) %>
+                <%= form.submit t(setting&.phone_required? ? ".send_code": ".authorize"), class: "button expanded", "data-disable-with" => "#{t('.send_code')}...", disabled: (setting&.email_required? && (!@form.participant || @form.phone.blank?)) %>
               </div>
             <% end %>
           </div>

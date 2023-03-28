@@ -9,7 +9,7 @@ module Decidim
           include Decidim::Verifications::Renewable
 
           helper_method :authorization, :setting
-          
+
           def new
             enforce_permission_to :create, :authorization, authorization: authorization
 
@@ -37,15 +37,15 @@ module Decidim
           def edit
             enforce_permission_to :update, :authorization, authorization: authorization
 
-            @form = form(ConfirmationForm).from_params(params)
+            @form = form(Decidim::Verifications::Sms::ConfirmationForm).from_params(params)
           end
 
           def update
             enforce_permission_to :update, :authorization, authorization: authorization
 
-            @form = form(ConfirmationForm).from_params(params)
+            @form = form(Decidim::Verifications::Sms::ConfirmationForm).from_params(params)
 
-            ConfirmUserAuthorization.call(authorization, @form, session) do
+            Decidim::Verifications::ConfirmUserAuthorization.call(authorization, @form, session) do
               on(:ok) do
                 flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
 
