@@ -19,9 +19,10 @@ en:
       models:
         delegations_verifier:
           attributes:
-            phone:
+            email:
               email_not_found: Sorry, this email is not in the census. Please, contact
                 us if you think this is a mistake.
+            phone:
               phone_not_found: Sorry, this phone number is not in the census. Please,
                 contact us if you think this is a mistake.
   decidim:
@@ -251,6 +252,8 @@ en:
           - A verification method for delegate voting
       delegations_verifier:
         explanation: Verified users with this method can delegate votes to other users
+        fields:
+          phone: Phone number
         name: Delegations Verifier
     resources:
       question:

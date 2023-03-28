@@ -19,7 +19,17 @@ module Decidim
       validates :setting, :email, presence: true
 
       def user
-        @user ||= Decidim::User.find_by(email: email)
+        @user ||= if setting.email_required?
+                    Decidim::User.find_by(email: email)
+                  else
+                    Decidim::Authorization.find_by(unique_id: uniq_id)&.user
+                  end
+      end
+
+      def uniq_id
+        @uniq_id ||= Digest::MD5.hexdigest(
+          "#{phone}-#{Rails.application.secrets.secret_key_base}"
+        )
       end
 
       def user_name

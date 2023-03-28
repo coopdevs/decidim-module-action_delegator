@@ -10,7 +10,9 @@ module Decidim
         attribute :email, String
         attribute :phone, String
 
-        validates :email, :phone, :verification_code, :sms_gateway, presence: true
+        validates :verification_code, :sms_gateway, presence: true
+        validates :phone, presence: true, if: ->(form) { form.setting&.phone_required? }
+        validates :email, presence: true, if: ->(form) { form.setting&.email_required? }
         validate :setting_exists
         validate :user_in_census
 
@@ -22,7 +24,7 @@ module Decidim
 
         def unique_id
           Digest::MD5.hexdigest(
-            "#{email}-#{phone}-#{Rails.application.secrets.secret_key_base}"
+            "#{setting&.phone_required? ? phone : email}-#{Rails.application.secrets.secret_key_base}"
           )
         end
 
@@ -65,7 +67,8 @@ module Decidim
           return unless setting
 
           @participant ||= begin
-            params = { email: current_user.email }
+            params = {}
+            params[:email] = email if setting.email_required?
             params[:phone] = phone if setting.phone_required?
 
             setting.participants.find_by(params)
@@ -108,7 +111,7 @@ module Decidim
         end
 
         def find_phone
-          @find_phone ||= participant&.phone
+          @find_phone ||= setting.participants.find_by(email: email)&.phone
         end
       end
     end
