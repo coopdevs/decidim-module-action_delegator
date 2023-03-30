@@ -41,9 +41,36 @@ module Decidim::ActionDelegator::Verifications
 
       context "when method is email" do
         let(:authorization_method) { :email }
-        let(:phone) { nil }
+        let(:phone) { "" }
 
         it { is_expected.to be_valid }
+      end
+
+      context "when method is phone" do
+        let(:authorization_method) { :phone }
+        let(:email) { "" }
+
+        it { is_expected.to be_valid }
+
+        context "when different phone prefixes in the participant" do
+          ["", "+34", "0034", "34"].each do |prefix|
+            let(:phone) { "#{prefix}34123456" }
+
+            it { is_expected.to be_valid }
+          end
+        end
+
+        context "when different phone prefixes in the attributes" do
+          ["", "+34", "0034", "34"].each do |prefix|
+            let(:attributes) do
+              {
+                phone: "#{prefix}#{phone}"
+              }
+            end
+
+            it { is_expected.to be_valid }
+          end
+        end
       end
 
       context "when no setting" do

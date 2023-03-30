@@ -2,6 +2,9 @@
 en:
   activemodel:
     attributes:
+      delegations_verifier:
+        email: Email
+        phone: Mobile phone number
       participant:
         decidim_action_delegator_ponderation_id: Ponderation
         email: Email

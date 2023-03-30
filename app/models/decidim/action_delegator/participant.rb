@@ -32,7 +32,7 @@ module Decidim
             Digest::MD5.hexdigest("#{prefix}#{phone}-#{Rails.application.secrets.secret_key_base}"),
             Digest::MD5.hexdigest("#{phone.delete_prefix(prefix)}-#{Rails.application.secrets.secret_key_base}")
           ]
-        end.flatten
+        end.flatten.uniq
       end
 
       def phone_prefixes

@@ -82,6 +82,14 @@ module Decidim
         it_behaves_like "unauthorized"
       end
 
+      context "and is in another participatory space" do
+        let(:other_consultation) { create(:consultation, organization: organization) }
+        let(:participatory_process) { create(:participatory_process, organization: organization) }
+        let(:component) { create(:component, permissions: permissions, organization: organization, participatory_space: participatory_process) }
+
+        it_behaves_like "authorized"
+      end
+
       context "and authorization is not granted" do
         before { authorization.update!(user: user, granted_at: nil) }
 

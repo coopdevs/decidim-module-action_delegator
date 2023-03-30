@@ -7,8 +7,6 @@ describe "Admin manages delegations", type: :system do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, :admin, :confirmed, organization: organization) }
 
-  let(:consultation_translated_title) { Decidim::ActionDelegator::Admin::ConsultationPresenter.new(consultation).translated_title }
-
   before do
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -55,7 +53,7 @@ describe "Admin manages delegations", type: :system do
 
       expect(page).to have_admin_callout("successfully")
       expect(page).to have_content(grantee.name)
-      expect(page).to have_content(consultation_translated_title)
+      expect(page).to have_i18n_content(consultation.title)
       expect(page).to have_current_path(decidim_admin_action_delegator.setting_delegations_path(setting.id))
     end
   end

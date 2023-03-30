@@ -7,8 +7,9 @@ module Decidim
         def authorize
           status = super
           return status unless status == [:ok, {}]
-          # byebug
 
+          # if used outside a consultation, allow all
+          return [:ok, {}] if consultation.blank?
           return [:ok, {}] if belongs_to_consultation? && user_in_census?
 
           [:unauthorized, { extra_explanation: extra_explanations }]

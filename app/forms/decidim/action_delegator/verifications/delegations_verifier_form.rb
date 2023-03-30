@@ -69,7 +69,11 @@ module Decidim
           @participant ||= begin
             params = {}
             params[:email] = email if setting.email_required?
-            params[:phone] = phone if setting.phone_required?
+            if setting.phone_required?
+              params[:phone] = phone
+              params[:phone] = phone_prefixes.map { |prefix| "#{prefix}#{phone}" }
+              params[:phone] += phone_prefixes.map { |prefix| phone.delete_prefix(prefix).to_s }
+            end
 
             setting.participants.find_by(params)
           end
@@ -77,12 +81,18 @@ module Decidim
 
         private
 
+        def phone_prefixes
+          return [] unless ActionDelegator.phone_prefixes.respond_to?(:map)
+
+          ActionDelegator.phone_prefixes
+        end
+
         def user_in_census
           return if errors.any?
           return if participant
 
-          errors.add(:phone, :phone_not_found)
-          errors.add(:email, :email_not_found)
+          errors.add(:phone, :phone_not_found) if setting.phone_required?
+          errors.add(:email, :email_not_found) if setting.email_required?
         end
 
         def setting_exists
