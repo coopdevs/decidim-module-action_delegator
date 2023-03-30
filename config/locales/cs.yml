@@ -1,10 +1,19 @@
 ---
 cs:
-  activerecord:
+  activemodel:
     attributes:
-      decidim/action_delegator/setting:
+      participant:
+        decidim_action_delegator_ponderation_id: Ponderation
+        email: Email
+        phone: Phone
+      ponderation:
+        name: Membership type
+        name_help: Membership type
+      setting:
         decidim_consultation_id: Consultation
         max_grants: Maximum vote delegations a user can receive
+        phone_freezed: Use phone number from the census. Don't allow participants to edit it.
+        verify_with_sms: Verify with SMS
   decidim:
     action_delegator:
       admin:
@@ -18,20 +27,18 @@ cs:
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
           destroy:
-            error: Došlo k potížím při odstraňování této delegace
+            error: There was a problem removing this delegation
             success: Delegace úspěšně zničena
           index:
             actions:
-              new_delegation: Nový účastník
+              new_delegation: New delegation
             consultation: Konzultace
             created_at: Vytvořeno v
             delete: Smazat
             grantee: Příjemce
             granter: Delegující
-            title: Účastníci
+            title: User vote delegations
           new:
-            form:
-              title: Obecné informace
             grantee: Příjemce
             granter: Delegující
             save: Vytvořit
@@ -42,33 +49,125 @@ cs:
             by_answer: Podle odpovědi
             by_type_and_weight: Podle typu a váhy
             sum_of_weights: Podle součtu vah
-          delegations: Uživatelské delegace
+          delegations: Delegations & Weights
           participants: Účastníci
+        participants:
+          create:
+            error: There was a problem creating the participants
+            success: Participants created successfully
+          destroy:
+            error: There was a problem removing this participant
+            success: Participant successfully destroyed
+          edit:
+            save: Save
+            title: Edit participant
+          index:
+            actions:
+              new_participant: New participant
+            created_at: Created at
+            email: Email
+            last_login: Last login
+            never_logged: Never logged yet
+            phone: Phone
+            ponderation: Ponderation
+            title: Census
+            user: User
+          new:
+            save: Create
+            title: New participant
+          update:
+            error: There was a problem updating the participants
+            success: Participants saved successfully
+        ponderations:
+          create:
+            error: There's been and error creating the ponderation
+            success: New ponderation created successfully
+          destroy:
+            error: There's been and error removing the ponderation
+            success: Ponderation destroyed successfully
+          edit:
+            save: Save
+            title: Edit ponderation type
+          form:
+            name_help: User type, e.g. "member", "associate", "supporter". Must be unique.
+            name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
+            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the users in this ponderation type.
+          index:
+            actions:
+              new_ponderation: New ponderation
+            created_at: Created at
+            name: Membership Type
+            num_users: Census total
+            title: Ponderations
+            weight: Vote weight
+          new:
+            save: Create
+            title: New ponderation type
+          update:
+            error: There's been and error updating the ponderation
+            success: Ponderation updated successfully
         results:
           sum_of_weights:
             index:
               title: Výsledky na základě součtu váh členů
         settings:
+          authorization_method:
+            both: Email and phone number
+            email: Only email
+            phone: Only phone number
+          authorization_method_help: |
+            Available options are:
+            <ul>
+            <li><b>Only phone number:</b> Uses SMS verification. Users must input their phone number that matches the census.</li>
+            <li><b>Only email:</b> User's email must match the census.</li>
+            <li><b>Email and phone number:</b> Uses SMS verification. User's email must match the census and phone number will be predefined.</li>
+            </ul>
           create:
             error: Při vytváření nastavení se vyskytl problém
-            success: Nastavení bylo úspěšně uloženo
+            success: Settings created successfully
           destroy:
-            error: Při odstraňování tohoto nastavení došlo k chybě
+            error: There was a problem removing this setting
             success: Nastavení úspěšně zničeno
+          edit:
+            save: Save
+            title: Edit delegation group
+          form:
+            max_grants: Maximum delegations per user
           index:
             actions:
-              new_setting: Nová delegace
+              census: Edit the census
+              delegations: Edit the delegations
+              new_setting: New delegation group
+              ponderate: Set weights for vote ponderation
+            authorization_method: Authorization method
+            census: Census total
+            closed: Closed
             consultation: Konzultace
             created_at: Vytvořeno v
-            delegations: Celkový počet delegací
+            delegations: Delegations
+            description_html: |
+              A delegation group is a set of settings to encapsulate the
+              configuration of a delegation system. For the moment only consultations are supported.
+              <br>
+              Each group can be configured with a different number of maximum delegations per user, different
+              user delegations grants and different sets of ponderation types.
+              <br>
+              Delegations are linked to the parent element (currently a consultation) and cannot be edited/deleted after a voting has been started.
             max_grants: Maximální počet delegací/uživatelů
-            title: Delegace
+            open: Open
+            ponderations: Ponderation types
+            state: State
+            title: Delegation groups
           new:
-            form:
-              title: Obecné informace
-            max_grants: Maximum delegací
-            save: Uložit
-            title: Nastavení delegování
+            save: Create
+            title: New delegation group
+          state:
+            closed: Closed
+            ongoing: Ongoing
+            pending: Pending
+          update:
+            error: There was a problem updating the settings
+            success: Settings saved successfully
       authorizations:
         new:
           missing_phone_error: Chybějící členský telefon
