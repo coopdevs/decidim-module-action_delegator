@@ -23,6 +23,14 @@ module Decidim
       3.months
     end
 
+    # used for comparing phone numbers from a census list and the ones introduced by the user
+    # the phone number will be normalized before comparing it so, for instance,
+    # if you have a census list with  +34 666 666 666 and the user introduces 0034666666666 or 666666666, they will be considered the same
+    # can be empty or null if yo don't want to check different combinations of prefixes
+    config_accessor :phone_prefixes do
+      ["+34", "0034", "34"]
+    end
+
     # Consultations has an annoying and totally useless deprecation warning
     # This plugin removes it by default.
     # If you want to keep it, you can set this config to false

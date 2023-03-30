@@ -12,7 +12,7 @@ module Decidim
       let(:ponderation) { create(:ponderation) }
       let(:user) { create(:user) }
       let(:email) { user.email }
-      let(:phone) { "123456" }
+      let(:phone) { "34123456" }
 
       it { is_expected.to be_valid }
       it { is_expected.to belong_to(:setting) }
@@ -28,6 +28,7 @@ module Decidim
 
       context "when verification method is phone" do
         let(:authorization_method) { :phone }
+        let(:email) { nil }
 
         it { is_expected.to be_valid }
 
@@ -36,12 +37,37 @@ module Decidim
         end
 
         context "and an authorization exists" do
-          let!(:authorization) { create(:authorization, user: user, name: "delegations_verifier", metadata: { phone: phone }, unique_id: uniq_id) }
-          let(:uniq_id) { Digest::MD5.hexdigest("#{phone}-#{Rails.application.secrets.secret_key_base}") }
+          let(:user_phone) { phone }
+          let!(:authorization) { create(:authorization, user: user, name: "delegations_verifier", metadata: { phone: user_phone }, unique_id: uniq_id) }
+          let(:uniq_id) { Digest::MD5.hexdigest("#{user_phone}-#{Rails.application.secrets.secret_key_base}") }
 
           it "has a related user" do
             expect(subject.user).to eq(user)
             expect(subject.user_name).to eq(user.name)
+          end
+
+          context "and authorization number has different prefixes" do
+            ["", "+34", "0034", "34"].each do |prefix|
+              let(:user_phone) { "#{prefix}#{phone}" }
+
+              it "has a related user" do
+                expect(subject.user).to eq(user)
+                expect(subject.user_name).to eq(user.name)
+              end
+            end
+          end
+
+          context "and participant number has different prefixes" do
+            let(:user_phone) { "34123456" }
+
+            ["", "+34", "0034", "34"].each do |prefix|
+              let(:phone) { "#{prefix}#{user_phone}" }
+
+              it "has a related user" do
+                expect(subject.user).to eq(user)
+                expect(subject.user_name).to eq(user.name)
+              end
+            end
           end
         end
       end
