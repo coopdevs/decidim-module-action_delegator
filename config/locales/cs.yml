@@ -13,7 +13,7 @@ cs:
         decidim_consultation_id: Konzultace
         max_grants: Maximum vote delegations a user can receive
         phone_freezed: Use phone number from the census. Don't allow participants to edit it.
-        verify_with_sms: Verify with SMS
+        verify_with_sms: Ověřit pomocí SMS
   decidim:
     action_delegator:
       admin:
@@ -27,7 +27,7 @@ cs:
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
           destroy:
-            error: There was a problem removing this delegation
+            error: Došlo k potížím při odstraňování této delegace
             success: Delegace úspěšně zničena
           index:
             actions:
@@ -49,7 +49,7 @@ cs:
             by_answer: Podle odpovědi
             by_type_and_weight: Podle typu a váhy
             sum_of_weights: Podle součtu vah
-          delegations: Delegations & Weights
+          delegations: Delegace a váhy
           participants: Účastníci
         participants:
           create:
