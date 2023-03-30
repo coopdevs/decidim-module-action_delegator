@@ -45,7 +45,7 @@ describe "Admin manages settings", type: :system do
     end
 
     it "renders the list of settings in a table" do
-      expect(page).to have_content(I18n.t("decidim.action_delegator.admin.delegations.index.title"))
+      expect(page).to have_content(I18n.t("decidim.action_delegator.admin.settings.index.title"))
 
       expect(page).to have_content(I18n.t("settings.index.consultation", scope: i18n_scope))
       expect(page).to have_content(I18n.t("settings.index.created_at", scope: i18n_scope))
@@ -54,9 +54,31 @@ describe "Admin manages settings", type: :system do
       expect(page).to have_content(I18n.l(setting.created_at, format: :short))
     end
 
-    it "links to the setting" do
-      click_link translated_attribute(consultation.title)
+    it "links to the consultation" do
+      expect(page).to have_selector(
+        :xpath,
+        "//a[@href='#{decidim_consultations.consultation_path(consultation)}'][@target='blank']"
+      )
+    end
+
+    it "links to edit the setting" do
+      click_link "Edit"
+      expect(page).to have_current_path(decidim_admin_action_delegator.edit_setting_path(setting))
+    end
+
+    it "links to the setting's delegations" do
+      click_link "Edit the delegations"
       expect(page).to have_current_path(decidim_admin_action_delegator.setting_delegations_path(setting))
+    end
+
+    it "links to the setting's participants" do
+      click_link "Edit the census"
+      expect(page).to have_current_path(decidim_admin_action_delegator.setting_participants_path(setting))
+    end
+
+    it "links to the setting's ponderations" do
+      click_link "Set weights for vote ponderation"
+      expect(page).to have_current_path(decidim_admin_action_delegator.setting_ponderations_path(setting))
     end
   end
 

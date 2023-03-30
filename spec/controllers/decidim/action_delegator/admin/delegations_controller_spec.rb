@@ -46,8 +46,8 @@ module Decidim
 
           get :index, params: { setting_id: setting.id }
 
-          expect(assigns(:delegations)).to include(delegation)
-          expect(assigns(:delegations)).not_to include(other_setting_delegation)
+          expect(controller.helpers.delegations).to include(delegation)
+          expect(controller.helpers.delegations).not_to include(other_setting_delegation)
         end
       end
 

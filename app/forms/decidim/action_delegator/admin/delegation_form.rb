@@ -6,6 +6,8 @@ module Decidim
       # A form object used to create a Delegation
       #
       class DelegationForm < Form
+        mimic :delegation
+
         attribute :granter_id, Integer
         attribute :grantee_id, Integer
 

@@ -34,7 +34,7 @@ module Decidim
 
           get :index
 
-          expect(assigns(:settings)).not_to include(other_setting)
+          expect(controller.helpers.settings).not_to include(other_setting)
         end
       end
 
@@ -48,7 +48,7 @@ module Decidim
 
       describe "#create" do
         let(:setting_params) do
-          { setting: { max_grants: 2, decidim_consultation_id: consultation.id } }
+          { setting: { max_grants: 2, decidim_consultation_id: consultation.id, authorization_method: :both } }
         end
 
         it "authorizes the action" do

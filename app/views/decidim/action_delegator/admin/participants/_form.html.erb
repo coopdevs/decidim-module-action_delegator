@@ -1,0 +1,9 @@
+<div class="row column">
+  <%= form.email_field :email %>
+</div>
+<div class="row column">
+  <%= form.text_field :phone %>
+</div>
+<div class="row column">
+  <%= form.select :decidim_action_delegator_ponderation_id, ponderations_for_select(current_setting) %>
+</div>

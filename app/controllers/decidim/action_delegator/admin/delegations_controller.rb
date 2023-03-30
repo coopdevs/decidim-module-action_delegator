@@ -7,15 +7,13 @@ module Decidim
         include NeedsPermission
         include Paginable
 
-        helper ::Decidim::ActionDelegator::DelegationHelper
-        helper_method :current_setting
+        helper ::Decidim::ActionDelegator::Admin::DelegationHelper
+        helper_method :current_setting, :delegations
 
         layout "decidim/action_delegator/admin/delegations"
 
         def index
           enforce_permission_to :index, :delegation
-
-          @delegations = paginate(collection)
         end
 
         def new
@@ -45,14 +43,12 @@ module Decidim
         def destroy
           enforce_permission_to :destroy, :delegation, resource: delegation
 
-          setting_id = delegation.setting.id
-
           if delegation.destroy
             notice = I18n.t("delegations.destroy.success", scope: "decidim.action_delegator.admin")
-            redirect_to setting_delegations_path(setting_id), notice: notice
+            redirect_to setting_delegations_path(current_setting), notice: notice
           else
             error = I18n.t("delegations.destroy.error", scope: "decidim.action_delegator.admin")
-            redirect_to setting_delegations_path(setting_id), flash: { error: error }
+            redirect_to setting_delegations_path(current_setting), flash: { error: error }
           end
         end
 
@@ -60,6 +56,10 @@ module Decidim
 
         def delegation
           @delegation ||= collection.find_by(id: params[:id])
+        end
+
+        def delegations
+          @delegations ||= paginate(collection)
         end
 
         def collection
