@@ -33,6 +33,7 @@ module Decidim
       enum authorization_method: { phone: 0, email: 1, both: 2 }, _prefix: :verify_with
 
       delegate :title, to: :consultation
+      delegate :organization, to: :consultation
 
       default_scope { order(created_at: :desc) }
 

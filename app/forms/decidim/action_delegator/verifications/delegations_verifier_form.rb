@@ -24,7 +24,7 @@ module Decidim
 
         def unique_id
           Digest::MD5.hexdigest(
-            "#{setting&.phone_required? ? phone : email}-#{Rails.application.secrets.secret_key_base}"
+            "#{setting&.phone_required? ? phone : email}-#{setting.organization.id}-#{Digest::MD5.hexdigest(Rails.application.secrets.secret_key_base)}"
           )
         end
 
@@ -70,6 +70,8 @@ module Decidim
             params = {}
             params[:email] = email if setting.email_required?
             if setting.phone_required?
+              return setting.participants.none if phone.blank?
+
               params[:phone] = phone
               params[:phone] = phone_prefixes.map { |prefix| "#{prefix}#{phone}" }
               params[:phone] += phone_prefixes.map { |prefix| phone.delete_prefix(prefix).to_s }

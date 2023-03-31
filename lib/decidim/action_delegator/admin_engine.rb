@@ -14,11 +14,12 @@ module Decidim
           resources :delegations, only: [:index, :new, :create, :destroy]
           resources :ponderations
           resources :participants
+          resources :permissions, only: [:create]
         end
 
         resources :consultations, param: :slug, only: [] do
           get :results, on: :member
-          resources :exports, only: [:create], module: :consultations
+          resources :exports, only: :create, module: :consultations
 
           namespace :exports do
             resources :sum_of_weights, only: :create
