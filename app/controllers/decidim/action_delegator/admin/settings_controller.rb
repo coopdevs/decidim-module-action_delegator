@@ -6,6 +6,7 @@ module Decidim
       class SettingsController < ActionDelegator::Admin::ApplicationController
         helper ::Decidim::ActionDelegator::Admin::DelegationHelper
         include Filterable
+        include Paginable
 
         layout "decidim/admin/users"
         helper_method :settings
@@ -89,9 +90,7 @@ module Decidim
         end
 
         def settings
-          @settings ||= filtered_collection.map do |setting|
-            SettingPresenter.new(setting)
-          end
+          @settings ||= paginate(collection)
         end
 
         def collection

@@ -34,6 +34,8 @@ module Decidim
 
       delegate :title, to: :consultation
 
+      default_scope { order(created_at: :desc) }
+
       def state
         @state ||= if consultation.end_voting_date < Time.zone.now
                      :closed
@@ -54,6 +56,10 @@ module Decidim
 
       def phone_required?
         verify_with_phone? || verify_with_both?
+      end
+
+      def email_required?
+        verify_with_email? || verify_with_both?
       end
     end
   end

@@ -16,10 +16,29 @@ module Decidim
 
       delegate :consultation, to: :setting
 
-      validates :setting, :email, presence: true
+      validates :setting, presence: true
 
       def user
-        @user ||= Decidim::User.find_by(email: email)
+        @user ||= if setting.email_required?
+                    Decidim::User.find_by(email: email)
+                  else
+                    Decidim::Authorization.find_by(unique_id: uniq_ids)&.user
+                  end
+      end
+
+      def uniq_ids
+        @uniq_ids ||= phone_prefixes.map do |prefix|
+          [
+            Digest::MD5.hexdigest("#{prefix}#{phone}-#{Rails.application.secrets.secret_key_base}"),
+            Digest::MD5.hexdigest("#{phone.delete_prefix(prefix)}-#{Rails.application.secrets.secret_key_base}")
+          ]
+        end.flatten.uniq
+      end
+
+      def phone_prefixes
+        @phone_prefixes = [""]
+        @phone_prefixes += ActionDelegator.phone_prefixes if ActionDelegator.phone_prefixes.respond_to?(:map)
+        @phone_prefixes
       end
 
       def user_name

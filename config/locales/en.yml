@@ -2,6 +2,9 @@
 en:
   activemodel:
     attributes:
+      delegations_verifier:
+        email: Email
+        phone: Mobile phone number
       participant:
         decidim_action_delegator_ponderation_id: Ponderation
         email: Email
@@ -15,6 +18,16 @@ en:
         phone_freezed: Use phone number from the census. Don't allow participants
           to edit it.
         verify_with_sms: Verify with SMS
+    errors:
+      models:
+        delegations_verifier:
+          attributes:
+            email:
+              email_not_found: Sorry, this email is not in the census. Please, contact
+                us if you think this is a mistake.
+            phone:
+              phone_not_found: Sorry, this phone number is not in the census. Please,
+                contact us if you think this is a mistake.
   decidim:
     action_delegator:
       admin:
@@ -126,6 +139,10 @@ en:
             <li><b>Only email:</b> User's email must match the census.</li>
             <li><b>Email and phone number:</b> Uses SMS verification. User's email must match the census and phone number will be predefined.</li>
             </ul>
+          check_verifier:
+            not_installed_html: It seems that the "Delegation Verifier" authorization
+              method is not installed. Vote delegations does not work without it.
+              Please install it at <a href="/system">/system</a>.
           create:
             error: There was a problem creating the settings
             success: Settings created successfully
@@ -145,7 +162,6 @@ en:
               ponderate: Set weights for vote ponderation
             authorization_method: Authorization method
             census: Census total
-            closed: Closed
             consultation: Consultation
             created_at: Created at
             delegations: Delegations
@@ -180,6 +196,14 @@ en:
       delegations:
         has_delegations: Delegate vote made
         link: You have delegations granted
+      delegations_authorizer:
+        email: We are using the email %{email} to verify your identity. If you think
+          this is wrong, please contact us.
+        no_setting: No delegation group found for this consultation. Please contact
+          the admin to fix it.
+        not_in_census: You are not in the census
+        phone: We are using the phone %{phone} to verify your identity. If you think
+          this is wrong, please contact us.
       delegations_modal:
         callout: Remember, you are voting on behalf of
         contextual_help: 'You have been granted the vote from:'
@@ -194,6 +218,27 @@ en:
           members:
             index:
               title: Members management
+      verifications:
+        delegations_verifier:
+          authorizations:
+            edit:
+              confirm_destroy: Are you sure you want to reset the verification code?
+              destroy: Reset verification code
+              resend: Didn't receive the verification code?
+              send: Confirm
+              title: Introduce the verification code you received
+            new:
+              authorize: Authorize my account
+              missing_phone_error: Missing membership phone
+              not_in_census: We're sorry but you can't be authorized because your
+                email is not in the census. Please contact the admin if you feel this
+                is a mistake.
+              participate_in: 'This authorization allows you to participate in the
+                following consultations: %{consultations}'
+              phone_warning: This phone number has been imported by the admin. Please,
+                reach out if it's not correct.
+              send_code: Send verification code
+              title: Authorize with Delegations Verifier
     admin:
       consultations:
         results:
@@ -210,7 +255,14 @@ en:
           - A verification method for delegate voting
       delegations_verifier:
         explanation: Verified users with this method can delegate votes to other users
+        fields:
+          phone: Phone number
         name: Delegations Verifier
+    resources:
+      question:
+        actions:
+          comment: Comment
+          vote: Vote
   layouts:
     decidim:
       admin:

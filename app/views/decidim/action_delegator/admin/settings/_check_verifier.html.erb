@@ -1,0 +1,5 @@
+<% unless current_organization.available_authorizations.include? "delegations_verifier" %>
+  <div class="callout alert">
+    <%= t(".not_installed_html") %>
+  </div>
+<% end %>

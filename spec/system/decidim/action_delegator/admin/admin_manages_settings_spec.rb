@@ -6,7 +6,8 @@ describe "Admin manages settings", type: :system do
   include Decidim::TranslationsHelper
 
   let(:i18n_scope) { "decidim.action_delegator.admin" }
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, available_authorizations: available_authorizations) }
+  let(:available_authorizations) { ["delegations_verifier"] }
   let!(:consultation) { create(:consultation, organization: organization) }
   let!(:user) { create(:user, :admin, :confirmed, organization: organization) }
 
@@ -45,6 +46,7 @@ describe "Admin manages settings", type: :system do
     end
 
     it "renders the list of settings in a table" do
+      expect(page).to have_no_content('"Delegation Verifier" authorization method is not installed')
       expect(page).to have_content(I18n.t("decidim.action_delegator.admin.settings.index.title"))
 
       expect(page).to have_content(I18n.t("settings.index.consultation", scope: i18n_scope))
@@ -79,6 +81,14 @@ describe "Admin manages settings", type: :system do
     it "links to the setting's ponderations" do
       click_link "Set weights for vote ponderation"
       expect(page).to have_current_path(decidim_admin_action_delegator.setting_ponderations_path(setting))
+    end
+
+    context "when verifier is installed" do
+      let(:available_authorizations) { [] }
+
+      it "does not show the verifier link" do
+        expect(page).to have_content('"Delegation Verifier" authorization method is not installed')
+      end
     end
   end
 

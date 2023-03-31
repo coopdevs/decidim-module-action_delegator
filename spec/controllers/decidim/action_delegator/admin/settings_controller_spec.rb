@@ -75,6 +75,50 @@ module Decidim
         end
       end
 
+      describe "#edit" do
+        let!(:setting) { create(:setting, consultation: consultation) }
+
+        it "authorizes the action" do
+          expect(controller).to receive(:allowed_to?).with(:update, :setting, {})
+
+          get :edit, params: { id: setting.id }
+        end
+      end
+
+      describe "#update" do
+        let!(:setting) { create(:setting, consultation: consultation) }
+        let(:another_consultation) { create(:consultation, organization: consultation.organization) }
+        let(:setting_params) do
+          { id: setting.id, setting: { max_grants: 3, decidim_consultation_id: another_consultation.id, authorization_method: :phone } }
+        end
+
+        it "authorizes the action" do
+          expect(controller).to receive(:allowed_to?).with(:update, :setting, {})
+
+          post :update, params: setting_params
+        end
+
+        context "when successful" do
+          it "updates new settings" do
+            post :update, params: setting_params
+
+            expect(setting.reload.max_grants).to eq(3)
+            expect(setting.consultation).to eq(another_consultation)
+            expect(setting.authorization_method).to eq("phone")
+            expect(response).to redirect_to(settings_path)
+            expect(flash[:notice]).to eq(I18n.t("decidim.action_delegator.admin.settings.update.success"))
+          end
+        end
+
+        context "when failed" do
+          it "shows the error" do
+            post :update, params: { id: setting.id, setting: { max_grants: 2 } }
+
+            expect(controller).to set_flash.now[:error].to(I18n.t("decidim.action_delegator.admin.settings.update.error"))
+          end
+        end
+      end
+
       describe "#destroy" do
         let!(:setting) { create(:setting, consultation: consultation) }
 
