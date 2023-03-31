@@ -36,7 +36,7 @@ module Decidim
                       .where.not("MD5(CONCAT(phone,'-',?,'-',?)) IN (?)",
                                  current_organization.id,
                                  Digest::MD5.hexdigest(Rails.application.secret_key_base),
-                                 Authorization.select(:unique_id))
+                                 Authorization.select(:unique_id).where.not(unique_id: nil))
         end
 
         def participants_uniq_ids(participants)
@@ -46,7 +46,10 @@ module Decidim
 
         def existing_authorizations(participants)
           uniq_ids = participants_uniq_ids(participants)
-          Decidim::Authorization.select(:decidim_user_id).where(unique_id: uniq_ids)
+          user_ids = current_organization.users.select(:id).where(email: participants.select(:email))
+          Decidim::Authorization.select(:decidim_user_id).where(unique_id: uniq_ids).or(
+            Decidim::Authorization.select(:decidim_user_id).where(decidim_user_id: user_ids)
+          )
         end
 
         def total_missing_authorizations(participants)

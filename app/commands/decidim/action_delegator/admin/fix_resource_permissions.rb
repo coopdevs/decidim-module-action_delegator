@@ -32,10 +32,11 @@ module Decidim
         def update_permissions
           resources.each do |resource|
             resource.resource_manifest.actions.each do |action|
-              next unless resource.permissions.dig(action, "authorization_handlers", "delegations_verifier").nil?
+              resource_permission ||= resource.resource_permission || resource.build_resource_permission
+              next unless resource_permission.permissions.dig(action, "authorization_handlers", "delegations_verifier").nil?
 
-              resource.resource_permission.permissions.merge!({ action => { "authorization_handlers" => { "delegations_verifier" => {} } } })
-              @errors << resource unless resource.resource_permission.save
+              resource_permission.permissions.deep_merge!({ action => { "authorization_handlers" => { "delegations_verifier" => {} } } })
+              @errors << resource unless resource_permission.save
             end
           end
         end
