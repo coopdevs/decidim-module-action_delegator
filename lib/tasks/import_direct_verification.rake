@@ -12,17 +12,14 @@ namespace :action_delegator do
       authorizations.each do |authorization|
         weight = authorization.metadata["membership_weight"]
         type = authorization.metadata["membership_type"]
-        phone = authorization.metadata["membership_phone"]
-        email = authorization.user.email
         settings.find_each do |setting|
-          ponderation = setting.ponderations.find_or_create_by!(weight: weight, name: (type.presence || "weight-#{weight}"))
-          participant = setting.participants.find_or_create_by(
-            ponderation: ponderation,
-            phone: phone,
-            email: email
-          )
-          if participant.persisted?
-            puts "Imported authorization [#{authorization.id}] into participant [#{participant.email}] with ponderation [#{ponderation.title}]"
+          participant = setting.participants.find_or_initialize_by(email: authorization.user.email)
+          next unless participant.new_record?
+
+          participant.phone = authorization.metadata["membership_phone"]
+          participant.ponderation = setting.ponderations.find_or_initialize_by(weight: weight, name: (type.presence || "weight-#{weight}"))
+          if participant.save
+            puts "Imported authorization [#{authorization.id}] into participant [#{participant.email}] with ponderation [#{participant.ponderation.title}]"
             count += 1
           end
         end

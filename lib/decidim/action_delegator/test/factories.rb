@@ -13,7 +13,7 @@ FactoryBot.define do
   factory :ponderation, class: "Decidim::ActionDelegator::Ponderation" do
     setting
     name { Faker::Lorem.sentence }
-    weight { 1 }
+    weight { Faker::Number.between(from: 1, to: 10) }
   end
 
   factory :participant, class: "Decidim::ActionDelegator::Participant" do
