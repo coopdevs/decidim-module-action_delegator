@@ -9,9 +9,13 @@ describe "Admin manages settings", type: :system do
   let(:organization) { create(:organization, available_authorizations: available_authorizations) }
   let(:available_authorizations) { ["delegations_verifier"] }
   let!(:consultation) { create(:consultation, organization: organization) }
+  let!(:questions) { create_list(:question, 2, consultation: consultation) }
   let!(:authorization) { create(:authorization, user: another_user, name: "delegations_verifier", granted_at: Time.current) }
   let!(:user) { create(:user, :admin, :confirmed, organization: organization, email: "bar@example.org") }
   let!(:another_user) { create(:user, :confirmed, organization: organization) }
+  let(:permissions) do
+    questions.index_with { |_question| { "vote" => { "authorization_handlers" => { "delegations_verifier" => {} } } } }.to_h
+  end
 
   context "when creating settings" do
     before do
@@ -43,6 +47,7 @@ describe "Admin manages settings", type: :system do
     let!(:setting) { create(:setting, consultation: consultation, participants: participants, authorization_method: authorization_method) }
 
     before do
+      permissions.each { |question, permission| question.build_resource_permission.update!(permissions: permission)}
       switch_to_host(organization.host)
       login_as user, scope: :user
       visit decidim_admin.users_path
@@ -143,6 +148,55 @@ describe "Admin manages settings", type: :system do
 
       it "alerts with a message" do
         expect(page).to have_content('"Delegation Verifier" authorization method is not installed')
+      end
+    end
+
+    context "when all questions are unrestricted" do
+      let(:permissions) { {} }
+
+      it "has a link to fix it" do
+        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 2 questions that are not restricted by the Delegations Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+
+        click_link "Click here to automatically fix this"
+
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+      end
+    end
+
+    context "when some questions are unrestricted" do
+      let(:permissions) do
+        { questions.first => { "vote" => { "authorization_handlers" => { "delegations_verifier" => {} } } } }
+      end
+
+      it "has a link to fix it" do
+        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+
+        click_link "Click here to automatically fix this"
+
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+      end
+    end
+
+    context "when some questions have other permissions" do
+      let(:permissions) do
+        {
+          questions.first => { "vote" => { "authorization_handlers" => { "delegations_verifier" => {} } } },
+          questions.second => { "vote" => { "authorization_handlers" => { "another_verifier" => {} } } }
+        }
+      end
+
+      it "has a link to fix it" do
+        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+
+        click_link "Click here to automatically fix this"
+
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
       end
     end
   end

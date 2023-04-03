@@ -25,10 +25,9 @@ module Decidim
         end
 
         def missing_verifications_for(resources, action)
-          Decidim::ResourcePermission
+          resources.where.not(id: Decidim::ResourcePermission.select(:resource_id)
             .where(resource: resources)
-            .where(Arel.sql("permissions->'#{action}'->'authorization_handlers'->>'delegations_verifier' IS NULL"))
-            .map(&:resource)
+            .where(Arel.sql("permissions->'#{action}'->'authorization_handlers'->>'delegations_verifier' IS NOT NULL")))
         end
 
         def missing_registered_users(participants)
