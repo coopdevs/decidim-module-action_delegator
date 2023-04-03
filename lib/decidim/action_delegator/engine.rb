@@ -28,6 +28,7 @@ module Decidim
         Decidim::Consultations::VoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
         Decidim::Consultations::MultiVoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)
         Decidim::Consultations::Vote.include(Decidim::ActionDelegator::Consultations::VoteOverride)
+        Decidim::Consultations::Permissions.include(Decidim::ActionDelegator::Consultations::PermissionsOverride)
       end
 
       initializer "decidim_action_delegator.overrides", after: "decidim.action_controller" do
@@ -37,10 +38,6 @@ module Decidim
           Decidim::Consultations::ConsultationsController.include(Decidim::ActionDelegator::Consultations::ConsultationsControllerOverride)
           Decidim::Consultations::QuestionMultipleVotesController.include(Decidim::ActionDelegator::Consultations::QuestionMultipleVotesControllerOverride)
         end
-      end
-
-      initializer "decidim_action_delegator.permissions" do
-        Decidim::Consultations::Permissions.prepend(ConsultationsPermissionsExtension)
       end
 
       initializer "decidim_action_delegator.authorizations" do
