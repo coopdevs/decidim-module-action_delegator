@@ -10,7 +10,7 @@ module Decidim
           helper ::Decidim::ActionDelegator::DelegationHelper
           helper_method :delegation
           before_action do
-            session[:delegation_id] = params[:delegation] if params[:delegation]
+            session[:delegation_id] = delegation.id if delegation
           end
 
           private
