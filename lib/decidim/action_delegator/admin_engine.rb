@@ -29,6 +29,9 @@ module Decidim
           end
         end
 
+        get :import_participants, to: "import_participants#new"
+        post :import_participants, to: "import_participants#create"
+
         root to: "delegations#index"
       end
 

@@ -4,6 +4,8 @@
       <%= link_to translated_attribute(current_setting.title), decidim_admin_action_delegator.settings_path %> &gt;
       <%= t ".title" %>
       <%= link_to t(".actions.new_participant"), decidim_admin_action_delegator.new_setting_participant_path(current_setting), class: "button tiny button--title" %>
+      <%= link_to t(".actions.csv_import"), decidim_admin_action_delegator.import_participants_path(setting_id: current_setting.id), class:
+        "button tiny button--title" %>
     </h2>
   </div>
   <div class="card-section">

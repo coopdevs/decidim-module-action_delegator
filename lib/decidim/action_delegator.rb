@@ -28,7 +28,12 @@ module Decidim
     # if you have a census list with  +34 666 666 666 and the user introduces 0034666666666 or 666666666, they will be considered the same
     # can be empty or null if yo don't want to check different combinations of prefixes
     config_accessor :phone_prefixes do
-      ["+34", "0034", "34"]
+      %w(+34 0034 34)
+    end
+
+    # The regex for validating phone numbers
+    config_accessor :phone_regex do
+      /^\d{6,15}$/ # 6 to 15 digits
     end
 
     # Consultations has an annoying and totally useless deprecation warning
