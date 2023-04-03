@@ -89,6 +89,10 @@ ca:
           update:
             error: There was a problem updating the participants
             success: Participants saved successfully
+        permissions:
+          update:
+            error: There was a problem updating the permissions
+            success: Permissions updated successfully
         ponderations:
           create:
             error: There's been and error creating the ponderation
@@ -173,6 +177,15 @@ ca:
           new:
             save: Create
             title: New delegation group
+          setting_checks:
+            all_users_authorized_html: All participants are verified by the <i>Delegations Verifier</i>.
+            all_users_registered_html: All participants are registered into the platform.
+            click_to_fix: Click here to automatically fix this
+            consultation_questions_all_verified_html: All questions are restricted by the <i>Delegations Verifier</i>.
+            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Delegations Verifier</i>. Without it, anyone will be able to vote on it and ponderations won't work. <b>Vote delegations are not affected by this.</b>
+            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Delegations Verifier</i>. <b>Vote delegations are not affected by this.</b>
+            missing_registered_users_html: There are %{count} participants that are not registered into the platform. <b>Vote delegations are not affected by this.</b>
+            no_participants_html: There is no census! Please, add participants or nobody will be able to vote if <i>Delegations Verifier</i> is active. <b>This is ok if you don't want to use vote ponderation and don't activate <i>Delegations Verifier</li></b>
           state:
             closed: Closed
             ongoing: Ongoing
