@@ -23,4 +23,5 @@ $(() => {
   voteButton.click(() => {
     delegationCallouts.addClass("is-hidden");
   });
+  console.log("handle vote button", voteButton);
 });
