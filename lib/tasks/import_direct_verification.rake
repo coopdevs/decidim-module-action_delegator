@@ -9,7 +9,7 @@ namespace :action_delegator do
       authorizations = Decidim::Authorization.where(name: "direct_verifications", user: organization.users)
       puts "Found #{authorizations.count} authorizations"
       count = 0
-      authorizations.each do |authorization|
+      authorizations.order(:id).each do |authorization|
         weight = authorization.metadata["membership_weight"]
         type = authorization.metadata["membership_type"]
         settings.find_each do |setting|

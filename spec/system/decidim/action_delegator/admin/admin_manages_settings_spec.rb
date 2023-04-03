@@ -47,7 +47,7 @@ describe "Admin manages settings", type: :system do
     let!(:setting) { create(:setting, consultation: consultation, participants: participants, authorization_method: authorization_method) }
 
     before do
-      permissions.each { |question, permission| question.build_resource_permission.update!(permissions: permission)}
+      permissions.each { |question, permission| question.build_resource_permission.update!(permissions: permission) }
       switch_to_host(organization.host)
       login_as user, scope: :user
       visit decidim_admin.users_path
