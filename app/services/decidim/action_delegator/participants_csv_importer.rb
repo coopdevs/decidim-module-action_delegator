@@ -58,13 +58,9 @@ module Decidim
         email = row["email"].to_s.strip
         phone = row["phone"].to_s.strip
 
-        if %w(email both).include?(authorization_method.to_s)
-          email = nil if invalid_email?(email)
-        end
+        email = nil if %w(email both).include?(authorization_method.to_s) && invalid_email?(email)
 
-        if %w(phone both).include?(authorization_method.to_s)
-          phone = nil if invalid_phone?(phone)
-        end
+        phone = nil if %w(phone both).include?(authorization_method.to_s) && invalid_phone?(phone)
 
         [email, phone]
       end
