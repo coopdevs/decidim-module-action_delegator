@@ -11,7 +11,7 @@ module Decidim
       it { is_expected.to belong_to(:setting) }
 
       it "has an automatic title" do
-        expect(subject.title).to eq(" #{subject.name} (x#{subject.weight})")
+        expect(subject.title).to eq("#{subject.name} (x#{subject.weight})")
       end
     end
   end

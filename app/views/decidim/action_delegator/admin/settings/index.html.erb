@@ -46,12 +46,7 @@
             <% if setting.editable? %>
             <tr>
               <td colspan="9">
-                <div class="callout primary">
-                  todo:
-                   - check verifier is installed in all questions
-                   - check users are verified
-                   - check users are registered
-                 </div>
+                <%= render "setting_checks", setting: setting %>
               </td>
             </tr>
             <% end %>
