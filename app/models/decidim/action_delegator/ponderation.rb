@@ -17,7 +17,7 @@ module Decidim
       delegate :consultation, to: :setting
 
       def title
-        @title ||= " #{name} (x#{weight})"
+        @title ||= "#{name} (x#{weight})"
       end
     end
   end

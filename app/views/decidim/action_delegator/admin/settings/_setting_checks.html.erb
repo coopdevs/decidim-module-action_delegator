@@ -1,0 +1,63 @@
+<% missing_questions =  missing_verifications_for(setting&.consultation&.questions, "vote") %>
+<% missing_registered =  missing_registered_users(setting&.participants) %>
+<% total_missing_authorizations =  total_missing_authorizations(setting&.participants) %>
+
+<div class="callout <%= (missing_questions.present? || missing_registered.present? || setting.participants.blank? || total_missing_authorizations.positive?) ? "warning" : "success" %> text-left">
+
+  <ul class="happy-faces">
+    <% if setting.consultation %>
+      <% if missing_questions.present? %>
+        <li class="unhappy">
+          <%= t(".consultation_questions_missing_verifier_html", count: missing_questions.count) %><br>
+          <%= link_to t(".click_to_fix"), decidim_admin_action_delegator.setting_permissions_path(setting), method: :post %>
+        </li>
+      <% else %>
+        <li class="happy"><%= t(".consultation_questions_all_verified_html") %></li>
+      <% end %>
+    <% end %>
+
+    <% if setting.participants.any? %>
+      <% if missing_registered.present? %>
+        <li class="unhappy"><%= t(".missing_registered_users_html", count: missing_registered.count) %></li>
+      <% else %>
+        <li class="happy"><%= t(".all_users_registered_html") %></li>
+      <% end %>
+      <% if total_missing_authorizations.positive? %>
+        <li class="unhappy"><%= t(".missing_authorizations_html", count: total_missing_authorizations) %></li>
+      <% else %>
+        <li class="happy"><%= t(".all_users_authorized_html") %></li>
+      <% end %>
+    <% else %>
+      <li class="unhappy"><%= t(".no_participants_html") %></li>
+    <% end %>
+  </ul>
+ </div>
+<style>
+  ul.happy-faces {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1em;
+    text-indent: -1.5em;
+  }
+  li.unhappy:before {
+    content: '☹ ';
+    color: red;
+  }
+  li.happy:before {
+    content: '☺ ';
+    color: green;
+  }
+  ul.happy-faces a {
+    text-decoration: underline;
+    position: relative;
+    margin-left: 1.4em;
+  }
+  ul.happy-faces a:before {
+    content: '👉';
+    padding-right: 5px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    line-height: 1.4;
+  }
+</style>
