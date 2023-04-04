@@ -1,3 +1,4 @@
+<p class="email-greeting"><%= t(".greeting", name: @user.name) %></p>
 <p><%= t(".result", rows_count: @import_summary[:imported_rows], total_rows_count: @import_summary[:total_rows]).html_safe %></p>
 <% if @import_summary[:error_rows].present? %>
   <p><%= t(".errors_title", errors_count: @import_summary[:error_rows].size).html_safe %></p><br>
@@ -12,7 +13,7 @@
     <% @import_summary[:error_rows].each do |error_row| %>
       <tr>
         <td><%= error_row[:row_number] %></td>
-        <td><%= error_row[:error_messages].join(', ') %></td>
+        <td><%= error_row[:error_messages].join(", ") %></td>
       </tr>
     <% end %>
     </tbody>

@@ -62,8 +62,8 @@ en:
         import_participants:
           create:
             error: There was a problem importing the participants
-            success: Participants imported successfully. The import result was send
-              to the email.
+            success: Found %{total_rows_count} rows in the CVS, %{rows_imported} imported
+              successfully, %{error_rows} with errors. The import result was send to the email.
           new:
             authorization_method:
               both: email and phone number
@@ -228,6 +228,7 @@ en:
         import:
           errors_present: There were errors importing the participants
           errors_title: "<b>Found:</b>  %{errors_count} errors"
+          greeting: Hello %{name},
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Row number
           subject: Participants imported

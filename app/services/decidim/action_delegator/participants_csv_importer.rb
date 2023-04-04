@@ -74,10 +74,10 @@ module Decidim
       end
 
       def process_participant(form)
-        @user = Decidim::ActionDelegator::Participant.find_by(email: form.email)
+        @participant = Decidim::ActionDelegator::Participant.find_by(email: form.email, setting: @current_setting)
 
-        if @user.present?
-          Decidim::ActionDelegator::Admin::UpdateParticipant.call(form, @user) do
+        if @participant.present?
+          Decidim::ActionDelegator::Admin::UpdateParticipant.call(form, @participant) do
             on(:invalid) do
               form.errors.add(:base, I18n.t("import.csv.invalid_row"))
             end
