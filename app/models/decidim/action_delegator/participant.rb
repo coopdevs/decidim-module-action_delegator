@@ -15,6 +15,7 @@ module Decidim
                  optional: true
 
       delegate :consultation, to: :setting
+      delegate :organization, to: :setting
 
       validates :setting, presence: true
 
@@ -27,18 +28,28 @@ module Decidim
       end
 
       def uniq_ids
-        @uniq_ids ||= phone_prefixes.map do |prefix|
-          [
-            Digest::MD5.hexdigest("#{prefix}#{phone}-#{Rails.application.secrets.secret_key_base}"),
-            Digest::MD5.hexdigest("#{phone.delete_prefix(prefix)}-#{Rails.application.secrets.secret_key_base}")
-          ]
+        @uniq_ids ||= Participant.verifier_ids(Participant.phone_combinations(["#{phone}-#{organization.id}"]))
+      end
+
+      def self.verifier_ids(seeds)
+        seeds.map { |seed| Digest::MD5.hexdigest("#{seed}-#{Digest::MD5.hexdigest(Rails.application.secrets.secret_key_base)}") }
+      end
+
+      def self.phone_combinations(phones)
+        phones.map do |phone|
+          phone_prefixes.map do |prefix|
+            [
+              "#{prefix}#{phone}",
+              phone.delete_prefix(prefix)
+            ]
+          end
         end.flatten.uniq
       end
 
-      def phone_prefixes
-        @phone_prefixes = [""]
-        @phone_prefixes += ActionDelegator.phone_prefixes if ActionDelegator.phone_prefixes.respond_to?(:map)
-        @phone_prefixes
+      def self.phone_prefixes
+        prefixes = [""]
+        prefixes += ActionDelegator.phone_prefixes if ActionDelegator.phone_prefixes.respond_to?(:map)
+        prefixes
       end
 
       def user_name

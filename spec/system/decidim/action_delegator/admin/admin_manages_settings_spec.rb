@@ -9,7 +9,13 @@ describe "Admin manages settings", type: :system do
   let(:organization) { create(:organization, available_authorizations: available_authorizations) }
   let(:available_authorizations) { ["delegations_verifier"] }
   let!(:consultation) { create(:consultation, organization: organization) }
-  let!(:user) { create(:user, :admin, :confirmed, organization: organization) }
+  let!(:questions) { create_list(:question, 2, consultation: consultation) }
+  let!(:authorization) { create(:authorization, user: another_user, name: "delegations_verifier", granted_at: Time.current) }
+  let!(:user) { create(:user, :admin, :confirmed, organization: organization, email: "bar@example.org") }
+  let!(:another_user) { create(:user, :confirmed, organization: organization) }
+  let(:permissions) do
+    questions.index_with { |_question| { "vote" => { "authorization_handlers" => { "delegations_verifier" => {} } } } }.to_h
+  end
 
   context "when creating settings" do
     before do
@@ -36,9 +42,12 @@ describe "Admin manages settings", type: :system do
   end
 
   context "when listing settings" do
-    let!(:setting) { create(:setting, consultation: consultation) }
+    let(:participants) { [] }
+    let(:authorization_method) { :both }
+    let!(:setting) { create(:setting, consultation: consultation, participants: participants, authorization_method: authorization_method) }
 
     before do
+      permissions.each { |question, permission| question.build_resource_permission.update!(permissions: permission) }
       switch_to_host(organization.host)
       login_as user, scope: :user
       visit decidim_admin.users_path
@@ -83,11 +92,111 @@ describe "Admin manages settings", type: :system do
       expect(page).to have_current_path(decidim_admin_action_delegator.setting_ponderations_path(setting))
     end
 
-    context "when verifier is installed" do
+    it "shows a callout with information" do
+      expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+      expect(page).to have_content("There is no census! Please, add participants or nobody will be able to vote if Delegations Verifier is active")
+    end
+
+    context "when there are participants" do
+      let(:email) { "foo@example.org" }
+      let(:phone) { "123456789" }
+      let(:participants) { [build(:participant, email: email, phone: phone)] }
+      let(:seed) { "something" }
+      let(:uniq_id) { Digest::MD5.hexdigest("#{seed}-#{organization.id}-#{Digest::MD5.hexdigest(Rails.application.secret_key_base)}") }
+
+      it "complains about registration" do
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_content("There are 1 participants that are not registered into the platform")
+        expect(page).to have_content("There are 1 participants that are not verified by the Delegations Verifier")
+        expect(page).to have_css(".callout.warning")
+      end
+
+      context "when participants are registered" do
+        let(:email) { user.email }
+
+        it "complains about verification" do
+          expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+          expect(page).to have_content("All participants are registered into the platform")
+          expect(page).to have_content("There are 1 participants that are not verified by the Delegations Verifier")
+          expect(page).to have_css(".callout.warning")
+        end
+
+        context "when participants are verified" do
+          let!(:authorization) { create(:authorization, user: user, name: "delegations_verifier", unique_id: uniq_id, granted_at: Time.current) }
+
+          it "is happy" do
+            expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+            expect(page).to have_content("All participants are registered into the platform")
+            expect(page).to have_content("All participants are verified by the Delegations Verifier")
+            expect(page).to have_css(".callout.success")
+          end
+
+          context "and unque_id is by email" do
+            let(:seed) { phone }
+            let(:email) { "another@email" }
+
+            it "is happy" do
+              expect(page).to have_content("All participants are verified by the Delegations Verifier")
+            end
+          end
+        end
+      end
+    end
+
+    context "when verifier is not installed" do
       let(:available_authorizations) { [] }
 
-      it "does not show the verifier link" do
+      it "alerts with a message" do
         expect(page).to have_content('"Delegation Verifier" authorization method is not installed')
+      end
+    end
+
+    context "when all questions are unrestricted" do
+      let(:permissions) { {} }
+
+      it "has a link to fix it" do
+        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 2 questions that are not restricted by the Delegations Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+
+        click_link "Click here to automatically fix this"
+
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+      end
+    end
+
+    context "when some questions are unrestricted" do
+      let(:permissions) do
+        { questions.first => { "vote" => { "authorization_handlers" => { "delegations_verifier" => {} } } } }
+      end
+
+      it "has a link to fix it" do
+        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+
+        click_link "Click here to automatically fix this"
+
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+      end
+    end
+
+    context "when some questions have other permissions" do
+      let(:permissions) do
+        {
+          questions.first => { "vote" => { "authorization_handlers" => { "delegations_verifier" => {} } } },
+          questions.second => { "vote" => { "authorization_handlers" => { "another_verifier" => {} } } }
+        }
+      end
+
+      it "has a link to fix it" do
+        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+
+        click_link "Click here to automatically fix this"
+
+        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
       end
     end
   end

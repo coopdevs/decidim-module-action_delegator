@@ -8,6 +8,7 @@ module Decidim
       subject { build(:participant, ponderation: ponderation, email: email, phone: phone, setting: setting) }
 
       let(:setting) { create(:setting, authorization_method: authorization_method) }
+      let(:organization) { setting.organization }
       let(:authorization_method) { :email }
       let(:ponderation) { create(:ponderation) }
       let(:user) { create(:user) }
@@ -39,7 +40,7 @@ module Decidim
         context "and an authorization exists" do
           let(:user_phone) { phone }
           let!(:authorization) { create(:authorization, user: user, name: "delegations_verifier", metadata: { phone: user_phone }, unique_id: uniq_id) }
-          let(:uniq_id) { Digest::MD5.hexdigest("#{user_phone}-#{Rails.application.secrets.secret_key_base}") }
+          let(:uniq_id) { Digest::MD5.hexdigest("#{user_phone}-#{organization.id}-#{Digest::MD5.hexdigest(Rails.application.secrets.secret_key_base)}") }
 
           it "has a related user" do
             expect(subject.user).to eq(user)

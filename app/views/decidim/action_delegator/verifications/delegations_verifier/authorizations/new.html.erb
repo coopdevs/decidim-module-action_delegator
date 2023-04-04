@@ -14,7 +14,7 @@
               <%= form_required_explanation %>
 
               <% if setting&.email_required? %>
-                <% unless @form.participant %>
+                <% unless @form.participant.present? %>
                   <div class="callout announcement mb-sm alert cell-announcement">
                     <p><%= t(".not_in_census") %></p>
                   </div>

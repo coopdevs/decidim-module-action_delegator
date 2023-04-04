@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    module NeedsConsultationSnippets
+    module NeedsConsultationStyles
       extend ActiveSupport::Concern
 
       included do
@@ -14,7 +14,6 @@ module Decidim
 
         unless @snippets.any?(:action_delegator_consultation_questions)
           @snippets.add(:action_delegator_consultation_questions, ActionController::Base.helpers.stylesheet_pack_tag("decidim_action_delegator_questions"))
-          @snippets.add(:action_delegator_consultation_questions, ActionController::Base.helpers.javascript_pack_tag("decidim_action_delegator_questions_js"))
           @snippets.add(:head, @snippets.for(:action_delegator_consultation_questions))
         end
 
