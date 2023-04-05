@@ -7,7 +7,7 @@ RSpec.describe Decidim::ActionDelegator::Admin::ImportParticipantsCsvJob, type: 
   let(:valid_csv_file) { File.open("spec/fixtures/valid_participants.csv") }
   let(:current_setting) { create(:setting, consultation: consultation) }
   let(:consultation) { create(:consultation) }
-  let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting)}
+  let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting) }
   let(:import_summary) { importer.import! }
 
   before do

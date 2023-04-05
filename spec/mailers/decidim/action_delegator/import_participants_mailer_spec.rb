@@ -12,7 +12,7 @@ module Decidim
       let(:current_setting) { create(:setting, consultation: consultation) }
       let(:consultation) { create(:consultation) }
 
-      describe "import" do
+      describe "#import" do
         context "when the CSV has valid rows" do
           let(:mail) { described_class.import(current_user, import_summary) }
           let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting) }

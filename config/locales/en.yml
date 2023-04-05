@@ -236,6 +236,9 @@ en:
           success: Participants imported successfully
           text_error: Error
       name: Decidim ActionDelegator cooperatives module
+      participants_csv_importer:
+        import:
+          error: There was a problem importing the participants
       sms_message: Your verification code is %{code}
       user_delegations:
         index:
