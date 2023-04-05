@@ -36,6 +36,7 @@ describe "Admin imports participants from cvs", type: :system do
       attach_file "csv_file", valid_csv_file.path
       click_button "Import"
       expect(page).to have_selector("tr[data-participant-id]", count: 4)
+      expect(page).to have_content("4 imported successfully, 0 with errors")
     end
   end
 
@@ -44,6 +45,7 @@ describe "Admin imports participants from cvs", type: :system do
       attach_file "csv_file", invalid_csv_file.path
       click_button "Import"
       expect(page).to have_selector("tr[data-participant-id]", count: 2)
+      expect(page).to have_content("2 imported successfully, 2 with errors")
     end
   end
 

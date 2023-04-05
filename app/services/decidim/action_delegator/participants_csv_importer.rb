@@ -88,7 +88,7 @@ module Decidim
       def update_existing_participant(form)
         Decidim::ActionDelegator::Admin::UpdateParticipant.call(form, @participant) do
           on(:invalid) do
-            form.errors.add(:base, I18n.t(".import.error"))
+            flash.now[:error] = I18n.t("participants.update.error", scope: "decidim.action_delegator.admin")
           end
         end
       end
@@ -96,7 +96,7 @@ module Decidim
       def create_new_participant(form)
         Decidim::ActionDelegator::Admin::CreateParticipant.call(form) do
           on(:invalid) do
-            form.errors.add(:base, I18n.t(".import.error"))
+            flash.now[:error] = I18n.t("participants.create.error", scope: "decidim.action_delegator.admin")
           end
         end
       end
