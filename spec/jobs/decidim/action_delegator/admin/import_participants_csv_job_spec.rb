@@ -5,11 +5,10 @@ require "spec_helper"
 RSpec.describe Decidim::ActionDelegator::Admin::ImportParticipantsCsvJob, type: :job do
   let(:current_user) { create(:user) }
   let(:valid_csv_file) { File.open("spec/fixtures/valid_participants.csv") }
-  let(:invalid_csv_file) { File.open("spec/fixtures/invalid_participants.csv") }
   let(:current_setting) { create(:setting, consultation: consultation) }
   let(:consultation) { create(:consultation) }
-  let(:importer) { instance_double("Decidim::ActionDelegator::ParticipantsCsvImporter") }
-  let(:import_summary) { instance_double("Decidim::ActionDelegator::ImportSummary") }
+  let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting)}
+  let(:import_summary) { importer.import! }
 
   before do
     allow(Decidim::ActionDelegator::ParticipantsCsvImporter).to receive(:new).with(valid_csv_file, current_user, current_setting).and_return(importer)
