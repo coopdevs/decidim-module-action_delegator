@@ -1,0 +1,5 @@
+email,phone,weight
+,,1.5
+bar@example.org,6660001,1
+baz@example.org,6660002,2
+user@example.org,,1.5
