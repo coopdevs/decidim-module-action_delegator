@@ -77,17 +77,42 @@ module Decidim
         @participant = Decidim::ActionDelegator::Participant.find_by(email: form.email, setting: @current_setting)
 
         if @participant.present?
-          Decidim::ActionDelegator::Admin::UpdateParticipant.call(form, @participant) do
-            on(:invalid) do
-              form.errors.add(:base, I18n.t("import.csv.invalid_row"))
-            end
-          end
+          update_existing_participant(form)
         else
-          Decidim::ActionDelegator::Admin::CreateParticipant.call(form) do
-            on(:invalid) do
-              form.errors.add(:base, I18n.t("import.csv.invalid_row"))
-            end
+          create_new_participant(form)
+        end
+
+        assign_ponderation(form.weight)
+      end
+
+      def update_existing_participant(form)
+        Decidim::ActionDelegator::Admin::UpdateParticipant.call(form, @participant) do
+          on(:invalid) do
+            form.errors.add(:base, I18n.t("import.csv.invalid_row"))
           end
+        end
+      end
+
+      def create_new_participant(form)
+        Decidim::ActionDelegator::Admin::CreateParticipant.call(form) do
+          on(:invalid) do
+            form.errors.add(:base, I18n.t("import.csv.invalid_row"))
+          end
+        end
+      end
+
+      def assign_ponderation(weight)
+        ponderation = find_ponderation(weight)
+        form.decidim_action_delegator_ponderation_id = ponderation.id if ponderation.present?
+      end
+
+      def find_ponderation(weight)
+        case weight
+        when String
+          @current_setting.ponderations.find_by(name: weight)
+        when Numeric
+          ponderation = @current_setting.ponderations.find_by(value: weight)
+          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", value: weight)
         end
       end
     end
