@@ -24,11 +24,11 @@ module Decidim
           @csv_file = params[:csv_file]
           redirect_to import_participants_path && return if @csv_file.blank?
 
-          @import_summary = Decidim::ActionDelegator::ParticipantsCsvImporter.new(
-            @csv_file.read.force_encoding("utf-8").encode("utf-8"),
+          @import_summary = Decidim::ActionDelegator::Admin::ImportParticipantsCsvJob.perform_now(
             current_user,
+            @csv_file.read.force_encoding("utf-8").encode("utf-8"),
             current_setting
-          ).import!
+          )
 
           flash[:notice] = t(".success",
                              total_rows_count: @import_summary[:total_rows],
@@ -37,7 +37,6 @@ module Decidim
 
           redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting)
         end
-
 
         private
 

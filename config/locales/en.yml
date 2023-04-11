@@ -63,7 +63,8 @@ en:
           create:
             error: There was a problem importing the participants
             success: Found %{total_rows_count} rows in the CVS, %{rows_imported} imported
-              successfully, %{error_rows} with errors. The import result was send to the email.
+              successfully, %{error_rows} with errors. The import result was send
+              to the email.
           new:
             authorization_method:
               both: email and phone number
@@ -260,6 +261,9 @@ en:
           success: Participants imported successfully
           text_error: Error
       name: Decidim ActionDelegator cooperatives module
+      participants_csv_importer:
+        import:
+          error: There was a problem importing the participants
       sms_message: Your verification code is %{code}
       user_delegations:
         index:

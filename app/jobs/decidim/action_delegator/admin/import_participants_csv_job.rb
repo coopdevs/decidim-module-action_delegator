@@ -11,6 +11,8 @@ module Decidim
           import_summary = importer.import!
 
           Decidim::ActionDelegator::ImportParticipantsMailer.import(current_user, import_summary).deliver_now
+
+          import_summary
         end
       end
     end
