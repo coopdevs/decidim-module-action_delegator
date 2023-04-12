@@ -104,13 +104,13 @@ describe "Admin imports participants from cvs", type: :system do
   end
 
   context "when imported existing participants" do
-    it "update tha data of existing users in the table" do
+    it "does not update tha data of existing users in the table" do
       import_csv(valid_csv_file)
       click_link I18n.t("decidim.action_delegator.admin.participants.index.actions.csv_import")
       import_csv(repeated_data_csv_file)
 
       expect(page).to have_selector("tr[data-participant-id]", count: 4)
-      expect(page).to have_content("9660000", count: 1)
+      expect(page).to have_content("9660000", count: 0)
     end
   end
 end

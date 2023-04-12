@@ -58,5 +58,17 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
         end.to change(Decidim::ActionDelegator::Participant, :count).by(3)
       end
     end
+
+    context "when participant exists with another data" do
+      subject { described_class.new(valid_csv_file, current_user, current_setting) }
+
+      let!(:participant) { create(:participant, phone: "123456789", setting: current_setting) }
+
+      it "does not change the data of the existing participant" do
+        expect do
+          subject.import!
+        end.not_to change { participant.reload.phone }.from("123456789")
+      end
+    end
   end
 end
