@@ -38,7 +38,7 @@ module Decidim
                                   Decidim::User.find_by(email: email, organization: setting.organization)
                                 else
                                   Decidim::Authorization.find_by(unique_id: uniq_ids)&.user
-                  end
+                                end
       end
 
       def uniq_ids
