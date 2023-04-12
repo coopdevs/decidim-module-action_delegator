@@ -253,10 +253,12 @@ en:
       import_participants_mailer:
         import:
           errors_present: There were errors importing the participants
-          errors_title: "<b>Found:</b>  %{errors_count} errors"
+          errors_title: "<b>Found:</b> %{errors_count} errors"
           greeting: Hello %{name},
+          info_messages: Reason for skipping
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Row number
+          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
           subject: Participants imported
           success: Participants imported successfully
           text_error: Error
@@ -264,6 +266,10 @@ en:
       participants_csv_importer:
         import:
           error: There was a problem importing the participants
+          field_name:
+            phone: phone
+          skip_import_info: Participant already exists%{with_mismatched_fields}
+          with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Your verification code is %{code}
       user_delegations:
         index:

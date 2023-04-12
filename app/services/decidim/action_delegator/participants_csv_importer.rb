@@ -15,16 +15,16 @@ module Decidim
         import_summary = {
           total_rows: 0,
           imported_rows: 0,
-          error_rows: []
+          error_rows: [],
+          skipped_rows: []
         }
 
         ActiveRecord::Base.transaction do
           i = 1
           csv = CSV.new(@csv_file, headers: true, col_sep: ",")
+
           while (row = csv.shift).present?
             i += 1
-            next if row.empty?
-
             authorization_method = @current_setting.authorization_method
 
             email, phone = extract_contact_details(row, authorization_method)
@@ -39,6 +39,16 @@ module Decidim
 
             @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
 
+            next if row.empty?
+
+            if participant_exists?(@form)
+              mismatch_fields = mismatched_fields(@form)
+              info_message = generate_info_message(mismatch_fields)
+              import_summary[:skipped_rows] << { row_number: i - 1, error_messages: [info_message] }
+
+              next
+            end
+
             if @form.valid?
               process_participant(@form)
               import_summary[:imported_rows] += 1
@@ -46,6 +56,7 @@ module Decidim
               import_summary[:error_rows] << { row_number: i - 1, error_messages: @form.errors.full_messages }
             end
           end
+
           import_summary[:total_rows] = i - 1
         end
 
@@ -74,15 +85,27 @@ module Decidim
       end
 
       def process_participant(form)
+        create_new_participant(form)
+        assign_ponderation(form.weight)
+      end
+
+      def participant_exists?(form)
         @participant = Decidim::ActionDelegator::Participant.find_by(email: form.email, setting: @current_setting)
 
-        if @participant.present?
-          update_existing_participant(form)
-        else
-          create_new_participant(form)
-        end
+        return false if @participant.blank?
 
-        assign_ponderation(form.weight)
+        true
+      end
+
+      def mismatched_fields(form)
+        mismatch_fields = []
+        mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.phone") if form.phone != @participant.phone
+        mismatch_fields.empty? ? nil : mismatch_fields.join(", ")
+      end
+
+      def generate_info_message(mismatch_fields)
+        with_mismatched_fields = mismatch_fields.present? ? I18n.t("decidim.action_delegator.participants_csv_importer.import.with_mismatched_fields", fields: mismatch_fields) : ""
+        I18n.t("decidim.action_delegator.participants_csv_importer.import.skip_import_info", with_mismatched_fields: with_mismatched_fields)
       end
 
       def update_existing_participant(form)
