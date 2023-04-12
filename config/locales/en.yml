@@ -62,9 +62,9 @@ en:
         import_participants:
           create:
             error: There was a problem importing the participants
-            success: Found %{total_rows_count} rows in the CVS, %{rows_imported} imported
-              successfully, %{error_rows} with errors. The import result was send
-              to the email.
+            success: The import process has started, please wait a few minutes and
+              refresh the page to see the list of participants. The import result
+              was send to the email.
           new:
             authorization_method:
               both: email and phone number

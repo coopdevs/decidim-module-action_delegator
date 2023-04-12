@@ -31,21 +31,32 @@ describe "Admin imports participants from cvs", type: :system do
     click_link I18n.t("decidim.action_delegator.admin.participants.index.actions.csv_import")
   end
 
-  context "when the CSV has valid rows" do
-    it "imports the participants" do
+  def import_csv(file)
+    attach_file "csv_file", file.path
+    click_button "Import"
+    perform_enqueued_jobs
+    visit current_url
+  end
+
+  context "when CSV file was imported" do
+    it "shows the flash" do
       attach_file "csv_file", valid_csv_file.path
       click_button "Import"
+      expect(page).to have_content("The import process has started")
+    end
+  end
+
+  context "when the CSV has valid rows" do
+    it "imports the participants" do
+      import_csv(valid_csv_file)
       expect(page).to have_selector("tr[data-participant-id]", count: 4)
-      expect(page).to have_content("4 imported successfully, 0 with errors")
     end
   end
 
   context "when the CSV has invalid rows" do
     it "does not import the participants" do
-      attach_file "csv_file", invalid_csv_file.path
-      click_button "Import"
+      import_csv(invalid_csv_file)
       expect(page).to have_selector("tr[data-participant-id]", count: 2)
-      expect(page).to have_content("2 imported successfully, 2 with errors")
     end
   end
 
@@ -53,8 +64,7 @@ describe "Admin imports participants from cvs", type: :system do
     let(:participant) { create(:participant, email: "foo@example.org") }
 
     it "does not import the participants" do
-      attach_file "csv_file", valid_csv_file.path
-      click_button "Import"
+      import_csv(valid_csv_file)
       expect(page).to have_selector("tr[data-participant-id]", count: 4)
       expect(page).to have_content("foo@example.org", count: 1)
     end
