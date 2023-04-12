@@ -20,7 +20,11 @@ module Decidim
       validates :setting, presence: true
 
       def user
-        @user ||= if setting.email_required?
+        user_from_metadata
+      end
+
+      def user_from_metadata
+        @user_from_metadata ||= if setting.email_required?
                     Decidim::User.find_by(email: email)
                   else
                     Decidim::Authorization.find_by(unique_id: uniq_ids)&.user
