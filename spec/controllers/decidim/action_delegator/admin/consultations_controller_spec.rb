@@ -34,7 +34,8 @@ module Decidim
 
           it "does not load any response" do
             get :results, params: { slug: consultation.slug }
-            expect(assigns(:responses)).to be_empty
+            expect(controller.helpers.responses_by_membership).to be_empty
+            expect(controller.helpers.responses_by_weight).to be_empty
           end
         end
 
@@ -43,8 +44,21 @@ module Decidim
 
           it "loads the responses" do
             get :results, params: { slug: consultation.slug }
-            expect(assigns(:responses)).not_to be_empty
+            expect(controller.helpers.responses_by_membership).not_to be_empty
+            expect(controller.helpers.responses_by_weight).not_to be_empty
           end
+        end
+      end
+
+      describe "#weighted_results" do
+        it "authorizes the action" do
+          expect(controller).to receive(:allowed_to?).with(:read, :consultation, anything)
+          get :weighted_results, params: { slug: consultation.slug }
+        end
+
+        it "renders decidim/admin/consultation layout" do
+          get :weighted_results, params: { slug: consultation.slug }
+          expect(response).to render_template("layouts/decidim/admin/consultation")
         end
       end
     end
