@@ -34,7 +34,7 @@ module Decidim
               email: email,
               phone: phone,
               weight: weight,
-              decidim_action_delegator_ponderation_id: nil
+              decidim_action_delegator_ponderation_id: find_ponderation(weight).id
             }
 
             @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
@@ -100,6 +100,9 @@ module Decidim
       def mismatched_fields(form)
         mismatch_fields = []
         mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.phone") if form.phone != @participant.phone
+        if form.decidim_action_delegator_ponderation_id != @participant.decidim_action_delegator_ponderation_id
+          mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.weight")
+        end
         mismatch_fields.empty? ? nil : mismatch_fields.join(", ")
       end
 
