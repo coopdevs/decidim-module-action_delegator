@@ -28,7 +28,7 @@ module Decidim
             authorization_method = @current_setting.authorization_method
 
             email, phone = extract_contact_details(row, authorization_method)
-            weight = row["weight"].to_s.strip
+            weight = ponderation_value(row["weight"].strip)
 
             params = {
               email: email,
@@ -85,8 +85,8 @@ module Decidim
       end
 
       def process_participant(form)
-        create_new_participant(form)
         assign_ponderation(form.weight)
+        create_new_participant(form)
       end
 
       def participant_exists?(form)
@@ -126,7 +126,7 @@ module Decidim
 
       def assign_ponderation(weight)
         ponderation = find_ponderation(weight)
-        form.decidim_action_delegator_ponderation_id = ponderation.id if ponderation.present?
+        @form.decidim_action_delegator_ponderation_id = ponderation.id if ponderation.present?
       end
 
       def find_ponderation(weight)
@@ -134,9 +134,15 @@ module Decidim
         when String
           @current_setting.ponderations.find_by(name: weight)
         when Numeric
-          ponderation = @current_setting.ponderations.find_by(value: weight)
-          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", value: weight)
+          ponderation = @current_setting.ponderations.find_by(weight: weight)
+          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", weight: weight)
         end
+      end
+
+      def ponderation_value(value)
+        Float(value)
+      rescue StandardError
+        value
       end
     end
   end
