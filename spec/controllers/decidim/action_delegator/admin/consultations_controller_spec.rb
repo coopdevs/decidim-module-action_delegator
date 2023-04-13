@@ -10,6 +10,9 @@ module Decidim
       let(:organization) { create(:organization) }
       let(:consultation) { create(:consultation, organization: organization) }
       let(:user) { create(:user, :admin, :confirmed, organization: organization) }
+      let(:setting) { create(:setting, consultation: consultation) }
+      let!(:delegation) { create(:delegation, setting: setting, granter: user, grantee: grantee) }
+      let(:grantee) { create(:user, :confirmed, organization: organization) }
 
       before do
         request.env["decidim.current_organization"] = organization
@@ -36,6 +39,8 @@ module Decidim
             get :results, params: { slug: consultation.slug }
             expect(controller.helpers.responses_by_membership).to be_empty
             expect(controller.helpers.responses_by_weight).to be_empty
+            expect(controller.helpers.total_delegates).to eq(1)
+            expect(controller.helpers.questions).not_to be_empty
           end
         end
 
@@ -46,6 +51,8 @@ module Decidim
             get :results, params: { slug: consultation.slug }
             expect(controller.helpers.responses_by_membership).not_to be_empty
             expect(controller.helpers.responses_by_weight).not_to be_empty
+            expect(controller.helpers.total_delegates).to eq(1)
+            expect(controller.helpers.questions).not_to be_empty
           end
         end
       end
