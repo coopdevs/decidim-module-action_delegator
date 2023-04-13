@@ -8,7 +8,7 @@ module Decidim
       def permissions
         allowed_delegation_action?
 
-        return permission_action unless user.admin?
+        return permission_action unless user && user.admin?
         return permission_action unless permission_action.scope == :admin
         return permission_action unless action_delegator_subject?
 

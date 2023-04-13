@@ -32,7 +32,7 @@ en:
     action_delegator:
       admin:
         consultations:
-          results:
+          weighted_results:
             title: Results by answer, membership type and weight
         delegations:
           create:
@@ -127,10 +127,8 @@ en:
           update:
             error: There's been and error updating the ponderation
             success: Ponderation updated successfully
-        results:
-          sum_of_weights:
-            index:
-              title: Results by answer summing membership weights
+        weighted_results:
+          title: Results by answer summing membership weights
         settings:
           authorization_method:
             both: Email and phone number

@@ -11,7 +11,12 @@
       </span>
       <span id="export-consultation-results" class="button--title">
         <% if allowed_to?(:export_consultation_results, :consultation, consultation: current_consultation) %>
-          <%= link_to t("decidim.admin.consultations.results.export"), decidim_admin_action_delegator.consultation_exports_path(current_consultation), method: :post, class: "button tiny button--title" %>
+          <%= link_to(
+            t("decidim.admin.consultations.results.export"),
+            decidim_admin_action_delegator.consultation_exports_sum_of_weights_path(current_consultation),
+            method: :post,
+            class: "button tiny button--title"
+          ) %>
         <% else %>
           <span class="button tiny button--title disabled"><%= t("decidim.admin.consultations.results.export") %></span>
         <% end %>
@@ -19,14 +24,12 @@
     </h2>
   </div>
   <div class="card-section">
-    <table class="table-list">
+    <table id="results" class="table-list">
       <% questions.each do |question| %>
         <% unless question.external_voting %>
           <thead>
             <tr>
               <th><%= strip_tags translated_attribute question.title %></th>
-              <th><%= I18n.t("decidim.admin.consultations.results.membership_type") %></th>
-              <th><%= I18n.t("decidim.admin.consultations.results.membership_weight") %></th>
               <th class="table-list__actions">
                 <%= t "decidim.admin.consultations.results.total_votes", count: question.total_votes %>
                 /
@@ -38,11 +41,9 @@
           </thead>
           <tbody>
             <% if question.publishable_results? %>
-              <% responses_by_membership.fetch(question.id, []).each do |row| %>
+              <% responses_by_weight.fetch(question.id, []).each do |row| %>
               <tr>
                 <td class="response-title"><%= strip_tags translated_attribute row.title %></td>
-                <td class="membership-type"><%= row.membership_type %></td>
-                <td class="membership-weight"><%= row.membership_weight %></td>
                 <td class="votes-count"><%= row.votes_count %></td>
               </tr>
               <% end %>

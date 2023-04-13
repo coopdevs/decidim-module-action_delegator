@@ -16,7 +16,7 @@ module Decidim
       attr_reader :consultation
 
       def published_questions_responses
-        VotedWithDirectVerification.new(
+        VotedWithPonderations.new(
           PublishedResponses.new(consultation).query
         ).query
       end

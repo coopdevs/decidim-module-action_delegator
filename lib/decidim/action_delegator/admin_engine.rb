@@ -19,14 +19,11 @@ module Decidim
 
         resources :consultations, param: :slug, only: [] do
           get :results, on: :member
+          get :weighted_results, on: :member
           resources :exports, only: :create, module: :consultations
 
           namespace :exports do
             resources :sum_of_weights, only: :create
-          end
-
-          namespace :results do
-            resources :sum_of_weights, only: :index
           end
         end
 
@@ -76,9 +73,9 @@ module Decidim
                         if: allowed_to?(:read, :question)
           menu.add_item :sum_of_weights,
                         I18n.t("sum_of_weights", scope: "decidim.action_delegator.admin.menu.consultations_submenu"),
-                        decidim_admin_action_delegator.consultation_results_sum_of_weights_path(current_consultation),
+                        decidim_admin_action_delegator.weighted_results_consultation_path(current_consultation),
                         position: 1.2,
-                        active: is_active_link?(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(current_consultation)),
+                        active: is_active_link?(decidim_admin_action_delegator.weighted_results_consultation_path(current_consultation)),
                         if: allowed_to?(:read, :question)
         end
       end
