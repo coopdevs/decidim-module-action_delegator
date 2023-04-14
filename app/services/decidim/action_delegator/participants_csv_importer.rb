@@ -19,13 +19,13 @@ module Decidim
           skipped_rows: [],
           errors_csv_path: nil
         }
-        errors_csv_file = File.join(File.dirname(@csv_file), "errors.csv")
+        details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
 
         ActiveRecord::Base.transaction do
           i = 1
           csv = CSV.new(@csv_file, headers: true, col_sep: ",")
 
-          CSV.open(errors_csv_file, "wb") do |errors_csv|
+          CSV.open(details_csv_file, "wb") do |errors_csv|
             headers(csv, errors_csv)
 
             csv.rewind
@@ -51,7 +51,7 @@ module Decidim
               if participant_exists?(@form)
                 mismatch_fields = mismatched_fields(@form)
                 info_message = generate_info_message(mismatch_fields)
-                import_summary[:skipped_rows] << { row_number: i - 1, error_messages: [info_message] }
+                import_summary[:skipped_rows] << { row_number: i - 1 }
 
                 row["reason"] = info_message
                 errors_csv << row
@@ -72,7 +72,7 @@ module Decidim
             end
           end
           import_summary[:total_rows] = i - 1
-          import_summary[:errors_csv_path] = errors_csv_file
+          import_summary[:errors_csv_path] = details_csv_file
         end
 
         import_summary
