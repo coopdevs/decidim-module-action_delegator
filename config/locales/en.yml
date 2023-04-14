@@ -55,6 +55,7 @@ en:
             grantee: Grantee
             granter: Granter
             title: User vote delegations
+            voted: Granter has voted?
           new:
             grantee: Grantee
             granter: Granter
@@ -89,6 +90,7 @@ en:
             ponderation: Ponderation
             title: Census
             user: User
+            voted: Has voted?
           new:
             save: Create
             title: New participant
@@ -96,6 +98,9 @@ en:
             error: There was a problem updating the participants
             success: Participants saved successfully
         permissions:
+          sync:
+            started: Participans synchronization has started. Please wait a few minutes
+              and refresh this page.
           update:
             error: There was a problem updating the permissions
             success: Permissions updated successfully
@@ -191,19 +196,24 @@ en:
             consultation_questions_all_verified_html: All questions are restricted
               by the <i>Delegations Verifier</i>.
             consultation_questions_missing_verifier_html: There are %{count} questions
-              that are not restricted by the <i>Delegations Verifier</i>. Without
-              it, anyone will be able to vote on it and ponderations won't work. <b>Vote
-              delegations are not affected by this.</b>
+              that are not restricted by the <i>Delegations Verifier</i>. <b>Without
+              it, anyone will be able to vote on them.</b> <em>This is ok if you are
+              using other authorization methods or everyone is allowed to vote.</em>
             missing_authorizations_html: There are %{count} participants that are
-              not verified by the <i>Delegations Verifier</i>. <b>Vote delegations
-              are not affected by this.</b>
+              not verified by the <i>Delegations Verifier</i>. <em>This is ok if these
+              participants have their votes delegated to others or you are using other
+              verification methods (or none).</em>
             missing_registered_users_html: There are %{count} participants that are
-              not registered into the platform. <b>Vote delegations are not affected
-              by this.</b>
-            no_participants_html: There is no census! Please, add participants or
-              nobody will be able to vote if <i>Delegations Verifier</i> is active.
-              <b>This is ok if you don't want to use vote ponderation and don't activate
-              <i>Delegations Verifier</li></b>
+              not registered into the platform.
+            no_delegations_html: There are no vote delegations.
+            no_participants_html: There is no census! <b>Add participants or nobody
+              will be able to vote if <i>Delegations Verifier</i> is active.</b> <em>This
+              is ok if you are using other authorization methods or everyone is allowed
+              to vote.</em>
+            no_ponderations_html: There are no vote ponderations. <b>All users will
+              have the same weight on their votes</b>
+            users_need_sync_html: The participants list needs to be synchronized.
+              <b>Consultation results might be wrong!</b>
           state:
             closed: Closed
             ongoing: Ongoing

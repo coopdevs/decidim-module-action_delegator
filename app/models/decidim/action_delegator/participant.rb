@@ -29,6 +29,9 @@ module Decidim
       # sets the decidim user if found
       before_save :set_decidim_user
 
+      # prevents destroy if has voted
+      before_destroy { |record| throw(:abort) if record.voted? }
+
       def user
         @user ||= decidim_user || user_from_metadata
       end
@@ -76,6 +79,21 @@ module Decidim
 
       def ponderation_title
         ponderation&.title
+      end
+
+      # checks if the user has voted in the setting's consultation
+      def voted?
+        return false if user.blank?
+
+        @voted ||= if Decidim::Consultations::Vote
+                      .joins(question: :consultation)
+                      .where(decidim_consultations_questions: {
+                               decidim_consultation_id: setting.consultation.id
+                             }, author: user).any?
+                     true
+                   else
+                     false
+                   end
       end
 
       private

@@ -26,7 +26,7 @@ module Decidim
         def user_in_census?
           return unless setting&.participants
 
-          setting.participants.exists?(census_params)
+          setting.participants.exists?(decidim_user: authorization.user) || setting.participants.exists?(census_params)
         end
 
         def census_params

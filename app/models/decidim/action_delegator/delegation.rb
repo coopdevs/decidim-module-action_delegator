@@ -18,8 +18,20 @@ module Decidim
 
       delegate :consultation, to: :setting
 
+      before_destroy { |record| throw(:abort) if record.voted? }
+
       def self.granted_to?(user, consultation)
         GranteeDelegations.for(consultation, user).exists?
+      end
+
+      def voted?
+        return false unless consultation.questions.any?
+
+        @voted ||= if consultation.questions&.detect { |question| question.voted_by?(granter) }
+                     true
+                   else
+                     false
+                   end
       end
     end
   end

@@ -94,7 +94,7 @@ describe "Admin manages settings", type: :system do
 
     it "shows a callout with information" do
       expect(page).to have_content("All questions are restricted by the Delegations Verifier")
-      expect(page).to have_content("There is no census! Please, add participants or nobody will be able to vote if Delegations Verifier is active")
+      expect(page).to have_content("There is no census! Add participants or nobody will be able to vote if Delegations Verifier is active")
     end
 
     context "when there are participants" do
@@ -141,6 +141,35 @@ describe "Admin manages settings", type: :system do
           end
         end
       end
+
+      context "when participants are not synced" do
+        let(:email) { user.email }
+
+        before do
+          participants.first.update_column(:decidim_user_id, nil) # rubocop:disable Rails/SkipsModelValidations:
+          click_link I18n.t("decidim.action_delegator.admin.menu.delegations")
+        end
+
+        it "is alert" do
+          expect(page).to have_content("The participants list needs to be synchronized")
+          expect(page).to have_link(href: decidim_admin_action_delegator.sync_setting_permissions_path(setting))
+          expect(page).to have_css(".callout.alert")
+
+          perform_enqueued_jobs { click_link "Click here to automatically fix this" }
+
+          expect(page).not_to have_css(".callout.alert")
+          expect(page).not_to have_content("The participants list needs to be synchronized")
+        end
+
+        context "and participants are not registered" do
+          let(:email) { "foo@example.org" }
+
+          it "has no alert" do
+            expect(page).not_to have_css(".callout.alert")
+            expect(page).not_to have_content("The participants list needs to be synchronized")
+          end
+        end
+      end
     end
 
     context "when verifier is not installed" do
@@ -158,6 +187,7 @@ describe "Admin manages settings", type: :system do
         expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
         expect(page).to have_content("There are 2 questions that are not restricted by the Delegations Verifier.")
         expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_css(".callout.success")
 
         click_link "Click here to automatically fix this"
 
@@ -174,6 +204,7 @@ describe "Admin manages settings", type: :system do
         expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
         expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
         expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_css(".callout.warning")
 
         click_link "Click here to automatically fix this"
 
@@ -193,6 +224,7 @@ describe "Admin manages settings", type: :system do
         expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
         expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
         expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_css(".callout.warning")
 
         click_link "Click here to automatically fix this"
 
@@ -202,8 +234,8 @@ describe "Admin manages settings", type: :system do
   end
 
   context "when removing settings" do
+    let!(:delegation) { nil }
     let!(:setting) { create(:setting, consultation: consultation) }
-    let!(:delegation) { create(:delegation, setting: setting) }
 
     before do
       switch_to_host(organization.host)
@@ -219,6 +251,16 @@ describe "Admin manages settings", type: :system do
 
       expect(page).to have_current_path(decidim_admin_action_delegator.settings_path)
       expect(page).to have_no_content(translated_attribute(consultation.title))
+    end
+
+    context "when setting is not destroyable" do
+      let!(:delegation) { create(:delegation, setting: setting) }
+
+      it "has no delete link" do
+        within "tr[data-setting-id=\"#{setting.id}\"]" do
+          expect(page).to have_no_link("Delete")
+        end
+      end
     end
   end
 end

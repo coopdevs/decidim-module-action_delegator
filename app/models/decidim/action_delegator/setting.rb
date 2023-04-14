@@ -14,17 +14,17 @@ module Decidim
                inverse_of: :setting,
                foreign_key: "decidim_action_delegator_setting_id",
                class_name: "Decidim::ActionDelegator::Delegation",
-               dependent: :destroy
+               dependent: :restrict_with_error
       has_many :ponderations,
                inverse_of: :setting,
                foreign_key: "decidim_action_delegator_setting_id",
                class_name: "Decidim::ActionDelegator::Ponderation",
-               dependent: :destroy
+               dependent: :restrict_with_error
       has_many :participants,
                inverse_of: :setting,
                foreign_key: "decidim_action_delegator_setting_id",
                class_name: "Decidim::ActionDelegator::Participant",
-               dependent: :destroy
+               dependent: :restrict_with_error
 
       validates :max_grants, presence: true
       validates :max_grants, numericality: { greater_than: 0 }
@@ -53,6 +53,10 @@ module Decidim
 
       def editable?
         state != :closed
+      end
+
+      def destroyable?
+        participants.empty? && ponderations.empty? && delegations.empty?
       end
 
       def phone_required?
