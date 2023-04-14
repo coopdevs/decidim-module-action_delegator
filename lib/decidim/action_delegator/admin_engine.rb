@@ -43,7 +43,8 @@ module Decidim
         Decidim.menu :admin_consultation_menu do |menu|
           menu.remove_item :results_consultation
           is_results = is_active_link?(decidim_admin_consultations.results_consultation_path(current_consultation)) ||
-                       is_active_link?(decidim_admin_action_delegator.results_consultation_path(current_consultation))
+                       is_active_link?(decidim_admin_action_delegator.results_consultation_path(current_consultation)) ||
+                       is_active_link?(decidim_admin_action_delegator.weighted_results_consultation_path(current_consultation))
           params = {
             position: 1.2,
             active: is_results,

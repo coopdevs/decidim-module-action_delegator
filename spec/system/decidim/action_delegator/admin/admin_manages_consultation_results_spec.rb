@@ -18,6 +18,10 @@ describe "Admin manages consultation results", type: :system do
 
   let(:votes) { consultation.questions.first.total_votes }
   let!(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
+  let(:setting) { create(:setting, consultation: consultation) }
+  let(:ponderation1) { create(:ponderation, setting: setting, name: "producer", weight: 2) }
+  let(:ponderation2) { create(:ponderation, setting: setting, name: "consumer", weight: 3) }
+  let(:ponderation3) { create(:ponderation, setting: setting, name: "consumer", weight: 1) }
 
   before do
     question.votes.create(author: user, response: response)
@@ -25,30 +29,10 @@ describe "Admin manages consultation results", type: :system do
     question.votes.create(author: another_user, response: response)
     question.votes.create(author: yet_another_user, response: other_response)
 
-    create(
-      :authorization,
-      :direct_verification,
-      user: user,
-      metadata: { membership_type: "producer", membership_weight: 2 }
-    )
-    create(
-      :authorization,
-      :direct_verification,
-      user: other_user,
-      metadata: { membership_type: "consumer", membership_weight: 3 }
-    )
-    create(
-      :authorization,
-      :direct_verification,
-      user: another_user,
-      metadata: { membership_type: "consumer", membership_weight: 1 }
-    )
-    create(
-      :authorization,
-      :direct_verification,
-      user: yet_another_user,
-      metadata: { membership_type: "consumer", membership_weight: 1 }
-    )
+    create(:participant, setting: setting, decidim_user: user, ponderation: ponderation1)
+    create(:participant, setting: setting, decidim_user: other_user, ponderation: ponderation2)
+    create(:participant, setting: setting, decidim_user: another_user, ponderation: ponderation3)
+    create(:participant, setting: setting, decidim_user: yet_another_user, ponderation: ponderation3)
 
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -65,7 +49,10 @@ describe "Admin manages consultation results", type: :system do
   end
 
   context "when in the consultation page" do
-    before { visit decidim_admin_consultations.edit_consultation_path(consultation) }
+    before do
+      visit decidim_admin_consultations.edit_consultation_path(consultation)
+      click_link "Results"
+    end
 
     it_behaves_like "handles the deprecation warning"
 
@@ -90,11 +77,11 @@ describe "Admin manages consultation results", type: :system do
     it "enables navigating to the sum of weights" do
       click_link I18n.t("decidim.action_delegator.admin.menu.consultations_submenu.sum_of_weights")
 
-      within ".results-nav" do
-        expect(find(".is-active")).to have_link(href: decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+      within ".secondary-nav ul ul" do
+        expect(find(".is-active")).to have_link(href: decidim_admin_action_delegator.weighted_results_consultation_path(consultation))
       end
 
-      expect(page).to have_current_path(decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation))
+      expect(page).to have_current_path(decidim_admin_action_delegator.weighted_results_consultation_path(consultation))
     end
 
     context "when viewing a finished consultation from the sum of weights page" do
@@ -116,7 +103,7 @@ describe "Admin manages consultation results", type: :system do
     it "enables navigating to the results page" do
       click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
 
-      expect(page).to have_current_path(decidim_admin_action_delegator.results_consultation_path(question.consultation))
+      expect(page).to have_current_path(decidim_admin_consultations.results_consultation_path(question.consultation))
     end
   end
 
@@ -209,7 +196,7 @@ describe "Admin manages consultation results", type: :system do
 
         expect(nth_row(3).find(".response-title")).to have_content("A")
         expect(nth_row(3).find(".membership-type")).to have_content("membership data not available")
-        expect(nth_row(3).find(".membership-weight")).to have_content("membership data not available")
+        expect(nth_row(3).find(".membership-weight")).to have_content("1.0")
         expect(nth_row(3).find(".votes-count")).to have_content(1)
 
         expect(nth_row(4).find(".response-title")).to have_content("A")
