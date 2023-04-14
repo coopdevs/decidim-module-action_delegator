@@ -37,6 +37,47 @@ module Decidim
         expect(subject.reload.decidim_user).to eq(user)
       end
 
+      shared_examples "hasn't voted" do
+        it "reports as not voted" do
+          expect(subject).not_to be_voted
+        end
+
+        it "can be destroyed" do
+          subject.save
+          expect { subject.destroy }.to change(Participant, :count).by(-1)
+        end
+      end
+
+      shared_examples "has voted" do
+        it "reports as voted" do
+          expect(subject).to be_voted
+        end
+
+        it "cannot be destroyed" do
+          subject.save
+          expect { subject.destroy }.not_to change(Participant, :count)
+        end
+      end
+
+      it_behaves_like "hasn't voted"
+
+      context "when user has voted in the setting's consultation" do
+        let!(:vote) { create(:vote, response: response, question: question, author: user) }
+        let(:response) { create(:response, question: question) }
+        let(:question) { create(:question, consultation: setting.consultation) }
+
+        it_behaves_like "has voted"
+
+        context "and voted in another consultation" do
+          let(:other_consultation) { create(:consultation, organization: setting.consultation.organization) }
+          let(:other_question) { create(:question, consultation: other_consultation) }
+          let(:other_response) { create(:response, question: other_question) }
+          let!(:vote) { create(:vote, response: other_response, question: other_question, author: user) }
+
+          it_behaves_like "hasn't voted"
+        end
+      end
+
       context "when same email exists in another organization" do
         let!(:existing_user) { create :user }
         let(:email) { existing_user.email }

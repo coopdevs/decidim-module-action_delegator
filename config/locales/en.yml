@@ -89,6 +89,7 @@ en:
             ponderation: Ponderation
             title: Census
             user: User
+            voted: Has voted?
           new:
             save: Create
             title: New participant

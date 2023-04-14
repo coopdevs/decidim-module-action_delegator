@@ -19,6 +19,7 @@
             <th><%= t(".ponderation") %></th>
             <th><%= t(".user") %></th>
             <th><%= t(".last_login") %></th>
+            <th><%= t(".voted") %></th>
             <th><%= t(".created_at") %></th>
             <th>&nbsp;</th>
           </tr>
@@ -31,11 +32,12 @@
               <td><%= participant.ponderation_title %></td>
               <td><%= participant.user_name %></td>
               <td><%= participant.last_login ? l(participant.last_login, format: :short) : t(".never_logged") %></td>
+              <td><%= t("booleans.#{participant.voted?}") %></td>
               <td><%= l participant.created_at, format: :short %></td>
 
               <td class="table-list__actions">
                 <%= icon_link_to "pencil", decidim_admin_action_delegator.edit_setting_participant_path(participant.setting, participant), t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit" %>
-                <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_participant_path(participant.setting, participant), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } %>
+                <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_participant_path(participant.setting, participant), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } unless participant.voted? %>
               </td>
             </tr>
           <% end %>
