@@ -30,6 +30,10 @@ module Decidim
             .where(Arel.sql("permissions->'#{action}'->'authorization_handlers'->>'delegations_verifier' IS NOT NULL")))
         end
 
+        def missing_decidim_users(participants)
+          participants.where(decidim_user: nil).or(Participant.where.not(decidim_user: current_organization.users)).where.not(id: missing_registered_users(participants))
+        end
+
         def missing_registered_users(participants)
           participants.where.not(email: current_organization.users.select(:email))
                       .where.not("MD5(CONCAT(phone,'-',?,'-',?)) IN (?)",

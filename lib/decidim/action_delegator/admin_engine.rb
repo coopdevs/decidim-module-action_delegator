@@ -14,7 +14,9 @@ module Decidim
           resources :delegations, only: [:index, :new, :create, :destroy]
           resources :ponderations
           resources :participants
-          resources :permissions, only: [:create]
+          resources :permissions, only: [:create] do
+            post :sync, on: :collection
+          end
         end
 
         resources :consultations, param: :slug, only: [] do

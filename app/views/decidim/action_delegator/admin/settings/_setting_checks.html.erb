@@ -1,13 +1,21 @@
 <% missing_questions =  missing_verifications_for(setting&.consultation&.questions, "vote") %>
 <% missing_registered =  missing_registered_users(setting&.participants) %>
 <% total_missing_authorizations =  total_missing_authorizations(setting&.participants) %>
+<% status_err = (missing_questions.present? || missing_registered.present? || setting.participants.blank? || total_missing_authorizations.positive?)
 
-<div class="callout <%= (missing_questions.present? || missing_registered.present? || setting.participants.blank? || total_missing_authorizations.positive?) ? "warning" : "success" %> text-left">
+  if setting&.consultation&.questions&.count == missing_questions.count
+    status_err = false
+  end
+%>
+
+<%= render "decidim/action_delegator/admin/settings/participants_sync_check", setting: setting %>
+
+<div class="callout <%= status_err ? "warning" : "success" %> text-left">
 
   <ul class="happy-faces">
     <% if setting.consultation %>
       <% if missing_questions.present? %>
-        <li class="unhappy">
+        <li class="<%= status_err ? "unhappy" : "warning" %>">
           <%= t(".consultation_questions_missing_verifier_html", count: missing_questions.count) %><br>
           <%= link_to t(".click_to_fix"), decidim_admin_action_delegator.setting_permissions_path(setting), method: :post %>
         </li>
@@ -18,17 +26,25 @@
 
     <% if setting.participants.any? %>
       <% if missing_registered.present? %>
-        <li class="unhappy"><%= t(".missing_registered_users_html", count: missing_registered.count) %></li>
+        <li class="warning"><%= t(".missing_registered_users_html", count: missing_registered.count) %></li>
       <% else %>
         <li class="happy"><%= t(".all_users_registered_html") %></li>
       <% end %>
       <% if total_missing_authorizations.positive? %>
-        <li class="unhappy"><%= t(".missing_authorizations_html", count: total_missing_authorizations) %></li>
+        <li class="<%= status_err ? "unhappy" : "warning" %>"><%= t(".missing_authorizations_html", count: total_missing_authorizations) %></li>
       <% else %>
         <li class="happy"><%= t(".all_users_authorized_html") %></li>
       <% end %>
     <% else %>
-      <li class="unhappy"><%= t(".no_participants_html") %></li>
+      <li class="warning"><%= t(".no_participants_html") %></li>
+    <% end %>
+
+    <% unless setting.ponderations.any? %>
+      <li class="warning"><%= t(".no_ponderations_html") %></li>
+    <% end %>
+
+    <% unless setting.delegations.any? %>
+      <li class="warning"><%= t(".no_delegations_html") %></li>
     <% end %>
   </ul>
  </div>
@@ -39,12 +55,16 @@
     padding-left: 1em;
     text-indent: -1.5em;
   }
+  li.warning:before {
+    content: '🧐 ';
+    color: red;
+  }
   li.unhappy:before {
-    content: '☹ ';
+    content: '⚠️ ';
     color: red;
   }
   li.happy:before {
-    content: '☺ ';
+    content: '👌 ';
     color: green;
   }
   ul.happy-faces a {

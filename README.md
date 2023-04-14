@@ -66,6 +66,8 @@ Currently it is designed to work with the Consultations module.
 
 - On the other, each set of census can work with a different set of weights and delegation.
 
+![](docs/settings.png)
+
 ### Extended consultation results
 
 This gem modifies the consultation's results page adding two extra columns
