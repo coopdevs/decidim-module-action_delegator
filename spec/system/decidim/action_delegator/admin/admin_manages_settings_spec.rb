@@ -234,8 +234,8 @@ describe "Admin manages settings", type: :system do
   end
 
   context "when removing settings" do
+    let!(:delegation) { nil }
     let!(:setting) { create(:setting, consultation: consultation) }
-    let!(:delegation) { create(:delegation, setting: setting) }
 
     before do
       switch_to_host(organization.host)
@@ -251,6 +251,16 @@ describe "Admin manages settings", type: :system do
 
       expect(page).to have_current_path(decidim_admin_action_delegator.settings_path)
       expect(page).to have_no_content(translated_attribute(consultation.title))
+    end
+
+    context "when setting is not destroyable" do
+      let!(:delegation) { create(:delegation, setting: setting) }
+
+      it "has no delete link" do
+        within "tr[data-setting-id=\"#{setting.id}\"]" do
+          expect(page).to have_no_link("Delete")
+        end
+      end
     end
   end
 end
