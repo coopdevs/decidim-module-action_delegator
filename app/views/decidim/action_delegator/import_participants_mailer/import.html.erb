@@ -1,67 +1,8 @@
-<style>
-  .import_csv {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .import_csv th,
-  .import_csv td {
-    border: 1px solid #000;
-    padding: 2px;
-    text-align: left;
-  }
-
-  .import_csv th:first-child {
-    width: 20%;
-  }
-
-  .import_csv th:last-child {
-    width: 100%;
-  }
-
-  .import_csv th {
-    background-color: #f2f2f2;
-  }
-</style>
-
 <p class="email-greeting"><%= t(".greeting", name: @user.name) %></p>
 <p><%= t(".result", rows_count: @import_summary[:imported_rows], total_rows_count: @import_summary[:total_rows]).html_safe %></p>
 <% if @import_summary[:skipped_rows].present? %>
   <p><%= t(".skipped_rows", skipped_rows: @import_summary[:skipped_rows].count).html_safe %></p>
-  <table class="import_csv">
-    <thead>
-    <tr>
-      <th><%= t(".row_number") %></th>
-      <th><%= t(".info_messages") %></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @import_summary[:skipped_rows].each do |skipped_row| %>
-      <tr>
-        <td><%= skipped_row[:row_number] %></td>
-        <td><%= skipped_row[:error_messages].join(", ") %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
 <% end %>
-<br>
 <% if @import_summary[:error_rows].present? %>
   <p><%= t(".errors_title", errors_count: @import_summary[:error_rows].size).html_safe %></p>
-  <table class="import_csv">
-    <thead>
-    <tr>
-      <th><%= t(".row_number") %></th>
-      <th><%= t(".text_error") %></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @import_summary[:error_rows].each do |error_row| %>
-      <tr>
-        <td><%= error_row[:row_number] %></td>
-        <td><%= error_row[:error_messages].join(", ") %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
 <% end %>

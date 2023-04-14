@@ -16,48 +16,63 @@ module Decidim
           total_rows: 0,
           imported_rows: 0,
           error_rows: [],
-          skipped_rows: []
+          skipped_rows: [],
+          errors_csv_path: nil
         }
+        errors_csv_file = File.join(File.dirname(@csv_file), "errors.csv")
 
         ActiveRecord::Base.transaction do
           i = 1
           csv = CSV.new(@csv_file, headers: true, col_sep: ",")
 
-          while (row = csv.shift).present?
-            i += 1
-            authorization_method = @current_setting.authorization_method
+          CSV.open(errors_csv_file, "wb") do |errors_csv|
+            headers(csv, errors_csv)
 
-            email, phone = extract_contact_details(row, authorization_method)
-            weight = ponderation_value(row["weight"].strip)
+            csv.rewind
 
-            params = {
-              email: email,
-              phone: phone,
-              weight: weight,
-              decidim_action_delegator_ponderation_id: find_ponderation(weight).id
-            }
+            while (row = csv.shift).present?
+              i += 1
+              authorization_method = @current_setting.authorization_method
 
-            @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
+              email, phone = extract_contact_details(row, authorization_method)
+              weight = ponderation_value(row["weight"].strip) if row["weight"].present?
 
-            next if row.empty?
+              params = {
+                email: email,
+                phone: phone,
+                weight: weight,
+                decidim_action_delegator_ponderation_id: find_ponderation(weight).id
+              }
 
-            if participant_exists?(@form)
-              mismatch_fields = mismatched_fields(@form)
-              info_message = generate_info_message(mismatch_fields)
-              import_summary[:skipped_rows] << { row_number: i - 1, error_messages: [info_message] }
+              @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
 
-              next
-            end
+              next if row.empty?
 
-            if @form.valid?
-              process_participant(@form)
-              import_summary[:imported_rows] += 1
-            else
-              import_summary[:error_rows] << { row_number: i - 1, error_messages: @form.errors.full_messages }
+              if participant_exists?(@form)
+                mismatch_fields = mismatched_fields(@form)
+                info_message = generate_info_message(mismatch_fields)
+                import_summary[:skipped_rows] << { row_number: i - 1, error_messages: [info_message] }
+
+                row["reason"] = info_message
+                errors_csv << row
+
+                next
+              end
+
+              if @form.valid?
+                process_participant(@form)
+                import_summary[:imported_rows] += 1
+              else
+                import_summary[:error_rows] << { row_number: i - 1, error_messages: @form.errors.full_messages }
+
+                row["reason"] = @form.errors.full_messages.join(", ")
+
+                errors_csv << row
+              end
             end
           end
-
           import_summary[:total_rows] = i - 1
+          import_summary[:errors_csv_path] = errors_csv_file
         end
 
         import_summary
@@ -100,9 +115,11 @@ module Decidim
       def mismatched_fields(form)
         mismatch_fields = []
         mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.phone") if form.phone != @participant.phone
+
         if form.decidim_action_delegator_ponderation_id != @participant.decidim_action_delegator_ponderation_id
           mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.weight")
         end
+
         mismatch_fields.empty? ? nil : mismatch_fields.join(", ")
       end
 
@@ -146,6 +163,12 @@ module Decidim
         Float(value)
       rescue StandardError
         value
+      end
+
+      def headers(csv, errors_csv)
+        headers = csv.first.headers
+        headers << I18n.t("decidim.action_delegator.participants_csv_importer.import.error_field")
+        errors_csv << headers
       end
     end
   end

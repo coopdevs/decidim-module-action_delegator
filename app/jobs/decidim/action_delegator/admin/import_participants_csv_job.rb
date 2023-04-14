@@ -10,7 +10,8 @@ module Decidim
           importer = Decidim::ActionDelegator::ParticipantsCsvImporter.new(csv_file, current_user, current_setting)
           import_summary = importer.import!
 
-          Decidim::ActionDelegator::ImportParticipantsMailer.import(current_user, import_summary).deliver_now
+          Decidim::ActionDelegator::ImportParticipantsMailer
+            .import(current_user, import_summary, import_summary[:errors_csv_path]).deliver_now
 
           import_summary
         end

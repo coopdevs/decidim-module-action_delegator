@@ -279,6 +279,7 @@ en:
           field_name:
             phone: phone
             weight: weight
+          error_field: Reason for skipping
           skip_import_info: Participant already exists%{with_mismatched_fields}
           with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Your verification code is %{code}
