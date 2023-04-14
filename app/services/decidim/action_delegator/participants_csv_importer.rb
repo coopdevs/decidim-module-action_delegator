@@ -17,7 +17,7 @@ module Decidim
           imported_rows: 0,
           error_rows: [],
           skipped_rows: [],
-          errors_csv_path: nil
+          details_csv_path: nil
         }
         details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
 
@@ -72,7 +72,7 @@ module Decidim
             end
           end
           import_summary[:total_rows] = i - 1
-          import_summary[:errors_csv_path] = details_csv_file
+          import_summary[:details_csv_path] = details_csv_file
         end
 
         import_summary
