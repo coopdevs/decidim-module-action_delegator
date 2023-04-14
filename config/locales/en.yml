@@ -266,6 +266,10 @@ en:
           errors_title: "<b>Found:</b> %{errors_count} errors"
           greeting: Hello %{name},
           info_messages: Reason for skipping
+          instructions: |
+            <p>Attached is a file with import details, which contains rows with participants that were not imported.</p>
+            <p>If you want to continue importing, correct the rows specified, delete the last column from the file, save 
+            the file and import again.</p>
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Row number
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
@@ -276,10 +280,10 @@ en:
       participants_csv_importer:
         import:
           error: There was a problem importing the participants
+          error_field: Reason for skipping
           field_name:
             phone: phone
             weight: weight
-          error_field: Reason for skipping
           skip_import_info: Participant already exists%{with_mismatched_fields}
           with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Your verification code is %{code}

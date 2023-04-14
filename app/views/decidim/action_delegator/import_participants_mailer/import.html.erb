@@ -6,3 +6,6 @@
 <% if @import_summary[:error_rows].present? %>
   <p><%= t(".errors_title", errors_count: @import_summary[:error_rows].size).html_safe %></p>
 <% end %>
+<% if @import_summary[:error_rows].present? || @import_summary[:skipped_rows].present? %>
+  <%= t(".instructions").html_safe %>
+<% end %>
