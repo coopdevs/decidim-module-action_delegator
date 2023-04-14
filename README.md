@@ -42,7 +42,18 @@ bundle exec rails decidim_action_delegator:install:migrations
 bundle exec rails db:migrate
 ```
 
-Depending on your Decidim version, choose the corresponding version to ensure compatibility:
+> **IMPORTANT:** 
+>
+> If you are upgrading from a previous version, you need to run the migrations again and import all membership types/weights into the built-in census by executing in your production server:
+>
+> ```bash
+> RAILS_ENV=production bundle exec rails decidim_action_delegator:import_direct_verifications
+> ```
+>
+> *It is safe to run the previous command multiple times, no content will be imported twice.*
+
+
+Depending on your Decidim version, you can choose the corresponding version to ensure compatibility:
 
 | Version | Compatible Decidim versions |
 |---|---|
@@ -54,7 +65,7 @@ Depending on your Decidim version, choose the corresponding version to ensure co
 | 0.2 | 0.23.x |
 | 0.1 | 0.22.0 |
 
-> *Heads up!*  [Consultations module will be deprecated in the near future.](https://github.com/decidim/decidim/issues/7097)
+*Heads up!*  [Consultations module will be deprecated in the near future.](https://github.com/decidim/decidim/issues/7097)
 
 ## Usage
 
