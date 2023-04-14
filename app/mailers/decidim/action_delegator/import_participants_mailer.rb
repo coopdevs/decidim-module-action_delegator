@@ -18,7 +18,7 @@ module Decidim
         @import_summary = import_summary
         @csv_file_path = csv_file_path
 
-        attachments["errors.csv"] = File.read(@csv_file_path)
+        attachments["errors.csv"] = File.read(@csv_file_path) if @csv_file_path.present? && File.exist?(@csv_file_path)
 
         with_user(user) do
           mail(to: "#{user.name} <#{user.email}>", subject: I18n.t("decidim.action_delegator.import_participants_mailer.import.subject"))

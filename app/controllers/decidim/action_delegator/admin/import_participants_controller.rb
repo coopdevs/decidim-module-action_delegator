@@ -10,7 +10,7 @@ module Decidim
         helper ::Decidim::ActionDelegator::Admin::DelegationHelper
         helper_method :organization_settings, :current_setting
 
-        layout "decidim/action_delegator/admin/delegations"
+        layout "decidim/admin/users"
 
         def new
           enforce_permission_to :create, :participant
