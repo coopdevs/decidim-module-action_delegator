@@ -6,8 +6,8 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
   subject { described_class.new(relation) }
 
   let(:relation) do
-    relation = Decidim::Consultations::Response.where(question: question)
-    Decidim::ActionDelegator::VotedWithDirectVerification.new(relation).query
+    relation = Decidim::Consultations::Response.joins(question: :consultation).where(question: question)
+    Decidim::ActionDelegator::VotedWithPonderations.new(relation).query
   end
 
   let(:organization) { create(:organization) }
@@ -16,103 +16,58 @@ describe Decidim::ActionDelegator::ResponsesByMembership do
   let(:user) { create(:user, :admin, :confirmed, organization: organization) }
   let(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
   let(:response) { create(:response, question: question) }
+  let(:setting) { create(:setting, consultation: consultation) }
+  let(:ponderation1) { create(:ponderation, setting: setting, name: "foo", weight: 2) }
+  let(:ponderation2) { create(:ponderation, setting: setting, name: "bar", weight: 3) }
 
   before do
     question.votes.create(author: user, response: response)
     question.votes.create(author: other_user, response: response)
-
-    create(:authorization, :direct_verification, user: user, metadata: auth_metadata)
-    create(:authorization, :direct_verification, user: other_user, metadata: other_auth_metadata)
   end
 
   describe "#query" do
-    context "when users have the same membership_weight" do
-      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
-      let(:other_auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
+    context "when users have the same ponderation" do
+      let!(:participant1) { create(:participant, ponderation: ponderation1, decidim_user: user, setting: setting) }
+      let!(:participant2) { create(:participant, ponderation: ponderation1, decidim_user: other_user, setting: setting) }
 
-      it "returns response votes by membership's type and weight in a single row" do
+      it "returns response votes by ponderation in a single row" do
         result = subject.query
 
-        expect(result.first.membership_type).to eq("producer")
-        expect(result.first.membership_weight).to eq("2")
+        expect(result.first.membership_type).to eq(ponderation1.name)
+        expect(result.first.membership_weight).to eq(ponderation1.weight)
         expect(result.first.votes_count).to eq(2)
       end
     end
 
-    context "when users have different membership_weight" do
-      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
-      let(:other_auth_metadata) { { membership_type: "producer", membership_weight: 1 } }
+    context "when users have different ponderations" do
+      let!(:participant1) { create(:participant, ponderation: ponderation1, decidim_user: user, setting: setting) }
+      let!(:participant2) { create(:participant, ponderation: ponderation2, decidim_user: other_user, setting: setting) }
 
-      it "returns response votes by membership's type in different rows" do
+      it "returns response votes by ponderation in different rows" do
         result = subject.query
 
-        expect(result.first.membership_type).to eq("producer")
-        expect(result.first.membership_weight).to eq("2")
+        expect(result.first.membership_type).to eq(ponderation2.name)
+        expect(result.first.membership_weight).to eq(ponderation2.weight)
         expect(result.first.votes_count).to eq(1)
 
-        expect(result.second.membership_type).to eq("producer")
-        expect(result.second.membership_weight).to eq("1")
+        expect(result.second.membership_type).to eq(ponderation1.name)
+        expect(result.second.membership_weight).to eq(ponderation1.weight)
         expect(result.second.votes_count).to eq(1)
       end
     end
 
-    context "when users have different membership_type" do
-      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
-      let(:other_auth_metadata) { { membership_type: "consumer", membership_weight: 2 } }
+    context "when dome users don't have ponderation" do
+      let!(:participant1) { create(:participant, ponderation: ponderation1, decidim_user: user, setting: setting) }
 
-      it "returns response votes by membership's type in different rows" do
+      it "returns response votes by ponderations in different rows" do
         result = subject.query
 
-        expect(result.first.membership_type).to eq("consumer")
-        expect(result.first.membership_weight).to eq("2")
+        expect(result.first.membership_type).to eq(ponderation1.name)
+        expect(result.first.membership_weight).to eq(ponderation1.weight)
         expect(result.first.votes_count).to eq(1)
 
-        expect(result.second.membership_type).to eq("producer")
-        expect(result.second.membership_weight).to eq("2")
-        expect(result.second.votes_count).to eq(1)
-      end
-    end
-
-    context "when users have multiple authorizations" do
-      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
-      let(:other_auth_metadata) { { membership_type: "consumer", membership_weight: 2 } }
-
-      before do
-        create(:authorization, user: user, metadata: {})
-      end
-
-      it "only considers direct_verifications authorizations" do
-        result = subject.query
-
-        expect(result.first.membership_type).to eq("consumer")
-        expect(result.first.membership_weight).to eq("2")
-        expect(result.first.votes_count).to eq(1)
-
-        expect(result.second.membership_type).to eq("producer")
-        expect(result.second.membership_weight).to eq("2")
-        expect(result.second.votes_count).to eq(1)
-
-        expect(result.third).to be_nil
-      end
-    end
-
-    context "when usesrs don't have authorization" do
-      let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
-      let(:other_auth_metadata) { { membership_type: "consumer", membership_weight: 2 } }
-
-      before do
-        Decidim::Authorization.where(user: other_user).destroy_all
-      end
-
-      it "includes their vote but highlights the lack of membership data" do
-        result = subject.query
-
-        expect(result.first.membership_type).to eq("(membership data not available)")
-        expect(result.first.membership_weight).to eq("(membership data not available)")
-        expect(result.first.votes_count).to eq(1)
-
-        expect(result.second.membership_type).to eq("producer")
-        expect(result.second.membership_weight).to eq("2")
+        expect(result.second.membership_type).to eq("(membership data not available)")
+        expect(result.second.membership_weight).to eq(1)
         expect(result.second.votes_count).to eq(1)
       end
     end

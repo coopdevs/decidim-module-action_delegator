@@ -69,7 +69,8 @@ module Decidim
     context "when there are settings" do
       let!(:setting) { create(:setting, consultation: consultation, authorization_method: authorization_method) }
       let(:explanations) { %w(not_in_census email) }
-      let!(:participants) { [create(:participant, email: email, phone: phone, setting: setting)] }
+      let!(:participants) { [create(:participant, email: email, phone: phone, setting: setting, decidim_user: decidim_user)] }
+      let(:decidim_user) { create :user, organization: organization }
       let!(:ponderations) { create_list(:ponderation, 2, setting: setting) }
 
       it_behaves_like "authorized"
@@ -100,6 +101,12 @@ module Decidim
         let(:email) { "other_email" }
 
         it_behaves_like "unauthorized"
+
+        context "and decidim user is" do
+          let(:decidim_user) { user }
+
+          it_behaves_like "authorized"
+        end
       end
 
       context "when phone is required and fixed" do

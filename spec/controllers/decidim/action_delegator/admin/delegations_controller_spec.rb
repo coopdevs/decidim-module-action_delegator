@@ -29,7 +29,7 @@ module Decidim
 
         it "renders decidim/action_delegator/admin/delegations layout" do
           get :index
-          expect(response).to render_template("layouts/decidim/action_delegator/admin/delegations")
+          expect(response).to render_template("layouts/decidim/admin/users")
         end
 
         it "renders the index template" do

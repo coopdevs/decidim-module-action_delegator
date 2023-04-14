@@ -6,19 +6,19 @@
 [![Codecov](https://codecov.io/gh/coopdevs/decidim-module-action_delegator/branch/master/graph/badge.svg)](https://codecov.io/gh/coopdevs/decidim-module-action_delegator)
 [![Gem Version](https://badge.fury.io/rb/decidim-action_delegator.svg)](https://badge.fury.io/rb/decidim-action_delegator)
 
-A tool for Decidim that provides extended functionalities for cooperatives.
+A tool for Decidim that provides extended functionalities for cooperatives or any other type of organization that need to vote with weighted-vote results and/or vote-delegation.
 
 Combines a CSV-like verification method with impersonation capabilities that allow users to delegate some actions to others.
 
 Admin can set limits to the number of delegation per users an other characteristics.
 
-Initially, only votes can be delegated.
+Initially, only votes on consultations can be delegated.
 
 ## Dependencies
 
-* [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) >= v0.24.0
-* [decidim-admin](https://github.com/decidim/decidim/tree/master/decidim-admin) >= v0.24.0
-* [decidim-core](https://github.com/decidim/decidim/tree/master/decidim-core) >= v0.24.0
+* [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) >= v0.26.0
+* [decidim-admin](https://github.com/decidim/decidim/tree/master/decidim-admin) >= v0.26.0
+* [decidim-core](https://github.com/decidim/decidim/tree/master/decidim-core) >= v0.26.0
 
 ## Installation
 
@@ -31,7 +31,7 @@ gem "decidim-action_delegator"
 Or, if you want to stay up to date with the latest changes use this line instead:
 
 ```ruby
-gem 'decidim-reporting_proposals', git: "https://github.com/openpoke/decidim-module-reporting_proposals"
+gem 'decidim-action_delegator', git: "https://github.com/coopdevs/decidim-module-action_delegator"
 ```
 
 And then execute:
@@ -60,28 +60,42 @@ Depending on your Decidim version, choose the corresponding version to ensure co
 
 ActionDelegator does not provides new Components or Participatory Spaces but enhances some functionalities in them.
 
+Currently it is designed to work with the Consultations module.
+
+- On one side, provides a custom verification method that allows admins to ensure only those in specific census (that can be uploaded via CSV) are able to vote. This census can be different for each consultation. This is optional and doesn't affect weighted voting or delegations.
+
+- On the other, each set of census can work with a different set of weights and delegation.
+
+![](docs/settings.png)
+
 ### Extended consultation results
 
 This gem modifies the consultation's results page adding two extra columns
-`Membership type` and `Membership weight`. This requires a Decidim verification
-that creates `decidim_authorizations` records which include the following JSON
-structure in the `metadata` column:
+`Membership type` and `Membership weight`. This is based on the census uploaded for each consultation and the weights assigned to each participant.
 
-```json
-"{ membership_type: '', membership_weight: '' }"
-```
+### Authorization verfifier and SMS gateway setup
 
-See https://github.com/Platoniq/decidim-verifications-direct_verifications/pull/2
-as an example of such verification.
+The integrated authorization method is called "Delegations verifier". If included in each question of a consultation, it will check if the user is authorized and present in the census before letting him vote.
 
-### SMS gateway setup
+It can be used in 3 modes:
 
-In order to use this new sms gateway you need to configure your application. In config/initializers/decidim.rb set:
+1. **Email only**: This means that the participants list for each consultation setting relies on the email only. No SMS gateway integration is needed. The user is verified if the email is found in the census.
+2. **Email and phone**: This means that the participants list for each consultation setting relies on the email and the phone number. An SMS gateway integration is needed. The user is verified if the email is found in the census and then sending a verification code to the phone number that the user cannot edit.
+3. **Phone only**: This means that the participants list for each consultation setting relies on the phone number only. An SMS gateway integration is needed. The user is verified by a form where a phone number must be introduced. The user can edit the phone number and the verification code is sent to the new phone number if that phone number is found in the participant's list. This method is useful to avoid to relay on keeping track of email changes for user's database.
+
+
+In order to use this new sms gateway you need to configure your application. It can work on two modes,
+
+The first is to use the same built-in SMS gateway used in Decidim: In `config/initializers/decidim.rb` set:
 
 ```ruby
 config.sms_gateway_service = 'Decidim::ActionDelegator::SmsGateway'
-
 ```
+
+> Note that if you use this method you will be able to use the built-in SMS verification method in Decidim.
+
+The other is to use a gateway service specific only for this plugin, this allows you to separate gateways or prevent decidim to allow admins to use the built in SMS verification method. This comes preinstalled and only requires you to setup some ENV variables.
+
 #### Som Connexió
 
 You can use Som Connexió as SMS provider which uses [this SOAP API](https://websms.masmovil.com/api_php/smsvirtual.wsdl). Reach out to Som Connexió to sign up first.
@@ -103,6 +117,17 @@ TWILIO_ACCOUNT_SID # SID from your Twilio account
 TWILIO_AUTH_TOKEN # Token from your Twilio account
 SMS_SENDER # Twilio's phone number. You need to purchase one there with SMS capability.
 ```
+
+#### Custom SMS gateways
+
+It is also possible to use your own Sms Gateway. In an new initializer (ie `config/initializers/action_delegator.rb`) set:
+
+```ruby
+Decidim::ActionDelegator.configure do |config|
+  config.sms_gateway_service = 'YourOwnSmsGateway'
+end
+```
+
 
 ### Track delegated votes and unvotes
 

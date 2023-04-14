@@ -1,0 +1,11 @@
+<% missing_sync =  missing_decidim_users(setting&.participants) %>
+<% if setting.participants.any? && missing_sync.present? %>
+<div class="callout alert text-left">
+  <ul class="happy-faces">
+    <li class="unhappy">
+      <%= t("users_need_sync_html", scope: "decidim.action_delegator.admin.settings.setting_checks", count: missing_sync.count) %><br>
+      <%= link_to t("click_to_fix", scope: "decidim.action_delegator.admin.settings.setting_checks"), decidim_admin_action_delegator.sync_setting_permissions_path(setting), method: :post %>
+    </li>
+  </ul>
+</div>
+<% end %>

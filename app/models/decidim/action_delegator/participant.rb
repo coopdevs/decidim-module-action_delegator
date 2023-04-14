@@ -14,17 +14,34 @@ module Decidim
                  class_name: "Decidim::ActionDelegator::Ponderation",
                  optional: true
 
+      belongs_to :decidim_user,
+                 class_name: "Decidim::User",
+                 optional: true
+
       delegate :consultation, to: :setting
       delegate :organization, to: :setting
 
       validates :setting, presence: true
+      validates :decidim_user, uniqueness: { scope: :setting }, if: -> { decidim_user.present? }
+      validates :email, uniqueness: { scope: :setting }, if: -> { email.present? }
+      validates :phone, uniqueness: { scope: :setting }, if: -> { phone.present? }
+
+      # sets the decidim user if found
+      before_save :set_decidim_user
+
+      # prevents destroy if has voted
+      before_destroy { |record| throw(:abort) if record.voted? }
 
       def user
-        @user ||= if setting.email_required?
-                    Decidim::User.find_by(email: email)
-                  else
-                    Decidim::Authorization.find_by(unique_id: uniq_ids)&.user
-                  end
+        @user ||= decidim_user || user_from_metadata
+      end
+
+      def user_from_metadata
+        @user_from_metadata ||= if setting.email_required?
+                                  Decidim::User.find_by(email: email, organization: setting.organization)
+                                else
+                                  Decidim::Authorization.find_by(unique_id: uniq_ids)&.user
+                                end
       end
 
       def uniq_ids
@@ -62,6 +79,27 @@ module Decidim
 
       def ponderation_title
         ponderation&.title
+      end
+
+      # checks if the user has voted in the setting's consultation
+      def voted?
+        return false if user.blank?
+
+        @voted ||= if Decidim::Consultations::Vote
+                      .joins(question: :consultation)
+                      .where(decidim_consultations_questions: {
+                               decidim_consultation_id: setting.consultation.id
+                             }, author: user).any?
+                     true
+                   else
+                     false
+                   end
+      end
+
+      private
+
+      def set_decidim_user
+        self.decidim_user = user_from_metadata if decidim_user.blank?
       end
     end
   end

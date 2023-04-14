@@ -20,6 +20,7 @@ module Decidim
             enforce_permission_to :create, :authorization, authorization: authorization
 
             @form = form(DelegationsVerifierForm).from_params(params, setting: setting)
+            participant = @form&.participant
 
             Decidim::Verifications::PerformAuthorizationStep.call(authorization, @form) do
               on(:ok) do
@@ -29,6 +30,7 @@ module Decidim
                   redirect_to authorization_method.resume_authorization_path(redirect_url: redirect_url)
                 else
                   authorization.grant!
+                  participant.update!(decidim_user: authorization.user)
                   flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
 
                   if redirect_url

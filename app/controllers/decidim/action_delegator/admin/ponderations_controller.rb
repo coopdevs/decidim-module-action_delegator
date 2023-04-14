@@ -9,7 +9,7 @@ module Decidim
 
         helper_method :current_setting, :ponderations
 
-        layout "decidim/action_delegator/admin/delegations"
+        layout "decidim/admin/users"
 
         def index
           enforce_permission_to :index, :ponderation

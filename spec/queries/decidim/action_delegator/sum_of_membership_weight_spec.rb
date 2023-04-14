@@ -9,9 +9,9 @@ module Decidim
 
       let(:relation) do
         relation = Decidim::Consultations::Response
-                   .joins(:question)
+                   .joins(question: :consultation)
                    .where(question: question)
-        Decidim::ActionDelegator::VotedWithDirectVerification.new(relation).query
+        Decidim::ActionDelegator::VotedWithPonderations.new(relation).query
       end
 
       let(:organization) { create(:organization) }
@@ -19,11 +19,17 @@ module Decidim
       let(:question) { create(:question, consultation: consultation) }
       let(:user) { create(:user, :admin, :confirmed, organization: organization) }
       let(:other_user) { create(:user, :admin, :confirmed, organization: organization) }
+      let(:yet_other_user) { create(:user, :admin, :confirmed, organization: organization) }
       let(:response) { create(:response, question: question) }
+      let(:setting) { create(:setting, consultation: consultation) }
+      let(:ponderation1) { create(:ponderation, setting: setting, name: "foo", weight: 3) }
+      let(:ponderation2) { create(:ponderation, setting: setting, name: "bar", weight: 2) }
+      let(:votes_count) { query_object.query.map(&:votes_count) }
 
       before do
         question.votes.create(author: user, response: response)
         question.votes.create(author: other_user, response: response)
+        question.votes.create(author: yet_other_user, response: response)
       end
 
       describe "#query" do
@@ -33,38 +39,25 @@ module Decidim
             "question_id" => question.id,
             "question_title" => question.title,
             "title" => response.title,
-            "votes_count" => 2
+            "votes_count" => 3
           )
         end
 
         context "when all users have membership" do
-          let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
-          let(:other_auth_metadata) { { membership_type: "producer", membership_weight: 3 } }
-
-          before do
-            create(:authorization, :direct_verification, user: user, metadata: auth_metadata)
-            create(:authorization, :direct_verification, user: other_user, metadata: other_auth_metadata)
-          end
+          let!(:participant1) { create(:participant, ponderation: ponderation1, decidim_user: user, setting: setting) }
+          let!(:participant2) { create(:participant, ponderation: ponderation1, decidim_user: other_user, setting: setting) }
+          let!(:participant3) { create(:participant, ponderation: ponderation2, decidim_user: yet_other_user, setting: setting) }
 
           it "aggregates their membership weights" do
-            result_set = query_object.query
-
-            expect(result_set.first.votes_count)
-              .to eq(auth_metadata[:membership_weight] + other_auth_metadata[:membership_weight])
+            expect(votes_count).to eq([2 * ponderation1.weight + ponderation2.weight])
           end
         end
 
         context "when some users have no membership" do
-          let(:auth_metadata) { { membership_type: "producer", membership_weight: 2 } }
+          let!(:participant1) { create(:participant, ponderation: ponderation1, decidim_user: user, setting: setting) }
 
-          before do
-            create(:authorization, :direct_verification, user: user, metadata: auth_metadata)
-          end
-
-          it "aggregates their vote as a single one" do
-            result_set = query_object.query
-
-            expect(result_set.first.votes_count).to eq(auth_metadata[:membership_weight] + 1)
+          it "aggregates blank votes as a single one" do
+            expect(votes_count).to eq([ponderation1.weight + 2])
           end
         end
       end

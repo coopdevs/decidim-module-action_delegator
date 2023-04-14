@@ -12,12 +12,16 @@ module Decidim
       has_many :participants,
                foreign_key: "decidim_action_delegator_ponderation_id",
                class_name: "Decidim::ActionDelegator::Participant",
-               dependent: :nullify
+               dependent: :restrict_with_error
 
       delegate :consultation, to: :setting
 
       def title
         @title ||= "#{name} (x#{weight})"
+      end
+
+      def destroyable?
+        participants.empty?
       end
     end
   end

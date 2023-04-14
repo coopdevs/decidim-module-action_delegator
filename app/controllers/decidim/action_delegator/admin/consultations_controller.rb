@@ -4,14 +4,16 @@ module Decidim
   module ActionDelegator
     module Admin
       class ConsultationsController < Decidim::Consultations::Admin::ConsultationsController
+        layout "decidim/admin/consultation"
+
+        helper_method :questions, :total_delegates, :responses_by_membership, :responses_by_weight
+
         def results
           enforce_permission_to :read, :consultation, consultation: current_consultation
+        end
 
-          @questions = Scrutiny.new(current_consultation).questions
-          @responses = responses.group_by(&:decidim_consultations_questions_id)
-          @total_delegates = DelegatesVotesByConsultation.new(current_consultation).query
-
-          render layout: "decidim/admin/consultation"
+        def weighted_results
+          enforce_permission_to :read, :consultation, consultation: current_consultation
         end
 
         private
@@ -20,12 +22,24 @@ module Decidim
           Decidim.permissions_registry.chain_for(ActionDelegator::Admin::ApplicationController)
         end
 
-        def responses
-          ResponsesByMembership.new(published_questions_responses).query
+        def questions
+          @questions ||= Scrutiny.new(current_consultation).questions
+        end
+
+        def total_delegates
+          @total_delegates ||= DelegatesVotesByConsultation.new(current_consultation).query
+        end
+
+        def responses_by_membership
+          ResponsesByMembership.new(published_questions_responses).query.group_by(&:decidim_consultations_questions_id)
+        end
+
+        def responses_by_weight
+          SumOfWeights.new(current_consultation).query.group_by(&:question_id)
         end
 
         def published_questions_responses
-          VotedWithDirectVerification.new(PublishedResponses.new(current_consultation).query).query
+          VotedWithPonderations.new(PublishedResponses.new(current_consultation).query).query
         end
       end
     end

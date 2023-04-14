@@ -3,14 +3,6 @@
 module Decidim
   module ActionDelegator
     # Returns total votes of each response by memberships' type and weight.
-    #
-    # This query completely relies on the schema of the `metadata` of the relevant
-    # `decidim_authorizations` records, which is expected to be like:
-    #
-    #   "{ membership_type: '',   membership_weight: '' }"
-    #
-    # Note that although we assume `membership_type` to be a string and `membership_weight` to be an
-    # integer, there are no implications in the code for their actual data types.
     class ResponsesByMembership < Rectify::Query
       DEFAULT_METADATA = I18n.t("decidim.admin.consultations.results.default_metadata")
 
@@ -23,8 +15,8 @@ module Decidim
           .select(
             responses[:decidim_consultations_questions_id],
             responses[:title],
-            membership(:type),
-            membership(:weight),
+            coalesce(Ponderation.arel_table[:name], default_metadata).as("membership_type"),
+            coalesce(Ponderation.arel_table[:weight], 1).as("membership_weight"),
             votes_count
           )
           .group(
@@ -39,15 +31,6 @@ module Decidim
       private
 
       attr_reader :relation
-
-      def membership(field)
-        full_field = "membership_#{field}"
-        coalesce(sql(full_field), default_metadata).as(full_field)
-      end
-
-      def memberships
-        Arel::Table.new(:memberships)
-      end
 
       def default_metadata
         sql("'#{DEFAULT_METADATA}'")

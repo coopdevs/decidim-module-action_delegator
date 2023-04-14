@@ -35,12 +35,8 @@ module Decidim
         Decidim::Consultations::Response.arel_table
       end
 
-      def authorizations
-        Decidim::Authorization.arel_table
-      end
-
       def votes_count
-        field = Arel.sql("membership_weight")
+        field = Ponderation.arel_table[:weight]
         VotesCountAggregation.new(field, "votes_count").to_sql
       end
     end
