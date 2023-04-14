@@ -11,18 +11,16 @@ describe "Admin manages sum of weight consultation results", type: :system do
 
   let!(:other_user) { create(:user, :confirmed, organization: organization) }
 
+  let(:setting) { create(:setting, consultation: consultation) }
+  let(:ponderation1) { create(:ponderation, setting: setting, name: "consumer", weight: 3) }
+
   before do
     # Regular vote
     question.votes.create(author: user, response: response)
     # Vote of a user with membership
     question.votes.create(author: other_user, response: response)
 
-    create(
-      :authorization,
-      :direct_verification,
-      user: other_user,
-      metadata: { membership_type: "consumer", membership_weight: 3 }
-    )
+    create(:participant, setting: setting, decidim_user: other_user, ponderation: ponderation1)
 
     switch_to_host(organization.host)
     login_as user, scope: :user
@@ -32,7 +30,7 @@ describe "Admin manages sum of weight consultation results", type: :system do
     let(:consultation) { create(:consultation, :finished, :published_results, organization: organization) }
 
     it "shows total votes taking membership weight into account" do
-      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
 
       within_table("results") do
         expect(find(".response-title")).to have_content("A")
@@ -41,7 +39,7 @@ describe "Admin manages sum of weight consultation results", type: :system do
     end
 
     it "enables exporting to CSV" do
-      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
       perform_enqueued_jobs { click_link(I18n.t("decidim.admin.consultations.results.export")) }
 
       expect(page).to have_content(I18n.t("decidim.admin.exports.notice"))
@@ -55,7 +53,7 @@ describe "Admin manages sum of weight consultation results", type: :system do
     let!(:consultation) { create(:consultation, :active, :unpublished_results, organization: organization) }
 
     it "enables the export button" do
-      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
 
       within "#export-consultation-results" do
         expect(page).not_to have_css(".disabled")
@@ -64,7 +62,7 @@ describe "Admin manages sum of weight consultation results", type: :system do
     end
 
     it "does not show any response" do
-      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
       expect(page).to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
     end
   end
@@ -73,7 +71,7 @@ describe "Admin manages sum of weight consultation results", type: :system do
     let!(:consultation) { create(:consultation, :finished, :unpublished_results, organization: organization) }
 
     it "disables the export button" do
-      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
 
       within "#export-consultation-results" do
         expect(page).not_to have_css(".disabled")
@@ -82,7 +80,7 @@ describe "Admin manages sum of weight consultation results", type: :system do
     end
 
     it "shows the responses" do
-      visit decidim_admin_action_delegator.consultation_results_sum_of_weights_path(consultation)
+      visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
       expect(page).to have_xpath(".//table/tbody/tr[1]")
     end
   end

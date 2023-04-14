@@ -8,7 +8,7 @@ module Decidim
       end
 
       def query
-        relation = VotedWithDirectVerification.new(published_questions_responses).query
+        relation = VotedWithPonderations.new(published_questions_responses).query
         ResponsesByMembership.new(relation).query
       end
 

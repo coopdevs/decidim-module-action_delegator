@@ -20,17 +20,21 @@ module Decidim::ActionDelegator
 
     let(:votes) { consultation.questions.first.total_votes }
 
+    let(:setting) { create(:setting, consultation: consultation) }
+    let(:ponderation1) { create(:ponderation, setting: setting, name: "producer", weight: 2) }
+    let(:ponderation2) { create(:ponderation, setting: setting, name: "consumer", weight: 3) }
+    let(:ponderation3) { create(:ponderation, setting: setting, name: "consumer", weight: 1) }
+
     before do
       question.votes.create(author: user, response: response)
       question.votes.create(author: other_user, response: response)
       question.votes.create(author: another_user, response: response)
       question.votes.create(author: yet_another_user, response: other_response)
 
-      create(:authorization, :direct_verification, user: user, metadata: { membership_type: "producer", membership_weight: 2 })
-      create(:authorization, :direct_verification, user: other_user, metadata: { membership_type: "consumer", membership_weight: 3 })
-      create(:authorization, :direct_verification, user: another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
-
-      create(:authorization, :direct_verification, user: yet_another_user, metadata: { membership_type: "consumer", membership_weight: 1 })
+      create(:participant, setting: setting, decidim_user: user, ponderation: ponderation1)
+      create(:participant, setting: setting, decidim_user: other_user, ponderation: ponderation2)
+      create(:participant, setting: setting, decidim_user: another_user, ponderation: ponderation3)
+      create(:participant, setting: setting, decidim_user: yet_another_user, ponderation: ponderation3)
     end
 
     describe "queue" do
@@ -103,10 +107,10 @@ module Decidim::ActionDelegator
               expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
                 expect(export_data.read).to eq(<<-CSV.strip_heredoc)
                 question;response;membership_type;membership_weight;votes_count
-                question_title;A;consumer;3;1
-                question_title;A;consumer;1;1
-                question_title;A;producer;2;1
-                question_title;B;consumer;1;1
+                question_title;A;consumer;3.0;1
+                question_title;A;consumer;1.0;1
+                question_title;A;producer;2.0;1
+                question_title;B;consumer;1.0;1
                 CSV
               end.and_return(mailer)
 

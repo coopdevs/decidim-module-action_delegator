@@ -5,7 +5,7 @@
       <span class="label button--title">
         <%= t "decidim.admin.consultations.results.total_votes", count: current_consultation.total_votes %>
         /
-        <%= t "decidim.admin.consultations.results.total_delegates", count: @total_delegates %>
+        <%= t "decidim.admin.consultations.results.total_delegates", count: total_delegates %>
         /
         <%= t "decidim.admin.consultations.results.participants", count: current_consultation.total_participants %>
       </span>
@@ -25,7 +25,7 @@
   </div>
   <div class="card-section">
     <table id="results" class="table-list">
-      <% @questions.each do |question| %>
+      <% questions.each do |question| %>
         <% unless question.external_voting %>
           <thead>
             <tr>
@@ -41,7 +41,7 @@
           </thead>
           <tbody>
             <% if question.publishable_results? %>
-              <% @responses.fetch(question.id, []).each do |row| %>
+              <% responses_by_weight.fetch(question.id, []).each do |row| %>
               <tr>
                 <td class="response-title"><%= strip_tags translated_attribute row.title %></td>
                 <td class="votes-count"><%= row.votes_count %></td>
