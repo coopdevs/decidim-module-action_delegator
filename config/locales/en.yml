@@ -55,6 +55,7 @@ en:
             grantee: Grantee
             granter: Granter
             title: User vote delegations
+            voted: Granter has voted?
           new:
             grantee: Grantee
             granter: Granter
