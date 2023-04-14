@@ -9,7 +9,7 @@ module Decidim
         attribute :email, String
         attribute :phone, String
         attribute :decidim_action_delegator_ponderation_id, Integer
-        attribute :weight, String
+        attribute :weight
 
         validates :email, presence: true, if: ->(form) { form.authorization_method.in? %w(email both) }
         validates :phone, presence: true, if: ->(form) { form.authorization_method.in? %w(phone both) }

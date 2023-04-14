@@ -15,29 +15,39 @@ module Decidim
         import_summary = {
           total_rows: 0,
           imported_rows: 0,
-          error_rows: []
+          error_rows: [],
+          skipped_rows: []
         }
 
         ActiveRecord::Base.transaction do
           i = 1
           csv = CSV.new(@csv_file, headers: true, col_sep: ",")
+
           while (row = csv.shift).present?
             i += 1
-            next if row.empty?
-
             authorization_method = @current_setting.authorization_method
 
             email, phone = extract_contact_details(row, authorization_method)
-            weight = row["weight"].to_s.strip
+            weight = ponderation_value(row["weight"].strip)
 
             params = {
               email: email,
               phone: phone,
               weight: weight,
-              decidim_action_delegator_ponderation_id: nil
+              decidim_action_delegator_ponderation_id: find_ponderation(weight).id
             }
 
             @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
+
+            next if row.empty?
+
+            if participant_exists?(@form)
+              mismatch_fields = mismatched_fields(@form)
+              info_message = generate_info_message(mismatch_fields)
+              import_summary[:skipped_rows] << { row_number: i - 1, error_messages: [info_message] }
+
+              next
+            end
 
             if @form.valid?
               process_participant(@form)
@@ -46,6 +56,7 @@ module Decidim
               import_summary[:error_rows] << { row_number: i - 1, error_messages: @form.errors.full_messages }
             end
           end
+
           import_summary[:total_rows] = i - 1
         end
 
@@ -74,15 +85,30 @@ module Decidim
       end
 
       def process_participant(form)
+        assign_ponderation(form.weight)
+        create_new_participant(form)
+      end
+
+      def participant_exists?(form)
         @participant = Decidim::ActionDelegator::Participant.find_by(email: form.email, setting: @current_setting)
 
-        if @participant.present?
-          update_existing_participant(form)
-        else
-          create_new_participant(form)
-        end
+        return false if @participant.blank?
 
-        assign_ponderation(form.weight)
+        true
+      end
+
+      def mismatched_fields(form)
+        mismatch_fields = []
+        mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.phone") if form.phone != @participant.phone
+        if form.decidim_action_delegator_ponderation_id != @participant.decidim_action_delegator_ponderation_id
+          mismatch_fields << I18n.t("decidim.action_delegator.participants_csv_importer.import.field_name.weight")
+        end
+        mismatch_fields.empty? ? nil : mismatch_fields.join(", ")
+      end
+
+      def generate_info_message(mismatch_fields)
+        with_mismatched_fields = mismatch_fields.present? ? I18n.t("decidim.action_delegator.participants_csv_importer.import.with_mismatched_fields", fields: mismatch_fields) : ""
+        I18n.t("decidim.action_delegator.participants_csv_importer.import.skip_import_info", with_mismatched_fields: with_mismatched_fields)
       end
 
       def update_existing_participant(form)
@@ -103,7 +129,7 @@ module Decidim
 
       def assign_ponderation(weight)
         ponderation = find_ponderation(weight)
-        form.decidim_action_delegator_ponderation_id = ponderation.id if ponderation.present?
+        @form.decidim_action_delegator_ponderation_id = ponderation.id if ponderation.present?
       end
 
       def find_ponderation(weight)
@@ -111,9 +137,15 @@ module Decidim
         when String
           @current_setting.ponderations.find_by(name: weight)
         when Numeric
-          ponderation = @current_setting.ponderations.find_by(value: weight)
-          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", value: weight)
+          ponderation = @current_setting.ponderations.find_by(weight: weight)
+          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", weight: weight)
         end
+      end
+
+      def ponderation_value(value)
+        Float(value)
+      rescue StandardError
+        value
       end
     end
   end
