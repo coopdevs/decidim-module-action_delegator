@@ -43,7 +43,7 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
 
         expect(import_summary[:error_rows].pluck(:row_number)).to eq [1, 4]
         expect(import_summary[:imported_rows]).to eq 2
-        expect(import_summary[:total_rows]).to eq 4
+        expect(import_summary[:total_rows]).to eq 5
       end
     end
 

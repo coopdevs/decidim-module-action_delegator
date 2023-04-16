@@ -30,6 +30,7 @@ describe "Admin imports participants from csv", type: :system do
     let(:invalid_csv_file) { File.open("spec/fixtures/invalid_participants.csv") }
     let(:repeated_data_csv_file) { File.open("spec/fixtures/repeated_data_participants.csv") }
     let(:ponderation_type_csv_file) { File.open("spec/fixtures/participant_with_ponderation_type.csv") }
+    let(:empty_row_csv_file) { File.open("spec/fixtures/valid_participants_with_empty_row.csv") }
 
     before do
       visit decidim_admin_action_delegator.setting_participants_path(setting)
@@ -55,7 +56,7 @@ describe "Admin imports participants from csv", type: :system do
 
     context "when the CSV has empty row" do
       it "the empty row is skipped and the import continues" do
-        import_csv(valid_csv_file)
+        import_csv(empty_row_csv_file)
 
         expect(page).to have_selector("tr[data-participant-id]", count: 4)
       end

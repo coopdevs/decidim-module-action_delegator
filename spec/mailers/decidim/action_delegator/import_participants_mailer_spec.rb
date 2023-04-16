@@ -44,7 +44,7 @@ module Decidim
           end
 
           it "renders the body" do
-            expect(mail.body.parts[0].body.raw_source).to include("2 rows of 4")
+            expect(mail.body.parts[0].body.raw_source).to include("2 rows of 5")
             expect(mail.body.parts[0].body.raw_source).to include("2 errors")
           end
 
