@@ -17,7 +17,6 @@ RSpec.describe Decidim::ActionDelegator::Admin::ImportParticipantsCsvJob, type: 
       .to receive(:import)
       .with(current_user, import_summary, "spec/fixtures/details.csv")
       .and_return(double("mailer", deliver_now: true))
-
   end
 
   it "imports participants CSV file and sends email notification" do
