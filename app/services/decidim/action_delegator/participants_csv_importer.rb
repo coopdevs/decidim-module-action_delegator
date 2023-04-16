@@ -41,7 +41,7 @@ module Decidim
                 email: email,
                 phone: phone,
                 weight: weight,
-                decidim_action_delegator_ponderation_id: nil
+                decidim_action_delegator_ponderation_id: find_ponderation(weight)&.id
               }
 
               @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
@@ -51,28 +51,21 @@ module Decidim
               if participant_exists?(@form)
                 mismatch_fields = mismatched_fields(@form)
                 info_message = generate_info_message(mismatch_fields)
-                import_summary[:skipped_rows] << { row_number: i - 1 }
-
-                row["reason"] = info_message
-                details_csv << row
+                handle_skipped_row(row, details_csv, import_summary, i, info_message)
 
                 next
               end
 
               if phone_exists?(@form)
-                import_summary[:skipped_rows] << { row_number: i - 1 }
-
-                row["reason"] = I18n.t("phone_exists", scope: "decidim.action_delegator.participants_csv_importer.import")
-                details_csv << row
+                reason = I18n.t("phone_exists", scope: "decidim.action_delegator.participants_csv_importer.import")
+                handle_skipped_row(row, details_csv, import_summary, i, reason)
 
                 next
               end
 
               if find_ponderation(weight).nil?
-                import_summary[:skipped_rows] << { row_number: i - 1 }
-
-                row["reason"] = I18n.t("ponderation_not_found", scope: "decidim.action_delegator.participants_csv_importer.import")
-                details_csv << row
+                reason = I18n.t("ponderation_not_found", scope: "decidim.action_delegator.participants_csv_importer.import")
+                handle_skipped_row(row, details_csv, import_summary, i, reason)
 
                 next
               end
@@ -81,11 +74,7 @@ module Decidim
                 process_participant(@form)
                 import_summary[:imported_rows] += 1
               else
-                import_summary[:error_rows] << { row_number: i - 1, error_messages: @form.errors.full_messages }
-
-                row["reason"] = @form.errors.full_messages.join(", ")
-
-                details_csv << row
+                handle_import_error(row, details_csv, import_summary, i, @form.errors.full_messages)
               end
             end
           end
@@ -123,13 +112,28 @@ module Decidim
       end
 
       def participant_exists?(form)
-        @participant = Decidim::ActionDelegator::Participant.find_by(email: form.email, setting: @current_setting)
-        @participant.present?
+        check_exists?(:email, form)
       end
 
       def phone_exists?(form)
-        @participant = Decidim::ActionDelegator::Participant.find_by(phone: form.phone, setting: @current_setting)
+        check_exists?(:phone, form)
+      end
+
+      def check_exists?(field, form)
+        @participant = Decidim::ActionDelegator::Participant.find_by(field => form.send(field), setting: @current_setting)
         @participant.present?
+      end
+
+      def handle_skipped_row(row, details_csv, import_summary, row_number, reason)
+        import_summary[:skipped_rows] << { row_number: row_number - 1 }
+        row["reason"] = reason
+        details_csv << row
+      end
+
+      def handle_import_error(row, details_csv, import_summary, row_number, error_messages)
+        import_summary[:error_rows] << { row_number: row_number - 1, error_messages: error_messages }
+        row["reason"] = reason
+        details_csv << row
       end
 
       def mismatched_fields(form)
@@ -165,8 +169,6 @@ module Decidim
       end
 
       def assign_ponderation(weight)
-        return unless find_ponderation(weight).present?
-
         ponderation = find_ponderation(weight)
         @form.decidim_action_delegator_ponderation_id = ponderation.id
       end
@@ -174,10 +176,10 @@ module Decidim
       def find_ponderation(weight)
         case weight
         when String
-          @current_setting.ponderations.find_by(name: weight)
+          @current_setting.ponderations.find_by(name: weight).presence
         when Numeric
           ponderation = @current_setting.ponderations.find_by(weight: weight)
-          ponderation.presence ||= @current_setting.ponderations.create(name: "weight-#{weight}", weight: weight)
+          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", weight: weight)
         end
       end
 
