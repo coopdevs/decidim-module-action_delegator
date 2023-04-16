@@ -284,6 +284,8 @@ en:
           field_name:
             phone: phone
             weight: weight
+          phone_exists: Participant with this phone already exists
+          ponderation_not_found: Ponderation type not found
           skip_import_info: Participant already exists%{with_mismatched_fields}
           with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Your verification code is %{code}

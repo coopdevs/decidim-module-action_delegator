@@ -25,8 +25,8 @@ module Decidim
           i = 1
           csv = CSV.new(@csv_file, headers: true, col_sep: ",")
 
-          CSV.open(details_csv_file, "wb") do |errors_csv|
-            headers(csv, errors_csv)
+          CSV.open(details_csv_file, "wb") do |details_csv|
+            headers(csv, details_csv)
 
             csv.rewind
 
@@ -41,7 +41,7 @@ module Decidim
                 email: email,
                 phone: phone,
                 weight: weight,
-                decidim_action_delegator_ponderation_id: find_ponderation(weight).id
+                decidim_action_delegator_ponderation_id: nil
               }
 
               @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
@@ -54,7 +54,25 @@ module Decidim
                 import_summary[:skipped_rows] << { row_number: i - 1 }
 
                 row["reason"] = info_message
-                errors_csv << row
+                details_csv << row
+
+                next
+              end
+
+              if phone_exists?(@form)
+                import_summary[:skipped_rows] << { row_number: i - 1 }
+
+                row["reason"] = I18n.t("phone_exists", scope: "decidim.action_delegator.participants_csv_importer.import")
+                details_csv << row
+
+                next
+              end
+
+              if find_ponderation(weight).nil?
+                import_summary[:skipped_rows] << { row_number: i - 1 }
+
+                row["reason"] = I18n.t("ponderation_not_found", scope: "decidim.action_delegator.participants_csv_importer.import")
+                details_csv << row
 
                 next
               end
@@ -67,7 +85,7 @@ module Decidim
 
                 row["reason"] = @form.errors.full_messages.join(", ")
 
-                errors_csv << row
+                details_csv << row
               end
             end
           end
@@ -100,16 +118,18 @@ module Decidim
       end
 
       def process_participant(form)
-        assign_ponderation(form.weight)
+        assign_ponderation(form.weight) if find_ponderation(form.weight).present?
         create_new_participant(form)
       end
 
       def participant_exists?(form)
         @participant = Decidim::ActionDelegator::Participant.find_by(email: form.email, setting: @current_setting)
+        @participant.present?
+      end
 
-        return false if @participant.blank?
-
-        true
+      def phone_exists?(form)
+        @participant = Decidim::ActionDelegator::Participant.find_by(phone: form.phone, setting: @current_setting)
+        @participant.present?
       end
 
       def mismatched_fields(form)
@@ -145,8 +165,10 @@ module Decidim
       end
 
       def assign_ponderation(weight)
+        return unless find_ponderation(weight).present?
+
         ponderation = find_ponderation(weight)
-        @form.decidim_action_delegator_ponderation_id = ponderation.id if ponderation.present?
+        @form.decidim_action_delegator_ponderation_id = ponderation.id
       end
 
       def find_ponderation(weight)
@@ -155,7 +177,7 @@ module Decidim
           @current_setting.ponderations.find_by(name: weight)
         when Numeric
           ponderation = @current_setting.ponderations.find_by(weight: weight)
-          ponderation.presence || @current_setting.ponderations.create(name: "weight-#{weight}", weight: weight)
+          ponderation.presence ||= @current_setting.ponderations.create(name: "weight-#{weight}", weight: weight)
         end
       end
 
@@ -165,10 +187,10 @@ module Decidim
         value
       end
 
-      def headers(csv, errors_csv)
+      def headers(csv, details_csv)
         headers = csv.first.headers
         headers << I18n.t("decidim.action_delegator.participants_csv_importer.import.error_field")
-        errors_csv << headers
+        details_csv << headers
       end
     end
   end
