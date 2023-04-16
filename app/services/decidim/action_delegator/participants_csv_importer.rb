@@ -19,6 +19,7 @@ module Decidim
           skipped_rows: [],
           details_csv_path: nil
         }
+
         details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
 
         ActiveRecord::Base.transaction do
@@ -32,21 +33,13 @@ module Decidim
 
             while (row = csv.shift).present?
               i += 1
-              authorization_method = @current_setting.authorization_method
 
-              email, phone = extract_contact_details(row, authorization_method)
+              params = extract_params(row)
               weight = ponderation_value(row["weight"].strip) if row["weight"].present?
-
-              params = {
-                email: email,
-                phone: phone,
-                weight: weight,
-                decidim_action_delegator_ponderation_id: find_ponderation(weight)&.id
-              }
 
               @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
 
-              next if row.empty?
+              next if row&.empty?
 
               if participant_exists?(@form)
                 mismatch_fields = mismatched_fields(@form)
@@ -86,6 +79,26 @@ module Decidim
       end
 
       private
+
+      def authorization_method
+        @current_setting.authorization_method
+      end
+
+      def extract_params(row)
+        email, phone, weight = extract_contact_details(row, authorization_method)
+        weight = ponderation_value(row["weight"].strip) if row["weight"].present?
+
+        params = {
+          email: email,
+          phone: phone,
+          weight: weight,
+          decidim_action_delegator_ponderation_id: find_ponderation(weight)&.id
+        }
+
+        @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
+
+        params
+      end
 
       def extract_contact_details(row, authorization_method)
         email = row["email"].to_s.strip
