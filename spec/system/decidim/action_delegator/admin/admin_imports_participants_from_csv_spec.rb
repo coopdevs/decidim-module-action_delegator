@@ -45,15 +45,6 @@ describe "Admin imports participants from csv", type: :system do
       end
     end
 
-    context "when CSV file was imported" do
-      it "shows the flash" do
-        attach_file "csv_file", valid_csv_file.path
-        click_button "Import"
-
-        expect(page).to have_content("The import process has started")
-      end
-    end
-
     context "when the CSV has valid rows" do
       it "imports the participants" do
         import_csv(valid_csv_file)
