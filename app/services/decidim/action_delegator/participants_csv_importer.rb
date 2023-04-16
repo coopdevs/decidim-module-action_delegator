@@ -145,7 +145,7 @@ module Decidim
 
       def handle_import_error(row, details_csv, import_summary, row_number, error_messages)
         import_summary[:error_rows] << { row_number: row_number - 1, error_messages: error_messages }
-        row["reason"] = reason
+        row["reason"] = error_messages
         details_csv << row
       end
 

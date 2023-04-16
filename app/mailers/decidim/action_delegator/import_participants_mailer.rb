@@ -18,6 +18,8 @@ module Decidim
         @import_summary = import_summary
         @csv_file_path = csv_file_path
 
+        @csv_file_path = "" if @import_summary[:total_rows] == @import_summary[:imported_rows]
+
         attachments["details.csv"] = File.read(@csv_file_path) if @csv_file_path.present? && File.exist?(@csv_file_path)
 
         with_user(user) do

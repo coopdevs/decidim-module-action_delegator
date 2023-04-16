@@ -14,7 +14,7 @@ module Decidim
 
       describe "#import" do
         context "when the CSV has valid rows" do
-          let(:mail) { described_class.import(current_user, import_summary) }
+          let(:mail) { described_class.import(current_user, import_summary, valid_csv_file.path) }
           let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting) }
           let(:import_summary) { importer.import! }
 
@@ -27,10 +27,14 @@ module Decidim
             expect(mail.body).to include("4 rows of 4")
             expect(mail.body).not_to include("errors")
           end
+
+          it "does not attach CSV file if file has valid rows" do
+            expect(mail.attachments).to be_empty
+          end
         end
 
         context "when the CSV has invalid rows" do
-          let(:mail) { described_class.import(current_user, import_summary) }
+          let(:mail) { described_class.import(current_user, import_summary, invalid_csv_file.path) }
           let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(invalid_csv_file, current_user, current_setting) }
           let(:import_summary) { importer.import! }
 
@@ -40,8 +44,12 @@ module Decidim
           end
 
           it "renders the body" do
-            expect(mail.body).to include("2 rows of 4")
-            expect(mail.body).to include("2 errors")
+            expect(mail.body.parts[0].body.raw_source).to include("2 rows of 4")
+            expect(mail.body.parts[0].body.raw_source).to include("2 errors")
+          end
+
+          it "attaches CSV file if file has invalid rows" do
+            expect(mail.attachments["details.csv"]).not_to be_nil
           end
         end
       end
