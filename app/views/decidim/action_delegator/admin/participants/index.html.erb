@@ -7,6 +7,10 @@
       <%= link_to t(".actions.csv_import"),
                   decidim_admin_action_delegator.new_setting_manage_participant_path(setting_id: current_setting.id),
                   class: "button tiny button--title" %>
+      <%= link_to t(".actions.remove_census"), decidim_admin_action_delegator.setting_remove_census_path(current_setting),
+                  method: :delete,
+                  data: { confirm: t("participants.remove_census.confirm", scope: "decidim.action_delegator.admin") },
+                  class: "button tiny alert button--title" %>
     </h2>
   </div>
   <div class="card-section">

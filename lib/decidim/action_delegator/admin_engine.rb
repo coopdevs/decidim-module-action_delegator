@@ -18,6 +18,7 @@ module Decidim
           resources :permissions, only: [:create] do
             post :sync, on: :collection
           end
+          delete "remove_census", to: "participants#remove_census", as: "remove_census"
         end
 
         resources :consultations, param: :slug, only: [] do

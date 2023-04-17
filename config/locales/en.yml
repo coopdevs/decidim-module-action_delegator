@@ -101,6 +101,7 @@ en:
             actions:
               csv_import: Import CSV
               new_participant: New participant
+              remove_census: Remove census
             created_at: Created at
             email: Email
             last_login: Last login
@@ -113,6 +114,10 @@ en:
           new:
             save: Create
             title: New participant
+          remove_census:
+            confirm: Are you sure you want to remove the census? This operation cannot be undone
+            error: There was a problem removing the census
+            success: Census removed successfully
           update:
             error: There was a problem updating the participants
             success: Participants saved successfully
