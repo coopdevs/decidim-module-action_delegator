@@ -182,9 +182,9 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
       it "assigns ponderation to participant" do
         allow(form).to receive(:decidim_action_delegator_ponderation_id=).with(ponderation.id).and_return(ponderation.id)
 
-        expect {
+        expect do
           subject.send(:process_participant, form)
-        }.to change(Decidim::ActionDelegator::Participant, :count).by(1)
+        end.to change(Decidim::ActionDelegator::Participant, :count).by(1)
       end
     end
   end
