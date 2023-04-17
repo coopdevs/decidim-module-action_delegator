@@ -173,17 +173,15 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
           invalid?: invalid,
           email: email,
           phone: phone,
-          decidim_action_delegator_ponderation_id: nil ,
+          decidim_action_delegator_ponderation_id: nil,
           setting: current_setting,
           weight: 1
         )
       end
 
-      before do
-        allow(form).to receive(:decidim_action_delegator_ponderation_id=).with(ponderation.id).and_return(ponderation.id)
-      end
-
       it "assigns ponderation to participant" do
+        allow(form).to receive(:decidim_action_delegator_ponderation_id=).with(ponderation.id).and_return(ponderation.id)
+
         expect {
           subject.send(:process_participant, form)
         }.to change(Decidim::ActionDelegator::Participant, :count).by(1)
