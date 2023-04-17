@@ -67,7 +67,7 @@ en:
             error: There was a problem importing the participants
             success: The import process has started, please wait a few minutes and
               refresh the page to see the list of participants. Import results will
-              be send by email.
+              be sent by email.
           new:
             authorization_method:
               both: email and phone number

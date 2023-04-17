@@ -12,7 +12,7 @@ module Decidim
 
           Decidim::ActionDelegator::ImportParticipantsMailer
             .import(current_user, import_summary, import_summary[:details_csv_path])
-            .deliver_now
+            .deliver_later
 
           import_summary
         end

@@ -13,6 +13,7 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
   let(:csv_file_without_emails) { File.open("spec/fixtures/without_email.csv") }
   let(:csv_file_without_phone) { File.open("spec/fixtures/without_phone.csv") }
   let(:valid_csv_with_uppercase) { File.open("spec/fixtures/valid_participants_with_uppercase.csv") }
+  let(:csv_file_with_same_phones) { File.open("spec/fixtures/same_phones.csv") }
 
   describe "#import!" do
     context "when the rows in the csv file are valid" do
@@ -72,6 +73,26 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
         expect do
           subject.import!
         end.not_to change { participant.reload.phone }.from("123456789")
+      end
+    end
+
+    context "when participant with this phone already exists" do
+      subject { described_class.new(csv_file_with_same_phones, current_user, current_setting) }
+
+      let!(:participant) { create(:participant, phone: "123456789", setting: current_setting) }
+
+      it "does not create a new participant" do
+        expect do
+          subject.import!
+        end.to change(Decidim::ActionDelegator::Participant, :count).by(1)
+      end
+
+      it "returns a summary of the import" do
+        import_summary = subject.import!
+
+        expect(import_summary[:skipped_rows].pluck(:row_number)).to eq [2, 3]
+        expect(import_summary[:imported_rows]).to eq 1
+        expect(import_summary[:total_rows]).to eq 3
       end
     end
 
