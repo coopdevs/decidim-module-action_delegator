@@ -63,12 +63,7 @@ module Decidim
                 next
               end
 
-              if @form.valid?
-                process_participant(@form)
-                import_summary[:imported_rows] += 1
-              else
-                handle_import_error(row, details_csv, import_summary, i, @form.errors.full_messages)
-              end
+              handle_form_validity(row, details_csv, import_summary, i)
             end
           end
           import_summary[:total_rows] = i - 1
@@ -147,6 +142,15 @@ module Decidim
         import_summary[:error_rows] << { row_number: row_number - 1, error_messages: error_messages }
         row["reason"] = error_messages
         details_csv << row
+      end
+
+      def handle_form_validity(row, details_csv, import_summary, row_number)
+        if @form.valid?
+          process_participant(@form)
+          import_summary[:imported_rows] += 1
+        else
+          handle_import_error(row, details_csv, import_summary, row_number, @form.errors.full_messages.join(", "))
+        end
       end
 
       def mismatched_fields(form)
