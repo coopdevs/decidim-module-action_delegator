@@ -500,6 +500,8 @@ GEM
     multi_xml (0.6.0)
     mustache (1.1.1)
     nio4r (2.5.8)
+    nokogiri (1.13.9-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     nori (2.6.0)
@@ -797,6 +799,7 @@ GEM
     zeitwerk (2.6.4)
 
 PLATFORMS
+  x86_64-darwin-22
   x86_64-linux
 
 DEPENDENCIES

@@ -62,6 +62,24 @@ en:
             save: Create
             select_member: Select member
             title: New delegation
+        manage_participants:
+          create:
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and
+              refresh the page to see the list of participants. Import results will
+              be sent by email.
+          new:
+            authorization_method:
+              both: email and phone number
+              email: email
+              phone: phone number
+            describe: 'Note that there''s also possible to import weights using the
+              name on the ponderation table instead of the weight number, for instance:'
+            import: Import
+            required_fields: 'Required fields: %{authorization_method}'
+            title: Import participants
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         menu:
           consultations_submenu:
             by_answer: By answer
@@ -81,6 +99,7 @@ en:
             title: Edit participant
           index:
             actions:
+              csv_import: Import CSV
               new_participant: New participant
             created_at: Created at
             email: Email
@@ -243,7 +262,34 @@ en:
         callout: Remember, you are voting on behalf of
         contextual_help: 'You have been granted the vote from:'
         title: 'Consultation: granted delegations'
+      import_participants_mailer:
+        import:
+          errors_present: There were errors importing the participants
+          errors_title: "<b>Found:</b> %{errors_count} errors"
+          greeting: Hello %{name},
+          info_messages: Reason for skipping
+          instructions: "<p>Attached is a file with import details, which contains
+            rows with participants that were not imported.</p>\n<p>If you want to
+            continue importing, correct the rows specified, delete the last column
+            from the file, save \nthe file and import again.</p>\n"
+          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
+          row_number: Row number
+          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
+          subject: Participants imported
+          success: Participants imported successfully
+          text_error: Error
       name: Decidim ActionDelegator cooperatives module
+      participants_csv_importer:
+        import:
+          error: There was a problem importing the participants
+          error_field: Reason for skipping
+          field_name:
+            phone: phone
+            weight: weight
+          phone_exists: Participant with this phone already exists
+          ponderation_not_found: Ponderation type not found
+          skip_import_info: Participant already exists%{with_mismatched_fields}
+          with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Your verification code is %{code}
       user_delegations:
         index:
