@@ -148,7 +148,7 @@ en:
             </ul>
           check_verifier:
             not_installed_html: It seems that the "Delegation Verifier" authorization
-              method is not installed. Vote delegations does not work without it.
+              method is not installed. You cannot use the integrated census without it.
               Please install it at <a href="/system">/system</a>.
           create:
             error: There was a problem creating the settings
