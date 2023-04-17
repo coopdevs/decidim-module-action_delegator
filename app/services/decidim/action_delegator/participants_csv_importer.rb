@@ -165,14 +165,6 @@ module Decidim
         I18n.t("decidim.action_delegator.participants_csv_importer.import.skip_import_info", with_mismatched_fields: with_mismatched_fields)
       end
 
-      def update_existing_participant(form)
-        Decidim::ActionDelegator::Admin::UpdateParticipant.call(form, @participant) do
-          on(:invalid) do
-            flash.now[:error] = I18n.t("participants.update.error", scope: "decidim.action_delegator.admin")
-          end
-        end
-      end
-
       def create_new_participant(form)
         Decidim::ActionDelegator::Admin::CreateParticipant.call(form) do
           on(:invalid) do
