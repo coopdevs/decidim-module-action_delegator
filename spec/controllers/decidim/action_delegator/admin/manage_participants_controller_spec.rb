@@ -5,7 +5,7 @@ require "spec_helper"
 module Decidim
   module ActionDelegator
     module Admin
-      describe ImportParticipantsController do
+      describe ManageParticipantsController do
         routes { Decidim::ActionDelegator::AdminEngine.routes }
 
         let(:organization) { create(:organization) }
