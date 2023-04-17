@@ -6,9 +6,13 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
   let(:current_user) { create(:user, :confirmed, :admin, organization: organization) }
   let(:organization) { create(:organization) }
   let(:consultation) { create(:consultation, organization: organization) }
-  let(:current_setting) { create(:setting, consultation: consultation) }
+  let(:authorization_method) { "both" }
+  let(:current_setting) { create(:setting, consultation: consultation, authorization_method: authorization_method) }
   let(:valid_csv_file) { File.open("spec/fixtures/valid_participants.csv") }
   let(:invalid_csv_file) { File.open("spec/fixtures/invalid_participants.csv") }
+  let(:csv_file_without_emails) { File.open("spec/fixtures/without_email.csv") }
+  let(:csv_file_without_phone) { File.open("spec/fixtures/without_phone.csv") }
+  let(:valid_csv_with_uppercase) { File.open("spec/fixtures/valid_participants_with_uppercase.csv") }
 
   describe "#import!" do
     context "when the rows in the csv file are valid" do
@@ -68,6 +72,68 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
         expect do
           subject.import!
         end.not_to change { participant.reload.phone }.from("123456789")
+      end
+    end
+
+    context "when authorization_method :phone" do
+      subject { described_class.new(csv_file_without_emails, current_user, current_setting2) }
+
+      let(:consultation2) { create(:consultation, organization: organization) }
+      let(:authorization_method) { "phone" }
+      let(:current_setting2) { create(:setting, consultation: consultation2, authorization_method: authorization_method) }
+
+      it "imports all rows from the CSV file with phone numbers only" do
+        expect do
+          subject.import!
+        end.to change(Decidim::ActionDelegator::Participant, :count).by(3)
+      end
+
+      it "returns a summary of the import with no error rows" do
+        import_summary = subject.import!
+
+        expect(import_summary[:error_rows]).to eq []
+        expect(import_summary[:imported_rows]).to eq 3
+        expect(import_summary[:total_rows]).to eq 3
+      end
+    end
+
+    context "when authorization_method :email" do
+      subject { described_class.new(csv_file_without_phone, current_user, current_setting3) }
+
+      let(:consultation3) { create(:consultation, organization: organization) }
+      let(:authorization_method) { "email" }
+      let(:current_setting3) { create(:setting, consultation: consultation3, authorization_method: authorization_method) }
+
+      it "imports all rows from the CSV file with emails only" do
+        expect do
+          subject.import!
+        end.to change(Decidim::ActionDelegator::Participant, :count).by(3)
+      end
+
+      it "returns a summary of the import with no error rows" do
+        import_summary = subject.import!
+
+        expect(import_summary[:error_rows]).to eq []
+        expect(import_summary[:imported_rows]).to eq 3
+        expect(import_summary[:total_rows]).to eq 3
+      end
+    end
+
+    context "when the email is written in upper case" do
+      subject { described_class.new(valid_csv_with_uppercase, current_user, current_setting) }
+
+      it "creates a participant with the email in lower case" do
+        expect do
+          subject.import!
+        end.to change(Decidim::ActionDelegator::Participant, :count).by(4)
+      end
+
+      it "returns a summary of the import with no error rows" do
+        import_summary = subject.import!
+
+        expect(import_summary[:error_rows]).to eq []
+        expect(import_summary[:imported_rows]).to eq 4
+        expect(import_summary[:total_rows]).to eq 4
       end
     end
   end

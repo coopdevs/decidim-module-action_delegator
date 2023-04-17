@@ -62,17 +62,18 @@ en:
             save: Create
             select_member: Select member
             title: New delegation
-        import_participants:
+        manage_participants:
           create:
             error: There was a problem importing the participants
             success: The import process has started, please wait a few minutes and
-              refresh the page to see the list of participants. The import result
-              was send to the email.
+              refresh the page to see the list of participants. Import results
+              will be send by email.
           new:
             authorization_method:
               both: email and phone number
               email: email
               phone: phone number
+            describe: "Note that there's also possible to import weights using the name on the ponderation table instead of the weight number, for instance:"
             import: Import
             required_fields: 'Required fields: %{authorization_method}'
             title: Import participants

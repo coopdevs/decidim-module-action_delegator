@@ -1,12 +1,12 @@
-
 <div class="card with-overflow" id='user-groups'>
   <div class="card-divider">
     <h2 class="card-title">
       <%= link_to translated_attribute(current_setting.title), decidim_admin_action_delegator.settings_path %> &gt;
       <%= t ".title" %>
       <%= link_to t(".actions.new_participant"), decidim_admin_action_delegator.new_setting_participant_path(current_setting), class: "button tiny button--title" %>
-      <%= link_to t(".actions.csv_import"), decidim_admin_action_delegator.import_participants_path(setting_id: current_setting.id), class:
-        "button tiny button--title" %>
+      <%= link_to t(".actions.csv_import"),
+                  decidim_admin_action_delegator.new_setting_manage_participant_path(setting_id: current_setting.id),
+                  class: "button tiny button--title" %>
     </h2>
   </div>
   <div class="card-section">
@@ -15,34 +15,34 @@
     <div class="table-scroll">
       <table class="table-list">
         <thead>
-          <tr>
-            <th><%= t(".email") %></th>
-            <th><%= t(".phone") %></th>
-            <th><%= t(".ponderation") %></th>
-            <th><%= t(".user") %></th>
-            <th><%= t(".last_login") %></th>
-            <th><%= t(".voted") %></th>
-            <th><%= t(".created_at") %></th>
-            <th>&nbsp;</th>
-          </tr>
+        <tr>
+          <th><%= t(".email") %></th>
+          <th><%= t(".phone") %></th>
+          <th><%= t(".ponderation") %></th>
+          <th><%= t(".user") %></th>
+          <th><%= t(".last_login") %></th>
+          <th><%= t(".voted") %></th>
+          <th><%= t(".created_at") %></th>
+          <th>&nbsp;</th>
+        </tr>
         </thead>
         <tbody>
-          <% participants.each do |participant| %>
-            <tr data-participant-id="<%= participant.id %>">
-              <td><%= participant.email %></td>
-              <td><%= participant.phone %></td>
-              <td><%= participant.ponderation_title %></td>
-              <td><%= participant.user_name %></td>
-              <td><%= participant.last_login ? l(participant.last_login, format: :short) : t(".never_logged") %></td>
-              <td><%= t("booleans.#{participant.voted?}") %></td>
-              <td><%= l participant.created_at, format: :short %></td>
+        <% participants.each do |participant| %>
+          <tr data-participant-id="<%= participant.id %>">
+            <td><%= participant.email %></td>
+            <td><%= participant.phone %></td>
+            <td><%= participant.ponderation_title %></td>
+            <td><%= participant.user_name %></td>
+            <td><%= participant.last_login ? l(participant.last_login, format: :short) : t(".never_logged") %></td>
+            <td><%= t("booleans.#{participant.voted?}") %></td>
+            <td><%= l participant.created_at, format: :short %></td>
 
-              <td class="table-list__actions">
-                <%= icon_link_to "pencil", decidim_admin_action_delegator.edit_setting_participant_path(participant.setting, participant), t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit" %>
-                <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_participant_path(participant.setting, participant), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } unless participant.voted? %>
-              </td>
-            </tr>
-          <% end %>
+            <td class="table-list__actions">
+              <%= icon_link_to "pencil", decidim_admin_action_delegator.edit_setting_participant_path(participant.setting, participant), t("actions.edit", scope: "decidim.admin"), class: "action-icon--edit" %>
+              <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_participant_path(participant.setting, participant), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } unless participant.voted? %>
+            </td>
+          </tr>
+        <% end %>
         </tbody>
       </table>
     </div>

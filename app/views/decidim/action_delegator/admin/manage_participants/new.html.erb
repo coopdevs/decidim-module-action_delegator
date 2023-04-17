@@ -1,4 +1,4 @@
-<%= form_tag(import_participants_path, multipart: true, class: "form new_import") do %>
+<%= form_tag(setting_manage_participants_path, multipart: true, class: "form new_import") do %>
   <%= hidden_field_tag :setting_id, current_setting.id %>
   <div class="card">
     <div class="card-divider">
@@ -16,7 +16,13 @@
     bar@example.org,6660001,1
     baz@example.org,6660002,2
     ...</pre>
-
+  <p><%= t(".describe") %></p>
+  <pre class="code-block">
+    email,phone,weight
+    foo@example.org,6660000,producer
+    bar@example.org,6660001,consumer
+    baz@example.org,6660002,associate
+    ...</pre>
   <div class="row column">
     <%= file_field_tag :csv_file %>
   </div>

@@ -14,6 +14,7 @@ module Decidim
           resources :delegations, only: [:index, :new, :create, :destroy]
           resources :ponderations
           resources :participants
+          resources :manage_participants, only: [:new, :create]
           resources :permissions, only: [:create] do
             post :sync, on: :collection
           end
@@ -28,9 +29,6 @@ module Decidim
             resources :sum_of_weights, only: :create
           end
         end
-
-        get :import_participants, to: "import_participants#new"
-        post :import_participants, to: "import_participants#create"
 
         root to: "delegations#index"
       end

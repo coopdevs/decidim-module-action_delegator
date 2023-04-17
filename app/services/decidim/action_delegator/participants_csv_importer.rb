@@ -56,7 +56,7 @@ module Decidim
                 next
               end
 
-              if find_ponderation(weight).nil?
+              if weight.present? && find_ponderation(weight).nil?
                 reason = I18n.t("ponderation_not_found", scope: "decidim.action_delegator.participants_csv_importer.import")
                 handle_skipped_row(row, details_csv, import_summary, i, reason)
 
@@ -101,7 +101,7 @@ module Decidim
       end
 
       def extract_contact_details(row, authorization_method)
-        email = row["email"].to_s.strip
+        email = row["email"].to_s.strip.downcase
         phone = row["phone"].to_s.strip
 
         email = nil if %w(email both).include?(authorization_method.to_s) && invalid_email?(email)
@@ -133,7 +133,7 @@ module Decidim
       end
 
       def check_exists?(field, form)
-        @participant = Decidim::ActionDelegator::Participant.find_by(field => form.send(field), setting: @current_setting)
+        @participant = Decidim::ActionDelegator::Participant.find_by(field => form.send(field), setting: @current_setting) if form.send(field).present?
         @participant.present?
       end
 

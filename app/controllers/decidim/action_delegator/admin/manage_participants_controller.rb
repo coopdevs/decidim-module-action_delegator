@@ -3,7 +3,7 @@
 module Decidim
   module ActionDelegator
     module Admin
-      class ImportParticipantsController < ActionDelegator::Admin::ApplicationController
+      class ManageParticipantsController < ActionDelegator::Admin::ApplicationController
         include NeedsPermission
         include Decidim::Paginable
 
@@ -22,7 +22,7 @@ module Decidim
           enforce_permission_to :create, :participant
 
           @csv_file = params[:csv_file]
-          redirect_to import_participants_path && return if @csv_file.blank?
+          redirect_to seting_manage_participants_path && return if @csv_file.blank?
 
           @import_summary = Decidim::ActionDelegator::Admin::ImportParticipantsCsvJob.perform_later(
             current_user,
