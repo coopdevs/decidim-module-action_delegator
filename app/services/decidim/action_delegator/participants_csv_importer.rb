@@ -113,7 +113,11 @@ module Decidim
       end
 
       def process_participant(form)
-        assign_ponderation(form.weight) if find_ponderation(form.weight).present?
+        if find_ponderation(form.weight).present?
+          ponderation = find_ponderation(form.weight)
+          form.decidim_action_delegator_ponderation_id = ponderation.id
+        end
+
         create_new_participant(form)
       end
 
@@ -168,16 +172,7 @@ module Decidim
       end
 
       def create_new_participant(form)
-        Decidim::ActionDelegator::Admin::CreateParticipant.call(form) do
-          on(:invalid) do
-            flash.now[:error] = I18n.t("participants.create.error", scope: "decidim.action_delegator.admin")
-          end
-        end
-      end
-
-      def assign_ponderation(weight)
-        ponderation = find_ponderation(weight)
-        @form.decidim_action_delegator_ponderation_id = ponderation.id
+        Decidim::ActionDelegator::Admin::CreateParticipant.call(form)
       end
 
       def find_ponderation(weight)

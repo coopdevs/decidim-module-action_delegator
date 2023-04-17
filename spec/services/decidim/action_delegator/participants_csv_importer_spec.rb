@@ -157,5 +157,37 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
         expect(import_summary[:total_rows]).to eq 4
       end
     end
+
+    context "when #assign_ponderation" do
+      subject { described_class.new(valid_csv_file, current_user, current_setting) }
+
+      let(:ponderation) { create(:ponderation, setting: current_setting, weight: 1) }
+
+      let(:email) { "example@example.org" }
+      let(:phone) { "123456789" }
+      let(:setting) { create(:setting) }
+      let(:invalid) { false }
+
+      let(:form) do
+        double(
+          invalid?: invalid,
+          email: email,
+          phone: phone,
+          decidim_action_delegator_ponderation_id: nil ,
+          setting: current_setting,
+          weight: 1
+        )
+      end
+
+      before do
+        allow(form).to receive(:decidim_action_delegator_ponderation_id=).with(ponderation.id).and_return(ponderation.id)
+      end
+
+      it "assigns ponderation to participant" do
+        expect {
+          subject.send(:process_participant, form)
+        }.to change(Decidim::ActionDelegator::Participant, :count).by(1)
+      end
+    end
   end
 end
