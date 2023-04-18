@@ -11,11 +11,15 @@ ca:
             error_granter_unique: ja ha delegat el seu vot
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegació creada amb èxit
+          csv_imports:
+            success: Delegacions importades amb èxit
+            invalid: S'ha produït un error en importar les delegacions
           destroy:
             error: S'ha produït un error en eliminar aquesta delegació
             success: S'ha eliminat la delegació amb èxit
           index:
             actions:
+              import_via_csv: Importar via csv
               new_delegation: Nou participant
             consultation: Consulta
             created_at: Creat el
@@ -46,6 +50,11 @@ ca:
           create:
             error: S'ha produït un error en crear la configuració
             success: Configuració guardada amb èxit
+          csv_import:
+            new:
+              explanation: 'Heu de tenir dues columnes, una columna amb el correu electrònic del concedent i una segona columna amb el correu electrònic del beneficiari (correu electrònic concedent, correu electrònic beneficiari), sense capçaleres.'
+              title: Puja el fitxer CSV
+              upload: Carrega
           destroy:
             error: S'ha produït un error en eliminar aquesta configuració
             success: Configuració eliminada correctament

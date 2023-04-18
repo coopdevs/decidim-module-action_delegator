@@ -20,6 +20,7 @@ module Decidim
           resources :permissions, only: [:create] do
             post :sync, on: :collection
           end
+          resource :delegations_csv_import, only: [:new, :create], path: "csv_import"
         end
 
         resources :consultations, param: :slug, only: [] do

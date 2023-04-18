@@ -48,6 +48,7 @@ en:
             success: Delegation successfully destroyed
           index:
             actions:
+              import_via_csv: Import via csv
               new_delegation: New delegation
             consultation: Consultation
             created_at: Created at
@@ -177,7 +178,12 @@ en:
               it. Please install it at <a href="/system">/system</a>.
           create:
             error: There was a problem creating the settings
-            success: Settings created successfully
+            success: Settings saved successfully
+          csv_import:
+            new:
+              explanation: 'Must have two columns, one column with granter email and a second column with grantee email (granter email, grantee email), without headers.'
+              title: Upload your CSV file
+              upload: Upload
           destroy:
             error: There was a problem removing this setting
             success: Setting successfully destroyed
