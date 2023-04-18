@@ -103,15 +103,18 @@ describe "Admin manages participants", type: :system do
 
   context "when removing census" do
     let(:consultation) { create(:consultation, organization: organization) }
+    let(:question) { create(:question, consultation: consultation) }
+    let(:response) { create(:response, question: question) }
+    let!(:vote) { create(:vote, question: question, response: response) }
     let(:setting) { create(:setting, consultation: consultation) }
-    let!(:participants) { create_list(:participant, 3, setting: setting) }
+    let!(:collection) { create_list :participant, 3, setting: setting }
 
     before do
       visit decidim_admin_action_delegator.setting_participants_path(setting)
     end
 
     it "removes the census" do
-      participants.each do |participant|
+      collection.each do |participant|
         expect(page).to have_content(participant.email)
       end
 
@@ -119,8 +122,29 @@ describe "Admin manages participants", type: :system do
 
       expect(page).to have_content("successfully")
 
-      participants.each do |participant|
+      collection.each do |participant|
         expect(page).not_to have_content(participant.email)
+      end
+    end
+
+    context "when participant has voted" do
+      let!(:participant) { create(:participant, setting: setting, decidim_user: user) }
+      let!(:vote) { create(:vote, question: question, response: response, author: user) }
+
+      it "does not remove the census" do
+        expect(page).to have_content(user.email)
+
+        collection.each do |participant|
+          expect(page).to have_content(participant.email)
+        end
+
+        accept_confirm { click_link "Remove census" }
+
+        collection.each do |participant|
+          expect(page).not_to have_content(participant.email)
+        end
+
+        expect(page).to have_content(user.email)
       end
     end
   end

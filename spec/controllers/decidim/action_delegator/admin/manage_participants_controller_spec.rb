@@ -35,6 +35,9 @@ module Decidim
         end
 
         describe "DELETE #destroy_all" do
+          let(:question) { create(:question, consultation: consultation) }
+          let(:response) { create(:response, question: question) }
+          let!(:vote) { create(:vote, question: question, response: response) }
           let!(:participants) { create_list(:participant, 3, setting: setting) }
 
           let(:params) do
@@ -47,10 +50,19 @@ module Decidim
             get :destroy_all, params: params
           end
 
-          context "when successful" do
-            it "redirects to the participants page" do
+          it "removes all and redirects to the participants page" do
+            expect { delete :destroy_all, params: params }.to change(Participant, :count).by(-3)
+            expect(flash[:notice]).to eq(I18n.t("participants.remove_census.success", scope: "decidim.action_delegator.admin", participants_count: participants.count))
+            expect(response).to redirect_to(setting_participants_path(setting))
+          end
+
+          context "when participant has voted" do
+            let!(:participant) { create(:participant, setting: setting, decidim_user: current_user) }
+            let!(:vote) { create(:vote, question: question, response: response, author: current_user) }
+
+            it "does not remove the voted participants" do
               expect { delete :destroy_all, params: params }.to change(Participant, :count).by(-3)
-              expect(flash[:notice]).to eq(I18n.t("participants.remove_census.success", scope: "decidim.action_delegator.admin"))
+              expect(flash[:notice]).to eq(I18n.t("participants.remove_census.success", scope: "decidim.action_delegator.admin", participants_count: participants.count))
               expect(response).to redirect_to(setting_participants_path(setting))
             end
           end
