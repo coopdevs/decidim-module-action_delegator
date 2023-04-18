@@ -27,7 +27,7 @@ module Decidim
             end
 
             on(:invalid) do
-              flash[:alert] = I18n.t(".delegations.csv_imports.invalid", scope: "decidim.action_delegator_admin")
+              flash[:alert] = I18n.t(".delegations.csv_imports.invalid", scope: "decidim.action_delegator.admin")
               render template: "decidim/admin/delegations_csv_imports/new"
             end
           end
