@@ -35,6 +35,18 @@ module Decidim
           redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting)
         end
 
+        def destroy_all
+          enforce_permission_to :destroy, :participant, resource: current_setting
+
+          if current_setting.participants.destroy_all
+            flash[:notice] = I18n.t("participants.remove_census.success", scope: "decidim.action_delegator.admin")
+            redirect_to setting_participants_path(current_setting)
+          else
+            flash[:error] = I18n.t("participants.remove_census.error", scope: "decidim.action_delegator.admin")
+            redirect_to setting_participants_path(current_setting)
+          end
+        end
+
         private
 
         def current_setting

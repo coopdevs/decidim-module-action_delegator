@@ -115,7 +115,8 @@ en:
             save: Create
             title: New participant
           remove_census:
-            confirm: Are you sure you want to remove the census? This operation cannot be undone
+            confirm: Are you sure you want to remove the census? This operation cannot
+              be undone
             error: There was a problem removing the census
             success: Census removed successfully
           update:
@@ -172,8 +173,8 @@ en:
             </ul>
           check_verifier:
             not_installed_html: It seems that the "Delegation Verifier" authorization
-              method is not installed. You cannot use the integrated census without it.
-              Please install it at <a href="/system">/system</a>.
+              method is not installed. You cannot use the integrated census without
+              it. Please install it at <a href="/system">/system</a>.
           create:
             error: There was a problem creating the settings
             success: Settings created successfully

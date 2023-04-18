@@ -100,4 +100,28 @@ describe "Admin manages participants", type: :system do
       end
     end
   end
+
+  context "when removing census" do
+    let(:consultation) { create(:consultation, organization: organization) }
+    let(:setting) { create(:setting, consultation: consultation) }
+    let!(:participants) { create_list(:participant, 3, setting: setting) }
+
+    before do
+      visit decidim_admin_action_delegator.setting_participants_path(setting)
+    end
+
+    it "removes the census" do
+      participants.each do |participant|
+        expect(page).to have_content(participant.email)
+      end
+
+      accept_confirm { click_link "Remove census" }
+
+      expect(page).to have_content("successfully")
+
+      participants.each do |participant|
+        expect(page).not_to have_content(participant.email)
+      end
+    end
+  end
 end

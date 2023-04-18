@@ -75,18 +75,6 @@ module Decidim
           end
         end
 
-        def remove_census
-          enforce_permission_to :destroy, :participant, resource: current_setting
-
-          if current_setting.participants.destroy_all
-            notice = I18n.t("participants.remove_census.success", scope: "decidim.action_delegator.admin")
-            redirect_to setting_participants_path(current_setting), notice: notice
-          else
-            error = I18n.t("participants.remove_census.error", scope: "decidim.action_delegator.admin")
-            redirect_to setting_participants_path(current_setting), flash: { error: error }
-          end
-        end
-
         private
 
         def participant
