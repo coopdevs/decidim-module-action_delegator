@@ -101,6 +101,7 @@ en:
             actions:
               csv_import: Import CSV
               new_participant: New participant
+              remove_census: Remove census
             created_at: Created at
             email: Email
             last_login: Last login
@@ -113,6 +114,11 @@ en:
           new:
             save: Create
             title: New participant
+          remove_census:
+            confirm: Are you sure you want to remove the census? This operation cannot
+              be undone
+            success: "%{participants_count} entries were successfully deleted from
+              the census"
           update:
             error: There was a problem updating the participants
             success: Participants saved successfully
@@ -167,8 +173,8 @@ en:
             </ul>
           check_verifier:
             not_installed_html: It seems that the "Delegation Verifier" authorization
-              method is not installed. You cannot use the integrated census without it.
-              Please install it at <a href="/system">/system</a>.
+              method is not installed. You cannot use the integrated census without
+              it. Please install it at <a href="/system">/system</a>.
           create:
             error: There was a problem creating the settings
             success: Settings created successfully
