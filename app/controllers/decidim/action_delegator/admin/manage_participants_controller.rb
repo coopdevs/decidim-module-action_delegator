@@ -40,11 +40,11 @@ module Decidim
 
           if current_setting.participants.destroy_all
             flash[:notice] = I18n.t("participants.remove_census.success", scope: "decidim.action_delegator.admin")
-            redirect_to setting_participants_path(current_setting)
           else
             flash[:error] = I18n.t("participants.remove_census.error", scope: "decidim.action_delegator.admin")
-            redirect_to setting_participants_path(current_setting)
           end
+
+          redirect_to setting_participants_path(current_setting)
         end
 
         private
