@@ -11,6 +11,9 @@ es:
             error_granter_unique: ya ha delegado su voto
             error_max_grants: You reached the limit of allowed delegations
             success: Delegación creada correctamente
+          csv_imports:
+            invalid: Se ha producido un error al importar las delegaciones
+            success: Delegaciones importadas correctamente
           destroy:
             error: Se ha producido un error al eliminar esta delegación
             success: Delegación eliminada correctamente

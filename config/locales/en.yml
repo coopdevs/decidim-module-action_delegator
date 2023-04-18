@@ -43,6 +43,9 @@ en:
             error_max_grants: You reached the limit of allowed delegations for this
               grantee
             success: Delegation created successfully
+          csv_imports:
+            invalid: There was a problem importing delegations
+            success: Delegations imported successfully
           destroy:
             error: There was a problem removing this delegation
             success: Delegation successfully destroyed
@@ -181,7 +184,9 @@ en:
             success: Settings saved successfully
           csv_import:
             new:
-              explanation: 'Must have two columns, one column with granter email and a second column with grantee email (granter email, grantee email), without headers.'
+              explanation: Must have two columns, one column with granter email and
+                a second column with grantee email (granter email, grantee email),
+                without headers.
               title: Upload your CSV file
               upload: Upload
           destroy:

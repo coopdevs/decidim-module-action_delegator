@@ -11,6 +11,9 @@ cs:
             error_granter_unique: již delegovali svůj hlas
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
+          csv_imports:
+            invalid: Při importu delegací došlo k problému
+            success: Delegace byly úspěšně importovány
           destroy:
             error: Došlo k potížím při odstraňování této delegace
             success: Delegace úspěšně zničena

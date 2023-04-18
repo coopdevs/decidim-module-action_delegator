@@ -12,8 +12,8 @@ ca:
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegació creada amb èxit
           csv_imports:
-            success: Delegacions importades amb èxit
             invalid: S'ha produït un error en importar les delegacions
+            success: Delegacions importades amb èxit
           destroy:
             error: S'ha produït un error en eliminar aquesta delegació
             success: S'ha eliminat la delegació amb èxit
