@@ -51,7 +51,7 @@ en:
             success: Delegation successfully destroyed
           index:
             actions:
-              import_via_csv: Import via csv
+              csv_import: Import via csv
               new_delegation: New delegation
             consultation: Consultation
             created_at: Created at
@@ -66,6 +66,18 @@ en:
             save: Create
             select_member: Select member
             title: New delegation
+        manage_delegations:
+          create:
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and
+              refresh the page to see the list of participants. Import results will
+              be sent by email.
+          new:
+            import: Import
+            required_fields: 'Required fields: granter email, grantee email'
+            title: Import delegations
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         manage_participants:
           create:
             error: There was a problem importing the participants
@@ -182,13 +194,6 @@ en:
           create:
             error: There was a problem creating the settings
             success: Settings saved successfully
-          csv_import:
-            new:
-              explanation: Must have two columns, one column with granter email and
-                a second column with grantee email (granter email, grantee email),
-                without headers.
-              title: Upload your CSV file
-              upload: Upload
           destroy:
             error: There was a problem removing this setting
             success: Setting successfully destroyed
@@ -279,6 +284,22 @@ en:
         callout: Remember, you are voting on behalf of
         contextual_help: 'You have been granted the vote from:'
         title: 'Consultation: granted delegations'
+      import_delegations_mailer:
+        import:
+          errors_present: There were errors importing the delegations
+          errors_title: "<b>Found:</b> %{errors_count} errors"
+          greeting: Hello %{name},
+          info_messages: Reason for skipping
+          instructions: "<p>Attached is a file with import details, which contains
+            rows with delegations that were not imported.</p>\n<p>If you want to continue
+            importing, correct the rows specified, delete the last column from the
+            file, save \nthe file and import again.</p>\n"
+          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
+          row_number: Row number
+          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
+          subject: Delegations imported
+          success: Delegations imported successfully
+          text_error: Error
       import_participants_mailer:
         import:
           errors_present: There were errors importing the participants

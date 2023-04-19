@@ -2,9 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class ParticipantsCsvImporter
-      include Decidim::FormFactory
-
+    class ParticipantsCsvImporter < CsvImporter
       def initialize(csv_file, current_user, current_setting)
         @csv_file = csv_file
         @current_user = current_user
@@ -134,18 +132,6 @@ module Decidim
         @participant.present?
       end
 
-      def handle_skipped_row(row, details_csv, import_summary, row_number, reason)
-        import_summary[:skipped_rows] << { row_number: row_number - 1 }
-        row["reason"] = reason
-        details_csv << row
-      end
-
-      def handle_import_error(row, details_csv, import_summary, row_number, error_messages)
-        import_summary[:error_rows] << { row_number: row_number - 1, error_messages: error_messages }
-        row["reason"] = error_messages
-        details_csv << row
-      end
-
       def handle_form_validity(row, details_csv, import_summary, row_number)
         if @form.valid?
           process_participant(@form)
@@ -166,11 +152,6 @@ module Decidim
         mismatch_fields.empty? ? nil : mismatch_fields.join(", ")
       end
 
-      def generate_info_message(mismatch_fields)
-        with_mismatched_fields = mismatch_fields.present? ? I18n.t("decidim.action_delegator.participants_csv_importer.import.with_mismatched_fields", fields: mismatch_fields) : ""
-        I18n.t("decidim.action_delegator.participants_csv_importer.import.skip_import_info", with_mismatched_fields: with_mismatched_fields)
-      end
-
       def create_new_participant(form)
         Decidim::ActionDelegator::Admin::CreateParticipant.call(form)
       end
@@ -189,12 +170,6 @@ module Decidim
         Float(value)
       rescue StandardError
         value
-      end
-
-      def headers(csv, details_csv)
-        headers = csv.first.headers
-        headers << I18n.t("decidim.action_delegator.participants_csv_importer.import.error_field")
-        details_csv << headers
       end
     end
   end

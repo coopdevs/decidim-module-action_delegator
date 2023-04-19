@@ -1,0 +1,25 @@
+<%= form_tag(setting_manage_delegations_path, multipart: true, class: "form new_import") do %>
+  <%= hidden_field_tag :setting_id, current_setting.id %>
+  <div class="card">
+    <div class="card-divider">
+      <h2 class="card-title">
+        <%= t(".title") %>
+      </h2>
+    </div>
+  </div>
+  <p><%= t(".upload_instructions") %></p>
+  <p><%= t(".required_fields") %></p>
+  <p><%= t(".title_example") %></p>
+  <pre class="code-block">
+    granter_email,grantee_email
+    granter@example.org,grantee@example.org
+    granter2@example.org,grantee2@example.org
+    ...</pre>
+  <div class="row column">
+    <%= file_field_tag :csv_file %>
+  </div>
+
+  <div class="button--double form-general-submit">
+    <%= submit_tag t(".import"), class: "button" %>
+  </div>
+<% end %>

@@ -11,15 +11,11 @@ cs:
             error_granter_unique: již delegovali svůj hlas
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
-          csv_imports:
-            invalid: Při importu delegací došlo k problému
-            success: Delegace byly úspěšně importovány
           destroy:
             error: Došlo k potížím při odstraňování této delegace
             success: Delegace úspěšně zničena
           index:
             actions:
-              import_via_csv: Importovat přes csv
               new_delegation: Nový účastník
             consultation: Konzultace
             created_at: Vytvořeno v
@@ -50,11 +46,6 @@ cs:
           create:
             error: Při vytváření nastavení se vyskytl problém
             success: Nastavení bylo úspěšně uloženo
-          csv_import:
-            new:
-              explanation: "Musí mít dva sloupce, jeden sloupec s e-mailem poskytovatele a druhý sloupec s e-mailem příjemce (e-mail poskytovatele, e-mail příjemce), bez záhlaví."
-              title: Nahrajte svůj soubor CSV
-              upload: Nahrát
           destroy:
             error: Při odstraňování tohoto nastavení došlo k chybě
             success: Nastavení úspěšně zničeno

@@ -1,3 +1,4 @@
+---
 ca:
   decidim:
     action_delegator:
@@ -11,15 +12,12 @@ ca:
             error_granter_unique: ja ha delegat el seu vot
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegació creada amb èxit
-          csv_imports:
-            invalid: S'ha produït un error en importar les delegacions
-            success: Delegacions importades amb èxit
           destroy:
             error: S'ha produït un error en eliminar aquesta delegació
             success: S'ha eliminat la delegació amb èxit
           index:
             actions:
-              import_via_csv: Importar via csv
+              csv_import: Importa via csv
               new_delegation: Nou participant
             consultation: Consulta
             created_at: Creat el
@@ -35,6 +33,17 @@ ca:
             save: Crear
             select_member: Selecciona un membre
             title: Nova delegació
+        manage_delegations:
+          create:
+            error: S'ha produït un error a l'importar les delegacions
+            success: El procés d'importació ha començat, espereu uns minuts i actualitzeu
+              la pàgina per veure la llista de delegacions.
+          new:
+            import: Importa
+            required_fields: 'Campos requerits: email concedent, email beneficiari'
+            title: Importa delegacions
+            title_example: 'Exemple:'
+            upload_instructions: Ha de ser un fitxer en format CSV amb capçalera.
         menu:
           consultations_submenu:
             by_answer: Per resposta
@@ -50,11 +59,6 @@ ca:
           create:
             error: S'ha produït un error en crear la configuració
             success: Configuració guardada amb èxit
-          csv_import:
-            new:
-              explanation: 'Heu de tenir dues columnes, una columna amb el correu electrònic del concedent i una segona columna amb el correu electrònic del beneficiari (correu electrònic concedent, correu electrònic beneficiari), sense capçaleres.'
-              title: Puja el fitxer CSV
-              upload: Carrega
           destroy:
             error: S'ha produït un error en eliminar aquesta configuració
             success: Configuració eliminada correctament
@@ -75,7 +79,8 @@ ca:
       authorizations:
         new:
           missing_phone_error: No s'ha trobat telèfon del membre
-          phone_warning: Aquest número de telèfon s'ha importat per l'administrador. Si us plau, poseu-vos-hi en contacte si no és correcte.
+          phone_warning: Aquest número de telèfon s'ha importat per l'administrador.
+            Si us plau, poseu-vos-hi en contacte si no és correcte.
       delegations:
         has_delegations: Vot delegat realitzat
         link: Tens delegacions disponibles
@@ -83,6 +88,22 @@ ca:
         callout: Recorda, estàs votant en nom de
         contextual_help: 'Has estat autoritzat a votar en nom de:'
         title: 'Consulta: delegacions atorgades'
+      import_delegations_mailer:
+        import:
+          errors_present: S'han produït errors a l'importar les delegacions
+          errors_title: "<b>S'han trobat:</b> %{errors_count} errors"
+          greeting: Hola %{name},
+          info_messages: Motiu de no importar-se
+          instructions: "<p>El fitxer adjunt conté detalls sobre les files que no
+            s'han pogut importar.</p>\n<p>Si vols continuar important-ho, corregeix
+            les files especificades, elimina l'última columna del fitxer, guarda'l
+            \n i importa'l de nou.</p>\n"
+          result: "<b>Importat:</b> %{rows_count} files de %{total_rows_count}."
+          row_number: Número de fila
+          skipped_rows: "<b>No importaes:</b> %{skipped_rows} files."
+          subject: Delegacions importades
+          success: Delegacions importades correctament
+          text_error: Error
       name: Mòdul Decidim ActionDelegator per a cooperatives
       sms_message: El teu codi de verificació és %{code}
       user_delegations:
@@ -106,19 +127,16 @@ ca:
       admin:
         delegations_verifier:
           help:
-            - Mètode de verificació per la delegació de vot
+          - Mètode de verificació per la delegació de vot
       delegations_verifier:
-        explanation: Els usuaris verificats per aquest mètode poden delegar els seus vots a altres usuaris
+        explanation: Els usuaris verificats per aquest mètode poden delegar els seus
+          vots a altres usuaris
         name: Verificador de Delegacions
   layouts:
     decidim:
       admin:
         question:
-          attachments: Attachments
+          attachments: Adjunts
           categories: Categories
       user_profile:
         vote_delegations: Delegacions de vot
-      admin:
-        question:
-          attachments: Adjunts
-          categories: Categories
