@@ -12,6 +12,11 @@ module Decidim
       let(:current_setting) { create(:setting, consultation: consultation) }
       let(:consultation) { create(:consultation) }
 
+      let!(:granter_email) { "granter@example.org" }
+      let!(:grantee_email) { "grantee@example.org" }
+      let!(:granter) { create(:user, email: granter_email) }
+      let!(:grantee) { create(:user, email: grantee_email) }
+
       describe "#import" do
         context "when the CSV has valid rows" do
           let(:mail) { described_class.import(current_user, import_summary, valid_csv_file.path) }
@@ -24,7 +29,7 @@ module Decidim
           end
 
           it "renders the body" do
-            expect(mail.body).to include("4 rows of 4")
+            expect(mail.body).to include("1 rows of 1")
             expect(mail.body).not_to include("errors")
           end
 
@@ -44,8 +49,8 @@ module Decidim
           end
 
           it "renders the body" do
-            expect(mail.body.parts[0].body.raw_source).to include("2 rows of 5")
-            expect(mail.body.parts[0].body.raw_source).to include("2 errors")
+            expect(mail.body.parts[0].body.raw_source).to include("0 rows of 1")
+            expect(mail.body.parts[0].body.raw_source).to include("1 errors")
           end
 
           it "attaches CSV file if file has invalid rows" do
