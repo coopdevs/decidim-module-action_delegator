@@ -92,9 +92,9 @@ es:
         callout: Recuerda, estás votando en nombre de
         contextual_help: 'Se le ha concedido el voto de:'
         title: 'Consulta: delegaciones concedidas'
-      import_delegations_mailer:
+      import_mailer:
         import:
-          errors_present: Hay errores en la importación de las delegaciones
+          errors_present: Hay errores en la importación
           errors_title: "<b>Encontrados:</b> %{errors_count} errores"
           greeting: Hola %{name},
           info_messages: Motivo de no importarse
@@ -105,8 +105,8 @@ es:
           result: "<b>Importado:</b> %{rows_count} filas de %{total_rows_count}."
           row_number: Número de fila
           skipped_rows: "<b>No importadas:</b> %{skipped_rows} filas."
-          subject: Delegaciones importadas
-          success: Delegaciones importadas correctamente
+          subject: CSV importado
+          success: CSV importado correctamente
           text_error: Error
       name: Módulo Cooperativas - ActionDelegator para Decidim
       sms_message: Su código de verificación es %{code}

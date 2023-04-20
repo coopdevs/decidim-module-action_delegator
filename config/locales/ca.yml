@@ -88,9 +88,9 @@ ca:
         callout: Recorda, estàs votant en nom de
         contextual_help: 'Has estat autoritzat a votar en nom de:'
         title: 'Consulta: delegacions atorgades'
-      import_delegations_mailer:
+      import_mailer:
         import:
-          errors_present: S'han produït errors a l'importar les delegacions
+          errors_present: S'han produït errors a la importació
           errors_title: "<b>S'han trobat:</b> %{errors_count} errors"
           greeting: Hola %{name},
           info_messages: Motiu de no importar-se
@@ -100,9 +100,9 @@ ca:
             \n i importa'l de nou.</p>\n"
           result: "<b>Importat:</b> %{rows_count} files de %{total_rows_count}."
           row_number: Número de fila
-          skipped_rows: "<b>No importaes:</b> %{skipped_rows} files."
-          subject: Delegacions importades
-          success: Delegacions importades correctament
+          skipped_rows: "<b>No importats:</b> %{skipped_rows} files."
+          subject: CSV importat
+          success: CSV importat correctament
           text_error: Error
       name: Mòdul Decidim ActionDelegator per a cooperatives
       sms_message: El teu codi de verificació és %{code}

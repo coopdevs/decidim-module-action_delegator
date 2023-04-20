@@ -18,7 +18,7 @@ RSpec.describe Decidim::ActionDelegator::Admin::ImportDelegationsCsvJob, type: :
   before do
     allow(Decidim::ActionDelegator::DelegationsCsvImporter).to receive(:new).with(valid_csv_file, current_user, current_setting).and_return(importer)
     allow(importer).to receive(:import!).and_return(import_summary)
-    allow(Decidim::ActionDelegator::ImportDelegationsMailer)
+    allow(Decidim::ActionDelegator::ImportMailer)
       .to receive(:import)
       .with(current_user, import_summary, "spec/fixtures/delegations_details.csv")
       .and_return(double("mailer", deliver_later: true))
@@ -27,7 +27,7 @@ RSpec.describe Decidim::ActionDelegator::Admin::ImportDelegationsCsvJob, type: :
   it "imports delegations CSV file and sends email notification" do
     expect { described_class.perform_now(current_user, valid_csv_file, current_setting) }.not_to raise_error
     expect(importer).to have_received(:import!).once
-    expect(Decidim::ActionDelegator::ImportDelegationsMailer)
+    expect(Decidim::ActionDelegator::ImportMailer)
       .to have_received(:import)
       .once
       .with(current_user, import_summary, "spec/fixtures/delegations_details.csv")
