@@ -24,11 +24,8 @@ module Decidim
           @csv_file = params[:csv_file]
           redirect_to seting_manage_participants_path && return if @csv_file.blank?
 
-          @import_summary = Decidim::ActionDelegator::Admin::ImportParticipantsCsvJob.perform_later(
-            current_user,
-            @csv_file.read.force_encoding("utf-8").encode("utf-8"),
-            current_setting
-          )
+          importer = Decidim::ActionDelegator::ParticipantsCsvImporter.new(@csv_file.read.force_encoding("utf-8").encode("utf-8"), current_user, current_setting)
+          @import_summary = Decidim::ActionDelegator::Admin::ImportCsvJob.perform_later(importer, current_user)
 
           flash[:notice] = t(".success")
 

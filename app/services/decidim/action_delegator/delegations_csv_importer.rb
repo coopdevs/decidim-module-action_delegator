@@ -18,7 +18,7 @@ module Decidim
           details_csv_path: nil
         }
 
-        details_csv_file = File.join(File.dirname(@csv_file), "delegations_details.csv")
+        details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
 
         i = 1
         csv = CSV.new(@csv_file, headers: true, col_sep: ",")

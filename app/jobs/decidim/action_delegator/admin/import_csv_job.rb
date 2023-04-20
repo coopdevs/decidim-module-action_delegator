@@ -3,11 +3,10 @@
 module Decidim
   module ActionDelegator
     module Admin
-      class ImportParticipantsCsvJob < ApplicationJob
+      class ImportCsvJob < ApplicationJob
         queue_as :exports
 
-        def perform(current_user, csv_file, current_setting)
-          importer = Decidim::ActionDelegator::ParticipantsCsvImporter.new(csv_file, current_user, current_setting)
+        def perform(importer, current_user)
           import_summary = importer.import!
 
           Decidim::ActionDelegator::ImportMailer
