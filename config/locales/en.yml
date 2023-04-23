@@ -52,13 +52,14 @@ en:
             consultation: Consultation
             created_at: Created at
             delete: Delete
-            grantee: Grantee
-            granter: Granter
+            description_html: This is the current census for this consultation
+            grantee: Grantee (to)
+            granter: Granter (from)
             title: User vote delegations
             voted: Granter has voted?
           new:
-            grantee: Grantee
-            granter: Granter
+            grantee: Grantee (to)
+            granter: Granter (from)
             save: Create
             select_member: Select member
             title: New delegation
@@ -85,7 +86,7 @@ en:
             by_answer: By answer
             by_type_and_weight: By type and weight
             sum_of_weights: By sum of weights
-          delegations: Delegations & Weights
+          delegations: Delegations & Weights Census
           participants: Participants
         participants:
           create:
@@ -190,7 +191,7 @@ en:
             actions:
               census: Edit the census
               delegations: Edit the delegations
-              new_setting: New delegation group
+              new_setting: New census group
               ponderate: Set weights for vote ponderation
             authorization_method: Authorization method
             census: Census total
@@ -198,21 +199,17 @@ en:
             created_at: Created at
             delegations: Delegations
             description_html: |
-              A delegation group is a set of settings to encapsulate the
-              configuration of a delegation system. For the moment only consultations are supported.
+              This module is designed for organizations that do voting through consultations. The functionalities we have available are: compilation of census, delegations of participants and weights by type of member. We can also use the integrated verifier via SMS, email or both. It is possible to use this module without importing a census, you can manage it in order to make delegations and/or weightings. If you need more information, go to guia.cercles.coop.
               <br>
-              Each group can be configured with a different number of maximum delegations per user, different
-              user delegations grants and different sets of ponderation types.
-              <br>
-              Delegations are linked to the parent element (currently a consultation) and cannot be edited/deleted after a voting has been started.
+              Each group can be configured with a different number of maximum delegations per user, different user delegations grants and different sets of ponderation types.
             max_grants: Max delegations/user
             open: Open
             ponderations: Ponderation types
             state: State
-            title: Delegation groups
+            title: Census groups
           new:
             save: Create
-            title: New delegation group
+            title: New census group
           setting_checks:
             all_users_authorized_html: All participants are verified by the <i>Delegations
               Verifier</i>.
