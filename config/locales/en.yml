@@ -62,6 +62,16 @@ en:
             save: Create
             select_member: Select member
             title: New delegation
+        invite_participants:
+          invite_all_users:
+            error: There was an error inviting the users
+            success: Users invited successfully
+          invite_user:
+            error: There was an error inviting the user
+            success: User invited successfully
+          resend_invitation:
+            error: There was an error resending the invitation
+            success: Invitation resent successfully
         manage_participants:
           create:
             error: There was a problem importing the participants
@@ -228,6 +238,8 @@ en:
               not verified by the <i>Delegations Verifier</i>. <em>This is ok if these
               participants have their votes delegated to others or you are using other
               verification methods (or none).</em>
+            missing_emails: The authorization method does not require an email. Because
+              of this, %{count} must register themselves on the platform
             missing_registered_users_html: There are %{count} participants that are
               not registered into the platform.
             no_delegations_html: There are no vote delegations.
@@ -237,6 +249,7 @@ en:
               to vote.</em>
             no_ponderations_html: There are no vote ponderations. <b>All users will
               have the same weight on their votes</b>
+            user: user
             users_need_sync_html: The participants list needs to be synchronized.
               <b>Consultation results might be wrong!</b>
           state:
@@ -284,6 +297,12 @@ en:
           subject: Participants imported
           success: Participants imported successfully
           text_error: Error
+      invite_participants_mailer:
+        confirmation:
+          body: You have been invited to participate in the consultation. Please click
+            the link below to confirm your participation.
+          confirm: Confirm participation
+          greeting: Hello %{recipient},
       name: Decidim ActionDelegator cooperatives module
       participants_csv_importer:
         import:
@@ -327,6 +346,10 @@ en:
               send_code: Send verification code
               title: Authorize with Delegations Verifier
     admin:
+      actions:
+        invite: Send invitation
+        invite_all: Send invitations to non-existing users
+        resend: Resend invitation
       consultations:
         results:
           default_metadata: "(membership data not available)"
@@ -350,6 +373,10 @@ en:
         actions:
           comment: Comment
           vote: Vote
+  devise:
+    mailer:
+      invite_participant:
+        subject: You have been invited to participate in the consultation
   layouts:
     decidim:
       admin:

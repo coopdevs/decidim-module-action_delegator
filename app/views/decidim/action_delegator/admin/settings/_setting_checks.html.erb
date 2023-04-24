@@ -1,8 +1,8 @@
 <% missing_questions =  missing_verifications_for(setting&.consultation&.questions, "vote") %>
 <% missing_registered =  missing_registered_users(setting&.participants) %>
 <% total_missing_authorizations =  total_missing_authorizations(setting&.participants) %>
+<% total_missing_emails = setting&.participants.where(email: "").count %>
 <% status_err = (missing_questions.present? || missing_registered.present? || setting.participants.blank? || total_missing_authorizations.positive?)
-
   if setting&.consultation&.questions&.count == missing_questions.count
     status_err = false
   end %>
@@ -33,6 +33,9 @@
         <li class="<%= status_err ? "unhappy" : "warning" %>"><%= t(".missing_authorizations_html", count: total_missing_authorizations) %></li>
       <% else %>
         <li class="happy"><%= t(".all_users_authorized_html") %></li>
+      <% end %>
+      <% if total_missing_emails > 0 %>
+        <li class="warning"><%= t(".missing_emails", count: pluralize(total_missing_emails, t(".user"))) %></li>
       <% end %>
     <% else %>
       <li class="warning"><%= t(".no_participants_html") %></li>
