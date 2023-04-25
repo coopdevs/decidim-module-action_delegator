@@ -6,7 +6,6 @@
         <%= t ".title" %>
       </div>
       <div>
-        <%=  %>
         <%= link_to t(".actions.new_participant"), decidim_admin_action_delegator.new_setting_participant_path(current_setting), class: "button tiny button--title" %>
         <%= link_to t(".actions.csv_import"),
                     decidim_admin_action_delegator.new_setting_manage_participant_path(setting_id: current_setting.id),
