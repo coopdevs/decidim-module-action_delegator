@@ -9,9 +9,7 @@ module Decidim
         helper_method :current_setting, :users_list_to_invite, :participant
 
         def invite_user
-          @form = form(RegistrationForm).from_model(participant)
-
-          InviteUser.call(@form, participant) do
+          Decidim::InviteUser.call(form(participant)) do
             on(:ok) do
               notice = t("invite_user.success", scope: "decidim.action_delegator.admin.invite_participants")
               redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
@@ -25,8 +23,7 @@ module Decidim
 
         def invite_all_users
           users_list_to_invite.each do |participant|
-            form = form(RegistrationForm).from_model(participant)
-            InviteUser.call(form, participant)
+            Decidim::InviteUser.call(form(participant))
           end
 
           notice = t("invite_all_users.success", scope: "decidim.action_delegator.admin.invite_participants")
@@ -49,7 +46,7 @@ module Decidim
         private
 
         def users_list_to_invite
-          @users_list_to_invite ||= participants.where.not(email: Decidim::User.select(:email))
+          @users_list_to_invite ||= participants.where.not(email: current_organization.users.select(:email))
         end
 
         def current_setting
@@ -66,6 +63,18 @@ module Decidim
 
         def organization_settings
           ActionDelegator::OrganizationSettings.new(current_organization).query
+        end
+
+        def form(participant)
+          InvitationParticipantForm.new(
+            name: participant.email.split("@").first&.gsub(/\W/, ""),
+            email: participant.email.downcase,
+            organization: current_organization,
+            admin: false,
+            role: nil,
+            invited_by: current_user,
+            invitation_instructions: "invite_participant"
+          )
         end
       end
     end
