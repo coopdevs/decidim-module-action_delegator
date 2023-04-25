@@ -30,7 +30,7 @@ module Decidim
           end
 
           notice = t("invite_all_users.success", scope: "decidim.action_delegator.admin.invite_participants")
-          redirect_to decidim_admin_action_delegator.settings_path, notice: notice
+          redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
         end
 
         def resend_invitation

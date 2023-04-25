@@ -115,9 +115,15 @@ en:
             created_at: Created at
             email: Email
             last_login: Last login
+            missing_emails: The authorization method does not require an email. Because
+              of this, %{count} must register themselves on the platform
+            missing_registered: There are %{missing_registered} that are not registered
+              into the platform
             never_logged: Never logged yet
+            participant: participant
             phone: Phone
             ponderation: Ponderation
+            send_invitation_link: Click here to send an invitation to them
             title: Census
             user: User
             voted: Has voted?
