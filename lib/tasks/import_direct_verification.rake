@@ -10,7 +10,7 @@ namespace :action_delegator do
       puts "Found #{authorizations.count} authorizations"
       count = 0
       authorizations.order(:id).each do |authorization|
-        weight = authorization.metadata["membership_weight"]
+        weight = authorization.metadata["membership_weight"] || 1
         type = authorization.metadata["membership_type"]
         settings.find_each do |setting|
           participant = setting.participants.find_or_initialize_by(email: authorization.user.email)
