@@ -9,6 +9,8 @@ module Decidim
         helper_method :current_setting, :users_list_to_invite, :participant, :form
 
         def invite_user
+          enforce_permission_to :invite, :participant, resource: current_setting
+
           Decidim::InviteUser.call(form) do
             on(:ok) do
               notice = t("invite_user.success", scope: "decidim.action_delegator.admin.invite_participants")
@@ -22,6 +24,8 @@ module Decidim
         end
 
         def invite_all_users
+          enforce_permission_to :invite, :participant, resource: current_setting
+
           users_list_to_invite.each do |participant|
             InviteParticipantsJob.perform_later(participant, current_organization)
           end
@@ -31,6 +35,8 @@ module Decidim
         end
 
         def resend_invitation
+          enforce_permission_to :invite, :participant, resource: current_setting
+
           Decidim::InviteUserAgain.call(participant.user, "invitation_instructions") do
             on(:ok) do
               notice = t("resend_invitation.success", scope: "decidim.action_delegator.admin.invite_participants")

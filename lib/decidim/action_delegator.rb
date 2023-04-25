@@ -23,6 +23,11 @@ module Decidim
       3.months
     end
 
+    # Inviting non-existent users from the list of participants
+    config_accessor :allow_to_invite_users do
+      true
+    end
+
     # used for comparing phone numbers from a census list and the ones introduced by the user
     # the phone number will be normalized before comparing it so, for instance,
     # if you have a census list with  +34 666 666 666 and the user introduces 0034666666666 or 666666666, they will be considered the same
