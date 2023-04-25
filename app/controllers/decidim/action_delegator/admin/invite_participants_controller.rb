@@ -6,10 +6,10 @@ module Decidim
       class InviteParticipantsController < ActionDelegator::Admin::ApplicationController
         include NeedsPermission
 
-        helper_method :current_setting, :users_list_to_invite, :participant
+        helper_method :current_setting, :users_list_to_invite, :participant, :form
 
         def invite_user
-          Decidim::InviteUser.call(form(participant)) do
+          Decidim::InviteUser.call(form) do
             on(:ok) do
               notice = t("invite_user.success", scope: "decidim.action_delegator.admin.invite_participants")
               redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
@@ -23,7 +23,7 @@ module Decidim
 
         def invite_all_users
           users_list_to_invite.each do |participant|
-            Decidim::InviteUser.call(form(participant))
+            InviteParticipantsJob.perform_later(participant, current_organization)
           end
 
           notice = t("invite_all_users.success", scope: "decidim.action_delegator.admin.invite_participants")
@@ -31,7 +31,7 @@ module Decidim
         end
 
         def resend_invitation
-          Decidim::InviteUserAgain.call(participant.user, "invite_participant") do
+          Decidim::InviteUserAgain.call(participant.user, "invitation_instructions") do
             on(:ok) do
               notice = t("resend_invitation.success", scope: "decidim.action_delegator.admin.invite_participants")
               redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
@@ -65,16 +65,18 @@ module Decidim
           ActionDelegator::OrganizationSettings.new(current_organization).query
         end
 
-        def form(participant)
-          InvitationParticipantForm.new(
+        def build_form(participant)
+          Decidim::ActionDelegator::Admin::InvitationParticipantForm.new(
             name: participant.email.split("@").first&.gsub(/\W/, ""),
             email: participant.email.downcase,
             organization: current_organization,
             admin: false,
-            role: nil,
-            invited_by: current_user,
-            invitation_instructions: "invite_participant"
+            invited_by: current_user
           )
+        end
+
+        def form
+          @form ||= build_form(participant)
         end
       end
     end
