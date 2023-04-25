@@ -148,4 +148,73 @@ describe "Admin manages participants", type: :system do
       end
     end
   end
+
+  context "when inviting participants" do
+    let(:consultation) { create(:consultation, organization: organization) }
+    let(:setting) { create(:setting, consultation: consultation, authorization_method: authorization_method) }
+    let(:authorization_method) { "phone" }
+    let(:user_exists) { create(:user, organization: organization, last_sign_in_at: 1.day.ago) }
+    let(:user_with_invitation) { create(:user, organization: organization, invitation_sent_at: 1.day.ago) }
+    let!(:participant_exists) { create(:participant, setting: setting, decidim_user_id: user_exists.id) }
+    let!(:participant_non_exists) { create(:participant, setting: setting, decidim_user_id: nil) }
+    let!(:participant_with_invitation) { create(:participant, setting: setting, decidim_user_id: user_with_invitation.id) }
+    let!(:participant_without_email) { create(:participant, setting: setting, email: "") }
+
+    def participant_name(participant)
+      participant.email.split("@").first&.gsub(/\W/, "")
+    end
+
+    before do
+      visit decidim_admin_action_delegator.setting_participants_path(setting)
+    end
+
+    it "has invite link for all non-exist user" do
+      expect(page).to have_link(I18n.t("participants.index.send_invitation_link", scope: i18n_scope))
+    end
+
+    it "has invite link for each participant" do
+      expect(page).to have_link(I18n.t("actions.invite", scope: "decidim.admin"), count: 1)
+    end
+
+    it "has information about unregistered users" do
+      expect(page).to have_content(I18n.t("participants.index.missing_registered",
+                                          missing_registered: "2 participants",
+                                          scope: i18n_scope))
+
+      expect(page).to have_content(I18n.t("participants.index.missing_emails",
+                                          missing_emails: "1 participant",
+                                          scope: i18n_scope))
+    end
+
+    it "invites all non-existent users" do
+      perform_enqueued_jobs { click_link I18n.t("participants.index.send_invitation_link", scope: i18n_scope) }
+
+      expect(page).to have_admin_callout("successfully")
+
+      within "tr[data-participant-id=\"#{participant_non_exists.id}\"]" do
+        expect(find("td:nth-of-type(4)")).to have_content(participant_name(participant_non_exists))
+      end
+    end
+
+    it "invites the one participant" do
+      within "tr[data-participant-id=\"#{participant_non_exists.id}\"]" do
+        click_link I18n.t("actions.invite", scope: "decidim.admin")
+
+        expect(find("td:nth-of-type(4)")).to have_content(participant_name(participant_non_exists))
+      end
+
+      expect(page).to have_admin_callout("successfully")
+    end
+
+    context "when resend invitation" do
+      it "resends invitation" do
+        within "tr[data-participant-id=\"#{participant_with_invitation.id}\"]" do
+          expect(page).not_to have_content(I18n.t("actions.invite", scope: "decidim.admin"))
+          click_link I18n.t("actions.resend", scope: "decidim.admin")
+        end
+
+        expect(page).to have_admin_callout("successfully")
+      end
+    end
+  end
 end
