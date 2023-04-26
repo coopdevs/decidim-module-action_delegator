@@ -45,7 +45,13 @@ module Decidim
         private
 
         def users_list_to_invite
-          @users_list_to_invite ||= participants.where.not(email: current_organization.users.select(:email))
+          @users_list_to_invite ||= participants.where(decidim_user: nil)
+                                                .where.not(email: current_organization.users.select(:email))
+                                                .where.not("MD5(CONCAT(phone,'-',?,'-',?)) IN (?)",
+                                                           current_organization.id,
+                                                           Digest::MD5.hexdigest(Rails.application.secret_key_base),
+                                                           Authorization.select(:unique_id)
+                                                                        .where.not(unique_id: nil))
         end
 
         def current_setting
@@ -53,7 +59,7 @@ module Decidim
         end
 
         def participants
-          @participants ||= current_setting.participants.where.not(email: "")
+          @participants ||= current_setting.participants
         end
 
         def participant

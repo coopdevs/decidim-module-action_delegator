@@ -112,6 +112,7 @@ en:
               csv_import: Import CSV
               new_participant: New participant
               remove_census: Remove census
+            all_users_registered_html: All users are registered into the platform
             created_at: Created at
             email: Email
             last_login: Last login
@@ -255,6 +256,7 @@ en:
               to vote.</em>
             no_ponderations_html: There are no vote ponderations. <b>All users will
               have the same weight on their votes</b>
+            participant: participant
             user: user
             users_need_sync_html: The participants list needs to be synchronized.
               <b>Consultation results might be wrong!</b>
