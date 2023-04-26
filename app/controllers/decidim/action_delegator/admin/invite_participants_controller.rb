@@ -16,10 +16,6 @@ module Decidim
               notice = t("invite_user.success", scope: "decidim.action_delegator.admin.invite_participants")
               redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
             end
-
-            on(:invalid) do |_error|
-              flash.now[:error] = t("invite_user.error", scope: "decidim.action_delegator.admin.invite_participants")
-            end
           end
         end
 
@@ -39,13 +35,10 @@ module Decidim
 
           Decidim::InviteUserAgain.call(participant.user, "invitation_instructions") do
             on(:ok) do
-              notice = t("resend_invitation.success", scope: "decidim.action_delegator.admin.invite_participants")
-              redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
+              flash[:notice] = I18n.t("users.resend_invitation.success", scope: "decidim.admin")
             end
 
-            on(:invalid) do |_error|
-              flash.now[:error] = t("resend_invitation.error", scope: "decidim.action_delegator.admin.invite_participants")
-            end
+            redirect_to setting_participants_path(current_setting)
           end
         end
 
