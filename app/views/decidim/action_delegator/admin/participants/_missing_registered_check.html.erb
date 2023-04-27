@@ -11,7 +11,7 @@
       <%= render "decidim/action_delegator/admin/settings/participants_email_check", setting: current_setting %>
     </ul>
   </div>
-<% else %>
+<% elsif current_setting&.participants.any? %>
   <div class="callout warning text-left">
     <p class="happy"><%= t("all_users_registered_html", scope: i18n_scope) %></p>
   </div>
