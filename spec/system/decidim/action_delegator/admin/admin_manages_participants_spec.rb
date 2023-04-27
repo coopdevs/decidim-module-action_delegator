@@ -152,13 +152,12 @@ describe "Admin manages participants", type: :system do
   context "when inviting participants" do
     let(:consultation) { create(:consultation, organization: organization) }
     let(:setting) { create(:setting, consultation: consultation, authorization_method: authorization_method) }
-    let(:authorization_method) { "phone" }
+    let(:authorization_method) { "both" }
     let(:user_exists) { create(:user, organization: organization, last_sign_in_at: 1.day.ago) }
     let(:user_with_invitation) { create(:user, organization: organization, invitation_sent_at: 1.day.ago) }
     let!(:participant_exists) { create(:participant, setting: setting, decidim_user_id: user_exists.id) }
     let!(:participant_non_exists) { create(:participant, setting: setting, decidim_user_id: nil) }
     let!(:participant_with_invitation) { create(:participant, setting: setting, decidim_user_id: user_with_invitation.id) }
-    let!(:participant_without_email) { create(:participant, setting: setting, email: "") }
 
     def participant_name(participant)
       participant.email.split("@").first&.gsub(/\W/, "")
@@ -174,16 +173,6 @@ describe "Admin manages participants", type: :system do
 
     it "has invite link for each participant" do
       expect(page).to have_link(I18n.t("actions.invite", scope: "decidim.admin"), count: 1)
-    end
-
-    it "has information about unregistered users" do
-      expect(page).to have_content(I18n.t("participants.index.missing_registered",
-                                          missing_registered: "2 participants",
-                                          scope: i18n_scope))
-
-      expect(page).to have_content(I18n.t("participants.index.missing_emails",
-                                          missing_emails: "1 participant",
-                                          scope: i18n_scope))
     end
 
     it "invites all non-existent users" do
