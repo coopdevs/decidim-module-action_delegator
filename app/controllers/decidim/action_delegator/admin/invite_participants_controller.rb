@@ -22,7 +22,9 @@ module Decidim
         def invite_all_users
           enforce_permission_to :invite, :participant, resource: current_setting
 
-          InviteParticipantsJob.perform_later(users_list_to_invite.to_a, current_organization)
+          users_list_to_invite.find_each do |participant|
+            InviteParticipantsJob.perform_later(participant, current_organization)
+          end
 
           notice = t("invite_all_users.success", scope: "decidim.action_delegator.admin.invite_participants")
           redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
