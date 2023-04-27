@@ -80,7 +80,7 @@ module Decidim
             allow(ActionDelegator).to receive(:allow_to_invite_users).and_return(false)
           end
 
-          describe "POST invite_user" do
+          describe "POST #invite_user" do
             it "redirects to the participants page" do
               post :invite_user, params: params
 
@@ -89,7 +89,7 @@ module Decidim
             end
           end
 
-          describe "POST invite_all_users" do
+          describe "POST #invite_all_users" do
             it "redirects to the participants page" do
               post :invite_all_users, params: { setting_id: setting.id }
 
@@ -98,7 +98,7 @@ module Decidim
             end
           end
 
-          describe "POST resend_invitation" do
+          describe "POST #resend_invitation" do
             it "redirects to the participants page" do
               post :resend_invitation, params: params
 

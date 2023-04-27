@@ -239,5 +239,23 @@ describe "Admin manages participants", type: :system do
         expect(page).to have_link(I18n.t("actions.invite", scope: "decidim.admin"))
       end
     end
+
+    context "when inviting users is disabled" do
+      let(:authorization_method) { "both" }
+      let(:email) { "test@example.org" }
+
+      before do
+        allow(Decidim::ActionDelegator).to receive(:allow_to_invite_users).and_return(false)
+        visit decidim_admin_action_delegator.setting_participants_path(setting)
+      end
+
+      it "does not have invite link for all non-exist user" do
+        expect(page).not_to have_link(I18n.t("participants.index.send_invitation_link", scope: i18n_scope))
+      end
+
+      it "does not have invite link for each participant" do
+        expect(page).not_to have_link(I18n.t("actions.invite", scope: "decidim.admin"))
+      end
+    end
   end
 end
