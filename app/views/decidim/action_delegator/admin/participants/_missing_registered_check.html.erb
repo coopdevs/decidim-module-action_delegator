@@ -4,11 +4,10 @@
   <div class="callout warning text-left">
     <ul class="happy-faces">
       <li>
-        <%= t("missing_registered", missing_registered: pluralize(missing_registered.count, t("#{i18n_scope}.participant")), scope: i18n_scope) %>
+        <%= t("#{i18n_scope}.missing_registered", missing_registered: pluralize(missing_registered.count, t("#{i18n_scope}.participant"))) %>
         <br>
         <%= link_to t("send_invitation_link", scope: i18n_scope), invite_all_users_setting_invite_participants_path(current_setting), class: "action-icon--edit", method: :post %>
       </li>
-      <%= render "decidim/action_delegator/admin/settings/participants_email_check", setting: current_setting %>
     </ul>
   </div>
 <% elsif current_setting&.participants.any? %>

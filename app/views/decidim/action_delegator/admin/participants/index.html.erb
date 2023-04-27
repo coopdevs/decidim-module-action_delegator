@@ -18,6 +18,7 @@
     </h2>
   </div>
   <div class="card-section">
+    <%= render "decidim/action_delegator/admin/settings/participants_email_check", setting: current_setting if (current_setting.authorization_method = "phone") %>
     <%= render "decidim/action_delegator/admin/settings/participants_sync_check", setting: current_setting %>
     <%= render "decidim/action_delegator/admin/participants/missing_registered_check", setting: current_setting if (current_setting.authorization_method != "phone") %>
     <div class="table-scroll">
