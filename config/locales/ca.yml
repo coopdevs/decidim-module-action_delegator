@@ -3,8 +3,8 @@ ca:
   activerecord:
     attributes:
       decidim/action_delegator/setting:
-        decidim_consultation_id: Consultation
-        max_grants: Maximum vote delegations a user can receive
+        decidim_consultation_id: Consulta
+        max_grants: Màxim nombre de delegacions que pot rebre un usuari
   decidim:
     action_delegator:
       admin:
