@@ -6,7 +6,7 @@ module Decidim
       class InviteParticipantsController < ActionDelegator::Admin::ApplicationController
         include NeedsPermission
 
-        helper_method :current_setting, :users_list_to_invite, :participant, :form
+        helper_method :current_setting, :participant, :form
 
         def invite_user
           enforce_permission_to :invite, :participant, resource: current_setting
@@ -22,9 +22,7 @@ module Decidim
         def invite_all_users
           enforce_permission_to :invite, :participant, resource: current_setting
 
-          users_list_to_invite.find_each do |participant|
-            InviteParticipantsJob.perform_later(participant, current_organization)
-          end
+          InviteParticipantsJob.perform_later(current_setting, current_organization)
 
           notice = t("invite_all_users.success", scope: "decidim.action_delegator.admin.invite_participants")
           redirect_to decidim_admin_action_delegator.setting_participants_path(current_setting), notice: notice
@@ -43,16 +41,6 @@ module Decidim
         end
 
         private
-
-        def users_list_to_invite
-          @users_list_to_invite ||= participants.where(decidim_user: nil)
-                                                .where.not(email: current_organization.users.select(:email))
-                                                .where.not("MD5(CONCAT(phone,'-',?,'-',?)) IN (?)",
-                                                           current_organization.id,
-                                                           Digest::MD5.hexdigest(Rails.application.secret_key_base),
-                                                           Authorization.select(:unique_id)
-                                                                        .where.not(unique_id: nil))
-        end
 
         def current_setting
           @current_setting ||= organization_settings.find_by(id: params[:setting_id])
