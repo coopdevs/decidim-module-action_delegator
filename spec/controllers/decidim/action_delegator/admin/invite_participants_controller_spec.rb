@@ -74,6 +74,39 @@ module Decidim
             end
           end
         end
+
+        context "when inviting users is disabled" do
+          before do
+            allow(ActionDelegator).to receive(:allow_to_invite_users).and_return(false)
+          end
+
+          describe "POST invite_user" do
+            it "redirects to the participants page" do
+              post :invite_user, params: params
+
+              expect(response).to redirect_to setting_participants_path(setting)
+              expect(flash[:alert]).to eq(I18n.t("permissions.not_allowed", scope: "decidim.action_delegator.admin.invite_participants"))
+            end
+          end
+
+          describe "POST invite_all_users" do
+            it "redirects to the participants page" do
+              post :invite_all_users, params: { setting_id: setting.id }
+
+              expect(response).to redirect_to setting_participants_path(setting)
+              expect(flash[:alert]).to eq(I18n.t("permissions.not_allowed", scope: "decidim.action_delegator.admin.invite_participants"))
+            end
+          end
+
+          describe "POST resend_invitation" do
+            it "redirects to the participants page" do
+              post :resend_invitation, params: params
+
+              expect(response).to redirect_to setting_participants_path(setting)
+              expect(flash[:alert]).to eq(I18n.t("permissions.not_allowed", scope: "decidim.action_delegator.admin.invite_participants"))
+            end
+          end
+        end
       end
     end
   end

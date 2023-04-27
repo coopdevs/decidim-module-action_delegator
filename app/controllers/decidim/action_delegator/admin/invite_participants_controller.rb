@@ -6,6 +6,8 @@ module Decidim
       class InviteParticipantsController < ActionDelegator::Admin::ApplicationController
         include NeedsPermission
 
+        before_action :enforce_permission_to_invite
+
         helper_method :current_setting, :participant, :form
 
         def invite_user
@@ -70,6 +72,11 @@ module Decidim
 
         def form
           @form ||= build_form(participant)
+        end
+
+        def enforce_permission_to_invite
+          alert = t("permissions.not_allowed", scope: "decidim.action_delegator.admin.invite_participants")
+          redirect_to setting_participants_path(current_setting), alert: alert unless Decidim::ActionDelegator.allow_to_invite_users
         end
       end
     end
