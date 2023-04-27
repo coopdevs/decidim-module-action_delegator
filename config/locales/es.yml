@@ -3,8 +3,8 @@ es:
   activerecord:
     attributes:
       decidim/action_delegator/setting:
-        decidim_consultation_id: Consultation
-        max_grants: Maximum vote delegations a user can receive
+        decidim_consultation_id: Consulta
+        max_grants: Número máximo de delegaciones de voto que una participante puede recibir
   decidim:
     action_delegator:
       admin:
@@ -96,17 +96,17 @@ es:
           default_metadata: "(datos de afiliación no disponibles)"
           export: Exportar
           export_filename: consultation_results
-          membership_type: Membership type
-          membership_weight: Weight
-          total_delegates: "%{count} delegated votes"
+          membership_type: Tipo de miembro
+          membership_weight: Peso
+          total_delegates: "%{count} votos delegados"
     authorization_handlers:
       admin:
         delegations_verifier:
           help:
-            - A verification method for delegate voting
+            - Un método de verificación para el voto delegado
       delegations_verifier:
-        explanation: Verified users with this method can delegate votes to other users
-        name: Delegations Verifier
+        explanation: Las participantes verificadas con este método pueden delegar votos a otras participantes
+        name: Verificador de Delegaciones
   layouts:
     decidim:
       admin:
@@ -114,4 +114,4 @@ es:
           attachments: Adjuntos
           categories: Categorías
       user_profile:
-        vote_delegations: Vote delegations
+        vote_delegations: Delegación de votos
