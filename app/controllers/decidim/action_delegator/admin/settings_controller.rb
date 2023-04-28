@@ -9,7 +9,7 @@ module Decidim
         include Paginable
 
         layout "decidim/admin/users"
-        helper_method :settings
+        helper_method :settings, :consultation_select_options, :selected_setting
 
         def index
           enforce_permission_to :index, :setting
@@ -26,7 +26,7 @@ module Decidim
 
           @form = form(SettingForm).from_params(params)
 
-          CreateSetting.call(@form) do
+          CreateSetting.call(@form, selected_setting) do
             on(:ok) do
               notice = I18n.t("settings.create.success", scope: "decidim.action_delegator.admin")
               redirect_to decidim_admin_action_delegator.settings_path, notice: notice
@@ -95,6 +95,17 @@ module Decidim
 
         def collection
           @collection ||= ActionDelegator::OrganizationSettings.new(current_organization).query
+        end
+
+        def consultation_select_options
+          Decidim::Consultation.where(id: ActionDelegator::Setting.select(:decidim_consultation_id))
+                               .order(:title)
+                               .map { |consultation| [consultation.id, consultation.title[I18n.locale.to_s]] }
+                               .to_h
+        end
+
+        def selected_setting
+          @selected_setting ||= Setting.find_by(decidim_consultation_id: params[:setting][:source_consultation_id])
         end
       end
     end
