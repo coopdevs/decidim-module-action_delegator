@@ -14,6 +14,11 @@ module Decidim
           resources :delegations, only: [:index, :new, :create, :destroy]
           resources :ponderations
           resources :participants
+          resources :invite_participants do
+            post :invite_user, on: :member
+            post :invite_all_users, on: :collection
+            post :resend_invitation, on: :member
+          end
           resources :manage_participants, only: [:new, :create, :destroy_all] do
             delete :destroy_all, on: :collection
           end

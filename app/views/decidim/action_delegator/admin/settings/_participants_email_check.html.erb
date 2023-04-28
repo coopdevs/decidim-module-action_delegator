@@ -1,0 +1,7 @@
+<% total_missing_emails = setting&.participants.where(email: "").count %>
+<% i18n_scope = "decidim.action_delegator.admin.settings.setting_checks" %>
+<% if Decidim::ActionDelegator.allow_to_invite_users && total_missing_emails.positive? %>
+  <div class="callout warning text-left">
+    <p><%= t("#{i18n_scope}.missing_emails", count: pluralize(total_missing_emails, t("#{i18n_scope}.participant"))) %></p>
+  </div>
+<% end %>
