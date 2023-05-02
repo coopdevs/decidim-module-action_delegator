@@ -178,6 +178,7 @@ ca:
             </ul>
           check_verifier:
             not_installed_html: Sembla que el mètode d'autorització "Verificador de delegació" no està instal·lat. No podeu utilitzar el cens integrat sense aquest. Instal·leu-lo a <a href="/system">/system</a>.
+          copy_setting: 'Copy ponderations and census from:'
           create:
             error: S'ha produït un error en crear la configuració
             success: Configuració guardada amb èxit
