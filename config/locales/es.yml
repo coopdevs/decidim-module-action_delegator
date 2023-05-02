@@ -179,6 +179,7 @@ es:
             </ul>
           check_verifier:
             not_installed_html: Parece que el método de autorización "Verificador de delegación" no está instalado. No puede usar el censo integrado sin él. Instálelo en <a href="/system">/system</a>.
+          copy_setting: 'Copy ponderations and census from:'
           create:
             error: Se ha producido un problema al crear la configuración
             success: Configuración guardada correctamente
