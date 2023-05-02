@@ -50,7 +50,7 @@ describe Decidim::ActionDelegator::Admin::UpdateSetting do
         max_grants: max_grants,
         authorization_method: authorization_method,
         decidim_consultation_id: decidim_consultation_id,
-        source_consultation_id: copy_from_setting.id
+        copy_from_setting: copy_from_setting.id
       )
     end
 

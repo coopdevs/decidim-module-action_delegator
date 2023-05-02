@@ -49,7 +49,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
         max_grants: max_grants,
         authorization_method: authorization_method,
         decidim_consultation_id: decidim_consultation_id,
-        source_consultation_id: copy_from_setting.id
+        copy_from_setting: copy_from_setting.id
       )
     end
 
@@ -59,6 +59,14 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
 
     it "creates a setting" do
       expect { subject.call }.to(change { Decidim::ActionDelegator::Setting.count }.by(1))
+    end
+
+    it "copies participants" do
+      expect { subject.call }.to(change { Decidim::ActionDelegator::Participant.count }.by(copy_from_setting.participants.count))
+    end
+
+    it "copies ponderations" do
+      expect { subject.call }.to(change { Decidim::ActionDelegator::Ponderation.count }.by(copy_from_setting.ponderations.count))
     end
   end
 end
