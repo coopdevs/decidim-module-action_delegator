@@ -7,9 +7,10 @@ module Decidim
         # Public: Initializes the command.
         #
         # form         - A form object with the params.
-        def initialize(form, setting)
+        def initialize(form, setting, copy_from_setting)
           @form = form
           @setting = setting
+          @copy_from_setting = copy_from_setting
         end
 
         # Executes the command. Broadcasts these events:
@@ -28,13 +29,36 @@ module Decidim
 
         private
 
-        attr_reader :form, :setting
+        attr_reader :form, :setting, :copy_from_setting
 
         def update_setting
-          setting.max_grants = form.max_grants
-          setting.decidim_consultation_id = form.decidim_consultation_id
-          setting.authorization_method = form.authorization_method
+          setting.assign_attributes(
+            max_grants: form.max_grants,
+            decidim_consultation_id: form.decidim_consultation_id,
+            authorization_method: form.authorization_method
+          )
+
+          if copy_from_setting.present?
+            new_participants = copy_from_setting.participants.reject do |participant|
+              existing_participants.any? { |p| p.email == participant.email || p.phone == participant.phone }
+            end
+            setting.participants += new_participants.map(&:dup)
+
+            new_ponderations = copy_from_setting.ponderations.reject do |ponderation|
+              existing_ponderations.any? { |p| p.name == ponderation.name }
+            end
+            setting.ponderations += new_ponderations.map(&:dup)
+          end
+
           setting.save!
+        end
+
+        def existing_participants
+          @existing_participants ||= setting.participants.to_a
+        end
+
+        def existing_ponderations
+          @existing_ponderations ||= setting.ponderations.to_a
         end
       end
     end

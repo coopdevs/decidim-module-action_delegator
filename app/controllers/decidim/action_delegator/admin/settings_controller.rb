@@ -9,7 +9,7 @@ module Decidim
         include Paginable
 
         layout "decidim/admin/users"
-        helper_method :settings
+        helper_method :settings, :settings_select_options, :copy_from_setting
 
         def index
           enforce_permission_to :index, :setting
@@ -26,7 +26,7 @@ module Decidim
 
           @form = form(SettingForm).from_params(params)
 
-          CreateSetting.call(@form) do
+          CreateSetting.call(@form, copy_from_setting) do
             on(:ok) do
               notice = I18n.t("settings.create.success", scope: "decidim.action_delegator.admin")
               redirect_to decidim_admin_action_delegator.settings_path, notice: notice
@@ -50,7 +50,7 @@ module Decidim
 
           @form = form(SettingForm).from_params(params)
 
-          UpdateSetting.call(@form, setting) do
+          UpdateSetting.call(@form, setting, copy_from_setting) do
             on(:ok) do
               notice = I18n.t("settings.update.success", scope: "decidim.action_delegator.admin")
               redirect_to decidim_admin_action_delegator.settings_path, notice: notice
@@ -95,6 +95,14 @@ module Decidim
 
         def collection
           @collection ||= ActionDelegator::OrganizationSettings.new(current_organization).query
+        end
+
+        def settings_select_options
+          collection.map { |setting| [setting.consultation.id, translated_attribute(setting.title)] }.to_h
+        end
+
+        def copy_from_setting
+          @copy_from_setting ||= Setting.find_by(decidim_consultation_id: params[:setting][:copy_from_setting_id])
         end
       end
     end
