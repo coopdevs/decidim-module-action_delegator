@@ -9,7 +9,7 @@ module Decidim
         attribute :max_grants, Integer
         attribute :decidim_consultation_id, Integer
         attribute :authorization_method, String
-        attribute :source_consultation_id, Integer
+        attribute :copy_from_setting_id, Integer
 
         validates :max_grants, :decidim_consultation_id, presence: true
         validate :consultation_uniqueness

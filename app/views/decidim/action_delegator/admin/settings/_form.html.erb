@@ -12,5 +12,5 @@
 </div>
 
 <div class="row column">
-  <%= form.collection_select :source_consultation_id, consultation_select_options, :first, :last,{ include_blank: true, label: t("copy_setting", scope: "decidim.action_delegator.admin.settings").html_safe } %>
+  <%= form.collection_select :copy_from_setting_id, settings_select_options, :first, :last, { include_blank: true, label: t("copy_setting", scope: "decidim.action_delegator.admin.settings").html_safe } %>
 </div>

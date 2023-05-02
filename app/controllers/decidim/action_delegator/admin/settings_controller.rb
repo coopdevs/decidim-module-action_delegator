@@ -9,7 +9,7 @@ module Decidim
         include Paginable
 
         layout "decidim/admin/users"
-        helper_method :settings, :consultation_select_options, :selected_setting
+        helper_method :settings, :settings_select_options, :copy_from_setting
 
         def index
           enforce_permission_to :index, :setting
@@ -26,7 +26,7 @@ module Decidim
 
           @form = form(SettingForm).from_params(params)
 
-          CreateSetting.call(@form, selected_setting) do
+          CreateSetting.call(@form, copy_from_setting) do
             on(:ok) do
               notice = I18n.t("settings.create.success", scope: "decidim.action_delegator.admin")
               redirect_to decidim_admin_action_delegator.settings_path, notice: notice
@@ -50,7 +50,7 @@ module Decidim
 
           @form = form(SettingForm).from_params(params)
 
-          UpdateSetting.call(@form, setting, selected_setting) do
+          UpdateSetting.call(@form, setting, copy_from_setting) do
             on(:ok) do
               notice = I18n.t("settings.update.success", scope: "decidim.action_delegator.admin")
               redirect_to decidim_admin_action_delegator.settings_path, notice: notice
@@ -97,15 +97,12 @@ module Decidim
           @collection ||= ActionDelegator::OrganizationSettings.new(current_organization).query
         end
 
-        def consultation_select_options
-          Decidim::Consultation.where(id: ActionDelegator::Setting.select(:decidim_consultation_id))
-                               .order(:title)
-                               .map { |consultation| [consultation.id, consultation.title[I18n.locale.to_s]] }
-                               .to_h
+        def settings_select_options
+          collection.map { |setting| [setting.consultation.id, setting.consultation.title[I18n.locale.to_s]] }.to_h
         end
 
-        def selected_setting
-          @selected_setting ||= Setting.find_by(decidim_consultation_id: params[:setting][:source_consultation_id])
+        def copy_from_setting
+          @copy_from_setting ||= Setting.find_by(decidim_consultation_id: params[:setting][:copy_from_setting_id])
         end
       end
     end

@@ -3,10 +3,10 @@
 require "spec_helper"
 
 describe Decidim::ActionDelegator::Admin::CreateSetting do
-  subject { described_class.new(form, selected_setting) }
+  subject { described_class.new(form, copy_from_setting) }
 
   let(:max_grants) { 10 }
-  let(:selected_setting) { nil }
+  let(:copy_from_setting) { nil }
   let(:authorization_method) { :both }
   let(:decidim_consultation_id) { create(:consultation).id }
   let(:invalid) { false }
@@ -41,7 +41,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
   end
 
   context "when copy setting" do
-    let!(:selected_setting) { create(:setting, :with_participants, :with_ponderations, consultation: other_consultation) }
+    let!(:copy_from_setting) { create(:setting, :with_participants, :with_ponderations, consultation: other_consultation) }
     let(:other_consultation) { create(:consultation) }
     let(:form) do
       double(
@@ -49,7 +49,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
         max_grants: max_grants,
         authorization_method: authorization_method,
         decidim_consultation_id: decidim_consultation_id,
-        source_consultation_id: selected_setting.id
+        source_consultation_id: copy_from_setting.id
       )
     end
 

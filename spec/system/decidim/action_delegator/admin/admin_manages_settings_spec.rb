@@ -57,7 +57,7 @@ describe "Admin manages settings", type: :system do
     it "creates a new setting" do
       fill_in :setting_max_grants, with: 5
       select translated_attribute(consultation.title), from: :setting_decidim_consultation_id
-      select translated_attribute(first_consultation.title), from: :setting_source_consultation_id
+      select translated_attribute(first_consultation.title), from: :setting_copy_from_setting_id
 
       find("*[type=submit]").click
 
@@ -83,7 +83,7 @@ describe "Admin manages settings", type: :system do
     end
 
     it "edits a setting" do
-      select translated_attribute(consultation.title), from: :setting_source_consultation_id
+      select translated_attribute(consultation.title), from: :setting_copy_from_setting_id
 
       find("*[type=submit]").click
 
