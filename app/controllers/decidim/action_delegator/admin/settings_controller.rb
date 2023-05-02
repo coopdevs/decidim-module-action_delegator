@@ -50,7 +50,7 @@ module Decidim
 
           @form = form(SettingForm).from_params(params)
 
-          UpdateSetting.call(@form, setting) do
+          UpdateSetting.call(@form, setting, selected_setting) do
             on(:ok) do
               notice = I18n.t("settings.update.success", scope: "decidim.action_delegator.admin")
               redirect_to decidim_admin_action_delegator.settings_path, notice: notice

@@ -31,21 +31,15 @@ module Decidim
         attr_reader :form, :setting
 
         def create_setting
-          selected = selected_setting || Setting.new(ponderations: [], participants: [])
+          selected = @selected_setting || Setting.new(ponderations: [], participants: [])
 
           created_setting = Setting.new(
             max_grants: form.max_grants,
             authorization_method: form.authorization_method,
-            decidim_consultation_id: form.decidim_consultation_id
+            decidim_consultation_id: form.decidim_consultation_id,
+            ponderations: selected.ponderations.map(&:dup),
+            participants: selected.participants.map(&:dup)
           )
-
-          selected.ponderations.each do |ponderation|
-            created_setting.ponderations << ponderation.dup
-          end
-
-          selected.participants.each do |participant|
-            created_setting.participants << participant.dup
-          end
 
           @setting = created_setting.save!
         end
