@@ -8,11 +8,11 @@ describe "rake action_delegator:import_direct_verifications", type: :task do
   let(:user3) { create(:user, :confirmed) }
   let(:user4) { create(:user, :confirmed, organization: user3.organization) }
   let(:user5) { create(:user, :confirmed, organization: user3.organization) }
-  let!(:authorization1) { create(:authorization, :direct_verification, user: user1, metadata: metadata1) }
-  let!(:authorization2) { create(:authorization, :direct_verification, user: user2, metadata: metadata2) }
-  let!(:authorization3) { create(:authorization, :direct_verification, user: user3, metadata: metadata3) }
-  let!(:authorization4) { create(:authorization, :direct_verification, user: user4, metadata: metadata4) }
-  let!(:authorization5) { create(:authorization, :direct_verification, user: user5, metadata: metadata5) }
+  let!(:authorization1) { create(:authorization, name: "direct_verifications", user: user1, metadata: metadata1) }
+  let!(:authorization2) { create(:authorization, name: "direct_verifications", user: user2, metadata: metadata2) }
+  let!(:authorization3) { create(:authorization, name: "direct_verifications", user: user3, metadata: metadata3) }
+  let!(:authorization4) { create(:authorization, name: "direct_verifications", user: user4, metadata: metadata4) }
+  let!(:authorization5) { create(:authorization, name: "direct_verifications", user: user5, metadata: metadata5) }
   let(:metadata1) { { membership_type: "producer", membership_weight: 2, membership_phone: "1234" } }
   let(:metadata2) { { membership_type: "consumer", membership_weight: 1.5, membership_phone: "23456" } }
   let(:metadata3) { { membership_type: "user1", membership_weight: 1 } }

@@ -38,11 +38,3 @@ FactoryBot.define do
     end
   end
 end
-
-FactoryBot.modify do
-  factory :authorization, class: "Decidim::Authorization" do
-    trait :direct_verification do
-      name { "direct_verifications" }
-    end
-  end
-end
