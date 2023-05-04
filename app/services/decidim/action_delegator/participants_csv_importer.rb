@@ -3,26 +3,8 @@
 module Decidim
   module ActionDelegator
     class ParticipantsCsvImporter < CsvImporter
-      def initialize(csv_file, current_user, current_setting)
-        @csv_file = csv_file
-        @current_user = current_user
-        @current_setting = current_setting
-      end
 
       def import!
-        import_summary = {
-          total_rows: 0,
-          imported_rows: 0,
-          error_rows: [],
-          skipped_rows: [],
-          details_csv_path: nil
-        }
-
-        details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
-
-        i = 1
-        csv = CSV.new(@csv_file, headers: true, col_sep: ",")
-
         CSV.open(details_csv_file, "wb") do |details_csv|
           headers(csv, details_csv)
 
@@ -37,6 +19,8 @@ module Decidim
             @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
 
             next if row&.empty?
+
+            process(row)
 
             if participant_exists?(@form)
               mismatch_fields = mismatched_fields(@form)
@@ -62,6 +46,10 @@ module Decidim
 
             handle_form_validity(row, details_csv, import_summary, i)
           end
+
+
+
+
         end
         import_summary[:total_rows] = i - 1
         import_summary[:details_csv_path] = details_csv_file
@@ -100,10 +88,6 @@ module Decidim
         phone = nil if %w(phone both).include?(authorization_method.to_s) && invalid_phone?(phone)
 
         [email, phone]
-      end
-
-      def invalid_email?(email)
-        email.blank? || !email.match?(::Devise.email_regexp)
       end
 
       def invalid_phone?(phone)

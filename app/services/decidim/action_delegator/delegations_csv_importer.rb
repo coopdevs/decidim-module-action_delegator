@@ -82,10 +82,6 @@ module Decidim
         [granter, grantee]
       end
 
-      def invalid_email?(email)
-        email.blank? || !email.match?(::Devise.email_regexp)
-      end
-
       def user_id(email)
         Decidim::User.find_by(email: email)&.id
       end

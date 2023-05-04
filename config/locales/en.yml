@@ -291,14 +291,14 @@ en:
           greeting: Hello %{name},
           info_messages: Reason for skipping
           instructions: "<p>Attached is a file with import details, which contains
-            rows that were not imported.</p>\n<p>If you want to
-            continue importing, correct the rows specified, delete the last column
-            from the file, save \nthe file and import again.</p>\n"
+            rows that were not imported.</p>\n<p>If you want to continue importing,
+            correct the rows specified, delete the last column from the file, save
+            \nthe file and import again.</p>\n"
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Row number
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: "CSV imported"
-          success: "CSV imported successfully"
+          subject: CSV imported
+          success: CSV imported successfully
           text_error: Error
       name: Decidim ActionDelegator cooperatives module
       participants_csv_importer:
