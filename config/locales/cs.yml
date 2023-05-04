@@ -4,7 +4,7 @@ cs:
     attributes:
       decidim/action_delegator/setting:
         decidim_consultation_id: Konzultace
-        max_grants: Maximum vote delegations a user can receive
+        max_grants: Maximální počet delegací hlasů, které může uživatel obdržet
   decidim:
     action_delegator:
       admin:
@@ -74,7 +74,7 @@ cs:
           missing_phone_error: Chybějící členský telefon
           phone_warning: Toto telefonní číslo bylo importováno administrátorem. Pokud není správné, obraťte se na něj.
       delegations:
-        has_delegations: Delegate vote made
+        has_delegations: Provedené hlasování delegátů
         link: Máte udělené delegace
       delegations_modal:
         callout: Pamatujte, že hlasujete jménem
