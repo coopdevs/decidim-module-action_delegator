@@ -41,6 +41,80 @@ describe "Admin manages settings", type: :system do
     end
   end
 
+  context "when creating with copy from other setting" do
+    let!(:first_consultation) { create(:consultation, organization: organization) }
+    let!(:setting) { create(:setting, :with_participants, :with_ponderations, authorization_method: :both, consultation: first_consultation) }
+
+    before do
+      switch_to_host(organization.host)
+      login_as user, scope: :user
+      visit decidim_admin.users_path
+      click_link I18n.t("decidim.action_delegator.admin.menu.delegations")
+
+      click_link I18n.t("decidim.action_delegator.admin.settings.index.actions.new_setting")
+    end
+
+    it "creates a new setting with participants and ponderations from an other setting" do
+      fill_in :setting_max_grants, with: 5
+      select translated_attribute(consultation.title), from: :setting_decidim_consultation_id
+      select translated_attribute(first_consultation.title), from: :setting_copy_from_setting_id
+
+      find("*[type=submit]").click
+
+      expect(page).to have_admin_callout("successfully")
+      expect(page).to have_content(translated_attribute(first_consultation.title))
+      expect(page).to have_css("tr[data-setting-id='#{setting.id}'] td:nth-of-type(5)", text: "3")
+      expect(page).to have_css("tr[data-setting-id='#{setting.id}'] td:nth-of-type(6)", text: "3")
+
+      row_with_new_setting = find(:xpath, "//table/tbody/tr[1]")
+      row_with_new_setting.find(:link, I18n.t("decidim.action_delegator.admin.settings.index.actions.census")).click
+
+      # Check that the participants from the copied setting are present
+      setting.participants.each do |participant|
+        expect(page).to have_content(participant.email)
+      end
+    end
+  end
+
+  context "when editing settings with copy from other setting" do
+    let!(:first_consultation) { create(:consultation, organization: organization) }
+    let!(:first_setting) { create(:setting, :with_participants, :with_ponderations, authorization_method: :both, consultation: first_consultation) }
+    let!(:second_setting) { create(:setting, :with_participants, :with_ponderations, authorization_method: :both, consultation: consultation) }
+
+    before do
+      switch_to_host(organization.host)
+      login_as user, scope: :user
+      visit decidim_admin.users_path
+      click_link I18n.t("decidim.action_delegator.admin.menu.delegations")
+
+      find("tr[data-setting-id='#{first_setting.id}'] a.action-icon--edit[title='Edit']").click
+    end
+
+    it "edits a setting" do
+      select translated_attribute(consultation.title), from: :setting_copy_from_setting_id
+
+      find("*[type=submit]").click
+
+      expect(page).to have_admin_callout("successfully")
+      expect(page).to have_content(translated_attribute(first_consultation.title))
+      expect(page).to have_css("tr[data-setting-id='#{first_setting.id}'] td:nth-of-type(5)", text: "6")
+      expect(page).to have_css("tr[data-setting-id='#{first_setting.id}'] td:nth-of-type(6)", text: "6")
+
+      edited_setting_row = find("tr[data-setting-id='#{first_setting.id}']")
+      edited_setting_row.find("a[title='#{I18n.t("decidim.action_delegator.admin.settings.index.actions.census")}']").click
+
+      # Check that the participants from the other setting are on the list
+      second_setting.participants.each do |participant|
+        expect(page).to have_content(participant.email)
+      end
+
+      # Check that the participants from the edited setting are on the list
+      first_setting.participants.each do |participant|
+        expect(page).to have_content(participant.email)
+      end
+    end
+  end
+
   context "when listing settings" do
     let(:participants) { [] }
     let(:authorization_method) { :both }

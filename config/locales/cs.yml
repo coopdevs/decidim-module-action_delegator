@@ -1,10 +1,38 @@
+---
 cs:
+  activemodel:
+    attributes:
+      delegations_verifier:
+        email: Email
+        phone: Mobile phone number
+      participant:
+        decidim_action_delegator_ponderation_id: Ponderation
+        email: E-mail
+        phone: Telefon
+      ponderation:
+        name: Typ členství
+        name_help: Typ členství
+      setting:
+        decidim_consultation_id: Konzultace
+        max_grants: Maximum vote delegations a user can receive
+        phone_freezed: Use phone number from the census. Don't allow participants to edit it.
+        verify_with_sms: Ověřit pomocí SMS
+    errors:
+      models:
+        delegations_verifier:
+          attributes:
+            email:
+              email_not_found: Sorry, this email is not in the census. Please, contact us if you think this is a mistake.
+            phone:
+              phone_not_found: Sorry, this phone number is not in the census. Please, contact us if you think this is a mistake.
   decidim:
     action_delegator:
       admin:
         consultations:
           results:
             title: Výsledky podle odpovědi, typu členství a váhy
+          weighted_results:
+            title: Results by answer summing membership weights
         delegations:
           create:
             error: Při vytváření delegace došlo k chybě
@@ -20,17 +48,32 @@ cs:
             consultation: Konzultace
             created_at: Vytvořeno v
             delete: Smazat
+            description_html: This is the current census for this consultation
             grantee: Příjemce
             granter: Delegující
             title: Účastníci
+            voted: Granter has voted?
           new:
-            form:
-              title: Obecné informace
             grantee: Příjemce
             granter: Delegující
             save: Vytvořit
             select_member: Vybrat člena
             title: Nová delegace
+        manage_participants:
+          create:
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+          new:
+            authorization_method:
+              both: email and phone number
+              email: email
+              phone: phone number
+            describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
+            import: Import
+            required_fields: 'Required fields: %{authorization_method}'
+            title: Import participants
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         menu:
           consultations_submenu:
             by_answer: Podle odpovědi
@@ -38,31 +81,142 @@ cs:
             sum_of_weights: Podle součtu vah
           delegations: Uživatelské delegace
           participants: Účastníci
-        results:
-          sum_of_weights:
-            index:
-              title: Výsledky na základě součtu váh členů
+        participants:
+          create:
+            error: There was a problem creating the participants
+            success: Participants created successfully
+          destroy:
+            error: There was a problem removing this participant
+            success: Participant successfully destroyed
+          edit:
+            save: Uložit
+            title: Upravit účastníka
+          index:
+            actions:
+              csv_import: Import CSV
+              new_participant: Nový účastník
+              remove_census: Remove census
+            created_at: Vytvořeno v
+            email: E-mail
+            last_login: Poslední přihlášení
+            never_logged: Nikdy nepřihlášený
+            phone: Telefon
+            ponderation: Ponderation
+            title: Seznam obyvatel
+            user: Uživatel
+            voted: Has voted?
+          new:
+            save: Vytvořit
+            title: Nový účastník
+          remove_census:
+            confirm: Are you sure you want to remove the census? This operation cannot be undone
+            success: "%{participants_count} entries were successfully deleted from the census"
+          update:
+            error: There was a problem updating the participants
+            success: Participants saved successfully
+        permissions:
+          sync:
+            started: Participans synchronization has started. Please wait a few minutes and refresh this page.
+          update:
+            error: There was a problem updating the permissions
+            success: Permissions updated successfully
+        ponderations:
+          create:
+            error: There's been and error creating the ponderation
+            success: New ponderation created successfully
+          destroy:
+            error: There's been and error removing the ponderation
+            success: Ponderation destroyed successfully
+          edit:
+            save: Uložit
+            title: Edit ponderation type
+          form:
+            name_help: User type, e.g. "member", "associate", "supporter". Must be unique.
+            name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
+            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the users in this ponderation type.
+          index:
+            actions:
+              new_ponderation: New ponderation
+            created_at: Vytvořeno v
+            name: Typ členství
+            num_users: Census total
+            title: Ponderations
+            weight: Vote weight
+          new:
+            save: Vytvořit
+            title: New ponderation type
+          update:
+            error: There's been and error updating the ponderation
+            success: Ponderation updated successfully
         settings:
+          authorization_method:
+            both: Email and phone number
+            email: Pouze e-mail
+            phone: Only phone number
+          authorization_method_help: |
+            Available options are:
+            <ul>
+            <li><b>Only phone number:</b> Uses SMS verification. Users must input their phone number that matches the census.</li>
+            <li><b>Only email:</b> User's email must match the census.</li>
+            <li><b>Email and phone number:</b> Uses SMS verification. User's email must match the census and phone number will be predefined.</li>
+            </ul>
+          check_verifier:
+            not_installed_html: It seems that the "Delegation Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
           create:
             error: Při vytváření nastavení se vyskytl problém
             success: Nastavení bylo úspěšně uloženo
           destroy:
             error: Při odstraňování tohoto nastavení došlo k chybě
             success: Nastavení úspěšně zničeno
+          edit:
+            save: Save
+            title: Edit delegation group
+          form:
+            max_grants: Maximum delegations per user
           index:
             actions:
+              census: Edit the census
+              delegations: Edit the delegations
               new_setting: Nová delegace
+              ponderate: Set weights for vote ponderation
+            authorization_method: Authorization method
+            census: Census total
             consultation: Konzultace
             created_at: Vytvořeno v
             delegations: Celkový počet delegací
+            description_html: |
+              This module is designed for organizations that do voting through consultations. The functionalities we have available are: compilation of census, delegations of participants and weights by type of member. We can also use the integrated verifier via SMS, email or both. It is possible to use this module without importing a census, you can manage it in order to make delegations and/or weightings. If you need more information, go to guia.cercles.coop.
+              <br>
+              Each group can be configured with a different number of maximum delegations per user, different user delegations grants and different sets of ponderation types.
             max_grants: Maximální počet delegací/uživatelů
+            open: Open
+            ponderations: Ponderation types
+            state: State
             title: Delegace
           new:
-            form:
-              title: Obecné informace
-            max_grants: Maximum delegací
             save: Uložit
             title: Nastavení delegování
+          setting_checks:
+            all_users_authorized_html: All participants are verified by the <i>Delegations Verifier</i>.
+            all_users_registered_html: All participants are registered into the platform.
+            click_to_fix: Click here to automatically fix this
+            consultation_questions_all_verified_html: All questions are restricted by the <i>Delegations Verifier</i>.
+            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Delegations Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
+            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Delegations Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
+            missing_registered_users_html: There are %{count} participants that are not registered into the platform.
+            no_delegations_html: There are no vote delegations.
+            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Delegations Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
+            no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
+            users_need_sync_html: The participants list needs to be synchronized. <b>Consultation results might be wrong!</b>
+          state:
+            closed: Closed
+            ongoing: Ongoing
+            pending: Pending
+          update:
+            error: There was a problem updating the settings
+            success: Settings saved successfully
+        weighted_results:
+          title: Results by answer summing membership weights
       authorizations:
         new:
           missing_phone_error: Chybějící členský telefon
@@ -70,11 +224,40 @@ cs:
       delegations:
         has_delegations: Delegate vote made
         link: Máte udělené delegace
+      delegations_authorizer:
+        email: We are using the email %{email} to verify your identity. If you think this is wrong, please contact us.
+        no_setting: No delegation group found for this consultation. Please contact the admin to fix it.
+        not_in_census: You are not in the census
+        phone: We are using the phone %{phone} to verify your identity. If you think this is wrong, please contact us.
       delegations_modal:
         callout: Pamatujte, že hlasujete jménem
         contextual_help: 'Hlasování vám bylo uděleno od:'
         title: 'Konzultace: udělené delegace'
+      import_participants_mailer:
+        import:
+          errors_present: There were errors importing the participants
+          errors_title: "<b>Found:</b> %{errors_count} errors"
+          greeting: Hello %{name},
+          info_messages: Reason for skipping
+          instructions: "<p>Attached is a file with import details, which contains rows with participants that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
+          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
+          row_number: Row number
+          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
+          subject: Participants imported
+          success: Participants imported successfully
+          text_error: Error
       name: Modul Decidim ActionDelegator cooperatives
+      participants_csv_importer:
+        import:
+          error: There was a problem importing the participants
+          error_field: Reason for skipping
+          field_name:
+            phone: phone
+            weight: weight
+          phone_exists: Participant with this phone already exists
+          ponderation_not_found: Ponderation type not found
+          skip_import_info: Participant already exists%{with_mismatched_fields}
+          with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Váš ověřovací kód je %{code}
       user_delegations:
         index:
@@ -84,6 +267,23 @@ cs:
           members:
             index:
               title: Správa členů
+      verifications:
+        delegations_verifier:
+          authorizations:
+            edit:
+              confirm_destroy: Are you sure you want to reset the verification code?
+              destroy: Reset verification code
+              resend: Didn't receive the verification code?
+              send: Confirm
+              title: Introduce the verification code you received
+            new:
+              authorize: Authorize my account
+              missing_phone_error: Missing membership phone
+              not_in_census: We're sorry but you can't be authorized because your email is not in the census. Please contact the admin if you feel this is a mistake.
+              participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
+              phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
+              send_code: Send verification code
+              title: Authorize with Delegations Verifier
     admin:
       consultations:
         results:
@@ -100,7 +300,14 @@ cs:
             - Metoda ověřování pro delegované hlasování
       delegations_verifier:
         explanation: Ověření uživatelé s touto metodou mohou delegovat hlasy na ostatní uživatele
+        fields:
+          phone: Phone number
         name: Ověřovatel delegací
+    resources:
+      question:
+        actions:
+          comment: Comment
+          vote: Vote
   layouts:
     decidim:
       admin:

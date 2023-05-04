@@ -7,8 +7,9 @@ module Decidim
         # Public: Initializes the command.
         #
         # form         - A form object with the params.
-        def initialize(form)
+        def initialize(form, copy_from_setting)
           @form = form
+          @copy_from_setting = copy_from_setting
         end
 
         # Executes the command. Broadcasts these events:
@@ -30,9 +31,17 @@ module Decidim
         attr_reader :form, :setting
 
         def create_setting
-          @setting = Setting.create!(max_grants: form.max_grants,
-                                     authorization_method: form.authorization_method,
-                                     decidim_consultation_id: form.decidim_consultation_id)
+          selected = @copy_from_setting || Setting.new(ponderations: [], participants: [])
+
+          created_setting = Setting.new(
+            max_grants: form.max_grants,
+            authorization_method: form.authorization_method,
+            decidim_consultation_id: form.decidim_consultation_id,
+            ponderations: selected.ponderations.map(&:dup),
+            participants: selected.participants.map(&:dup)
+          )
+
+          @setting = created_setting.save!
         end
       end
     end

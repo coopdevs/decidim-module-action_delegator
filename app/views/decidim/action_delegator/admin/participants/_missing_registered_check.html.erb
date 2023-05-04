@@ -1,0 +1,17 @@
+<% missing_registered = missing_registered_users(current_setting&.participants) %>
+<% i18n_scope = "decidim.action_delegator.admin.participants.index" %>
+<% if missing_registered.present? %>
+  <div class="callout warning text-left">
+    <ul class="happy-faces">
+      <li>
+        <%= t("#{i18n_scope}.missing_registered", missing_registered: pluralize(missing_registered.count, t("#{i18n_scope}.participant"))) %>
+        <br>
+        <%= link_to t("send_invitation_link", scope: i18n_scope), invite_all_users_setting_invite_participants_path(current_setting), class: "action-icon--edit", method: :post %>
+      </li>
+    </ul>
+  </div>
+<% elsif current_setting&.participants.any? %>
+  <div class="callout warning text-left">
+    <p class="happy"><%= t("all_users_registered_html", scope: i18n_scope) %></p>
+  </div>
+<% end %>
