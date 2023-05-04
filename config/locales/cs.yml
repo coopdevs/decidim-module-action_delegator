@@ -14,8 +14,8 @@ cs:
         name_help: Typ členství
       setting:
         decidim_consultation_id: Konzultace
-        max_grants: Maximum vote delegations a user can receive
-        phone_freezed: Use phone number from the census. Don't allow participants to edit it.
+        max_grants: Maximální počet delegací hlasů, které může uživatel obdržet
+        phone_freezed: Použít telefonní číslo ze seznamu obyvatel. Nedovolte účastníkům jej upravovat.
         verify_with_sms: Ověřit pomocí SMS
     errors:
       models:
