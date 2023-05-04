@@ -3,10 +3,10 @@ cs:
   activemodel:
     attributes:
       delegations_verifier:
-        email: Email
-        phone: Mobile phone number
+        email: E-mail
+        phone: Mobilní telefonní číslo
       participant:
-        decidim_action_delegator_ponderation_id: Ponderation
+        decidim_action_delegator_ponderation_id: Úvaha
         email: E-mail
         phone: Telefon
       ponderation:
