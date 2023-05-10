@@ -67,18 +67,6 @@ en:
             save: Create
             select_member: Select member
             title: New delegation
-        manage_delegations:
-          create:
-            error: There was a problem importing the participants
-            success: The import process has started, please wait a few minutes and
-              refresh the page to see the list of participants. Import results will
-              be sent by email.
-          new:
-            import: Import
-            required_fields: 'Required fields: granter email, grantee email'
-            title: Import delegations
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
         invite_participants:
           invite_all_users:
             error: There was an error inviting the users
@@ -91,6 +79,18 @@ en:
           resend_invitation:
             error: There was an error resending the invitation
             success: Invitation resent successfully
+        manage_delegations:
+          create:
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and
+              refresh the page to see the list of participants. Import results will
+              be sent by email.
+          new:
+            import: Import
+            required_fields: 'Required fields: granter email, grantee email'
+            title: Import delegations
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         manage_participants:
           create:
             error: There was a problem importing the participants

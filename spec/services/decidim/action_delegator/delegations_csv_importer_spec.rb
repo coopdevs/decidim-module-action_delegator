@@ -12,6 +12,20 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
   let(:valid_csv_with_uppercase) { File.open("spec/fixtures/valid_delegations_with_uppercase.csv") }
   let(:valid_csv_with_blank_spaces) { File.open("spec/fixtures/valid_delegations_with_blank_spaces.csv") }
 
+  let(:params) do
+    {
+      granter_id: granter.id,
+      grantee_id: grantee.id
+    }
+  end
+
+  let(:form) do
+    Decidim::ActionDelegator::Admin::DelegationForm.from_params(
+      params,
+      setting: current_setting
+    )
+  end
+
   let!(:granter_email) { "granter@example.org" }
   let!(:grantee_email) { "grantee@example.org" }
   let!(:granter) { create(:user, email: granter_email) }
@@ -19,7 +33,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
 
   describe "#import!" do
     context "when the rows in the csv file are valid" do
-      subject { described_class.new(valid_csv_file, current_user, current_setting) }
+      subject { described_class.new(form, valid_csv_file, current_user, current_setting) }
 
       it "Import all rows from csv file" do
         expect do
@@ -37,7 +51,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
     end
 
     context "when the rows in the csv file are not valid" do
-      subject { described_class.new(invalid_csv_file, current_user, current_setting) }
+      subject { described_class.new(form, invalid_csv_file, current_user, current_setting) }
 
       it "creates delegations from valid rows" do
         expect do
@@ -55,7 +69,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
     end
 
     context "when delegation already exists" do
-      subject { described_class.new(valid_csv_file, current_user, current_setting) }
+      subject { described_class.new(form, valid_csv_file, current_user, current_setting) }
 
       let!(:delegation) { create(:delegation, granter_id: granter.id, grantee_id: grantee.id) }
 
@@ -67,7 +81,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
     end
 
     context "when the email is written in upper case" do
-      subject { described_class.new(valid_csv_with_uppercase, current_user, current_setting) }
+      subject { described_class.new(form, valid_csv_with_uppercase, current_user, current_setting) }
 
       it "creates a delegation with the email in lower case" do
         expect do
@@ -85,7 +99,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
     end
 
     context "when the emails are written with blank spaces" do
-      subject { described_class.new(valid_csv_with_blank_spaces, current_user, current_setting) }
+      subject { described_class.new(form, valid_csv_with_blank_spaces, current_user, current_setting) }
 
       it "creates a delegation with the emails without spaces" do
         expect do

@@ -3,55 +3,16 @@
 module Decidim
   module ActionDelegator
     class DelegationsCsvImporter < CsvImporter
-      def initialize(csv_file, current_user, current_setting)
-        @csv_file = csv_file
-        @current_user = current_user
-        @current_setting = current_setting
-      end
+      def process(row, params, details_csv, import_summary, iterator)
+        if delegation_exists?(params)
+          message = generate_info_message(row)
 
-      def import!
-        import_summary = {
-          total_rows: 0,
-          imported_rows: 0,
-          error_rows: [],
-          skipped_rows: [],
-          details_csv_path: nil
-        }
+          handle_skipped_row(row, details_csv, import_summary, iterator, message)
 
-        details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
-
-        i = 1
-        csv = CSV.new(@csv_file, headers: true, col_sep: ",")
-
-        CSV.open(details_csv_file, "wb") do |details_csv|
-          headers(csv, details_csv)
-
-          csv.rewind
-
-          while (row = csv.shift).present?
-            i += 1
-
-            params = extract_params(row)
-
-            @form = form(Decidim::ActionDelegator::Admin::DelegationForm).from_params(params, setting: @current_setting)
-
-            next if row&.empty?
-
-            if delegation_exists?(params)
-              info_message = generate_info_message(row)
-
-              handle_skipped_row(row, details_csv, import_summary, i, info_message)
-
-              next
-            end
-
-            handle_form_validity(row, details_csv, import_summary, i)
-          end
+          false
+        else
+          true
         end
-        import_summary[:total_rows] = i - 1
-        import_summary[:details_csv_path] = details_csv_file
-
-        import_summary
       end
 
       private
@@ -98,6 +59,15 @@ module Decidim
 
       def create_new_delegation(form)
         Decidim::ActionDelegator::Admin::CreateDelegation.call(form, @current_user, @current_setting)
+      end
+
+      def handle_form_validity(row, details_csv, import_summary, row_number)
+        if @form.valid?
+          process_delegation(@form)
+          import_summary[:imported_rows] += 1
+        else
+          handle_import_error(row, details_csv, import_summary, row_number, @form.errors.full_messages.join(", "))
+        end
       end
     end
   end

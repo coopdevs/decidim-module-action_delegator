@@ -31,13 +31,17 @@ module Decidim
             i += 1
 
             params = extract_params(row)
-            weight = ponderation_value(row["weight"].strip) if row["weight"].present?
 
-            return if row&.empty?
+            next if row&.empty?
 
-
-            process(row)
+            handle_form_validity(row, details_csv, import_summary, i) if process(row, params, details_csv, import_summary, i)
+          end
         end
+
+        import_summary[:total_rows] = i - 1
+        import_summary[:details_csv_path] = details_csv_file
+
+        import_summary
       end
 
       def handle_skipped_row(row, details_csv, import_summary, row_number, reason)
@@ -53,12 +57,7 @@ module Decidim
       end
 
       def handle_form_validity(row, details_csv, import_summary, row_number)
-        if @form.valid?
-          process_delegation(@form)
-          import_summary[:imported_rows] += 1
-        else
-          handle_import_error(row, details_csv, import_summary, row_number, @form.errors.full_messages.join(", "))
-        end
+        raise NotImplementedError
       end
 
       def generate_info_message(mismatch_fields)
@@ -74,6 +73,14 @@ module Decidim
 
       def invalid_email?(email)
         email.blank? || !email.match?(::Devise.email_regexp)
+      end
+
+      def process(row)
+        raise NotImplementedError
+      end
+
+      def extract_params
+        raise NotImplementedError
       end
     end
   end

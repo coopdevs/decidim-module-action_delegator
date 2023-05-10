@@ -9,16 +9,31 @@ RSpec.describe Decidim::ActionDelegator::Admin::ImportCsvJob, type: :job do
 
   describe "import delegations" do
     let(:valid_csv_file) { File.open("spec/fixtures/valid_delegations.csv") }
-    let(:importer) { Decidim::ActionDelegator::DelegationsCsvImporter.new(valid_csv_file, current_user, current_setting) }
-    let(:import_summary) { importer.import! }
 
     let!(:granter_email) { "granter@example.org" }
     let!(:grantee_email) { "grantee@example.org" }
     let!(:granter) { create(:user, email: granter_email) }
     let!(:grantee) { create(:user, email: grantee_email) }
 
+    let(:params) do
+      {
+        granter_id: granter.id,
+        grantee_id: grantee.id
+      }
+    end
+
+    let(:form) do
+      Decidim::ActionDelegator::Admin::DelegationForm.from_params(
+        params,
+        setting: current_setting
+      )
+    end
+
+    let(:importer) { Decidim::ActionDelegator::DelegationsCsvImporter.new(form, valid_csv_file, current_user, current_setting) }
+    let(:import_summary) { importer.import! }
+
     before do
-      allow(Decidim::ActionDelegator::DelegationsCsvImporter).to receive(:new).with(valid_csv_file, current_user, current_setting).and_return(importer)
+      allow(Decidim::ActionDelegator::DelegationsCsvImporter).to receive(:new).with(form, valid_csv_file, current_user, current_setting).and_return(importer)
       allow(importer).to receive(:import!).and_return(import_summary)
       allow(Decidim::ActionDelegator::ImportMailer)
         .to receive(:import)
@@ -43,11 +58,29 @@ RSpec.describe Decidim::ActionDelegator::Admin::ImportCsvJob, type: :job do
 
   describe "import participants" do
     let(:valid_csv_file) { File.open("spec/fixtures/valid_participants.csv") }
-    let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting) }
+    let(:weight) { 3 }
+    let!(:ponderation) { create(:ponderation, setting: current_setting) }
+    let(:params) do
+      {
+        email: "email@example.org",
+        phone: "600000000",
+        weight: weight,
+        decidim_action_delegator_ponderation_id: ponderation.id
+      }
+    end
+
+    let(:form) do
+      Decidim::ActionDelegator::Admin::ParticipantForm.from_params(
+        params,
+        setting: current_setting
+      )
+    end
+
+    let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(form, valid_csv_file, current_user, current_setting) }
     let(:import_summary) { importer.import! }
 
     before do
-      allow(Decidim::ActionDelegator::ParticipantsCsvImporter).to receive(:new).with(valid_csv_file, current_user, current_setting).and_return(importer)
+      allow(Decidim::ActionDelegator::ParticipantsCsvImporter).to receive(:new).with(form, valid_csv_file, current_user, current_setting).and_return(importer)
       allow(importer).to receive(:import!).and_return(import_summary)
       allow(Decidim::ActionDelegator::ImportMailer)
         .to receive(:import)

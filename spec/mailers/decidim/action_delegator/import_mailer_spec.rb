@@ -13,10 +13,27 @@ module Decidim
       describe "#import participants" do
         let(:valid_csv_file) { File.open("spec/fixtures/valid_participants.csv") }
         let(:invalid_csv_file) { File.open("spec/fixtures/invalid_participants.csv") }
+        let(:weight) { 3 }
+        let!(:ponderation) { create(:ponderation, setting: current_setting) }
+        let(:params) do
+          {
+            email: "email@example.org",
+            phone: "600000000",
+            weight: weight,
+            decidim_action_delegator_ponderation_id: ponderation.id
+          }
+        end
+
+        let(:form) do
+          Decidim::ActionDelegator::Admin::ParticipantForm.from_params(
+            params,
+            setting: @current_setting
+          )
+        end
 
         context "when the CSV has valid rows" do
           let(:mail) { described_class.import(current_user, import_summary, valid_csv_file.path) }
-          let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(valid_csv_file, current_user, current_setting) }
+          let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(form, valid_csv_file, current_user, current_setting) }
           let(:import_summary) { importer.import! }
 
           it "renders the headers" do
@@ -36,7 +53,7 @@ module Decidim
 
         context "when the CSV has invalid rows" do
           let(:mail) { described_class.import(current_user, import_summary, invalid_csv_file.path) }
-          let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(invalid_csv_file, current_user, current_setting) }
+          let(:importer) { Decidim::ActionDelegator::ParticipantsCsvImporter.new(form, invalid_csv_file, current_user, current_setting) }
           let(:import_summary) { importer.import! }
 
           it "renders the headers" do
@@ -63,9 +80,23 @@ module Decidim
         let!(:granter) { create(:user, email: granter_email) }
         let!(:grantee) { create(:user, email: grantee_email) }
 
+        let(:params) do
+          {
+            granter_id: granter.id,
+            grantee_id: grantee.id
+          }
+        end
+
+        let(:form) do
+          Decidim::ActionDelegator::Admin::DelegationForm.from_params(
+            params,
+            setting: @current_setting
+          )
+        end
+
         context "when the CSV has valid rows" do
           let(:mail) { described_class.import(current_user, import_summary, valid_csv_file.path) }
-          let(:importer) { Decidim::ActionDelegator::DelegationsCsvImporter.new(valid_csv_file, current_user, current_setting) }
+          let(:importer) { Decidim::ActionDelegator::DelegationsCsvImporter.new(form, valid_csv_file, current_user, current_setting) }
           let(:import_summary) { importer.import! }
 
           it "renders the headers" do
@@ -85,7 +116,7 @@ module Decidim
 
         context "when the CSV has invalid rows" do
           let(:mail) { described_class.import(current_user, import_summary, invalid_csv_file.path) }
-          let(:importer) { Decidim::ActionDelegator::DelegationsCsvImporter.new(invalid_csv_file, current_user, current_setting) }
+          let(:importer) { Decidim::ActionDelegator::DelegationsCsvImporter.new(form, invalid_csv_file, current_user, current_setting) }
           let(:import_summary) { importer.import! }
 
           it "renders the headers" do
