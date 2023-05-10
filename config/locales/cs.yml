@@ -106,7 +106,7 @@ cs:
             - Metoda ověřování pro delegované hlasování
       delegations_verifier:
         explanation: Ověření uživatelé s touto metodou mohou delegovat hlasy na ostatní uživatele
-        name: Ověřovatel delegací
+        name: Corporate Governance Verifier
   layouts:
     decidim:
       admin:
