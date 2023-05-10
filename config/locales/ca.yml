@@ -178,7 +178,7 @@ ca:
                <li><b>Correu electrònic i número de telèfon:</b> utilitza la verificació per SMS. El correu electrònic de la participant ha de coincidir amb el cens i el número de telèfon estarà predefinit.</li>
             </ul>
           check_verifier:
-            not_installed_html: Sembla que el mètode d'autorització "Verificador de delegació" no està instal·lat. No podeu utilitzar el cens integrat sense aquest. Instal·leu-lo a <a href="/system">/system</a>.
+            not_installed_html: It seems that the "Corporate Governance Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
           copy_setting: 'Copia ponderacions i cens de:'
           create:
             error: S'ha produït un error en crear la configuració
@@ -309,7 +309,7 @@ ca:
               participate_in: 'Aquesta autorització us permet participar en les consultes següents: %{consultations}'
               phone_warning: Aquest número de telèfon ha estat importat per l'administrador. Si us plau, poseu-vos en contacte si no és correcte.
               send_code: Envia el codi de verificació
-              title: Autoritza amb el verificador de Governança societària
+              title: Authorize with Corporate Governance Verifier
     admin:
       actions:
         invite: Enviar invitació
@@ -332,7 +332,7 @@ ca:
         explanation: Els usuaris verificats per aquest mètode poden delegar els seus vots a altres usuaris
         fields:
           phone: Número de telèfon
-        name: Verificador de Governança societària
+        name: Corporate Governance
     resources:
       question:
         actions:
