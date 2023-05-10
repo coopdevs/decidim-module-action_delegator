@@ -192,7 +192,7 @@ en:
               <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
             </ul>
           check_verifier:
-            not_installed_html: It seems that the "Delegation Verifier" authorization
+            not_installed_html: It seems that the "Corporate Governance Verifier" authorization
               method is not installed. You cannot use the integrated census without
               it. Please install it at <a href="/system">/system</a>.
           copy_setting: 'Copy ponderations and census from:'
@@ -353,7 +353,7 @@ en:
               phone_warning: This phone number has been imported by the admin. Please,
                 reach out if it's not correct.
               send_code: Send verification code
-              title: Authorize with Delegations Verifier
+              title: Authorize with Corporate Governance Verifier
     admin:
       actions:
         invite: Send invitation
@@ -376,7 +376,7 @@ en:
         explanation: Verified users with this method can delegate votes to other users
         fields:
           phone: Phone number
-        name: Delegations Verifier
+        name: Corporate Governance
     resources:
       question:
         actions:
