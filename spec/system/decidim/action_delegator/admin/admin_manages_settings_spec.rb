@@ -167,8 +167,8 @@ describe "Admin manages settings", type: :system do
     end
 
     it "shows a callout with information" do
-      expect(page).to have_content("All questions are restricted by the Delegations Verifier")
-      expect(page).to have_content("There is no census! Add participants or nobody will be able to vote if Delegations Verifier is active")
+      expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
+      expect(page).to have_content("There is no census! Add participants or nobody will be able to vote if Corporate Governance Verifier is active")
     end
 
     context "when there are participants" do
@@ -179,9 +179,9 @@ describe "Admin manages settings", type: :system do
       let(:uniq_id) { Digest::MD5.hexdigest("#{seed}-#{organization.id}-#{Digest::MD5.hexdigest(Rails.application.secret_key_base)}") }
 
       it "complains about registration" do
-        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
         expect(page).to have_content("There are 1 participants that are not registered into the platform")
-        expect(page).to have_content("There are 1 participants that are not verified by the Delegations Verifier")
+        expect(page).to have_content("There are 1 participants that are not verified by the Corporate Governance Verifier")
         expect(page).to have_css(".callout.warning")
       end
 
@@ -189,9 +189,9 @@ describe "Admin manages settings", type: :system do
         let(:email) { user.email }
 
         it "complains about verification" do
-          expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+          expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
           expect(page).to have_content("All participants are registered into the platform")
-          expect(page).to have_content("There are 1 participants that are not verified by the Delegations Verifier")
+          expect(page).to have_content("There are 1 participants that are not verified by the Corporate Governance Verifier")
           expect(page).to have_css(".callout.warning")
         end
 
@@ -199,9 +199,9 @@ describe "Admin manages settings", type: :system do
           let!(:authorization) { create(:authorization, user: user, name: "delegations_verifier", unique_id: uniq_id, granted_at: Time.current) }
 
           it "is happy" do
-            expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+            expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
             expect(page).to have_content("All participants are registered into the platform")
-            expect(page).to have_content("All participants are verified by the Delegations Verifier")
+            expect(page).to have_content("All participants are verified by the Corporate Governance Verifier")
             expect(page).to have_css(".callout.success")
           end
 
@@ -210,7 +210,7 @@ describe "Admin manages settings", type: :system do
             let(:email) { "another@email" }
 
             it "is happy" do
-              expect(page).to have_content("All participants are verified by the Delegations Verifier")
+              expect(page).to have_content("All participants are verified by the Corporate Governance Verifier")
             end
           end
         end
@@ -259,13 +259,13 @@ describe "Admin manages settings", type: :system do
 
       it "has a link to fix it" do
         expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
-        expect(page).to have_content("There are 2 questions that are not restricted by the Delegations Verifier.")
-        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_content("There are 2 questions that are not restricted by the Corporate Governance Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Corporate Governance Verifier")
         expect(page).to have_css(".callout.success")
 
         click_link "Click here to automatically fix this"
 
-        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
       end
     end
 
@@ -275,14 +275,14 @@ describe "Admin manages settings", type: :system do
       end
 
       it "has a link to fix it" do
-        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
-        expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
-        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).not_to have_content('"Corporate Governance Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 1 questions that are not restricted by the Corporate Governance Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Corporate Governance Verifier")
         expect(page).to have_css(".callout.warning")
 
         click_link "Click here to automatically fix this"
 
-        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
       end
     end
 
@@ -295,14 +295,14 @@ describe "Admin manages settings", type: :system do
       end
 
       it "has a link to fix it" do
-        expect(page).not_to have_content('"Delegation Verifier" authorization method is not installed')
-        expect(page).to have_content("There are 1 questions that are not restricted by the Delegations Verifier.")
-        expect(page).not_to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).not_to have_content('"Corporate Governance Verifier" authorization method is not installed')
+        expect(page).to have_content("There are 1 questions that are not restricted by the Corporate Governance Verifier.")
+        expect(page).not_to have_content("All questions are restricted by the Corporate Governance Verifier")
         expect(page).to have_css(".callout.warning")
 
         click_link "Click here to automatically fix this"
 
-        expect(page).to have_content("All questions are restricted by the Delegations Verifier")
+        expect(page).to have_content("All questions are restricted by the Corporate Governance Verifier")
       end
     end
   end
