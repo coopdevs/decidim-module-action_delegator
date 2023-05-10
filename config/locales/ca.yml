@@ -106,7 +106,7 @@ ca:
             - Mètode de verificació per la delegació de vot
       delegations_verifier:
         explanation: Els usuaris verificats per aquest mètode poden delegar els seus vots a altres usuaris
-        name: Verificador de Delegacions
+        name: Corporate Governance Verifier
   layouts:
     decidim:
       admin:
