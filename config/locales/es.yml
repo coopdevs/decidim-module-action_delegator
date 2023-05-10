@@ -106,7 +106,7 @@ es:
             - Un método de verificación para el voto delegado
       delegations_verifier:
         explanation: Las participantes verificadas con este método pueden delegar votos a otras participantes
-        name: Verificador de Delegaciones
+        name: Corporate Governance Verifier
   layouts:
     decidim:
       admin:
