@@ -31,8 +31,8 @@ module Decidim
       end
 
       def extract_details(row)
-        granter_email = row["granter_email"].to_s.strip.downcase
-        grantee_email = row["grantee_email"].to_s.strip.downcase
+        granter_email = row["from"].to_s.strip.downcase
+        grantee_email = row["to"].to_s.strip.downcase
 
         granter = user_id(granter_email)
         grantee = user_id(grantee_email)

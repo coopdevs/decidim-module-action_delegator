@@ -1,2 +1,2 @@
-granter_email,grantee_email
+from,to
 Granter@example.org,Grantee@example.org

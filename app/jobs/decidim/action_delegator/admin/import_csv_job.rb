@@ -6,7 +6,13 @@ module Decidim
       class ImportCsvJob < ApplicationJob
         queue_as :exports
 
-        def perform(importer, current_user)
+        def perform(importer_type, csv_file, current_user, current_setting)
+          importer = if importer_type == "DelegationsCsvImporter"
+                       Decidim::ActionDelegator::DelegationsCsvImporter.new(csv_file, current_user, current_setting)
+                     else
+                       Decidim::ActionDelegator::ParticipantsCsvImporter.new(csv_file, current_user, current_setting)
+                     end
+
           import_summary = importer.import!
 
           Decidim::ActionDelegator::ImportMailer

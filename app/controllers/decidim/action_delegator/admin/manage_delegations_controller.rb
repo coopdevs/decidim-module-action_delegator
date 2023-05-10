@@ -24,8 +24,9 @@ module Decidim
           @csv_file = params[:csv_file]
           redirect_to seting_manage_delegations_path && return if @csv_file.blank?
 
-          importer = Decidim::ActionDelegator::DelegationsCsvImporter.new(@csv_file.read.force_encoding("utf-8").encode("utf-8"), current_user, current_setting)
-          @import_summary = Decidim::ActionDelegator::Admin::ImportCsvJob.perform_later(importer, current_user)
+          importer_type = "DelegationsCsvImporter"
+          csv_file = @csv_file.read.force_encoding("utf-8").encode("utf-8")
+          @import_summary = Decidim::ActionDelegator::Admin::ImportCsvJob.perform_now(importer_type, csv_file, current_user, current_setting)
 
           flash[:notice] = t(".success")
 

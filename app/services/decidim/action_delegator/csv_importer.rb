@@ -5,8 +5,7 @@ module Decidim
     class CsvImporter
       include Decidim::FormFactory
 
-      def initialize(form, csv_file, current_user, current_setting)
-        @form = form
+      def initialize(csv_file, current_user, current_setting)
         @csv_file = csv_file
         @current_user = current_user
         @current_setting = current_setting
