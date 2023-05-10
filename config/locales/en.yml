@@ -184,12 +184,13 @@ en:
             both: Email and phone number
             email: Only email
             phone: Only phone number
-          authorization_method_help: "Available options are:\n<ul>\n<li><b>Only phone
-            number:</b> Uses SMS verification. Participants must input their phone
-            number that \nmatches the census.</li>\n<li><b>Only email:</b> Participant's
-            email must match the census.</li>\n<li><b>Email and phone number:</b>
-            Uses SMS verification. Participant's email must match the census and phone
-            number will be predefined.</li>\n</ul>\n"
+          authorization_method_help: |
+            Available options are:
+            <ul>
+              <li><b>Only phone number:</b> Uses SMS verification. Participants must input their phone number that matches the census.</li>
+              <li><b>Only email:</b> Participant's email must match the census.</li>
+              <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
+            </ul>
           check_verifier:
             not_installed_html: It seems that the "Delegation Verifier" authorization
               method is not installed. You cannot use the integrated census without
