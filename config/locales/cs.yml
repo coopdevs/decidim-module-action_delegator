@@ -84,8 +84,8 @@ cs:
             import: Importovat
             required_fields: 'Required fields: %{authorization_method}'
             title: Import participants
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+            title_example: 'Příklad:'
+            upload_instructions: Musí být soubor ve formátu CSV s záhlavím.
         menu:
           consultations_submenu:
             by_answer: Podle odpovědi
