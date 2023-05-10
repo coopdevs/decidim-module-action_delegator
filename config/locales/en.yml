@@ -108,7 +108,7 @@ en:
           - A verification method for delegate voting
       delegations_verifier:
         explanation: Verified users with this method can delegate votes to other users
-        name: Delegations Verifier
+        name: Corporate Governance Verifier
   layouts:
     decidim:
       admin:
