@@ -14,7 +14,7 @@ cs:
         name_help: Typ členství
       setting:
         decidim_consultation_id: Konzultace
-        max_grants: Maximální počet delegací hlasů, které může uživatel obdržet
+        max_grants: Maximum vote delegations a participant can receive
         phone_freezed: Použít telefonní číslo ze seznamu obyvatel. Nedovolte účastníkům jej upravovat.
         verify_with_sms: Ověřit pomocí SMS
     errors:
@@ -48,7 +48,7 @@ cs:
             consultation: Konzultace
             created_at: Vytvořeno v
             delete: Smazat
-            description_html: This is the current census for this consultation
+            description_html: This is the current delegations for this consultation
             grantee: Příjemce
             granter: Delegující
             title: Účastníci
@@ -91,7 +91,7 @@ cs:
             by_answer: Podle odpovědi
             by_type_and_weight: Podle typu a váhy
             sum_of_weights: Podle součtu vah
-          delegations: Uživatelské delegace
+          delegations: Corporate Governance
           participants: Účastníci
         participants:
           create:
@@ -117,10 +117,10 @@ cs:
             never_logged: Nikdy nepřihlášený
             participant: participant
             phone: Telefon
-            ponderation: Ponderation
+            ponderation: Ponderation type
             send_invitation_link: Click here to send an invitation to them
             title: Seznam obyvatel
-            user: Uživatel
+            user: Name
             voted: Has voted?
           new:
             save: Vytvořit
@@ -148,9 +148,9 @@ cs:
             save: Uložit
             title: Edit ponderation type
           form:
-            name_help: User type, e.g. "member", "associate", "supporter". Must be unique.
+            name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
             name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
-            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the users in this ponderation type.
+            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the participants in this ponderation type.
           index:
             actions:
               new_ponderation: New ponderation
@@ -173,9 +173,9 @@ cs:
           authorization_method_help: |
             Available options are:
             <ul>
-            <li><b>Only phone number:</b> Uses SMS verification. Users must input their phone number that matches the census.</li>
-            <li><b>Only email:</b> User's email must match the census.</li>
-            <li><b>Email and phone number:</b> Uses SMS verification. User's email must match the census and phone number will be predefined.</li>
+              <li><b>Only phone number:</b> Uses SMS verification. Participants must input their phone number that matches the census.</li>
+              <li><b>Only email:</b> Participant's email must match the census.</li>
+              <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
             </ul>
           check_verifier:
             not_installed_html: It seems that the "Delegation Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
@@ -195,7 +195,7 @@ cs:
             actions:
               census: Edit the census
               delegations: Edit the delegations
-              new_setting: Nová delegace
+              new_setting: New configuration
               ponderate: Set weights for vote ponderation
             authorization_method: Authorization method
             census: Census total
@@ -210,21 +210,21 @@ cs:
             open: Open
             ponderations: Ponderation types
             state: State
-            title: Delegace
+            title: Corporate Governance
           new:
             save: Uložit
-            title: Nastavení delegování
+            title: New configuration
           setting_checks:
-            all_users_authorized_html: All participants are verified by the <i>Delegations Verifier</i>.
+            all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
             all_users_registered_html: All participants are registered into the platform.
             click_to_fix: Click here to automatically fix this
-            consultation_questions_all_verified_html: All questions are restricted by the <i>Delegations Verifier</i>.
-            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Delegations Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
-            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Delegations Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
+            consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
+            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
+            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
             missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
             missing_registered_users_html: There are %{count} participants that are not registered into the platform.
             no_delegations_html: There are no vote delegations.
-            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Delegations Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
+            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
             participant: participant
             user: user
