@@ -178,7 +178,7 @@ es:
               <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
             </ul>
           check_verifier:
-            not_installed_html: Parece que el método de autorización "Verificador de delegación" no está instalado. No puede usar el censo integrado sin él. Instálelo en <a href="/system">/system</a>.
+            not_installed_html: It seems that the "Corporate Governance Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
           copy_setting: 'Copy ponderations and census from:'
           create:
             error: Se ha producido un problema al crear la configuración
@@ -309,7 +309,7 @@ es:
               participate_in: 'Esta autorización le permite participar en las siguientes consultas: %{consultations}'
               phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
               send_code: Enviar código de verificación
-              title: Autorizar con Verificador de Delegaciones
+              title: Authorize with Corporate Governance Verifier
     admin:
       actions:
         invite: Send invitation
@@ -332,7 +332,7 @@ es:
         explanation: Las participantes verificadas con este método pueden delegar votos a otras participantes
         fields:
           phone: Número de teléfono
-        name: Verificador de Delegaciones
+        name: Corporate Governance
     resources:
       question:
         actions:
