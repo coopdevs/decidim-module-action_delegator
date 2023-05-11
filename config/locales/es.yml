@@ -14,7 +14,7 @@ es:
         name_help: Tipo de miembro
       setting:
         decidim_consultation_id: Consulta
-        max_grants: Número máximo de delegaciones de voto que una participante puede recibir
+        max_grants: Maximum vote delegations a participant can receive
         phone_freezed: Utilice el número de teléfono del censo. No permita que los participantes lo editen.
         verify_with_sms: Verificar con SMS
     errors:
@@ -48,7 +48,7 @@ es:
             consultation: Consulta
             created_at: Creado el
             delete: Eliminar
-            description_html: Este es el censo actual para esta consulta
+            description_html: This is the current delegations for this consultation
             grantee: Beneficiario
             granter: Concedente
             title: Participantes
@@ -59,6 +59,18 @@ es:
             save: Crear
             select_member: Seleccionar miembro
             title: Nueva delegación
+        invite_participants:
+          invite_all_users:
+            error: There was an error inviting the users
+            success: Users invited successfully
+          invite_user:
+            error: There was an error inviting the user
+            success: User invited successfully
+          permissions:
+            not_allowed: You are not allowed for this action
+          resend_invitation:
+            error: There was an error resending the invitation
+            success: Invitation resent successfully
         manage_participants:
           create:
             error: Se ha producido un error en importar las participantes
@@ -79,7 +91,7 @@ es:
             by_answer: Por respuesta
             by_type_and_weight: Por tipo y peso
             sum_of_weights: Por suma de pesos
-          delegations: Delegaciones de usuario
+          delegations: Corporate Governance
           participants: Participantes
         participants:
           create:
@@ -96,14 +108,19 @@ es:
               csv_import: Importar CSV
               new_participant: Nueva participante
               remove_census: Eliminar censo
+            all_users_registered_html: All users are registered into the platform
             created_at: Creado el
             email: Correo electrónico
             last_login: Último acceso
+            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
+            missing_registered: There are %{missing_registered} that are not registered into the platform
             never_logged: Nunca ha iniciado sesión
+            participant: participant
             phone: Teléfono
-            ponderation: Ponderación
+            ponderation: Ponderation type
+            send_invitation_link: Click here to send an invitation to them
             title: Censo
-            user: Participante
+            user: Name
             voted: '¿Ha votado?'
           new:
             save: Crear
@@ -131,9 +148,9 @@ es:
             save: Guardar
             title: Editar tipos de ponderación
           form:
-            name_help: Tipo de usuario, p. ej., "miembro", "asociado", "partidario". Debe ser único.
+            name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
             name_placeholder: 'Prueba, por ejemplo: "miembro", "asociado", "partidario"...'
-            weight_help: Vote peso, p. ej., "1", "2", "1.5". Este número se utilizará para sopesar los votos de los usuarios en este tipo de ponderación.
+            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the participants in this ponderation type.
           index:
             actions:
               new_ponderation: Nueva ponderación
@@ -154,14 +171,15 @@ es:
             email: Solo correo electrónico
             phone: Solo número de teléfono móvil
           authorization_method_help: |
-            Las opciones disponibles son:
+            Available options are:
             <ul>
-            <li><b>Solo número de teléfono:</b> Utiliza verificación por SMS. Los usuarios deben ingresar su número de teléfono que coincida con el censo.</li>
-            <li><b>Solo correo electrónico:</b> El correo electrónico del usuario debe coincidir con el censo.</li>
-            <li><b>Correo electrónico y número de teléfono:</b> Utiliza verificación por SMS. El correo electrónico del usuario debe coincidir con el censo y el número de teléfono estará predefinido.</li>
+              <li><b>Only phone number:</b> Uses SMS verification. Participants must input their phone number that matches the census.</li>
+              <li><b>Only email:</b> Participant's email must match the census.</li>
+              <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
             </ul>
           check_verifier:
-            not_installed_html: Parece que el método de autorización "Verificador de delegación" no está instalado. No puede usar el censo integrado sin él. Instálelo en <a href="/system">/system</a>.
+            not_installed_html: It seems that the "Corporate Governance Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
+          copy_setting: 'Copy ponderations and census from:'
           create:
             error: Se ha producido un problema al crear la configuración
             success: Configuración guardada correctamente
@@ -177,7 +195,7 @@ es:
             actions:
               census: Edita el censo
               delegations: Edita las delegaciones
-              new_setting: Nueva delegación
+              new_setting: New configuration
               ponderate: Establecer los pesos para la ponderación de votos
             authorization_method: Método de autorización
             census: Censo total
@@ -192,21 +210,24 @@ es:
             open: Abierto
             ponderations: Tipos de ponderación
             state: Estado
-            title: Delegaciones
+            title: Corporate Governance
           new:
             save: Guardar
-            title: Configuración de la delegación
+            title: New configuration
           setting_checks:
-            all_users_authorized_html: Todos los participantes son verificados por el <i>Verificador de Delegaciones</i>.
+            all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
             all_users_registered_html: Todos los participantes están registrados en la plataforma.
             click_to_fix: Haga clic aquí para arreglar esto automáticamente
-            consultation_questions_all_verified_html: Todas las preguntas están restringidas por el <i>Verificador de Delegaciones</i>.
-            consultation_questions_missing_verifier_html: Hay %{count} preguntas que no están restringidas por el <i>Verificador de delegaciones</i>. <b>Sin él, cualquiera podrá votar por ellos.</b> <em>Esto está bien si está utilizando otros métodos de autorización o si todos pueden votar.</em>
-            missing_authorizations_html: Hay %{count} participantes que no están verificados por el <i>Verificador de delegaciones</i>. <em>Está bien si estos participantes tienen sus votos delegados a otros o si está utilizando otros métodos de verificación (o ninguno).</em>
+            consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
+            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
+            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
+            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
             missing_registered_users_html: Hay %{count} participantes que no están registrados en la plataforma.
             no_delegations_html: No hay votos delegados.
-            no_participants_html: '¡No hay censo! <b>Agregue participantes o nadie podrá votar si el <i>Verificador de delegaciones</i> está activo.</b> <em>Está bien si está utilizando otros métodos de autorización o si todos pueden votar.</em>'
+            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             no_ponderations_html: No hay ponderaciones de votos. <b>Todos los usuarios tendrán el mismo peso en sus votos</b>
+            participant: participant
+            user: user
             users_need_sync_html: La lista de participantes debe sincronizarse. <b>¡Los resultados de la consulta pueden ser incorrectos!</b>
           state:
             closed: Cerrado
@@ -246,6 +267,11 @@ es:
           subject: Participantes importadas
           success: Participantes importadas con éxito
           text_error: Error
+      invite_participants_mailer:
+        confirmation:
+          body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
+          confirm: Confirm participation
+          greeting: Hello %{recipient},
       name: Módulo Cooperativas - ActionDelegator para Decidim
       participants_csv_importer:
         import:
@@ -283,8 +309,12 @@ es:
               participate_in: 'Esta autorización le permite participar en las siguientes consultas: %{consultations}'
               phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
               send_code: Enviar código de verificación
-              title: Autorizar con Verificador de Delegaciones
+              title: Authorize with Corporate Governance Verifier
     admin:
+      actions:
+        invite: Send invitation
+        invite_all: Send invitations to non-existing users
+        resend: Resend invitation
       consultations:
         results:
           default_metadata: "(datos de afiliación no disponibles)"
@@ -302,12 +332,16 @@ es:
         explanation: Las participantes verificadas con este método pueden delegar votos a otras participantes
         fields:
           phone: Número de teléfono
-        name: Verificador de Delegaciones
+        name: Corporate Governance
     resources:
       question:
         actions:
           comment: Comentario
           vote: Votar
+  devise:
+    mailer:
+      invite_participant:
+        subject: You have been invited to participate in the consultation
   layouts:
     decidim:
       admin:
