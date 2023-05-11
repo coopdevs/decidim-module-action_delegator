@@ -250,7 +250,7 @@ describe "Admin manages settings", type: :system do
       let(:available_authorizations) { [] }
 
       it "alerts with a message" do
-        expect(page).to have_content('"Delegation Verifier" authorization method is not installed')
+        expect(page).to have_content('"Corporate Governance Verifier" authorization method is not installed')
       end
     end
 

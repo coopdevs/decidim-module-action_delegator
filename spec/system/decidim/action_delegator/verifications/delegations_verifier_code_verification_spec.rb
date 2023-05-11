@@ -32,7 +32,7 @@ describe "delegations_verifier code verification", type: :system do
     switch_to_host(organization.host)
     login_as user, scope: :user
     visit decidim_verifications.authorizations_path
-    click_link "Delegations Verifier"
+    click_link "Corporate Governance Verifier"
   end
 
   context "when code requested" do

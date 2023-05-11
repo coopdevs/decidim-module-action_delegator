@@ -192,9 +192,9 @@ en:
               <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
             </ul>
           check_verifier:
-            not_installed_html: It seems that the "Corporate Governance Verifier" authorization
-              method is not installed. You cannot use the integrated census without
-              it. Please install it at <a href="/system">/system</a>.
+            not_installed_html: It seems that the "Corporate Governance Verifier"
+              authorization method is not installed. You cannot use the integrated
+              census without it. Please install it at <a href="/system">/system</a>.
           copy_setting: 'Copy ponderations and census from:'
           create:
             error: There was a problem creating the settings
