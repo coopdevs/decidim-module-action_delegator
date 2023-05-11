@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Delegations verifier request", type: :system do
+describe "Corporate Governance Verifier request", type: :system do
   let!(:organization) do
     create(:organization, available_authorizations: ["delegations_verifier"])
   end
@@ -21,7 +21,7 @@ describe "Delegations verifier request", type: :system do
   end
 
   it "Shows the required fields" do
-    expect(page).to have_content("Authorize with Delegations Verifier")
+    expect(page).to have_content("Authorize with Corporate Governance Verifier")
     within "#new_delegations_verifier_" do
       expect(page).to have_content("Email")
       expect(page).to have_selector("input[value='#{email}'][readonly]")
@@ -39,7 +39,7 @@ describe "Delegations verifier request", type: :system do
     let(:authorization_method) { :phone }
 
     it "Shows the required fields" do
-      expect(page).to have_content("Authorize with Delegations Verifier")
+      expect(page).to have_content("Authorize with Corporate Governance Verifier")
       within "#new_delegations_verifier_" do
         expect(page).not_to have_content("Email")
         expect(page).not_to have_selector("input[value='#{email}'][readonly]")
@@ -64,7 +64,7 @@ describe "Delegations verifier request", type: :system do
     let(:authorization_method) { :email }
 
     it "Shows the required fields" do
-      expect(page).to have_content("Authorize with Delegations Verifier")
+      expect(page).to have_content("Authorize with Corporate Governance Verifier")
       within "#new_delegations_verifier_" do
         expect(page).to have_content("Email")
         expect(page).to have_selector("input[value='#{email}'][readonly]")
