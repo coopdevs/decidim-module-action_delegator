@@ -25,7 +25,7 @@ describe "Census vote", type: :system do
   end
 
   shared_examples "requires verification" do
-    let(:text) { "you need to be authorized with \"Delegations Verifier\"" }
+    let(:text) { "you need to be authorized with \"Corporate Governance\"" }
     it "requires verification first" do
       expect(page).to have_content("VERIFY YOUR ACCOUNT TO VOTE")
 

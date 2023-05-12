@@ -57,10 +57,11 @@ module Decidim
 
       initializer "decidim.user_menu" do
         Decidim.menu :user_menu do |menu|
-          menu.item t("vote_delegations", scope: "layouts.decidim.user_profile"),
-                    decidim_action_delegator.user_delegations_path,
-                    position: 5.0,
-                    active: :exact
+          menu.add_item :vote_delegations,
+                        t("vote_delegations", scope: "layouts.decidim.user_profile"),
+                        decidim_action_delegator.user_delegations_path,
+                        position: 5.0,
+                        active: :exact
         end
       end
     end
