@@ -38,23 +38,11 @@ describe "Admin manages consultation results", type: :system do
     login_as user, scope: :user
   end
 
-  shared_examples "handles the deprecation warning" do
-    it "does not show the warning" do
-      expect(page).not_to have_content("Consultations module will be deprecated in the near future.")
-    end
-  end
-
-  it_behaves_like "handles the deprecation warning" do
-    before { visit decidim_admin_consultations.consultations_path }
-  end
-
   context "when in the consultation page" do
     before do
       visit decidim_admin_consultations.edit_consultation_path(consultation)
       click_link "Results"
     end
-
-    it_behaves_like "handles the deprecation warning"
 
     it "enables navigating to the default results page" do
       click_link I18n.t("decidim.admin.menu.consultations_submenu.results")
