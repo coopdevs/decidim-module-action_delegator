@@ -196,7 +196,7 @@ ca:
               census: Edita el cens
               delegations: Edita les delegacions
               new_setting: Nova configuració
-              ponderate: Estables els pesos per les ponderacions de vot
+              ponderate: Estableix els pesos per les ponderacions de vot
             authorization_method: Mètode de verificació de la condició d'associat
             census: Cens total
             consultation: Consulta
