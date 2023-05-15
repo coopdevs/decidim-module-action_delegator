@@ -39,12 +39,15 @@ es:
             error_granter_unique: ya ha delegado su voto
             error_max_grants: You reached the limit of allowed delegations
             success: Delegación creada correctamente
+          csv_imports:
+            invalid: There was a problem importing delegations
+            success: Delegations imported successfully
           destroy:
             error: Se ha producido un error al eliminar esta delegación
             success: Delegación eliminada correctamente
           index:
             actions:
-              csv_import: Importar via csv
+              csv_import: Import via csv
               new_delegation: Nueva participante
             consultation: Consulta
             created_at: Creado el
@@ -74,16 +77,14 @@ es:
             success: Invitación reenviada con éxito
         manage_delegations:
           create:
-            error: Ha habido un problema al importar las delegaciones
-            success: El proceso de importación ha empezado, por favor espera unos
-              minutos y refresca la página para ver el listado de delegaciones. Los
-              resultados de la importación se enviarán por correo electrónico.
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
           new:
-            import: Importar
-            required_fields: 'Campos requeridos: email concedente, email beneficiario'
-            title: Importar delegaciones
-            title_example: 'Ejemplo:'
-            upload_instructions: Debe ser un fichero en formato CSV con cabecera.
+            import: Import
+            required_fields: 'Required fields: granter email, grantee email'
+            title: Import delegations
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         manage_participants:
           create:
             error: Se ha producido un error en importar las participantes
@@ -195,7 +196,7 @@ es:
           copy_setting: 'Copiar ponderaciones y censo de:'
           create:
             error: Se ha producido un problema al crear la configuración
-            success: Configuración guardada correctamente
+            success: Settings saved successfully
           destroy:
             error: Hubo un problema al destruir esta configuración
             success: Configuración eliminada correctamente
@@ -269,19 +270,16 @@ es:
         title: 'Consulta: delegaciones concedidas'
       import_mailer:
         import:
-          errors_present: Hay errores en la importación
-          errors_title: "<b>Encontrados:</b> %{errors_count} errores"
-          greeting: Hola %{name},
-          info_messages: Motivo de no importarse
-          instructions: "<p>El fichero adjunto contiene detalles sobre las filas que
-            no se han podido importar.</p>\n<p> Si quieres continuar importandolo,
-            corrige las filas especificadas, elimina la ultima columna del fichero,
-            guardalo \n e importalo de nuevo.</p>\n"
-          result: "<b>Importado:</b> %{rows_count} filas de %{total_rows_count}."
-          row_number: Número de fila
-          skipped_rows: "<b>No importadas:</b> %{skipped_rows} filas."
-          subject: CSV importado
-          success: CSV importado correctamente
+          errors_present: There were errors in the importation
+          errors_title: "<b>Found:</b> %{errors_count} errors"
+          greeting: Hello %{name},
+          info_messages: Reason for skipping
+          instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
+          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
+          row_number: Row number
+          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
+          subject: CSV imported
+          success: CSV imported successfully
           text_error: Error
       invite_participants_mailer:
         confirmation:
