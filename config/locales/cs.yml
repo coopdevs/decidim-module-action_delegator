@@ -39,11 +39,15 @@ cs:
             error_granter_unique: již delegovali svůj hlas
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
+          csv_imports:
+            invalid: There was a problem importing delegations
+            success: Delegations imported successfully
           destroy:
             error: Došlo k potížím při odstraňování této delegace
             success: Delegace úspěšně zničena
           index:
             actions:
+              csv_import: Import via csv
               new_delegation: Nový účastník
             consultation: Konzultace
             created_at: Vytvořeno v
@@ -71,6 +75,16 @@ cs:
           resend_invitation:
             error: Při opětovném odesílání pozvánky došlo k chybě
             success: Pozvánka byla úspěšně znovu odeslána
+        manage_delegations:
+          create:
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+          new:
+            import: Import
+            required_fields: 'Required fields: granter email, grantee email'
+            title: Import delegations
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         manage_participants:
           create:
             error: There was a problem importing the participants
@@ -182,7 +196,7 @@ cs:
           copy_setting: 'Copy ponderations and census from:'
           create:
             error: Při vytváření nastavení se vyskytl problém
-            success: Nastavení bylo úspěšně uloženo
+            success: Settings saved successfully
           destroy:
             error: Při odstraňování tohoto nastavení došlo k chybě
             success: Nastavení úspěšně zničeno
@@ -254,18 +268,18 @@ cs:
         callout: Pamatujte, že hlasujete jménem
         contextual_help: 'Hlasování vám bylo uděleno od:'
         title: 'Konzultace: udělené delegace'
-      import_participants_mailer:
+      import_mailer:
         import:
-          errors_present: There were errors importing the participants
+          errors_present: There were errors in the importation
           errors_title: "<b>Found:</b> %{errors_count} errors"
           greeting: Hello %{name},
           info_messages: Reason for skipping
-          instructions: "<p>Attached is a file with import details, which contains rows with participants that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
+          instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Row number
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: Participants imported
-          success: Participants imported successfully
+          subject: CSV imported
+          success: CSV imported successfully
           text_error: Error
       invite_participants_mailer:
         confirmation:
