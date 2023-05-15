@@ -178,8 +178,8 @@ es:
             <li><b>Correo electrónico y número de teléfono:</b> Utiliza verificación por SMS. El correo electrónico de la participante debe coincidir con el censo y el número de teléfono estará predefinido.</li>
             </ul>
           check_verifier:
-            not_installed_html: It seems that the "Corporate Governance Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
-          copy_setting: 'Copy ponderations and census from:'
+            not_installed_html: Parece que el método de autorización "Verificador de Gobernanza Societaria" no está activado. No puedes autenticar el censo sin la activación. Instálelo en <a href="/system">/system</a>.
+          copy_setting: 'Copiar ponderaciones y censo de:'
           create:
             error: Se ha producido un problema al crear la configuración
             success: Configuración guardada correctamente
@@ -195,7 +195,7 @@ es:
             actions:
               census: Edita el censo
               delegations: Edita las delegaciones
-              new_setting: New configuration
+              new_setting: Nueva configuración
               ponderate: Establecer los pesos para la ponderación de votos
             authorization_method: Método de autorización
             census: Censo total
@@ -210,24 +210,24 @@ es:
             open: Abierto
             ponderations: Tipos de ponderación
             state: Estado
-            title: Corporate Governance
+            title: Gobernanza Societaria
           new:
             save: Guardar
-            title: New configuration
+            title: Nueva configuración
           setting_checks:
-            all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
+            all_users_authorized_html: Todas las participantes están verificadas por el <i>Verificador de Gobernanza Societaria</i>.
             all_users_registered_html: Todos los participantes están registrados en la plataforma.
             click_to_fix: Haga clic aquí para arreglar esto automáticamente
-            consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
-            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
-            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
+            consultation_questions_all_verified_html: Todas las preguntas están restringidas por el <i>Verificador de Gobernanza Societaria</i>.
+            consultation_questions_missing_verifier_html: Hay %{count} preguntas que no están restringidas por el <i>Verificador de Gobernanza Societaria</i>. <b>Sin la restricción, cualquiera podrá votar las preguntas.</b> <em>Esto está bien si está utilizando otros métodos de autorización o si todas las registradas pueden votar.</em>
+            missing_authorizations_html: Hay %{count} participantes que no están verificadas por el <i>Verificador de Gobernanza Societaria</i>. <em>Está bien si estas participantes tienen sus votos delegados a otras o si está utilizando otros métodos de verificación (o ninguno).</em>
+            missing_emails: El método de autorización no requiere un correo electrónico. Por esto, %{count} debe registrarse en la plataforma
             missing_registered_users_html: Hay %{count} participantes que no están registrados en la plataforma.
             no_delegations_html: No hay votos delegados.
-            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
+            no_participants_html: '¡No hay censo! <b>Añade participantes o nadie podrá votar si el <i>Verificador de Gobernanza Societaria</i> está activo.</b> <em>Está bien si está utilizando otros métodos de autorización o si todas las registradas pueden votar.</em>'
             no_ponderations_html: No hay ponderaciones de votos. <b>Todos los usuarios tendrán el mismo peso en sus votos</b>
-            participant: participant
-            user: user
+            participant: participante
+            user: participante
             users_need_sync_html: La lista de participantes debe sincronizarse. <b>¡Los resultados de la consulta pueden ser incorrectos!</b>
           state:
             closed: Cerrado
@@ -269,9 +269,9 @@ es:
           text_error: Error
       invite_participants_mailer:
         confirmation:
-          body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
-          confirm: Confirm participation
-          greeting: Hello %{recipient},
+          body: Has sido invitado a participar en la consulta. Por favor, haz clic en el enlace de abajo para confirmar tu participación.
+          confirm: Confirmar la participación
+          greeting: '¡Hola, %{recipient}!,'
       name: Módulo Cooperativas - ActionDelegator para Decidim
       participants_csv_importer:
         import:
@@ -309,12 +309,12 @@ es:
               participate_in: 'Esta autorización le permite participar en las siguientes consultas: %{consultations}'
               phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
               send_code: Enviar código de verificación
-              title: Authorize with Corporate Governance Verifier
+              title: Autorizar con el Verificador de Gobernanza Societaria
     admin:
       actions:
-        invite: Send invitation
-        invite_all: Send invitations to non-existing users
-        resend: Resend invitation
+        invite: Enviar invitación
+        invite_all: Enviar invitaciones a participantes no registradas
+        resend: Reenviar la invitación
       consultations:
         results:
           default_metadata: "(datos de afiliación no disponibles)"
@@ -332,7 +332,7 @@ es:
         explanation: Las participantes verificadas con este método pueden delegar votos a otras participantes
         fields:
           phone: Número de teléfono
-        name: Corporate Governance
+        name: Gobernanza Societaria
     resources:
       question:
         actions:
@@ -341,7 +341,7 @@ es:
   devise:
     mailer:
       invite_participant:
-        subject: You have been invited to participate in the consultation
+        subject: Has sido invitada a participar en una consulta
   layouts:
     decidim:
       admin:
