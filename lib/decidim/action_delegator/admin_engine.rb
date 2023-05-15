@@ -22,6 +22,7 @@ module Decidim
           resources :manage_participants, only: [:new, :create, :destroy_all] do
             delete :destroy_all, on: :collection
           end
+          resources :manage_delegations, only: [:new, :create]
           resources :permissions, only: [:create] do
             post :sync, on: :collection
           end

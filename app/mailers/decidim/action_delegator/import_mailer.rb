@@ -4,7 +4,7 @@ module Decidim
   module ActionDelegator
     # This mailer sends a notification email containing the result of importing a
     # CSV of results.
-    class ImportParticipantsMailer < Decidim::ApplicationMailer
+    class ImportMailer < Decidim::ApplicationMailer
       # Public: Sends a notification email with the result of a CSV import
       # of results.
       #
@@ -23,7 +23,7 @@ module Decidim
         attachments["details.csv"] = File.read(@csv_file_path) if @csv_file_path.present? && File.exist?(@csv_file_path)
 
         with_user(user) do
-          mail(to: "#{user.name} <#{user.email}>", subject: I18n.t("decidim.action_delegator.import_participants_mailer.import.subject"))
+          mail(to: "#{user.name} <#{user.email}>", subject: I18n.t("decidim.action_delegator.import_mailer.import.subject"))
         end
       end
     end

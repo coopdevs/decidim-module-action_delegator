@@ -2,73 +2,30 @@
 
 module Decidim
   module ActionDelegator
-    class ParticipantsCsvImporter
-      include Decidim::FormFactory
+    class ParticipantsCsvImporter < CsvImporter
+      def process(row, params, details_csv, import_summary, iterator)
+        weight = ponderation_value(row["weight"].strip) if row["weight"].present?
 
-      def initialize(csv_file, current_user, current_setting)
-        @csv_file = csv_file
-        @current_user = current_user
-        @current_setting = current_setting
-      end
+        @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
 
-      def import!
-        import_summary = {
-          total_rows: 0,
-          imported_rows: 0,
-          error_rows: [],
-          skipped_rows: [],
-          details_csv_path: nil
-        }
-
-        details_csv_file = File.join(File.dirname(@csv_file), "details.csv")
-
-        i = 1
-        csv = CSV.new(@csv_file, headers: true, col_sep: ",")
-
-        CSV.open(details_csv_file, "wb") do |details_csv|
-          headers(csv, details_csv)
-
-          csv.rewind
-
-          while (row = csv.shift).present?
-            i += 1
-
-            params = extract_params(row)
-            weight = ponderation_value(row["weight"].strip) if row["weight"].present?
-
-            @form = form(Decidim::ActionDelegator::Admin::ParticipantForm).from_params(params, setting: @current_setting)
-
-            next if row&.empty?
-
-            if participant_exists?(@form)
-              mismatch_fields = mismatched_fields(@form)
-              info_message = generate_info_message(mismatch_fields)
-              handle_skipped_row(row, details_csv, import_summary, i, info_message)
-
-              next
-            end
-
-            if phone_exists?(@form)
-              reason = I18n.t("phone_exists", scope: "decidim.action_delegator.participants_csv_importer.import")
-              handle_skipped_row(row, details_csv, import_summary, i, reason)
-
-              next
-            end
-
-            if weight.present? && find_ponderation(weight).nil?
-              reason = I18n.t("ponderation_not_found", scope: "decidim.action_delegator.participants_csv_importer.import")
-              handle_skipped_row(row, details_csv, import_summary, i, reason)
-
-              next
-            end
-
-            handle_form_validity(row, details_csv, import_summary, i)
-          end
+        if participant_exists?(@form)
+          mismatch_fields = mismatched_fields(@form)
+          message = generate_info_message(mismatch_fields)
+          handle_skipped_row(row, details_csv, import_summary, iterator, message)
+          return false
         end
-        import_summary[:total_rows] = i - 1
-        import_summary[:details_csv_path] = details_csv_file
+        if phone_exists?(@form)
+          reason = I18n.t("phone_exists", scope: "decidim.action_delegator.participants_csv_importer.import")
+          handle_skipped_row(row, details_csv, import_summary, iterator, reason)
+          return false
+        end
+        if weight.present? && find_ponderation(weight).nil?
+          reason = I18n.t("ponderation_not_found", scope: "decidim.action_delegator.participants_csv_importer.import")
+          handle_skipped_row(row, details_csv, import_summary, iterator, reason)
+          return false
+        end
 
-        import_summary
+        true
       end
 
       private
@@ -104,10 +61,6 @@ module Decidim
         [email, phone]
       end
 
-      def invalid_email?(email)
-        email.blank? || !email.match?(::Devise.email_regexp)
-      end
-
       def invalid_phone?(phone)
         phone.blank? || !phone.gsub(/[^+0-9]/, "").match?(Decidim::ActionDelegator.phone_regex)
       end
@@ -134,18 +87,6 @@ module Decidim
         @participant.present?
       end
 
-      def handle_skipped_row(row, details_csv, import_summary, row_number, reason)
-        import_summary[:skipped_rows] << { row_number: row_number - 1 }
-        row["reason"] = reason
-        details_csv << row
-      end
-
-      def handle_import_error(row, details_csv, import_summary, row_number, error_messages)
-        import_summary[:error_rows] << { row_number: row_number - 1, error_messages: error_messages }
-        row["reason"] = error_messages
-        details_csv << row
-      end
-
       def handle_form_validity(row, details_csv, import_summary, row_number)
         if @form.valid?
           process_participant(@form)
@@ -166,11 +107,6 @@ module Decidim
         mismatch_fields.empty? ? nil : mismatch_fields.join(", ")
       end
 
-      def generate_info_message(mismatch_fields)
-        with_mismatched_fields = mismatch_fields.present? ? I18n.t("decidim.action_delegator.participants_csv_importer.import.with_mismatched_fields", fields: mismatch_fields) : ""
-        I18n.t("decidim.action_delegator.participants_csv_importer.import.skip_import_info", with_mismatched_fields: with_mismatched_fields)
-      end
-
       def create_new_participant(form)
         Decidim::ActionDelegator::Admin::CreateParticipant.call(form)
       end
@@ -189,12 +125,6 @@ module Decidim
         Float(value)
       rescue StandardError
         value
-      end
-
-      def headers(csv, details_csv)
-        headers = csv.first.headers
-        headers << I18n.t("decidim.action_delegator.participants_csv_importer.import.error_field")
-        details_csv << headers
       end
     end
   end

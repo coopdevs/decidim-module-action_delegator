@@ -43,11 +43,15 @@ en:
             error_max_grants: You reached the limit of allowed delegations for this
               grantee
             success: Delegation created successfully
+          csv_imports:
+            invalid: There was a problem importing delegations
+            success: Delegations imported successfully
           destroy:
             error: There was a problem removing this delegation
             success: Delegation successfully destroyed
           index:
             actions:
+              csv_import: Import via csv
               new_delegation: New delegation
             consultation: Consultation
             created_at: Created at
@@ -75,6 +79,18 @@ en:
           resend_invitation:
             error: There was an error resending the invitation
             success: Invitation resent successfully
+        manage_delegations:
+          create:
+            error: There was a problem importing the participants
+            success: The import process has started, please wait a few minutes and
+              refresh the page to see the list of participants. Import results will
+              be sent by email.
+          new:
+            import: Import
+            required_fields: 'Required fields: granter email, grantee email'
+            title: Import delegations
+            title_example: 'Example:'
+            upload_instructions: Must be a file in CSV format with a header.
         manage_participants:
           create:
             error: There was a problem importing the participants
@@ -198,7 +214,7 @@ en:
           copy_setting: 'Copy ponderations and census from:'
           create:
             error: There was a problem creating the settings
-            success: Settings created successfully
+            success: Settings saved successfully
           destroy:
             error: There was a problem removing this setting
             success: Setting successfully destroyed
@@ -290,21 +306,21 @@ en:
         callout: Remember, you are voting on behalf of
         contextual_help: 'You have been granted the vote from:'
         title: 'Consultation: granted delegations'
-      import_participants_mailer:
+      import_mailer:
         import:
-          errors_present: There were errors importing the participants
+          errors_present: There were errors in the importation
           errors_title: "<b>Found:</b> %{errors_count} errors"
           greeting: Hello %{name},
           info_messages: Reason for skipping
           instructions: "<p>Attached is a file with import details, which contains
-            rows with participants that were not imported.</p>\n<p>If you want to
-            continue importing, correct the rows specified, delete the last column
-            from the file, save \nthe file and import again.</p>\n"
+            rows that were not imported.</p>\n<p>If you want to continue importing,
+            correct the rows specified, delete the last column from the file, save
+            \nthe file and import again.</p>\n"
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Row number
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: Participants imported
-          success: Participants imported successfully
+          subject: CSV imported
+          success: CSV imported successfully
           text_error: Error
       invite_participants_mailer:
         confirmation:

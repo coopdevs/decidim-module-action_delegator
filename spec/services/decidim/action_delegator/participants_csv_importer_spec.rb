@@ -14,8 +14,19 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
   let(:csv_file_without_phone) { File.open("spec/fixtures/without_phone.csv") }
   let(:valid_csv_with_uppercase) { File.open("spec/fixtures/valid_participants_with_uppercase.csv") }
   let(:csv_file_with_same_phones) { File.open("spec/fixtures/same_phones.csv") }
+  let(:weight) { 3 }
 
   describe "#import!" do
+    let!(:ponderation) { create(:ponderation, setting: current_setting) }
+    let(:params) do
+      {
+        email: "user@example.org",
+        phone: "600000000",
+        weight: weight,
+        decidim_action_delegator_ponderation_id: ponderation.id
+      }
+    end
+
     context "when the rows in the csv file are valid" do
       subject { described_class.new(valid_csv_file, current_user, current_setting) }
 
@@ -55,19 +66,19 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
     context "when participant with this email already exists" do
       subject { described_class.new(valid_csv_file, current_user, current_setting) }
 
-      let!(:participant) { create(:participant, email: "baz@example.org", setting: current_setting) }
+      let!(:participant) { create(:participant, ponderation: ponderation, email: "user_@example.org", setting: current_setting) }
 
       it "does not create a new participant" do
         expect do
           subject.import!
-        end.to change(Decidim::ActionDelegator::Participant, :count).by(3)
+        end.to change(Decidim::ActionDelegator::Participant, :count).by(4)
       end
     end
 
     context "when participant exists with another data" do
       subject { described_class.new(valid_csv_file, current_user, current_setting) }
 
-      let!(:participant) { create(:participant, phone: "123456789", setting: current_setting) }
+      let!(:participant) { create(:participant, ponderation: ponderation, phone: "123456789", setting: current_setting) }
 
       it "does not change the data of the existing participant" do
         expect do
@@ -79,7 +90,7 @@ describe Decidim::ActionDelegator::ParticipantsCsvImporter do
     context "when participant with this phone already exists" do
       subject { described_class.new(csv_file_with_same_phones, current_user, current_setting) }
 
-      let!(:participant) { create(:participant, phone: "123456789", setting: current_setting) }
+      let!(:participant) { create(:participant, ponderation: ponderation, phone: "123456789", setting: current_setting) }
 
       it "does not create a new participant" do
         expect do

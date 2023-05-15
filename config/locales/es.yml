@@ -44,6 +44,7 @@ es:
             success: Delegación eliminada correctamente
           index:
             actions:
+              csv_import: Importar via csv
               new_delegation: Nueva participante
             consultation: Consulta
             created_at: Creado el
@@ -71,6 +72,18 @@ es:
           resend_invitation:
             error: Se ha producido un error al reenviar la invitación
             success: Invitación reenviada con éxito
+        manage_delegations:
+          create:
+            error: Ha habido un problema al importar las delegaciones
+            success: El proceso de importación ha empezado, por favor espera unos
+              minutos y refresca la página para ver el listado de delegaciones. Los
+              resultados de la importación se enviarán por correo electrónico.
+          new:
+            import: Importar
+            required_fields: 'Campos requeridos: email concedente, email beneficiario'
+            title: Importar delegaciones
+            title_example: 'Ejemplo:'
+            upload_instructions: Debe ser un fichero en formato CSV con cabecera.
         manage_participants:
           create:
             error: Se ha producido un error en importar las participantes
@@ -254,18 +267,21 @@ es:
         callout: Recuerda, estás votando en nombre de
         contextual_help: 'Se le ha concedido el voto de:'
         title: 'Consulta: delegaciones concedidas'
-      import_participants_mailer:
+      import_mailer:
         import:
-          errors_present: Se ha producido errores en importar las participantes
-          errors_title: "<b>Encontrado:</b> %{errors_count} errores"
+          errors_present: Hay errores en la importación
+          errors_title: "<b>Encontrados:</b> %{errors_count} errores"
           greeting: Hola %{name},
-          info_messages: Motivo para omitir
-          instructions: "<p>Se adjunta un archivo con detalles de importación, que contiene filas con participantes que no fueron importados.</p>\n<p>Si desea continuar con la importación, corrija las filas especificadas, elimine la última columna del archivo, guarde el archivo e importar de nuevo.</p>"
+          info_messages: Motivo de no importarse
+          instructions: "<p>El fichero adjunto contiene detalles sobre las filas que
+            no se han podido importar.</p>\n<p> Si quieres continuar importandolo,
+            corrige las filas especificadas, elimina la ultima columna del fichero,
+            guardalo \n e importalo de nuevo.</p>\n"
           result: "<b>Importado:</b> %{rows_count} filas de %{total_rows_count}."
-          row_number: Numero fila
-          skipped_rows: "<b>Omitido:</b> %{skipped_rows} filas."
-          subject: Participantes importadas
-          success: Participantes importadas con éxito
+          row_number: Número de fila
+          skipped_rows: "<b>No importadas:</b> %{skipped_rows} filas."
+          subject: CSV importado
+          success: CSV importado correctamente
           text_error: Error
       invite_participants_mailer:
         confirmation:
