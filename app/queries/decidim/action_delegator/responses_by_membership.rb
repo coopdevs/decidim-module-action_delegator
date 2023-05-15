@@ -33,7 +33,7 @@ module Decidim
       attr_reader :relation
 
       def default_metadata
-        sql("'#{DEFAULT_METADATA}'")
+        sql(ActiveRecord::Base::sanitize_sql(["?", DEFAULT_METADATA]))
       end
 
       def votes_count
