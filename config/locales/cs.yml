@@ -45,6 +45,8 @@ cs:
           destroy:
             error: Došlo k potížím při odstraňování této delegace
             success: Delegace úspěšně zničena
+          grantee_missing: The grantee (receiver) is not registered into the platform
+          granter_missing: The granter (from) is not registered into the platform
           index:
             actions:
               csv_import: Import via csv
@@ -296,7 +298,7 @@ cs:
             weight: weight
           phone_exists: Participant with this phone already exists
           ponderation_not_found: Ponderation type not found
-          skip_import_info: Participant already exists%{with_mismatched_fields}
+          skip_import_info: Participant already exists %{with_mismatched_fields}
           with_mismatched_fields: " with mismatched fields: %{fields}"
       sms_message: Váš ověřovací kód je %{code}
       user_delegations:
