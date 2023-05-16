@@ -14,12 +14,6 @@ module Decidim
         attribute :granter_email, String
         attribute :grantee_email, String
 
-        validates :granter_id, presence: true, if: -> { granter_email.blank? }
-        validates :grantee_id, presence: true, if: -> { grantee_email.blank? }
-
-        validates :granter_email, presence: true, if: -> { granter_id.blank? }
-        validates :grantee_email, presence: true, if: -> { grantee_id.blank? }
-
         validate :granter_exists
         validate :grantee_exists
 
