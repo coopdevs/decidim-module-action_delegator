@@ -50,7 +50,7 @@ en:
             error: There was a problem removing this delegation
             success: Delegation successfully destroyed
           grantee_missing: The grantee (receiver) is not registered into the platform
-          grantor_missing: The granter (from) is not registered into the platform
+          granter_missing: The granter (from) is not registered into the platform
           index:
             actions:
               csv_import: Import via csv
