@@ -18,37 +18,17 @@ module Decidim
       private
 
       def extract_params(row)
-        granter, grantee = extract_details(row)
-
         params = {
-          granter_id: granter,
-          grantee_id: grantee
+          granter_email: row["from"].to_s.strip.downcase,
+          grantee_email: row["to"].to_s.strip.downcase
         }
 
         @form = form(Decidim::ActionDelegator::Admin::DelegationForm).from_params(params, setting: @current_setting)
 
-        params
-      end
-
-      def extract_details(row)
-        granter_email = row["from"].to_s.strip.downcase
-        grantee_email = row["to"].to_s.strip.downcase
-
-        granter = user_id(granter_email)
-        grantee = user_id(grantee_email)
-
-        granter = nil if invalid_email?(granter_email) && granter.nil?
-        grantee = nil if invalid_email?(grantee_email) && grantee.nil?
-
-        [granter, grantee]
-      end
-
-      def user_id(email)
-        Decidim::User.find_by(email: email)&.id
-      end
-
-      def process_delegation(form)
-        create_new_delegation(form)
+        {
+          granter_id: @form.granter&.id,
+          grantee_id: @form.grantee&.id
+        }
       end
 
       def delegation_exists?(params)
@@ -57,7 +37,7 @@ module Decidim
         @delegation.present?
       end
 
-      def create_new_delegation(form)
+      def process_delegation(form)
         Decidim::ActionDelegator::Admin::CreateDelegation.call(form, @current_user, @current_setting)
       end
 
