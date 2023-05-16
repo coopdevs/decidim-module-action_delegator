@@ -40,16 +40,16 @@ ca:
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegació creada amb èxit
           csv_imports:
-            invalid: There was a problem importing delegations
-            success: Delegations imported successfully
+            invalid: Hi ha hagut un problema important les delegacions
+            success: Delegacions importades correctament
           destroy:
             error: S'ha produït un error en eliminar aquesta delegació
             success: S'ha eliminat la delegació amb èxit
-          grantee_missing: The grantee (receiver) is not registered into the platform
-          granter_missing: The granter (from) is not registered into the platform
+          grantee_missing: L'atorgant no està registrada a la plataforma
+          granter_missing: L'atorgant no està registrada a la plataforma
           index:
             actions:
-              csv_import: Import via csv
+              csv_import: Importa un arxiu CSV
               new_delegation: Nou participant
             consultation: Consulta
             created_at: Creat el
@@ -79,14 +79,14 @@ ca:
             success: Invitació reenviada amb èxit
         manage_delegations:
           create:
-            error: There was a problem importing the participants
-            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+            error: S'ha produït un error en importar les participants
+            success: El procés d'importació ha començat, espereu uns minuts i actualitzeu la pàgina per veure la llista de participants. Els resultats d'importació s'enviaran per correu electrònic.
           new:
-            import: Import
-            required_fields: 'Required fields: granter email, grantee email'
-            title: Import delegations
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+            import: Importa
+            required_fields: 'Camps obligatoris: Email de l''atorgant, email de la receptora'
+            title: Importa les delegacions
+            title_example: 'Exemple:'
+            upload_instructions: Ha de ser un fitxer en format CSV amb una capçalera.
         manage_participants:
           create:
             error: S'ha produït un error en importar les participants
@@ -198,7 +198,7 @@ ca:
           copy_setting: 'Copia ponderacions i cens de:'
           create:
             error: S'ha produït un error en crear la configuració
-            success: Settings saved successfully
+            success: Configuració desada correctament
           destroy:
             error: S'ha produït un error en eliminar aquesta configuració
             success: Configuració eliminada correctament
@@ -272,16 +272,16 @@ ca:
         title: 'Consulta: delegacions atorgades'
       import_mailer:
         import:
-          errors_present: There were errors in the importation
-          errors_title: "<b>Found:</b> %{errors_count} errors"
-          greeting: Hello %{name},
-          info_messages: Reason for skipping
-          instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
-          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
-          row_number: Row number
-          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: CSV imported
-          success: CSV imported successfully
+          errors_present: Hi ha hagut errors en la importació
+          errors_title: "<b>S'han trobat:</b> %{errors_count} errors"
+          greeting: Hola %{name},
+          info_messages: Motiu d'omissió
+          instructions: "<p>S'adjunta un fitxer amb els detalls de la importació, conté les files que no s'han importat.</p>\n<p>Si voleu continuar important, corregiu les files especificades, suprimiu l'última columna del fitxer, deseu el fitxer i torna a importar.</p>\n"
+          result: "<b>Importat:</b> %{rows_count} files de %{total_rows_count}."
+          row_number: Número de fila
+          skipped_rows: "<b>S'han omès:</b> %{skipped_rows} files."
+          subject: CSV importat
+          success: CSV importat correctament
           text_error: Error
       invite_participants_mailer:
         confirmation:
@@ -298,7 +298,7 @@ ca:
             weight: ponderació
           phone_exists: El participant amb aquest telèfon ja existeix
           ponderation_not_found: No s'ha trobat el tipus de ponderació
-          skip_import_info: Participant already exists %{with_mismatched_fields}
+          skip_import_info: El participant ja existeix%{with_mismatched_fields}
           with_mismatched_fields: "amb camps no coincidents: %{fields}"
       sms_message: El teu codi de verificació és %{code}
       user_delegations:
