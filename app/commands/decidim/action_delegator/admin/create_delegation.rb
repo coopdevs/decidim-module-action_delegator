@@ -54,7 +54,11 @@ module Decidim
         end
 
         def create_delegation
-          @delegation = Delegation.create(form.attributes.merge(setting: current_setting))
+          @delegation = Delegation.create(
+            granter: form.granter,
+            grantee: form.grantee,
+            setting: current_setting
+          )
         end
       end
     end
