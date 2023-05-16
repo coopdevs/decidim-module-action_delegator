@@ -37,8 +37,6 @@ en:
           weighted_results:
             title: Results by answer summing membership weights
         delegations:
-          grantee_missing: The grantee (receiver) is not registered into the platform
-          grantor_missing: The granter (from) is not registered into the platform
           create:
             error: There was a problem creating the delegation
             error_granter_unique: already delegated their vote
@@ -51,6 +49,8 @@ en:
           destroy:
             error: There was a problem removing this delegation
             success: Delegation successfully destroyed
+          grantee_missing: The grantee (receiver) is not registered into the platform
+          grantor_missing: The granter (from) is not registered into the platform
           index:
             actions:
               csv_import: Import via csv
