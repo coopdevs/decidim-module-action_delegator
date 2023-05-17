@@ -9,7 +9,7 @@ module Decidim
 
       it { is_expected.to belong_to(:setting) }
       it { is_expected.to be_valid }
-      it { is_expected.not_to be_voted }
+      it { is_expected.not_to be_grantee_voted }
 
       describe ".granted_to?" do
         subject { delegation }
@@ -23,7 +23,7 @@ module Decidim
         let(:setting) { create(:setting, consultation: consultation) }
 
         shared_examples "can be destroyed" do
-          it { is_expected.not_to be_voted }
+          it { is_expected.not_to be_grantee_voted }
 
           it "can be destroyed" do
             expect { subject.destroy }.to change(described_class, :count).by(-1)
@@ -31,7 +31,7 @@ module Decidim
         end
 
         shared_examples "cannot be destroyed" do
-          it { is_expected.to be_voted }
+          it { is_expected.to be_grantee_voted }
 
           it "cannot be destroyed" do
             expect { subject.destroy }.not_to change(described_class, :count)
@@ -57,12 +57,22 @@ module Decidim
 
           it_behaves_like "can be destroyed"
 
-          context "and granter has voted" do
+          context "and granter has voted", versioning: true do
             let!(:vote) { create(:vote, question: question, response: response, author: delegation.granter) }
 
             it_behaves_like "can be destroyed"
 
-            context "and grantee has voted in behave of the granter" do
+            context "and grantee has voted in behalf of the granter" do
+              before do
+                PaperTrail::Version.create!(
+                  item_type: "Decidim::Consultations::Vote",
+                  item_id: vote.id,
+                  event: "create",
+                  whodunnit: delegation.grantee.id,
+                  decidim_action_delegator_delegation_id: delegation.id
+                )
+              end
+
               it_behaves_like "cannot be destroyed"
             end
           end
