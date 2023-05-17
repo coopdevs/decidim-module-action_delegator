@@ -56,9 +56,10 @@ cs:
             delete: Smazat
             description_html: This is the current delegations for this consultation
             grantee: Příjemce
+            grantee_voted: Grantee has voted in behalf of granter?
             granter: Delegující
+            granter_voted: Granter has voted?
             title: Účastníci
-            voted: Granter has voted?
           new:
             grantee: Příjemce
             granter: Delegující
@@ -354,6 +355,11 @@ cs:
         actions:
           comment: Comment
           vote: Vote
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            delegations_verifier: Get verified with Corporate Governance Census
   devise:
     mailer:
       invite_participant:
