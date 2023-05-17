@@ -55,14 +55,14 @@ es:
             created_at: Creado el
             delete: Eliminar
             description_html: Estas son las delegaciones actuales para esta consulta
-            grantee: Beneficiario
-            grantee_voted: Grantee has voted in behalf of granter?
-            granter: Concedente
-            granter_voted: Granter has voted?
+            grantee: Receptora (a)
+            grantee_voted: '¿Se ha utilizado la delegación?'
+            granter: Otorgante
+            granter_voted: '¿Ha votado la otorgante?'
             title: Participantes
           new:
             grantee: Beneficiario
-            granter: Concedente
+            granter: Otorgante
             save: Crear
             select_member: Seleccionar miembro
             title: Nueva delegación
