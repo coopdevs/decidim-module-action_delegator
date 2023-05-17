@@ -139,6 +139,40 @@ Decidim::ActionDelegator.configure do |config|
 end
 ```
 
+### Other configuration options
+
+There are some other configuration options available, for more info check [action_delegator](lib/decidim/action_delegator.rb). These are the default values
+
+```ruby
+Decidim::ActionDelegator.configure do |config|
+  # this is the SmsGateway provided by this module
+  # Note that it will be ignored if you provide your own SmsGateway in Decidm.sms_gateway_service
+  config.sms_gateway_service = "Decidim::ActionDelegator::SmsGateway"
+
+  # The default expiration time for the integrated authorization
+  # if zero, the authorization won't be registered
+  config.authorization_expiration_time = 3.months
+
+  # Put this to false if you don't want to allow administrators to invite users not registered
+  # in the platform when uploading a census (inviting users without permission can be a GDPR offense).
+  config.allow_to_invite_users = true
+
+  # used for comparing phone numbers from a census list and the ones introduced by the user
+  # the phone number will be normalized before comparing it so, for instance,
+  # if you have a census list with  +34 666 666 666 and the user introduces 0034666666666 or 666666666, they will be considered the same
+  # can be empty or null if yo don't want to check different combinations of prefixes
+  config.phone_prefixes = %w(+34 0034 34)
+
+  # The regex for validating phone numbers
+  config.phone_regex = /^\d{6,15}$/ # 6 to 15 digits
+
+  # Consultations has an annoying and totally useless deprecation warning
+  # This plugin removes it by default.
+  # If you want to keep it, you can set this config to false
+  config.remove_consultation_deprecation_warning = true
+end
+```
+
 ### Track delegated votes and unvotes
 
 Votes and revocations done on behalf of other members are tracked through the
@@ -290,3 +324,8 @@ https://crowdin.com/project/decidim-action-delegator-vote
 ## License
 
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
+
+## About
+
+This plugin is currently maintained by [![Pokecode](app/packs/images/logo-pokecode.png)](https://pokecode.net)with much appreciated contributions from other companies.
+
