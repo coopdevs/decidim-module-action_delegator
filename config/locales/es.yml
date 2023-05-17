@@ -39,24 +39,30 @@ es:
             error_granter_unique: ya ha delegado su voto
             error_max_grants: You reached the limit of allowed delegations
             success: Delegación creada correctamente
+          csv_imports:
+            invalid: Se ha producido un error al importar las delegaciones
+            success: Delegaciones importadas correctamente
           destroy:
             error: Se ha producido un error al eliminar esta delegación
             success: Delegación eliminada correctamente
+          grantee_missing: El receptor no está registrado en la plataforma
+          granter_missing: El otorgante no está registrado en la plataforma
           index:
             actions:
-              csv_import: Importar via csv
+              csv_import: Importar un fichero CSV
               new_delegation: Nueva participante
             consultation: Consulta
             created_at: Creado el
             delete: Eliminar
             description_html: Estas son las delegaciones actuales para esta consulta
-            grantee: Beneficiario
-            granter: Concedente
+            grantee: Receptora (a)
+            grantee_voted: '¿Se ha utilizado la delegación?'
+            granter: Otorgante
+            granter_voted: '¿Ha votado la otorgante?'
             title: Participantes
-            voted: '¿Ha votado la receptora?'
           new:
             grantee: Beneficiario
-            granter: Concedente
+            granter: Otorgante
             save: Crear
             select_member: Seleccionar miembro
             title: Nueva delegación
@@ -74,16 +80,14 @@ es:
             success: Invitación reenviada con éxito
         manage_delegations:
           create:
-            error: Ha habido un problema al importar las delegaciones
-            success: El proceso de importación ha empezado, por favor espera unos
-              minutos y refresca la página para ver el listado de delegaciones. Los
-              resultados de la importación se enviarán por correo electrónico.
+            error: Se ha producido un error en importar las participantes
+            success: El proceso de importación ha comenzado, por favor espere unos minutos y actualice la página para ver la lista de participantes. Los resultados de importación se enviarán por correo electrónico.
           new:
             import: Importar
-            required_fields: 'Campos requeridos: email concedente, email beneficiario'
+            required_fields: 'Campos requeridos: correo del otorgante, correo del receptor'
             title: Importar delegaciones
             title_example: 'Ejemplo:'
-            upload_instructions: Debe ser un fichero en formato CSV con cabecera.
+            upload_instructions: Debe ser un archivo en formato CSV con un encabezado.
         manage_participants:
           create:
             error: Se ha producido un error en importar las participantes
@@ -269,17 +273,14 @@ es:
         title: 'Consulta: delegaciones concedidas'
       import_mailer:
         import:
-          errors_present: Hay errores en la importación
-          errors_title: "<b>Encontrados:</b> %{errors_count} errores"
+          errors_present: Se han producido errores durante la importación
+          errors_title: "<b>Se han encontrado:</b> %{errors_count} errores"
           greeting: Hola %{name},
-          info_messages: Motivo de no importarse
-          instructions: "<p>El fichero adjunto contiene detalles sobre las filas que
-            no se han podido importar.</p>\n<p> Si quieres continuar importandolo,
-            corrige las filas especificadas, elimina la ultima columna del fichero,
-            guardalo \n e importalo de nuevo.</p>\n"
+          info_messages: Motivo de omisión
+          instructions: "<p>Se adjunta un archivo con detalles de importación, contiene filas que no fueron importadas.</p>\n<p>Si desea continuar con la importación, corrija las filas especificadas, elimine la última columna del archivo, guarde el archivo e importar de nuevo.</p>\n"
           result: "<b>Importado:</b> %{rows_count} filas de %{total_rows_count}."
-          row_number: Número de fila
-          skipped_rows: "<b>No importadas:</b> %{skipped_rows} filas."
+          row_number: Numero fila
+          skipped_rows: "<b>Omitidas:</b> %{skipped_rows} filas."
           subject: CSV importado
           success: CSV importado correctamente
           text_error: Error
@@ -354,6 +355,11 @@ es:
         actions:
           comment: Comentario
           vote: Votar
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            delegations_verifier: Get verified with Corporate Governance Census
   devise:
     mailer:
       invite_participant:
