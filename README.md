@@ -139,7 +139,6 @@ Decidim::ActionDelegator.configure do |config|
 end
 ```
 
-
 ### Track delegated votes and unvotes
 
 Votes and revocations done on behalf of other members are tracked through the

@@ -60,7 +60,11 @@ module Decidim
           context "and granter has voted" do
             let!(:vote) { create(:vote, question: question, response: response, author: delegation.granter) }
 
-            it_behaves_like "cannot be destroyed"
+            it_behaves_like "can be destroyed"
+
+            context "and grantee has voted in behave of the granter" do
+              it_behaves_like "cannot be destroyed"
+            end
           end
         end
       end
