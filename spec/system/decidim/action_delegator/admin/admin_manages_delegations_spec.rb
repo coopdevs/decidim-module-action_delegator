@@ -58,18 +58,7 @@ describe "Admin manages delegations", type: :system do
     end
   end
 
-  context "when destroying a delegation" do
-    let(:consultation) { create(:consultation, organization: organization) }
-    let(:question) { create(:question, consultation: consultation) }
-    let(:response) { create(:response, question: question) }
-    let!(:vote) { create(:vote, response: response, question: question) }
-    let(:setting) { create(:setting, consultation: consultation) }
-    let!(:delegation) { create(:delegation, setting: setting) }
-
-    before do
-      visit decidim_admin_action_delegator.setting_delegations_path(setting)
-    end
-
+  shared_examples "destroys a delegation" do
     it "destroys the delegation" do
       # has no votes
       expect(page).to have_content("No")
@@ -82,18 +71,54 @@ describe "Admin manages delegations", type: :system do
       expect(page).to have_current_path(decidim_admin_action_delegator.setting_delegations_path(setting.id))
       expect(page).to have_admin_callout("successfully")
     end
+  end
 
-    context "and granter has voted" do
+  shared_examples "do not destroy a delegation" do
+    it "does not destroy the delegation" do
+      # has votes
+      expect(page).not_to have_content("No")
+      expect(page).to have_content("Yes")
+      within "tr[data-delegation-id=\"#{delegation.id}\"]" do
+        expect(page).not_to have_link("Delete")
+      end
+    end
+  end
+
+  context "when destroying a delegation" do
+    let(:consultation) { create(:consultation, organization: organization) }
+    let(:question) { create(:question, consultation: consultation) }
+    let(:response) { create(:response, question: question) }
+    let!(:vote) { create(:vote, response: response, question: question) }
+    let(:setting) { create(:setting, consultation: consultation) }
+    let!(:delegation) { create(:delegation, setting: setting) }
+
+    before do
+      visit decidim_admin_action_delegator.setting_delegations_path(setting)
+    end
+
+    it_behaves_like "destroys a delegation"
+
+    context "and granter has voted", versioning: true do
       let!(:vote) { create(:vote, response: response, question: question, author: delegation.granter) }
 
-      it "does not destroy the delegation" do
-        # has votes
-        expect(page).not_to have_content("No")
-        expect(page).to have_content("Yes")
-        within "tr[data-delegation-id=\"#{delegation.id}\"]" do
-          expect(page).not_to have_link("Delete")
-        end
+      it_behaves_like "destroys a delegation"
+    end
+
+    context "and grantee has voted in behalf of the granter" do
+      let!(:vote) { create(:vote, response: response, question: question, author: delegation.granter) }
+
+      before do
+        PaperTrail::Version.create!(
+          item_type: "Decidim::Consultations::Vote",
+          item_id: vote.id,
+          event: "create",
+          whodunnit: delegation.grantee.id,
+          decidim_action_delegator_delegation_id: delegation.id
+        )
+        visit decidim_admin_action_delegator.setting_delegations_path(setting)
       end
+
+      it_behaves_like "do not destroy a delegation"
     end
   end
 end
