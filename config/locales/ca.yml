@@ -56,9 +56,9 @@ ca:
             delete: Eliminar
             description_html: Aquestes són les delegacions actuals per a aquesta consulta
             grantee: Receptora (a)
-            grantee_voted: Grantee has voted in behalf of granter?
+            grantee_voted: S'ha utilitzat la delegació?
             granter: Atorgant
-            granter_voted: Granter has voted?
+            granter_voted: Ha votat l'atorgant?
             title: Participants
           new:
             grantee: Receptora (a)
@@ -359,7 +359,7 @@ ca:
       authorizations:
         first_login:
           actions:
-            delegations_verifier: Get verified with Corporate Governance Census
+            delegations_verifier: Verificat amb el Cens de Governança Societària
   devise:
     mailer:
       invite_participant:
