@@ -56,9 +56,10 @@ es:
             delete: Eliminar
             description_html: Estas son las delegaciones actuales para esta consulta
             grantee: Beneficiario
+            grantee_voted: Grantee has voted in behalf of granter?
             granter: Concedente
+            granter_voted: Granter has voted?
             title: Participantes
-            voted: '¿Ha votado la receptora?'
           new:
             grantee: Beneficiario
             granter: Concedente
@@ -354,6 +355,11 @@ es:
         actions:
           comment: Comentario
           vote: Votar
+    verifications:
+      authorizations:
+        first_login:
+          actions:
+            delegations_verifier: Get verified with Corporate Governance Census
   devise:
     mailer:
       invite_participant:
