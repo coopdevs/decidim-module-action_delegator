@@ -10,17 +10,11 @@ module Decidim
       end
 
       def query
-        statement = <<-SQL.squish
-          SELECT *
-          FROM versions
-          INNER JOIN decidim_action_delegator_delegations
-            ON decidim_action_delegator_delegations.id = versions.decidim_action_delegator_delegation_id
-          INNER JOIN decidim_action_delegator_settings
-            ON decidim_action_delegator_settings.id = decidim_action_delegator_delegations.decidim_action_delegator_setting_id
-          WHERE decidim_action_delegator_settings.decidim_consultation_id = #{consultation.id}
-        SQL
-
-        ActiveRecord::Base.connection.execute(statement).to_a
+        PaperTrail::Version
+          .joins("INNER JOIN decidim_action_delegator_delegations ON decidim_action_delegator_delegations.id = versions.decidim_action_delegator_delegation_id")
+          .joins("INNER JOIN decidim_action_delegator_settings ON decidim_action_delegator_settings.id = decidim_action_delegator_delegations.decidim_action_delegator_setting_id")
+          .where(decidim_action_delegator_settings: { decidim_consultation_id: consultation.id })
+          .order("versions.created_at ASC")
       end
 
       private

@@ -15,7 +15,7 @@
           <tr>
             <th><%= t(".granter") %></th>
             <th><%= t(".grantee") %></th>
-            <th><%= t(".voted") %></th>
+            <th><%= t(".grantee_voted") %></th>
             <th><%= t(".created_at") %></th>
             <th>&nbsp;</th>
           </tr>
@@ -25,11 +25,11 @@
             <tr data-delegation-id="<%= delegation.id %>">
               <td><%= delegation.granter.name %></td>
               <td><%= delegation.grantee.name %></td>
-              <td><%= t("booleans.#{delegation.voted?}") %></td>
+              <td><%= t("booleans.#{delegation.grantee_voted?}") %></td>
               <td><%= l delegation.created_at, format: :short %></td>
 
               <td class="table-list__actions">
-                <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_delegation_path(delegation.setting, delegation), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } unless delegation.voted? %>
+                <%= icon_link_to "circle-x", decidim_admin_action_delegator.setting_delegation_path(delegation.setting, delegation), t("actions.destroy", scope: "decidim.admin"), class: "action-icon--remove", method: :delete, data: { confirm: t("actions.confirm_destroy", scope: "decidim.admin") } unless delegation.grantee_voted? %>
               </td>
             </tr>
           <% end %>
