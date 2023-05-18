@@ -47,7 +47,7 @@ bundle exec rails db:migrate
 > If you are upgrading from a previous version, you need to run the migrations again and import all membership types/weights into the built-in census by executing in your production server:
 >
 > ```bash
-> RAILS_ENV=production bundle exec rails decidim_action_delegator:import_direct_verifications
+> RAILS_ENV=production bundle exec rails action_delegator:import_direct_verifications
 > ```
 >
 > *It is safe to run the previous command multiple times, no content will be imported twice.*
