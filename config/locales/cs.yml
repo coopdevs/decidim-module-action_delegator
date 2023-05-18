@@ -3,26 +3,26 @@ cs:
   activemodel:
     attributes:
       delegations_verifier:
-        email: Email
-        phone: Mobile phone number
+        email: E-mail
+        phone: Číslo mobilního telefonu
       participant:
         decidim_action_delegator_ponderation_id: Ponderation
-        email: Email
-        phone: Phone
+        email: E-mail
+        phone: Telefon
       ponderation:
-        name: Membership type
-        name_help: Membership type
+        name: Typ členství
+        name_help: Typ členství
       setting:
-        decidim_consultation_id: Consultation
-        max_grants: Maximum vote delegations a participant can receive
-        phone_freezed: Use phone number from the census. Don't allow participants to edit it.
-        verify_with_sms: Verify with SMS
+        decidim_consultation_id: Konzultace
+        max_grants: Maximální počet delegací hlasů, které může uživatel obdržet
+        phone_freezed: Použít telefonní číslo ze seznamu obyvatel. Nedovolte účastníkům jej upravovat.
+        verify_with_sms: Ověřit pomocí SMS
     errors:
       models:
         delegations_verifier:
           attributes:
             email:
-              email_not_found: Sorry, this email is not in the census. Please, contact us if you think this is a mistake.
+              email_not_found: Omlouváme se, tento e-mail není v seznamu obyvatel. Pokud se domníváte, že se jedná o chybu, kontaktujte nás prosím.
             phone:
               phone_not_found: Sorry, this phone number is not in the census. Please, contact us if you think this is a mistake.
   decidim:
