@@ -48,6 +48,12 @@ module Decidim
     config_accessor :remove_consultation_deprecation_warning do
       true
     end
+
+    # In a consultation the highlighted questions are duplicated in the list of regular questions
+    # this maintains the highlighted questions in the highlighted list and removes them from the regular list
+    config_accessor :remove_duplicated_highlighted_questions do
+      true
+    end
   end
 end
 

@@ -1,4 +1,4 @@
-<!-- replace_contents "erb[silent]:contains('if question.multiple?')" 
+<!-- replace_contents "erb[silent]:contains('if question.multiple?')"
      closing_selector "erb[silent]:contains('else')" -->
 
 <%= link_to decidim_consultations.question_question_multiple_votes_path(question, delegation: 0),

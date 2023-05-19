@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-action_delegator (0.7.0)
+    decidim-action_delegator (0.7.2)
       decidim-admin (>= 0.26.0, < 0.27)
       decidim-consultations (>= 0.26.0, < 0.27)
       decidim-core (>= 0.26.0, < 0.27)
@@ -490,7 +490,6 @@ GEM
     mime-types-data (3.2022.0105)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
     minitest (5.16.3)
     mixlib-cli (2.1.8)
     mixlib-config (3.0.27)
@@ -829,4 +828,4 @@ RUBY VERSION
    ruby 2.7.7p221
 
 BUNDLED WITH
-   2.3.24
+   2.4.6
