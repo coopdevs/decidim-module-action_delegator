@@ -42,7 +42,37 @@ bundle exec rails decidim_action_delegator:install:migrations
 bundle exec rails db:migrate
 ```
 
-> **IMPORTANT:** 
+**ActiveJob Configuration**
+
+This module can send invitations to users in order to register into the platform.
+If you are using Sidekiq (or another queue processor), you need to make sure that the `invite_participants` queue is processed by Sidekiq.
+
+For instance, this file should work for Sidekiq:
+
+`config/sidekiq.yml`
+
+```yaml
+:concurrency: <%= ENV.fetch("SIDEKIQ_CONCURRENCY", "5").to_i %>
+:queues:
+  - [mailers, 4]
+  - [invite_participants, 4]
+  - [vote_reminder, 2]
+  - [reminders, 2]
+  - [default, 2]
+  - [newsletter, 2]
+  - [newsletters_opt_in, 2]
+  - [conference_diplomas, 2]
+  - [events, 2]
+  - [translations, 2]
+  - [user_report, 2]
+  - [block_user, 2]
+  - [metrics, 1]
+  - [exports, 1]
+  - [close_meeting_reminder, 1]
+```
+
+
+> **UPGRADE NOTES:** 
 >
 > If you are upgrading from a previous version, you need to run the migrations again and import all membership types/weights into the built-in census by executing in your production server:
 >
