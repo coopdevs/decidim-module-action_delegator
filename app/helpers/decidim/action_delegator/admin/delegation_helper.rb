@@ -31,7 +31,7 @@ module Decidim
         end
 
         def missing_decidim_users(participants)
-          participants.where(decidim_user: nil).or(Participant.where.not(decidim_user: current_organization.users)).where.not(id: missing_registered_users(participants))
+          participants.where(decidim_user: nil).or(participants.where.not(decidim_user: current_organization.users)).where.not(id: missing_registered_users(participants))
         end
 
         def missing_registered_users(participants)
