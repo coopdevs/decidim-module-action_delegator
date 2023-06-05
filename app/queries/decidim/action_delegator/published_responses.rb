@@ -12,7 +12,7 @@ module Decidim
       def query
         Decidim::Consultations::Response
           .joins(question: :consultation)
-          .merge(Consultation.finished)
+          # .merge(Consultation.finished)
           .where(decidim_consultations_questions: { decidim_consultation_id: consultation.id })
           .where.not(decidim_consultations_questions: { published_at: nil })
       end

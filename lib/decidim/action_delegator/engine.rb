@@ -23,6 +23,7 @@ module Decidim
 
       config.to_prepare do
         # override votes questions
+        Decidim::Consultations::Question.include(Decidim::ActionDelegator::Consultations::QuestionOverride)
         Decidim::Consultations::VoteQuestion.include(Decidim::ActionDelegator::Consultations::VoteQuestionOverride)
         Decidim::Consultations::MultipleVoteQuestion.include(Decidim::ActionDelegator::Consultations::MultipleVoteQuestionOverride)
         Decidim::Consultations::VoteForm.include(Decidim::ActionDelegator::Consultations::VoteFormOverride)

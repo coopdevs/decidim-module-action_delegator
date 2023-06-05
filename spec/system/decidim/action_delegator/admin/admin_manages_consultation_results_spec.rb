@@ -95,6 +95,42 @@ describe "Admin manages consultation results", type: :system do
     end
   end
 
+  shared_examples "show results" do
+    it "shows votes by membership and weight type" do
+      visit decidim_admin_action_delegator.results_consultation_path(consultation)
+
+      expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
+      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
+
+      expect(page).to have_content("Total: 5 votes / 0 delegated votes / 4 participants")
+      expect(page).to have_content("Total: 4 votes / 0 delegated votes / 4 participants")
+      expect(page).to have_content("Total: 1 votes / 0 delegated votes / 1 participants")
+
+      within ".table-list" do
+        expect(nth_row(1).find(".response-title")).to have_content("A")
+        expect(nth_row(1).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(1).find(".membership-weight")).to have_content(3)
+        expect(nth_row(1).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(2).find(".response-title")).to have_content("A")
+        expect(nth_row(2).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(2).find(".membership-weight")).to have_content(1)
+        expect(nth_row(2).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(3).find(".response-title")).to have_content("A")
+        expect(nth_row(3).find(".membership-type")).to have_content("producer")
+        expect(nth_row(3).find(".membership-weight")).to have_content(2)
+        expect(nth_row(3).find(".votes-count")).to have_content(1)
+
+        expect(nth_row(4).find(".response-title")).to have_content("B")
+        expect(nth_row(4).find(".membership-type")).to have_content("consumer")
+        expect(nth_row(4).find(".membership-weight")).to have_content(1)
+        expect(nth_row(4).find(".votes-count")).to have_content(1)
+      end
+    end
+  end
+
   context "when viewing a finished consultation with votes" do
     context "without delegated votes" do
       let(:extra_question) { create(:question, consultation: consultation) }
@@ -104,39 +140,7 @@ describe "Admin manages consultation results", type: :system do
         extra_question.votes.create(author: user, response: extra_response)
       end
 
-      it "shows votes by membership and weight type" do
-        visit decidim_admin_action_delegator.results_consultation_path(consultation)
-
-        expect(page).to have_content(/#{translated(consultation.questions.first.responses.first.title)}/i)
-        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_type"))
-        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.membership_weight"))
-
-        expect(page).to have_content("Total: 5 votes / 0 delegated votes / 4 participants")
-        expect(page).to have_content("Total: 4 votes / 0 delegated votes / 4 participants")
-        expect(page).to have_content("Total: 1 votes / 0 delegated votes / 1 participants")
-
-        within ".table-list" do
-          expect(nth_row(1).find(".response-title")).to have_content("A")
-          expect(nth_row(1).find(".membership-type")).to have_content("consumer")
-          expect(nth_row(1).find(".membership-weight")).to have_content(3)
-          expect(nth_row(1).find(".votes-count")).to have_content(1)
-
-          expect(nth_row(2).find(".response-title")).to have_content("A")
-          expect(nth_row(2).find(".membership-type")).to have_content("consumer")
-          expect(nth_row(2).find(".membership-weight")).to have_content(1)
-          expect(nth_row(2).find(".votes-count")).to have_content(1)
-
-          expect(nth_row(3).find(".response-title")).to have_content("A")
-          expect(nth_row(3).find(".membership-type")).to have_content("producer")
-          expect(nth_row(3).find(".membership-weight")).to have_content(2)
-          expect(nth_row(3).find(".votes-count")).to have_content(1)
-
-          expect(nth_row(4).find(".response-title")).to have_content("B")
-          expect(nth_row(4).find(".membership-type")).to have_content("consumer")
-          expect(nth_row(4).find(".membership-weight")).to have_content(1)
-          expect(nth_row(4).find(".votes-count")).to have_content(1)
-        end
-      end
+      it_behaves_like "show results"
 
       it "enables exporting to CSV" do
         visit decidim_admin_action_delegator.results_consultation_path(consultation)
@@ -211,7 +215,13 @@ describe "Admin manages consultation results", type: :system do
   end
 
   context "when viewing an unfinished consultation" do
-    let!(:consultation) { create(:consultation, :active, :unpublished_results, organization: organization) }
+    let(:consultation) { create(:consultation, :active, :unpublished_results, organization: organization) }
+    let(:extra_question) { create(:question, consultation: consultation) }
+    let(:extra_response) { create(:response, question: extra_question) }
+
+    before do
+      extra_question.votes.create(author: user, response: extra_response)
+    end
 
     it "enables the export button" do
       visit decidim_admin_action_delegator.results_consultation_path(consultation)
@@ -222,9 +232,17 @@ describe "Admin manages consultation results", type: :system do
       end
     end
 
-    it "does not show any response" do
-      visit decidim_admin_action_delegator.results_consultation_path(consultation)
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
+    it_behaves_like "show results"
+
+    context "when preview results is disabled" do
+      before do
+        allow(Decidim::ActionDelegator).to receive(:admin_preview_results).and_return(false)
+      end
+
+      it "does not show any response" do
+        visit decidim_admin_action_delegator.results_consultation_path(consultation)
+        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
+      end
     end
   end
 
