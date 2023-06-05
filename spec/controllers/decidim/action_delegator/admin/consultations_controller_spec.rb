@@ -37,8 +37,8 @@ module Decidim
 
           it "does not load any response" do
             get :results, params: { slug: consultation.slug }
-            expect(controller.helpers.responses_by_membership).to be_empty
-            expect(controller.helpers.responses_by_weight).to be_empty
+            expect(controller.helpers.responses_by_membership).not_to be_empty
+            expect(controller.helpers.responses_by_weight).not_to be_empty
             expect(controller.helpers.total_delegates).to eq(1)
             expect(controller.helpers.questions).not_to be_empty
           end

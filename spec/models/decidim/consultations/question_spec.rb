@@ -16,7 +16,7 @@ module Decidim
 
       context "when mod is not enabled" do
         before do
-          Decidim::ActionDelegator.admin_preview_results = false
+          allow(Decidim::ActionDelegator).to receive(:admin_preview_results).and_return(false)
         end
 
         it { is_expected.not_to be_publishable_results }
