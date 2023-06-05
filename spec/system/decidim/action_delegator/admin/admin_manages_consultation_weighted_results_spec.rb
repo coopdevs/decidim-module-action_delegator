@@ -61,9 +61,20 @@ describe "Admin manages sum of weight consultation results", type: :system do
       end
     end
 
-    it "does not show any response" do
+    it "shows responses" do
       visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
-      expect(page).to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
+      expect(page).not_to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
+    end
+
+    context "when mod is disabled" do
+      before do
+        allow(Decidim::ActionDelegator).to receive(:admin_preview_results).and_return(false)
+      end
+
+      it "does not show any response" do
+        visit decidim_admin_action_delegator.weighted_results_consultation_path(consultation)
+        expect(page).to have_content(I18n.t("decidim.admin.consultations.results.not_visible"))
+      end
     end
   end
 

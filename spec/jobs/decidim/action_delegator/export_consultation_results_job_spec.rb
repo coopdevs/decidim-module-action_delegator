@@ -84,17 +84,26 @@ module Decidim::ActionDelegator
           subject.perform_now(user, consultation, :type_and_weight)
         end
 
-        context "when the consultation is active" do
-          let!(:consultation) { create(:consultation, :active, organization: organization) }
-          let(:export_data) { double(:export_data, read: "\n") }
-
-          it "does not export anything" do
+        shared_examples "exports consultation" do
+          it "exports consultation's by membership" do
             expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-              expect(export_data.read).to eq("\n")
+              expect(export_data.read).to eq(<<-CSV.strip_heredoc)
+              question;response;membership_type;membership_weight;votes_count
+              question_title;A;consumer;3.0;1
+              question_title;A;consumer;1.0;1
+              question_title;A;producer;2.0;1
+              question_title;B;consumer;1.0;1
+              CSV
             end.and_return(mailer)
 
             subject.perform_now(user, consultation, :type_and_weight)
           end
+        end
+
+        context "when the consultation is active" do
+          let!(:consultation) { create(:consultation, :active, organization: organization) }
+
+          it_behaves_like "exports consultation"
         end
 
         context "when the consultation is finished" do
@@ -103,26 +112,12 @@ module Decidim::ActionDelegator
               create(:consultation, :finished, :published_results, organization: organization)
             end
 
-            it "exports consultation's by membership" do
-              expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-                expect(export_data.read).to eq(<<-CSV.strip_heredoc)
-                question;response;membership_type;membership_weight;votes_count
-                question_title;A;consumer;3.0;1
-                question_title;A;consumer;1.0;1
-                question_title;A;producer;2.0;1
-                question_title;B;consumer;1.0;1
-                CSV
-              end.and_return(mailer)
-
-              subject.perform_now(user, consultation, :type_and_weight)
-            end
+            it_behaves_like "exports consultation"
           end
         end
       end
 
-      context "when passing sum_of_weights" do
-        let(:export_data) { double(:export_data, read: "data\n") }
-
+      shared_examples "exports results by sum of weights" do
         it "fetches data calling SumOfWeights" do
           sum_of_weights = instance_double(SumOfWeights)
           expect(SumOfWeights)
@@ -131,6 +126,12 @@ module Decidim::ActionDelegator
 
           subject.perform_now(user, consultation, :sum_of_weights)
         end
+      end
+
+      context "when passing sum_of_weights" do
+        let(:export_data) { double(:export_data, read: "data\n") }
+
+        it_behaves_like "exports results by sum of weights"
 
         it "sends an export mail with the collection data" do
           allow(exporter_class).to receive(:new)
@@ -154,13 +155,7 @@ module Decidim::ActionDelegator
         context "when the consultation is active" do
           let!(:consultation) { create(:consultation, :active, organization: organization) }
 
-          it "does not export anything" do
-            expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-              expect(export_data.read).to eq("\n")
-            end.and_return(mailer)
-
-            subject.perform_now(user, consultation, :sum_of_weights)
-          end
+          it_behaves_like "exports results by sum of weights"
         end
 
         context "when the consultation is finished" do
