@@ -3,7 +3,7 @@
 require "spec_helper"
 
 module Decidim::ActionDelegator
-  describe PublishedResponses do
+  describe Responses do
     subject { described_class.new(consultation) }
 
     let(:organization) { create(:organization) }
@@ -19,8 +19,8 @@ module Decidim::ActionDelegator
       context "when the consultation is active" do
         let(:consultation) { create(:consultation, :active, organization: organization) }
 
-        it "returns empty" do
-          expect(subject.query).to be_empty
+        it "returns present" do
+          expect(subject.query).not_to be_empty
         end
       end
 
@@ -30,7 +30,7 @@ module Decidim::ActionDelegator
         end
 
         it "returns empty" do
-          expect(subject.query).to be_empty
+          expect(subject.query).not_to be_empty
         end
       end
 
@@ -40,7 +40,7 @@ module Decidim::ActionDelegator
         end
 
         it "returns empty" do
-          expect(subject.query).to be_empty
+          expect(subject.query).not_to be_empty
         end
       end
 

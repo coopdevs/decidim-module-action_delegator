@@ -33,6 +33,8 @@ en:
       admin:
         consultations:
           results:
+            ongoing_consultation: This consultations is still ongoing. Be aware that
+              results may change as more people vote.
             title: Results by answer, membership type and weight
           weighted_results:
             title: Results by answer summing membership weights

@@ -17,7 +17,7 @@ module Decidim
 
       def published_questions_responses
         VotedWithPonderations.new(
-          PublishedResponses.new(consultation).query
+          Responses.new(consultation).query
         ).query
       end
     end

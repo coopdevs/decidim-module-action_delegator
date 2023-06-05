@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class PublishedResponses < Rectify::Query
+    class Responses < Rectify::Query
       def initialize(consultation)
         @consultation = consultation
       end
@@ -12,7 +12,6 @@ module Decidim
       def query
         Decidim::Consultations::Response
           .joins(question: :consultation)
-          .merge(Consultation.finished)
           .where(decidim_consultations_questions: { decidim_consultation_id: consultation.id })
           .where.not(decidim_consultations_questions: { published_at: nil })
       end

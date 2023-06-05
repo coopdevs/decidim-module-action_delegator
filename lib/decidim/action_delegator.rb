@@ -54,6 +54,11 @@ module Decidim
     config_accessor :remove_duplicated_highlighted_questions do
       true
     end
+
+    # If true, admins can view the result of a consultation even if the consultation is ongoing
+    config_accessor :admin_preview_results do
+      true
+    end
   end
 end
 
