@@ -30,6 +30,7 @@ ca:
       admin:
         consultations:
           results:
+            ongoing_consultation: This consultations is still ongoing. Be aware that results may change as more people vote.
             title: Resultats per resposta, tipus de soci i pes
           weighted_results:
             title: Results by answer summing membership weights
