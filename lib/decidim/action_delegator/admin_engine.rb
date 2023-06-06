@@ -41,12 +41,10 @@ module Decidim
         root to: "delegations#index"
       end
 
+      # marks the main "Users" menu in the admin always active when we are in the action_delegator admin space
       initializer "decidim_admin_action_delegator.main_menu" do
         Decidim.menu :admin_menu do |menu|
-          # old = menu.remove_item :impersonatable_users
-          menu.instance_variable_get(:@items).each do |item|
-            next unless item.identifier == :impersonatable_users
-
+          if (item = menu.items.find { |it| it.identifier == :impersonatable_users })
             item.active.first << "decidim/action_delegator/admin/settings"
             item.active.first << "decidim/action_delegator/admin/ponderations"
             item.active.first << "decidim/action_delegator/admin/participants"

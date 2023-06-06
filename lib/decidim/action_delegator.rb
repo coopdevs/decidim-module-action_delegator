@@ -12,7 +12,7 @@ module Decidim
     include ActiveSupport::Configurable
 
     # this is the SmsGateway provided by this module
-    # Note that it will be ignored if you provide your own SmsGateway in Decidm.sms_gateway_service
+    # Note that it will be ignored if you provide your own SmsGateway in Decidim.sms_gateway_service
     config_accessor :sms_gateway_service do
       "Decidim::ActionDelegator::SmsGateway"
     end

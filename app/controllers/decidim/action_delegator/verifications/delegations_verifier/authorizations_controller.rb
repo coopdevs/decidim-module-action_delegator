@@ -10,10 +10,30 @@ module Decidim
 
           helper_method :authorization, :setting
 
-          def new
-            enforce_permission_to :create, :authorization, authorization: authorization
+          before_action do
+            unless setting
+              flash[:alert] = t("verifications.delegations_verifier.not_active", scope: "decidim.action_delegator")
+              redirect
+            end
+          end
 
+          def new
+            @authorization.destroy! if authorization&.persisted? && !authorization&.granted?
+
+            enforce_permission_to :create, :authorization, authorization: authorization
             @form = form(DelegationsVerifierForm).instance(setting: setting)
+            participant = @form&.participant
+
+            return unless ActionDelegator.authorize_on_login && setting&.verify_with_email?
+
+            Decidim::Verifications::PerformAuthorizationStep.call(authorization, @form) do
+              on(:ok) do
+                grant_and_redirect(participant)
+              end
+              on(:invalid) do
+                render :new
+              end
+            end
           end
 
           def create
@@ -29,15 +49,7 @@ module Decidim
                   authorization_method = Decidim::Verifications::Adapter.from_element(authorization.name)
                   redirect_to authorization_method.resume_authorization_path(redirect_url: redirect_url)
                 else
-                  authorization.grant!
-                  participant.update!(decidim_user: authorization.user)
-                  flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
-
-                  if redirect_url
-                    redirect_to redirect_url
-                  else
-                    redirect_to decidim_verifications.authorizations_path
-                  end
+                  grant_and_redirect(participant)
                 end
               end
               on(:invalid) do
@@ -62,11 +74,7 @@ module Decidim
               on(:ok) do
                 flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
 
-                if redirect_url
-                  redirect_to redirect_url
-                else
-                  redirect_to decidim_verifications.authorizations_path
-                end
+                redirect
               end
 
               on(:invalid) do
@@ -86,6 +94,21 @@ module Decidim
           end
 
           private
+
+          def grant_and_redirect(participant)
+            authorization.grant!
+            participant.update!(decidim_user: authorization.user)
+            flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
+            redirect
+          end
+
+          def redirect
+            if redirect_url
+              redirect_to redirect_url
+            else
+              redirect_to decidim_verifications.authorizations_path
+            end
+          end
 
           def authorization
             @authorization ||= Decidim::Authorization.find_or_initialize_by(
