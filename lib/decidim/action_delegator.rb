@@ -29,6 +29,12 @@ module Decidim
       true
     end
 
+    # If true, tries to automatically authorize users when they log in with the "Corporate Governance Verifier"
+    # Note that this is only possible when the verifier is configured to use only the email (if SMS is required, the user will have to do the standard verification process)
+    config_accessor :authorize_on_login do
+      true
+    end
+
     # used for comparing phone numbers from a census list and the ones introduced by the user
     # the phone number will be normalized before comparing it so, for instance,
     # if you have a census list with  +34 666 666 666 and the user introduces 0034666666666 or 666666666, they will be considered the same

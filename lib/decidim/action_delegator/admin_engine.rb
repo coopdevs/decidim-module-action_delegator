@@ -41,9 +41,25 @@ module Decidim
         root to: "delegations#index"
       end
 
+      initializer "decidim_admin_action_delegator.main_menu" do
+        Decidim.menu :admin_menu do |menu|
+          # old = menu.remove_item :impersonatable_users
+          menu.instance_variable_get(:@items).each do |item|
+            next unless item.identifier == :impersonatable_users
+
+            item.active.first << "decidim/action_delegator/admin/settings"
+            item.active.first << "decidim/action_delegator/admin/ponderations"
+            item.active.first << "decidim/action_delegator/admin/participants"
+            item.active.first << "decidim/action_delegator/admin/manage_participants"
+            item.active.first << "decidim/action_delegator/admin/delegations"
+            item.active.first << "decidim/action_delegator/admin/manage_delegations"
+          end
+        end
+      end
+
       initializer "decidim_admin_action_delegator.admin_user_menu" do
         Decidim.menu :admin_user_menu do |menu|
-          menu.add_item :users,
+          menu.add_item :action_delegator,
                         I18n.t("menu.delegations", scope: "decidim.action_delegator.admin"), decidim_admin_action_delegator.settings_path,
                         active: is_active_link?(decidim_admin_action_delegator.settings_path),
                         if: allowed_to?(:index, :impersonatable_user)
