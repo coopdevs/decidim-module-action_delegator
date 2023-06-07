@@ -12,7 +12,7 @@ module Decidim
     include ActiveSupport::Configurable
 
     # this is the SmsGateway provided by this module
-    # Note that it will be ignored if you provide your own SmsGateway in Decidm.sms_gateway_service
+    # Note that it will be ignored if you provide your own SmsGateway in Decidim.sms_gateway_service
     config_accessor :sms_gateway_service do
       "Decidim::ActionDelegator::SmsGateway"
     end
@@ -26,6 +26,12 @@ module Decidim
     # Put this to false if you don't want to allow administrators to invite users not registered
     # in the platform when uploading a census (inviting users without permission can be a GDPR offense).
     config_accessor :allow_to_invite_users do
+      true
+    end
+
+    # If true, tries to automatically authorize users when they log in with the "Corporate Governance Verifier"
+    # Note that this is only possible when the verifier is configured to use only the email (if SMS is required, the user will have to do the standard verification process)
+    config_accessor :authorize_on_login do
       true
     end
 
