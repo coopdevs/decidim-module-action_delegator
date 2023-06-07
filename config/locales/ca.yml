@@ -328,6 +328,7 @@ ca:
               phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
               send_code: Send verification code
               title: Authorize with Corporate Governance Verifier
+          not_active: The Corporate Governance Verifier cannot be granted at this time as there are no active voting spaces.
     admin:
       actions:
         invite: Send invitation
