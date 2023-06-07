@@ -13,8 +13,10 @@ describe "Corporate Governance Verifier request", type: :system do
   let!(:participant) { create(:participant, phone: phone, email: email, setting: setting) }
   let(:phone) { "612345678" }
   let(:email) { user.email }
+  let(:authorize_on_login) { true }
 
   before do
+    allow(Decidim::ActionDelegator).to receive(:authorize_on_login).and_return(authorize_on_login)
     switch_to_host(organization.host)
     login_as user, scope: :user
     visit decidim_delegations_verifier.root_path
@@ -63,19 +65,35 @@ describe "Corporate Governance Verifier request", type: :system do
   context "when authorization method is email" do
     let(:authorization_method) { :email }
 
-    it "Shows the required fields" do
-      expect(page).to have_content("Authorize with Corporate Governance Verifier")
-      within "#new_delegations_verifier_" do
-        expect(page).to have_content("Email")
-        expect(page).to have_selector("input[value='#{email}'][readonly]")
-        expect(page).not_to have_content("Mobile phone number")
-        expect(page).not_to have_selector("input[value='#{phone}']")
+    it "automatically authorizes the user" do
+      expect(page).to have_content("Congratulations. You've been successfully verified.")
+    end
+
+    context "when authorize on login is disabled" do
+      let(:authorize_on_login) { false }
+
+      it "Shows the required fields" do
+        expect(page).to have_content("Authorize with Corporate Governance Verifier")
+        within "#new_delegations_verifier_" do
+          expect(page).to have_content("Email")
+          expect(page).to have_selector("input[value='#{email}'][readonly]")
+          expect(page).not_to have_content("Mobile phone number")
+          expect(page).not_to have_selector("input[value='#{phone}']")
+        end
+      end
+
+      it "allows to authorize the user" do
+        click_button "Authorize my account"
+        expect(page).to have_content("Congratulations. You've been successfully verified.")
       end
     end
 
-    it "allows to authorize the user" do
-      click_button "Authorize my account"
-      expect(page).to have_content("Congratulations. You've been successfully verified.")
+    context "when no active setting" do
+      let(:consultation) { create(:consultation, :finished, organization: organization) }
+
+      it "does not authorize the user" do
+        expect(page).to have_content("The Corporate Governance Verifier cannot be granted at this time as there are no active voting spaces")
+      end
     end
   end
 end

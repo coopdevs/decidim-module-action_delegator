@@ -11,13 +11,13 @@ module Decidim
 
           # automatically authorize the user if theres a setting for it
           def after_sign_in_path_for(user)
-            authorize_user_with_delegations_verifier!
-            after_sign_in_path_for_original(user)
+            after_sign_in_path_for_original(user) unless authorize_user_with_delegations_verifier(user)
+            super
           end
 
           private
 
-          def authorize_user_with_delegations_verifier!
+          def authorize_user_with_delegations_verifier(user)
             setting = Decidim::ActionDelegator::OrganizationSettings.new(current_user.organization).active.first
             delegations_verifier_authorization = Decidim::Authorization.find_or_initialize_by(
               user: user,
@@ -37,6 +37,7 @@ module Decidim
                 delegations_verifier_authorization.grant!
                 form.participant.update!(decidim_user: user)
                 flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
+                return true
               end
               on(:invalid) do
               end
