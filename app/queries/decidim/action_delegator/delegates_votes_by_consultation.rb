@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class DelegatesVotesByConsultation < Rectify::Query
+    class DelegatesVotesByConsultation < Decidim::Query
       def initialize(consultation, relation = DelegationVotes)
         @consultation = consultation
         @relation = relation

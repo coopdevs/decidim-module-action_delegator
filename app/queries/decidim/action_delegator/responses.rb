@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class Responses < Rectify::Query
+    class Responses < Decidim::Query
       def initialize(consultation)
         @consultation = consultation
       end

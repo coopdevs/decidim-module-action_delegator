@@ -27,7 +27,7 @@ module Decidim::ActionDelegator
       end
 
       it "creates a message through Twilio's client" do
-        expect(subject.perform_now(sender, mobile_phone_number, message)).to eq true
+        expect(subject.perform_now(sender, mobile_phone_number, message)).to be true
       end
     end
   end

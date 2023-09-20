@@ -5,6 +5,7 @@ require "savon"
 module Decidim
   module ActionDelegator
     class SendSmsJobException < StandardError; end
+
     class SendSmsJob < ApplicationJob
       queue_as :default
 

@@ -5,7 +5,7 @@ module Decidim
     # This query object replaces the ActiveRecord association we would have between the Vote and
     # Delegation models. Unfortunately we can't use custom foreign keys on both ends of the
     # association so this aims to replace `delegation.votes`.
-    class DelegationVotes < Rectify::Query
+    class DelegationVotes < Decidim::Query
       def query
         Delegation.joins(
           delegations.join(votes).on(vote_author_eq_granter).join_sources

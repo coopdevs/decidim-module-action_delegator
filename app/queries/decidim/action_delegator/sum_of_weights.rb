@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class SumOfWeights < Rectify::Query
+    class SumOfWeights < Decidim::Query
       def initialize(consultation)
         @consultation = consultation
       end

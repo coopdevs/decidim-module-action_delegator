@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class TypeAndWeight < Rectify::Query
+    class TypeAndWeight < Decidim::Query
       def initialize(consultation)
         @consultation = consultation
       end

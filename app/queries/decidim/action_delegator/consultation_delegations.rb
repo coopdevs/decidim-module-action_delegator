@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class ConsultationDelegations < Rectify::Query
+    class ConsultationDelegations < Decidim::Query
       def self.for(consultation)
         new(consultation).query
       end

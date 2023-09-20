@@ -39,8 +39,6 @@ module Decidim
                 flash[:notice] = t("authorizations.update.success", scope: "decidim.verifications.sms")
                 return true
               end
-              on(:invalid) do
-              end
             end
           end
         end

@@ -7,7 +7,7 @@ require "decidim/action_delegator/version"
 Gem::Specification.new do |s|
   s.version = Decidim::ActionDelegator::VERSION
   s.authors = ["Pau Pérez Fabregat", "Ivan Vergés"]
-  s.email = ["saulopefa@gmail.com", "ivan@pokecode.net"]
+  s.email = %w(saulopefa@gmail.com ivan@pokecode.net)
   s.license = "AGPL-3.0"
   s.homepage = "https://github.com/coopdevs/decidim-module-action_delegator"
   s.required_ruby_version = ">= 2.7"
@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency "twilio-ruby"
 
   s.add_development_dependency "decidim-dev", Decidim::ActionDelegator::COMPAT_DECIDIM_VERSION
+  s.metadata["rubygems_mfa_required"] = "true"
 end

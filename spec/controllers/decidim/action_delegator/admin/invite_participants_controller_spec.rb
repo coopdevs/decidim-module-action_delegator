@@ -39,7 +39,7 @@ module Decidim
             it "invites the user and redirects to the participants page" do
               post :invite_user, params: params
 
-              expect(response).to redirect_to setting_participants_path(setting)
+              expect(response).to redirect_to "/admin/action_delegator#{setting_participants_path(setting)}"
               expect(flash[:notice]).to eq(I18n.t("invite_user.success", scope: "decidim.action_delegator.admin.invite_participants"))
             end
           end
@@ -52,7 +52,7 @@ module Decidim
             it "invites all users and redirects to the participants page" do
               post :invite_all_users, params: { setting_id: setting.id }
 
-              expect(response).to redirect_to setting_participants_path(setting)
+              expect(response).to redirect_to "/admin/action_delegator#{setting_participants_path(setting)}"
               expect(flash[:notice]).to eq(I18n.t("invite_all_users.success", scope: "decidim.action_delegator.admin.invite_participants"))
             end
           end

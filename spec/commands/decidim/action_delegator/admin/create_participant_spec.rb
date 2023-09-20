@@ -26,7 +26,7 @@ describe Decidim::ActionDelegator::Admin::CreateParticipant do
   end
 
   it "creates a participant" do
-    expect { subject.call }.to(change { Decidim::ActionDelegator::Participant.count }.by(1))
+    expect { subject.call }.to(change(Decidim::ActionDelegator::Participant, :count).by(1))
   end
 
   context "when the form is invalid" do
@@ -37,7 +37,7 @@ describe Decidim::ActionDelegator::Admin::CreateParticipant do
     end
 
     it "doesn't create a participant" do
-      expect { subject.call }.not_to(change { Decidim::ActionDelegator::Participant.count })
+      expect { subject.call }.not_to(change(Decidim::ActionDelegator::Participant, :count))
     end
   end
 end

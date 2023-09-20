@@ -87,12 +87,12 @@ module Decidim::ActionDelegator
         shared_examples "exports consultation" do
           it "exports consultation's by membership" do
             expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-              expect(export_data.read).to eq(<<-CSV.strip_heredoc)
-              question;response;membership_type;membership_weight;votes_count
-              question_title;A;consumer;3.0;1
-              question_title;A;consumer;1.0;1
-              question_title;A;producer;2.0;1
-              question_title;B;consumer;1.0;1
+              expect(export_data.read).to eq(<<~CSV)
+                question;response;membership_type;membership_weight;votes_count
+                question_title;A;consumer;3.0;1
+                question_title;A;consumer;1.0;1
+                question_title;A;producer;2.0;1
+                question_title;B;consumer;1.0;1
               CSV
             end.and_return(mailer)
 
@@ -165,7 +165,7 @@ module Decidim::ActionDelegator
 
           it "exports consultation's by membership" do
             expect(Decidim::ExportMailer).to receive(:export) do |_user, _name, export_data|
-              expect(export_data.read).to eq(<<-CSV.strip_heredoc)
+              expect(export_data.read).to eq(<<~CSV)
                 question;response;votes_count
                 question_title;A;6
                 question_title;B;1

@@ -34,7 +34,7 @@ module Decidim
         end
 
         def destroy_all
-          enforce_permission_to :destroy, :participant, resource: current_setting
+          enforce_permission_to :destroy, :participant, { resource: current_setting }
 
           participants_to_remove = current_setting.participants.reject(&:voted?)
 

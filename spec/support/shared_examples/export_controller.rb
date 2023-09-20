@@ -3,7 +3,7 @@
 RSpec.shared_examples "results export controller" do |type|
   it "authorizes the action" do
     expect(controller).to receive(:allowed_to?)
-      .with(:export_consultation_results, :consultation, consultation: consultation)
+      .with(:export_consultation_results, :consultation, { consultation: consultation })
 
     post :create, params: { consultation_slug: consultation.slug }
   end

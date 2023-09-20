@@ -13,15 +13,15 @@ module Decidim::ActionDelegator
         # non deface views
         "/app/views/decidim/consultations/question_votes/update_vote_button.js.erb" => "a675fe780e77e8766beef999112a8fcb",
         # deface views
-        "/app/views/decidim/consultations/consultations/_question.html.erb" => "21b19519b1f249c27a536fbd1b49d619",
+        "/app/views/decidim/consultations/consultations/_question.html.erb" => "2d02835e2a1538cd7f6db698e302a29b",
         # NOTE: _vote_button.html.erb is copied into _delegations_modal.html.erb, double check that view if _vote_button.html.erb changed
-        "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "a339b7639e8d36b0699ab3f7763872fb",
-        "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "ae7c38afcc6588a00f8298ea69769da7",
-        "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "a0d033ed6593f15c957393afa128ca12",
+        "/app/views/decidim/consultations/questions/_vote_button.html.erb" => "7f3516e6d13cc4a1a9c0894b9d9fb808",
+        "/app/views/decidim/consultations/questions/_vote_modal.html.erb" => "bb4b10e9278cffd8d0d4eb57f5197a89",
+        "/app/views/decidim/consultations/questions/_vote_modal_confirm.html.erb" => "bac38cece8f1eaf76265fa1ad0ace064",
         "/app/views/decidim/consultations/question_multiple_votes/_form.html.erb" => "af610283ce7ee20f5ef786228a263d4a",
         # monkeypatches
-        "/app/commands/decidim/consultations/vote_question.rb" => "8d89031039a1ba2972437d13687a72b5",
-        "/app/commands/decidim/consultations/multiple_vote_question.rb" => "06d4cde2805031ecbb0c546fad567065",
+        "/app/commands/decidim/consultations/vote_question.rb" => "bb0489e93d3bd142db19d9f93f556d67",
+        "/app/commands/decidim/consultations/multiple_vote_question.rb" => "86ac61db829acb4e86a9b6d90bd46333",
         "/app/models/decidim/consultations/vote.rb" => "c06286e3f7366d3a017bf69f1c9e3eef",
         "/app/controllers/decidim/consultations/question_votes_controller.rb" => "69bf764e99dfcdae138613adbed28b84",
         "/app/forms/decidim/consultations/vote_form.rb" => "d2b69f479b61b32faf3b108da310081a",

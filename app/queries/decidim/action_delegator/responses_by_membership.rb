@@ -3,7 +3,7 @@
 module Decidim
   module ActionDelegator
     # Returns total votes of each response by memberships' type and weight.
-    class ResponsesByMembership < Rectify::Query
+    class ResponsesByMembership < Decidim::Query
       DEFAULT_METADATA = I18n.t("decidim.admin.consultations.results.default_metadata")
 
       def initialize(relation)

@@ -45,7 +45,7 @@ module Decidim
           end
 
           it "authorizes the action" do
-            expect(controller).to receive(:allowed_to?).with(:destroy, :participant, resource: setting)
+            expect(controller).to receive(:allowed_to?).with(:destroy, :participant, { resource: setting })
 
             get :destroy_all, params: params
           end

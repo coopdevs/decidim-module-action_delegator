@@ -6,7 +6,7 @@ describe Decidim::ActionDelegator::Permissions do
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
   let(:user) { build(:user, :admin) }
-  let(:permission_action) { Decidim::PermissionAction.new(action) }
+  let(:permission_action) { Decidim::PermissionAction.new(**action) }
   let(:context) { {} }
 
   context "when scope is not admin" do
@@ -44,7 +44,7 @@ describe Decidim::ActionDelegator::Permissions do
       end
 
       context "when the user is admin" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "when the user is not admin" do
@@ -60,7 +60,7 @@ describe Decidim::ActionDelegator::Permissions do
       end
 
       context "when the user is admin" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "when the user is not admin" do
@@ -77,7 +77,7 @@ describe Decidim::ActionDelegator::Permissions do
       let(:context) { { resource: create(:delegation) } }
 
       context "when the user is admin" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "when the user is not admin" do
@@ -93,7 +93,7 @@ describe Decidim::ActionDelegator::Permissions do
       end
 
       context "when the user is admin" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "when the user is not admin" do
@@ -109,7 +109,7 @@ describe Decidim::ActionDelegator::Permissions do
       end
 
       context "when the user is admin" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "when the user is not admin" do
@@ -126,7 +126,7 @@ describe Decidim::ActionDelegator::Permissions do
       let(:context) { { resource: create(:setting) } }
 
       context "when the user is admin" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "when the user is not admin" do

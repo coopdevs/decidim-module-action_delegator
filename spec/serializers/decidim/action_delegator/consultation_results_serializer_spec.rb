@@ -4,7 +4,8 @@ require "spec_helper"
 
 module Decidim::ActionDelegator
   describe ConsultationResultsSerializer do
-    let(:subject) { described_class.new(result) }
+    subject { described_class.new(result) }
+
     let(:question) { instance_double(Decidim::Consultations::Question, title: { "ca" => "question_title" }) }
     let(:result) do
       double(

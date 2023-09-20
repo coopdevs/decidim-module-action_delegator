@@ -4,7 +4,8 @@ require "spec_helper"
 
 module Decidim::ActionDelegator
   describe SumOfWeightsSerializer do
-    let(:subject) { described_class.new(result) }
+    subject { described_class.new(result) }
+
     let(:result) do
       double(
         :result,

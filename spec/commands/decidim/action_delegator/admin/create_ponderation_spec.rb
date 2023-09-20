@@ -24,7 +24,7 @@ describe Decidim::ActionDelegator::Admin::CreatePonderation do
   end
 
   it "creates a ponderation" do
-    expect { subject.call }.to(change { Decidim::ActionDelegator::Ponderation.count }.by(1))
+    expect { subject.call }.to(change(Decidim::ActionDelegator::Ponderation, :count).by(1))
   end
 
   context "when the form is invalid" do
@@ -35,7 +35,7 @@ describe Decidim::ActionDelegator::Admin::CreatePonderation do
     end
 
     it "doesn't create a Ponderation" do
-      expect { subject.call }.not_to(change { Decidim::ActionDelegator::Ponderation.count })
+      expect { subject.call }.not_to(change(Decidim::ActionDelegator::Ponderation, :count))
     end
   end
 end

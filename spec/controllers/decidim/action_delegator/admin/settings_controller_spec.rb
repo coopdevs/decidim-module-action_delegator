@@ -61,7 +61,7 @@ module Decidim
           it "creates new settings" do
             expect { post :create, params: setting_params }.to change(Setting, :count).by(1)
 
-            expect(response).to redirect_to(settings_path)
+            expect(response).to redirect_to("/admin/action_delegator#{settings_path}")
             expect(flash[:notice]).to eq(I18n.t("decidim.action_delegator.admin.settings.create.success"))
           end
         end
@@ -105,7 +105,7 @@ module Decidim
             expect(setting.reload.max_grants).to eq(3)
             expect(setting.consultation).to eq(another_consultation)
             expect(setting.authorization_method).to eq("phone")
-            expect(response).to redirect_to(settings_path)
+            expect(response).to redirect_to("/admin/action_delegator#{settings_path}")
             expect(flash[:notice]).to eq(I18n.t("decidim.action_delegator.admin.settings.update.success"))
           end
         end
@@ -123,7 +123,7 @@ module Decidim
         let!(:setting) { create(:setting, consultation: consultation) }
 
         it "authorizes the action" do
-          expect(controller).to receive(:allowed_to?).with(:destroy, :setting, resource: setting)
+          expect(controller).to receive(:allowed_to?).with(:destroy, :setting, { resource: setting })
 
           delete :destroy, params: { id: setting.id }
         end

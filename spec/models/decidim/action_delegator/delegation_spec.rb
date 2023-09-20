@@ -42,7 +42,7 @@ module Decidim
 
         context "when there is no delegation granted to user for the given consultation" do
           it "returns false" do
-            expect(described_class.granted_to?(user, consultation)).to eq(false)
+            expect(described_class.granted_to?(user, consultation)).to be(false)
           end
 
           it_behaves_like "can be destroyed"
@@ -52,7 +52,7 @@ module Decidim
           let!(:delegation) { create(:delegation, setting: setting, grantee: user) }
 
           it "returns true" do
-            expect(described_class.granted_to?(user, consultation)).to eq(true)
+            expect(described_class.granted_to?(user, consultation)).to be(true)
           end
 
           it_behaves_like "can be destroyed"

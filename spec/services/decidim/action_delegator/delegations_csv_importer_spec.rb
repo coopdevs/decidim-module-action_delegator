@@ -49,7 +49,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
       it "creates delegations from valid rows" do
         expect do
           subject.import!
-        end.to change(Decidim::ActionDelegator::Delegation, :count).by(0)
+        end.not_to change(Decidim::ActionDelegator::Delegation, :count)
       end
 
       it "returns a summary of the import" do
@@ -69,7 +69,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
       it "does not create a new delegation" do
         expect do
           subject.import!
-        end.to change(Decidim::ActionDelegator::Delegation, :count).by(0)
+        end.not_to change(Decidim::ActionDelegator::Delegation, :count)
       end
     end
 
