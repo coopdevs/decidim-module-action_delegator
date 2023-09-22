@@ -85,3 +85,7 @@ Rails/SkipsModelValidations:
 Rails/Validation:
   Include:
     - app/models/**/*.rb
+
+RSpec/StubbedMock:
+  Exclude:
+    - "spec/jobs/decidim/action_delegator/*.rb"

@@ -21,7 +21,6 @@ module Decidim
       delegate :consultation, to: :setting
       delegate :organization, to: :setting
 
-      validates :setting, presence: true
       validates :decidim_user, uniqueness: { scope: :setting }, if: -> { decidim_user.present? }
       validates :email, uniqueness: { scope: :setting }, if: -> { email.present? }
       validates :phone, uniqueness: { scope: :setting }, if: -> { phone.present? }
