@@ -23,3 +23,9 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+require_relative "./support/custom_autocomplete_select.rb"
+
+RSpec.configure do |config|
+  config.include CustomAutoCompleteSelect, type: :system
+end
