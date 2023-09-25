@@ -121,7 +121,7 @@ module Decidim
 
       describe "#destroy" do
         it "authorizes the action" do
-          expect(controller).to receive(:allowed_to?).with(:destroy, :ponderation, resource: ponderation)
+          expect(controller).to receive(:allowed_to?).with(:destroy, :ponderation, { resource: ponderation })
 
           get :destroy, params: edit_params
         end

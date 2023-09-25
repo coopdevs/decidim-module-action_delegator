@@ -70,11 +70,13 @@ module Decidim
             params = {}
             params[:email] = email if setting.email_required?
             if setting.phone_required?
-              return setting.participants.none if phone.blank?
-
-              params[:phone] = phone
-              params[:phone] = phone_prefixes.map { |prefix| "#{prefix}#{phone}" }
-              params[:phone] += phone_prefixes.map { |prefix| phone.delete_prefix(prefix).to_s }
+              if phone.blank?
+                @participant = setting.participants.none
+              else
+                params[:phone] = phone
+                params[:phone] = phone_prefixes.map { |prefix| "#{prefix}#{phone}" }
+                params[:phone] += phone_prefixes.map { |prefix| phone.delete_prefix(prefix).to_s }
+              end
             end
 
             setting.participants.find_by(params)

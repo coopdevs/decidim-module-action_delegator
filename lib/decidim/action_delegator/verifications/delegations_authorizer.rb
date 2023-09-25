@@ -71,9 +71,7 @@ module Decidim
         end
 
         def consultation
-          @consultation ||= begin
-            component.participatory_space if component&.participatory_space.is_a?(Decidim::Consultation)
-          end
+          @consultation ||= (component.participatory_space if component&.participatory_space.is_a?(Decidim::Consultation))
         end
 
         def manifest

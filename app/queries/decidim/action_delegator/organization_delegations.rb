@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class OrganizationDelegations < Rectify::Query
+    class OrganizationDelegations < Decidim::Query
       def initialize(organization)
         @organization = organization
       end

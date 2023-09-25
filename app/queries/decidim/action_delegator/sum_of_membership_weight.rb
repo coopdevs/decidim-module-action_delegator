@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class SumOfMembershipWeight < Rectify::Query
+    class SumOfMembershipWeight < Decidim::Query
       def initialize(relation)
         @relation = relation
       end

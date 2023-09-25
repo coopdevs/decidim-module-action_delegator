@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::ActionDelegator::Permissions do # rubocop:disable RSpec/FilePath
   subject { described_class.new(user, permission_action, context).permissions.allowed? }
 
-  let(:permission_action) { Decidim::PermissionAction.new(action) }
+  let(:permission_action) { Decidim::PermissionAction.new(**action) }
   let(:context) { {} }
 
   let(:organization) { create(:organization, available_authorizations: ["dummy_authorization_workflow"]) }
@@ -34,13 +34,13 @@ describe Decidim::ActionDelegator::Permissions do # rubocop:disable RSpec/FilePa
       end
 
       context "and it wasn't voted yet" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "and it was already voted" do
         before { create(:vote, author: granter, question: question) }
 
-        it { is_expected.to eq(false) }
+        it { is_expected.to be(false) }
       end
     end
 
@@ -56,7 +56,7 @@ describe Decidim::ActionDelegator::Permissions do # rubocop:disable RSpec/FilePa
         Decidim::Authorization.create!(name: "dummy_authorization_workflow", decidim_user_id: other_user.id, granted_at: Time.zone.now)
       end
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
   end
 
@@ -74,13 +74,13 @@ describe Decidim::ActionDelegator::Permissions do # rubocop:disable RSpec/FilePa
       end
 
       context "and it was already voted" do
-        it { is_expected.to eq(true) }
+        it { is_expected.to be(true) }
       end
 
       context "and it wasn't voted yet" do
         before { vote.destroy }
 
-        it { is_expected.to eq(false) }
+        it { is_expected.to be(false) }
       end
     end
 
@@ -96,7 +96,7 @@ describe Decidim::ActionDelegator::Permissions do # rubocop:disable RSpec/FilePa
         Decidim::Authorization.create!(name: "dummy_authorization_workflow", decidim_user_id: other_user.id, granted_at: Time.zone.now)
       end
 
-      it { is_expected.to eq(false) }
+      it { is_expected.to be(false) }
     end
   end
 end

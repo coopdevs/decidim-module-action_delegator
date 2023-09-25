@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class DelegatesVotesByQuestion < Rectify::Query
+    class DelegatesVotesByQuestion < Decidim::Query
       def initialize(question)
         @question = question
       end

@@ -2,7 +2,7 @@
 
 module Decidim
   module ActionDelegator
-    class SettingDelegations < Rectify::Query
+    class SettingDelegations < Decidim::Query
       def initialize(setting)
         @setting = setting
       end

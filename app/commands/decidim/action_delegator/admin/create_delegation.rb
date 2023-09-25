@@ -3,7 +3,7 @@
 module Decidim
   module ActionDelegator
     module Admin
-      class CreateDelegation < Rectify::Command
+      class CreateDelegation < Decidim::Command
         # Public: Initializes the command.
         #
         # form         - A form object with the params.

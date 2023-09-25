@@ -3,7 +3,7 @@
 module Decidim
   module ActionDelegator
     module Admin
-      class UpdatePonderation < Rectify::Command
+      class UpdatePonderation < Decidim::Command
         # Public: Initializes the command.
         #
         # form         - A form object with the params.

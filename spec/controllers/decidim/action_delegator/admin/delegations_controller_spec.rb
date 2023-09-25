@@ -22,7 +22,7 @@ module Decidim
         let!(:delegation) { create(:delegation, setting: setting) }
 
         it "authorizes the action" do
-          expect(controller.allowed_to?(:index, :delegation)).to eq true
+          expect(controller.allowed_to?(:index, :delegation)).to be true
 
           get :index, params: { setting_id: setting.id }
         end
@@ -108,7 +108,7 @@ module Decidim
         let(:params) { { id: delegation.id, setting_id: setting.id } }
 
         it "authorizes the action" do
-          expect(controller).to receive(:allowed_to?).with(:destroy, :delegation, resource: delegation)
+          expect(controller).to receive(:allowed_to?).with(:destroy, :delegation, { resource: delegation })
 
           delete :destroy, params: params
         end

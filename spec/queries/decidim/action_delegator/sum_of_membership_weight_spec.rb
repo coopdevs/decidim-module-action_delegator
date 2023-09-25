@@ -49,7 +49,7 @@ module Decidim
           let!(:participant3) { create(:participant, ponderation: ponderation2, decidim_user: yet_other_user, setting: setting) }
 
           it "aggregates their membership weights" do
-            expect(votes_count).to eq([2 * ponderation1.weight + ponderation2.weight])
+            expect(votes_count).to eq([(2 * ponderation1.weight) + ponderation2.weight])
           end
         end
 

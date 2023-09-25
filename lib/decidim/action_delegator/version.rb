@@ -3,8 +3,8 @@
 module Decidim
   # This holds the decidim-action_delegator version.
   module ActionDelegator
-    VERSION = "0.7.2"
-    DECIDIM_VERSION = "0.26.5"
-    COMPAT_DECIDIM_VERSION = [">= 0.26.0", "< 0.27"].freeze
+    VERSION = "0.8.0"
+    DECIDIM_VERSION = "0.27.4"
+    COMPAT_DECIDIM_VERSION = [">= 0.27.0", "< 0.28"].freeze
   end
 end

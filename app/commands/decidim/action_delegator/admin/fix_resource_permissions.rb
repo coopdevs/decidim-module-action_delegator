@@ -3,7 +3,7 @@
 module Decidim
   module ActionDelegator
     module Admin
-      class FixResourcePermissions < Rectify::Command
+      class FixResourcePermissions < Decidim::Command
         def initialize(resources)
           @resources = resources
           @errors = []

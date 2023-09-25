@@ -31,11 +31,11 @@ describe "rake action_delegator:import_direct_verifications", type: :task do
     end
 
     it "create participants" do
-      expect { task.execute }.to change { Decidim::ActionDelegator::Participant.count }.by(5)
+      expect { task.execute }.to change(Decidim::ActionDelegator::Participant, :count).by(5)
     end
 
     it "create weights" do
-      expect { task.execute }.to change { Decidim::ActionDelegator::Ponderation.count }.by(4)
+      expect { task.execute }.to change(Decidim::ActionDelegator::Ponderation, :count).by(4)
     end
 
     context "when no current participants" do
@@ -68,11 +68,11 @@ describe "rake action_delegator:import_direct_verifications", type: :task do
       let!(:participant5) { create(:participant, setting: setting2, ponderation: setting2.ponderations.third, email: user5.email) }
 
       it "does not change current weights" do
-        expect { task.execute }.not_to(change { Decidim::ActionDelegator::Ponderation.count })
+        expect { task.execute }.not_to(change(Decidim::ActionDelegator::Ponderation, :count))
       end
 
       it "does not change current participants" do
-        expect { task.execute }.not_to(change { Decidim::ActionDelegator::Participant.count })
+        expect { task.execute }.not_to(change(Decidim::ActionDelegator::Participant, :count))
       end
 
       context "when using the command" do

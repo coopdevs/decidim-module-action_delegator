@@ -98,7 +98,7 @@ module Decidim
         end
 
         def settings_select_options
-          collection.map { |setting| [setting.consultation.id, translated_attribute(setting.title)] }.to_h
+          collection.to_h { |setting| [setting.consultation.id, translated_attribute(setting.title)] }
         end
 
         def copy_from_setting

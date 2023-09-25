@@ -25,7 +25,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
   end
 
   it "creates a setting" do
-    expect { subject.call }.to(change { Decidim::ActionDelegator::Setting.count }.by(1))
+    expect { subject.call }.to(change(Decidim::ActionDelegator::Setting, :count).by(1))
   end
 
   context "when the form is invalid" do
@@ -36,7 +36,7 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
     end
 
     it "doesn't create a setting" do
-      expect { subject.call }.not_to(change { Decidim::ActionDelegator::Setting.count })
+      expect { subject.call }.not_to(change(Decidim::ActionDelegator::Setting, :count))
     end
   end
 
@@ -58,15 +58,15 @@ describe Decidim::ActionDelegator::Admin::CreateSetting do
     end
 
     it "creates a setting" do
-      expect { subject.call }.to(change { Decidim::ActionDelegator::Setting.count }.by(1))
+      expect { subject.call }.to(change(Decidim::ActionDelegator::Setting, :count).by(1))
     end
 
     it "copies participants" do
-      expect { subject.call }.to(change { Decidim::ActionDelegator::Participant.count }.by(copy_from_setting.participants.count))
+      expect { subject.call }.to(change(Decidim::ActionDelegator::Participant, :count).by(copy_from_setting.participants.count))
     end
 
     it "copies ponderations" do
-      expect { subject.call }.to(change { Decidim::ActionDelegator::Ponderation.count }.by(copy_from_setting.ponderations.count))
+      expect { subject.call }.to(change(Decidim::ActionDelegator::Ponderation, :count).by(copy_from_setting.ponderations.count))
     end
   end
 end

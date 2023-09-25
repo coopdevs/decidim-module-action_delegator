@@ -21,7 +21,6 @@ module Decidim
       delegate :consultation, to: :setting
       delegate :organization, to: :setting
 
-      validates :setting, presence: true
       validates :decidim_user, uniqueness: { scope: :setting }, if: -> { decidim_user.present? }
       validates :email, uniqueness: { scope: :setting }, if: -> { email.present? }
       validates :phone, uniqueness: { scope: :setting }, if: -> { phone.present? }
@@ -85,15 +84,11 @@ module Decidim
       def voted?
         return false if user.blank?
 
-        @voted ||= if Decidim::Consultations::Vote
-                      .joins(question: :consultation)
-                      .where(decidim_consultations_questions: {
-                               decidim_consultation_id: setting.consultation.id
-                             }, author: user).any?
-                     true
-                   else
-                     false
-                   end
+        @voted ||= Decidim::Consultations::Vote
+                   .joins(question: :consultation)
+                   .where(decidim_consultations_questions: {
+                            decidim_consultation_id: setting.consultation.id
+                          }, author: user).any?
       end
 
       private
