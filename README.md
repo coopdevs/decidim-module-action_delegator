@@ -16,9 +16,9 @@ Initially, only votes on consultations can be delegated.
 
 ## Dependencies
 
-* [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) >= v0.26.0
-* [decidim-admin](https://github.com/decidim/decidim/tree/master/decidim-admin) >= v0.26.0
-* [decidim-core](https://github.com/decidim/decidim/tree/master/decidim-core) >= v0.26.0
+* [decidim-consultations](https://github.com/decidim/decidim/tree/master/decidim-consultations) >= v0.27.0
+* [decidim-admin](https://github.com/decidim/decidim/tree/master/decidim-admin) >= v0.27.0
+* [decidim-core](https://github.com/decidim/decidim/tree/master/decidim-core) >= v0.27.0
 
 ## Installation
 
@@ -86,14 +86,15 @@ For instance, this file should work for Sidekiq:
 Depending on your Decidim version, you can choose the corresponding version to ensure compatibility:
 
 | Version | Compatible Decidim versions |
-|---|---|
-| 0.7.x | 0.26.x |
-| 0.6.x | 0.26.x |
-| 0.5 | 0.25.x |
-| 0.4 | 0.24.x |
-| 0.3 | 0.24.x |
-| 0.2 | 0.23.x |
-| 0.1 | 0.22.0 |
+|---------|-----------------------------|
+| 0.8.x   | 0.27.x                      |
+| 0.7.x   | 0.26.x                      |
+| 0.6.x   | 0.26.x                      |
+| 0.5     | 0.25.x                      |
+| 0.4     | 0.24.x                      |
+| 0.3     | 0.24.x                      |
+| 0.2     | 0.23.x                      |
+| 0.1     | 0.22.0                      |
 
 *Heads up!*  [Consultations module will be deprecated in the near future.](https://github.com/decidim/decidim/issues/7097)
 
@@ -358,4 +359,3 @@ This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
 ## About
 
 This plugin is currently maintained by [![Pokecode](app/packs/images/logo-pokecode.png)](https://pokecode.net)with much appreciated contributions from other companies.
-
