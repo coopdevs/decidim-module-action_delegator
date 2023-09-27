@@ -3,37 +3,37 @@ es:
   activemodel:
     attributes:
       delegations_verifier:
-        email: Email
-        phone: Mobile phone number
+        email: Correo electrónico
+        phone: Número de teléfono móvil
       participant:
-        decidim_action_delegator_ponderation_id: Ponderation
-        email: Email
-        phone: Phone
+        decidim_action_delegator_ponderation_id: Ponderación
+        email: Correo electrónico
+        phone: Teléfono
       ponderation:
-        name: Membership type
-        name_help: Membership type
+        name: Tipo de miembro
+        name_help: Tipo de miembro
       setting:
-        decidim_consultation_id: Consultation
-        max_grants: Maximum vote delegations a participant can receive
-        phone_freezed: Use phone number from the census. Don't allow participants to edit it.
-        verify_with_sms: Verify with SMS
+        decidim_consultation_id: Consulta
+        max_grants: Número máximo de delegaciones de voto que una participante puede recibir
+        phone_freezed: Utilice el número de teléfono del censo. No permita que los participantes lo editen.
+        verify_with_sms: Verificar con SMS
     errors:
       models:
         delegations_verifier:
           attributes:
             email:
-              email_not_found: Sorry, this email is not in the census. Please, contact us if you think this is a mistake.
+              email_not_found: Lo sentimos, este correo electrónico no está en el censo. Por favor, póngase en contacto con nosotros si cree que esto es un error.
             phone:
-              phone_not_found: Sorry, this phone number is not in the census. Please, contact us if you think this is a mistake.
+              phone_not_found: Lo sentimos, este teléfono móvil no está en el censo. Por favor, póngase en contacto con nosotros si cree que esto es un error.
   decidim:
     action_delegator:
       admin:
         consultations:
           results:
-            ongoing_consultation: This consultations is still ongoing. Be aware that results may change as more people vote.
+            ongoing_consultation: Estas consultas siguen en curso. Tenga en cuenta que los resultados pueden cambiar a medida que más personas voten.
             title: Resultados por respuesta, tipo de membresía y peso
           weighted_results:
-            title: Results by answer summing membership weights
+            title: Resultados por respuesta sumando pesos por membresía
         delegations:
           create:
             error: Se ha producido un error al crear la delegación
@@ -41,21 +41,21 @@ es:
             error_max_grants: You reached the limit of allowed delegations
             success: Delegación creada correctamente
           csv_imports:
-            invalid: There was a problem importing delegations
-            success: Delegations imported successfully
+            invalid: Se ha producido un error al importar las delegaciones
+            success: Delegaciones importadas correctamente
           destroy:
-            error: There was a problem removing this delegation
+            error: Se ha producido un error al eliminar esta delegación
             success: Delegación eliminada correctamente
-          grantee_missing: The grantee (receiver) is not registered into the platform
-          granter_missing: The granter (from) is not registered into the platform
+          grantee_missing: El receptor no está registrado en la plataforma
+          granter_missing: El otorgante no está registrado en la plataforma
           index:
             actions:
-              csv_import: Import via csv
-              new_delegation: New delegation
+              csv_import: Importar un fichero CSV
+              new_delegation: Nueva delegación
             consultation: Consulta
             created_at: Creado el
             delete: Eliminar
-            description_html: This is the current delegations for this consultation
+            description_html: Estas son las delegaciones actuales para esta consulta
             grantee: Grantee (to)
             grantee_voted: Grantee has voted in behalf of granter?
             granter: Granter (from)
