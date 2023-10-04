@@ -24,16 +24,16 @@ cs:
             email:
               email_not_found: Omlouváme se, tento e-mail není v seznamu obyvatel. Pokud se domníváte, že se jedná o chybu, kontaktujte nás prosím.
             phone:
-              phone_not_found: Sorry, this phone number is not in the census. Please, contact us if you think this is a mistake.
+              phone_not_found: Omlouváme se, tento telefon není v seznamu obyvatel. Pokud se domníváte, že se jedná o chybu, kontaktujte nás prosím.
   decidim:
     action_delegator:
       admin:
         consultations:
           results:
-            ongoing_consultation: This consultations is still ongoing. Be aware that results may change as more people vote.
+            ongoing_consultation: Tyto konzultace stále probíhají. Mějte na paměti, že výsledky se mohou změnit, jak hlasuje více lidí.
             title: Výsledky podle odpovědi, typu členství a váhy
           weighted_results:
-            title: Results by answer summing membership weights
+            title: Výsledky na základě součtu váh členů
         delegations:
           create:
             error: Při vytváření delegace došlo k chybě
@@ -41,7 +41,7 @@ cs:
             error_max_grants: Dosáhli jste limitu povolených delegací pro tohoto příjemce
             success: Delegace úspěšně vytvořena
           csv_imports:
-            invalid: There was a problem importing delegations
+            invalid: Při importu delegací došlo k problému
             success: Delegations imported successfully
           destroy:
             error: There was a problem removing this delegation
