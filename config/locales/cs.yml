@@ -69,10 +69,10 @@ cs:
             title: Nová delegace
         invite_participants:
           invite_all_users:
-            error: There was an error inviting the users
-            success: Users invited successfully
+            error: Při pozvání uživatelů došlo k chybě
+            success: Uživatelé úspěšně pozváni
           invite_user:
-            error: There was an error inviting the user
+            error: Při pozvání uživatele došlo k chybě
             success: Uživatel úspěšně pozván
           permissions:
             not_allowed: Pro tuto akci nemáte oprávnění
