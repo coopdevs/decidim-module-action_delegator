@@ -78,7 +78,7 @@ cs:
             not_allowed: Pro tuto akci nemáte oprávnění
           resend_invitation:
             error: There was an error resending the invitation
-            success: Invitation resent successfully
+            success: Pozvánka byla úspěšně znovu odeslána
         manage_delegations:
           create:
             error: There was a problem importing the participants
@@ -87,7 +87,7 @@ cs:
             import: Import
             required_fields: 'Required fields: granter email, grantee email'
             title: Import delegations
-            title_example: 'Example:'
+            title_example: 'Příklad:'
             upload_instructions: Must be a file in CSV format with a header.
         manage_participants:
           create:
@@ -96,13 +96,13 @@ cs:
           new:
             authorization_method:
               both: email and phone number
-              email: email
-              phone: phone number
+              email: e-mail
+              phone: telefonní číslo
             describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
             import: Import
             required_fields: 'Required fields: %{authorization_method}'
             title: Import participants
-            title_example: 'Example:'
+            title_example: 'Příklad:'
             upload_instructions: Must be a file in CSV format with a header.
         menu:
           consultations_submenu:
@@ -119,15 +119,15 @@ cs:
             error: There was a problem removing this participant
             success: Participant successfully destroyed
           edit:
-            save: Save
-            title: Edit participant
+            save: Uložit
+            title: Upravit účastníka
           index:
             actions:
               csv_import: Import CSV
-              new_participant: New participant
+              new_participant: Nový účastník
               remove_census: Remove census
             all_users_registered_html: All users are registered into the platform
-            created_at: Created at
+            created_at: Vytvořeno v
             email: Email
             last_login: Last login
             missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
