@@ -41,7 +41,7 @@ cs:
             success: Delegace úspěšně vytvořena
           csv_imports:
             invalid: There was a problem importing delegations
-            success: Delegations imported successfully
+            success: Delegace úspěšně importovány
           destroy:
             error: Došlo k potížím při odstraňování této delegace
             success: Delegace úspěšně zničena
@@ -49,7 +49,7 @@ cs:
           granter_missing: The granter (from) is not registered into the platform
           index:
             actions:
-              csv_import: Import via csv
+              csv_import: Importovat přes csv
               new_delegation: Nový účastník
             consultation: Konzultace
             created_at: Vytvořeno v
@@ -100,7 +100,7 @@ cs:
             describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
             import: Importovat
             required_fields: 'Required fields: %{authorization_method}'
-            title: Import participants
+            title: Importovat účastníky
             title_example: 'Příklad:'
             upload_instructions: Musí být soubor ve formátu CSV s záhlavím.
         menu:
@@ -132,12 +132,12 @@ cs:
             missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
             missing_registered: There are %{missing_registered} that are not registered into the platform
             never_logged: Nikdy nepřihlášený
-            participant: participant
+            participant: účastník
             phone: Telefon
             ponderation: Ponderation type
             send_invitation_link: Click here to send an invitation to them
             title: Seznam obyvatel
-            user: Name
+            user: Jméno
             voted: Has voted?
           new:
             save: Vytvořit
@@ -175,7 +175,7 @@ cs:
             name: Typ členství
             num_users: Census total
             title: Ponderations
-            weight: Vote weight
+            weight: Váha hlasu
           new:
             save: Vytvořit
             title: New ponderation type
@@ -184,9 +184,9 @@ cs:
             success: Ponderation updated successfully
         settings:
           authorization_method:
-            both: Email and phone number
+            both: E-mail a telefonní číslo
             email: Pouze e-mail
-            phone: Only phone number
+            phone: Pouze telefonní číslo
           authorization_method_help: |
             Available options are:
             <ul>
@@ -204,15 +204,15 @@ cs:
             error: Při odstraňování tohoto nastavení došlo k chybě
             success: Nastavení úspěšně zničeno
           edit:
-            save: Save
-            title: Edit delegation group
+            save: Uložit
+            title: Upravit delegovanou skupinu
           form:
-            max_grants: Maximum delegations per user
+            max_grants: Maximální počet delegací na uživatele
           index:
             actions:
               census: Edit the census
               delegations: Edit the delegations
-              new_setting: New configuration
+              new_setting: Nová konfigurace
               ponderate: Set weights for vote ponderation
             authorization_method: Authorization method
             census: Census total
@@ -224,13 +224,13 @@ cs:
               <br>
               Each group can be configured with a different number of maximum delegations per user, different user delegations grants and different sets of ponderation types.
             max_grants: Maximální počet delegací/uživatelů
-            open: Open
+            open: Otevřít
             ponderations: Ponderation types
-            state: State
+            state: Stav
             title: Corporate Governance
           new:
             save: Uložit
-            title: New configuration
+            title: Nová konfigurace
           setting_checks:
             all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
             all_users_registered_html: All participants are registered into the platform.
@@ -243,13 +243,13 @@ cs:
             no_delegations_html: There are no vote delegations.
             no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
-            participant: participant
-            user: user
+            participant: účastník
+            user: uživatel
             users_need_sync_html: The participants list needs to be synchronized. <b>Consultation results might be wrong!</b>
           state:
-            closed: Closed
-            ongoing: Ongoing
-            pending: Pending
+            closed: Uzavřeno
+            ongoing: Probíhá
+            pending: Čekající
           update:
             error: There was a problem updating the settings
             success: Settings saved successfully
@@ -275,15 +275,15 @@ cs:
         import:
           errors_present: There were errors in the importation
           errors_title: "<b>Found:</b> %{errors_count} errors"
-          greeting: Hello %{name},
-          info_messages: Reason for skipping
+          greeting: Dobrý den %{name},
+          info_messages: Důvod přeskočení
           instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
-          row_number: Row number
+          row_number: Číslo řádku
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: CSV imported
-          success: CSV imported successfully
-          text_error: Error
+          subject: CSV importováno
+          success: CSV úspěšně importováno
+          text_error: Chyba
       invite_participants_mailer:
         confirmation:
           body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
@@ -348,12 +348,12 @@ cs:
       delegations_verifier:
         explanation: Ověření uživatelé s touto metodou mohou delegovat hlasy na ostatní uživatele
         fields:
-          phone: Phone number
+          phone: Telefonní číslo
         name: Corporate Governance
     resources:
       question:
         actions:
-          comment: Comment
+          comment: Komentář
           vote: Vote
     verifications:
       authorizations:
