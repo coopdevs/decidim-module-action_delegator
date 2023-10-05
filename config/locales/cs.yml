@@ -95,15 +95,15 @@ cs:
             success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
           new:
             authorization_method:
-              both: email and phone number
+              both: e-mail a telefonní číslo
               email: e-mail
               phone: telefonní číslo
             describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
             import: Import
-            required_fields: 'Required fields: %{authorization_method}'
-            title: Import participants
+            required_fields: 'Vyžadovaná pole: %{authorization_method}'
+            title: Import účastníků
             title_example: 'Příklad:'
-            upload_instructions: Must be a file in CSV format with a header.
+            upload_instructions: Musí být soubor ve formátu CSV se záhlavím.
         menu:
           consultations_submenu:
             by_answer: Podle odpovědi
@@ -116,8 +116,8 @@ cs:
             error: There was a problem creating the participants
             success: Participants created successfully
           destroy:
-            error: There was a problem removing this participant
-            success: Participant successfully destroyed
+            error: Při odstraňování tohoto uživatele došlo k chybě
+            success: Uživatel úspěšně zničen
           edit:
             save: Uložit
             title: Upravit účastníka
@@ -128,27 +128,27 @@ cs:
               remove_census: Remove census
             all_users_registered_html: All users are registered into the platform
             created_at: Vytvořeno v
-            email: Email
-            last_login: Last login
+            email: E-mail
+            last_login: Poslední přihlášení
             missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
             missing_registered: There are %{missing_registered} that are not registered into the platform
             never_logged: Never logged yet
-            participant: participant
-            phone: Phone
+            participant: účastník
+            phone: Telefon
             ponderation: Ponderation type
             send_invitation_link: Click here to send an invitation to them
             title: Census
-            user: Name
-            voted: Has voted?
+            user: Jméno
+            voted: Bylo hlasováno?
           new:
-            save: Create
-            title: New participant
+            save: Vytvořit
+            title: Nový účastník
           remove_census:
             confirm: Are you sure you want to remove the census? This operation cannot be undone
             success: "%{participants_count} entries were successfully deleted from the census"
           update:
             error: There was a problem updating the participants
-            success: Participants saved successfully
+            success: Účastníci úspěšně uloženi
         permissions:
           sync:
             started: Participans synchronization has started. Please wait a few minutes and refresh this page.
