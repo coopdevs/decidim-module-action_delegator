@@ -178,16 +178,16 @@ cs:
             title: Ponderations
             weight: Vote weight
           new:
-            save: Create
+            save: Vytvořit
             title: New ponderation type
           update:
             error: There's been and error updating the ponderation
             success: Ponderation updated successfully
         settings:
           authorization_method:
-            both: Email and phone number
-            email: Only email
-            phone: Only phone number
+            both: E-mail a telefonní číslo
+            email: Pouze e-mail
+            phone: Pouze telefonní číslo
           authorization_method_help: |
             Available options are:
             <ul>
@@ -205,7 +205,7 @@ cs:
             error: There was a problem removing this setting
             success: Nastavení úspěšně zničeno
           edit:
-            save: Save
+            save: Uložit
             title: Edit delegation group
           form:
             max_grants: Maximum delegations per user
@@ -213,7 +213,7 @@ cs:
             actions:
               census: Edit the census
               delegations: Edit the delegations
-              new_setting: New configuration
+              new_setting: Nová konfigurace
               ponderate: Set weights for vote ponderation
             authorization_method: Authorization method
             census: Census total
@@ -225,13 +225,13 @@ cs:
               <br>
               Each group can be configured with a different number of maximum delegations per user, different user delegations grants and different sets of ponderation types.
             max_grants: Maximální počet delegací/uživatelů
-            open: Open
+            open: Otevřít
             ponderations: Ponderation types
-            state: State
+            state: Stav
             title: Corporate Governance
           new:
-            save: Create
-            title: New configuration
+            save: Vytvořit
+            title: Nová konfigurace
           setting_checks:
             all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
             all_users_registered_html: All participants are registered into the platform.
@@ -244,13 +244,13 @@ cs:
             no_delegations_html: There are no vote delegations.
             no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
-            participant: participant
-            user: user
+            participant: účastník
+            user: uživatel
             users_need_sync_html: The participants list needs to be synchronized. <b>Consultation results might be wrong!</b>
           state:
-            closed: Closed
-            ongoing: Ongoing
-            pending: Pending
+            closed: Uzavřeno
+            ongoing: Probíhá
+            pending: Nevyřízeno
           update:
             error: There was a problem updating the settings
             success: Settings saved successfully
@@ -289,15 +289,15 @@ cs:
         confirmation:
           body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
           confirm: Confirm participation
-          greeting: Hello %{recipient},
+          greeting: Dobrý den %{recipient},
       name: Modul Decidim ActionDelegator cooperatives
       participants_csv_importer:
         import:
           error: There was a problem importing the participants
           error_field: Reason for skipping
           field_name:
-            phone: phone
-            weight: weight
+            phone: telefon
+            weight: váha
           phone_exists: Participant with this phone already exists
           ponderation_not_found: Ponderation type not found
           skip_import_info: Participant already exists %{with_mismatched_fields}
@@ -318,22 +318,22 @@ cs:
               confirm_destroy: Are you sure you want to reset the verification code?
               destroy: Reset verification code
               resend: Didn't receive the verification code?
-              send: Confirm
+              send: Potvrdit
               title: Introduce the verification code you received
             new:
-              authorize: Authorize my account
-              missing_phone_error: Missing membership phone
+              authorize: Autorizovat můj účet
+              missing_phone_error: Chybějící členský telefon
               not_in_census: We're sorry but you can't be authorized because your email is not in the census. Please contact the admin if you feel this is a mistake.
               participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
               phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
-              send_code: Send verification code
+              send_code: Odeslat ověřovací kód
               title: Authorize with Corporate Governance Verifier
           not_active: The Corporate Governance Verifier cannot be granted at this time as there are no active voting spaces.
     admin:
       actions:
-        invite: Send invitation
-        invite_all: Send invitations to non-existing users
-        resend: Resend invitation
+        invite: Odeslat pozvánku
+        invite_all: Poslat pozvánky neexistujícím uživatelům
+        resend: Znovu odeslat pozvánku
       consultations:
         results:
           default_metadata: "(členské údaje nejsou k dispozici)"
@@ -350,13 +350,13 @@ cs:
       delegations_verifier:
         explanation: Ověření uživatelé s touto metodou mohou delegovat hlasy na ostatní uživatele
         fields:
-          phone: Phone number
+          phone: Telefonní číslo
         name: Corporate Governance
     resources:
       question:
         actions:
-          comment: Comment
-          vote: Vote
+          comment: Komentář
+          vote: Hlasovat
     verifications:
       authorizations:
         first_login:
