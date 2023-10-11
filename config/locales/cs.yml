@@ -294,14 +294,14 @@ cs:
       participants_csv_importer:
         import:
           error: There was a problem importing the participants
-          error_field: Reason for skipping
+          error_field: Důvod pro přeskočení
           field_name:
             phone: telefon
             weight: váha
-          phone_exists: Participant with this phone already exists
+          phone_exists: Uživatel s tímto telefonem již existuje
           ponderation_not_found: Ponderation type not found
-          skip_import_info: Participant already exists %{with_mismatched_fields}
-          with_mismatched_fields: " with mismatched fields: %{fields}"
+          skip_import_info: Uživatel již existuje %{with_mismatched_fields}
+          with_mismatched_fields: " s neodpovídajícími polem: %{fields}"
       sms_message: Váš ověřovací kód je %{code}
       user_delegations:
         index:
@@ -315,11 +315,11 @@ cs:
         delegations_verifier:
           authorizations:
             edit:
-              confirm_destroy: Are you sure you want to reset the verification code?
-              destroy: Reset verification code
-              resend: Didn't receive the verification code?
+              confirm_destroy: Opravdu chcete resetovat ověřovací kód?
+              destroy: Resetovat ověřovací kód
+              resend: Neobdrželi jste ověřovací kód?
               send: Potvrdit
-              title: Introduce the verification code you received
+              title: Zadejte ověřovací kód, který vám přišel
             new:
               authorize: Autorizovat můj účet
               missing_phone_error: Chybějící členský telefon
