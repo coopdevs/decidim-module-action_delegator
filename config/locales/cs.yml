@@ -86,11 +86,11 @@ cs:
             import: Import
             required_fields: 'Required fields: granter email, grantee email'
             title: Import delegations
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+            title_example: 'Příklad:'
+            upload_instructions: Musí být soubor ve formátu CSV se záhlavím.
         manage_participants:
           create:
-            error: There was a problem importing the participants
+            error: Došlo k potížím při importu účastníků
             success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
           new:
             authorization_method:
@@ -287,8 +287,8 @@ cs:
       invite_participants_mailer:
         confirmation:
           body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
-          confirm: Confirm participation
-          greeting: Hello %{recipient},
+          confirm: Potvrdit účast
+          greeting: Dobrý den %{recipient},
       name: Modul Decidim ActionDelegator cooperatives
       participants_csv_importer:
         import:
@@ -317,7 +317,7 @@ cs:
               confirm_destroy: Are you sure you want to reset the verification code?
               destroy: Reset verification code
               resend: Didn't receive the verification code?
-              send: Confirm
+              send: Potvrdit
               title: Introduce the verification code you received
             new:
               authorize: Authorize my account
@@ -329,7 +329,7 @@ cs:
               title: Authorize with Corporate Governance Verifier
     admin:
       actions:
-        invite: Send invitation
+        invite: Odeslat pozvánku
         invite_all: Send invitations to non-existing users
         resend: Resend invitation
       consultations:
