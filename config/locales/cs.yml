@@ -163,7 +163,7 @@ cs:
             error: There's been and error removing the ponderation
             success: Ponderation destroyed successfully
           edit:
-            save: Save
+            save: Uložit
             title: Edit ponderation type
           form:
             name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
@@ -172,8 +172,8 @@ cs:
           index:
             actions:
               new_ponderation: New ponderation
-            created_at: Created at
-            name: Membership Type
+            created_at: Vytvořeno v
+            name: Typ členství
             num_users: Census total
             title: Ponderations
             weight: Vote weight
@@ -219,7 +219,7 @@ cs:
             census: Census total
             consultation: Konzultace
             created_at: Vytvořeno v
-            delegations: Delegations
+            delegations: Delegace
             description_html: |
               This module is designed for organizations that do voting through consultations. The functionalities we have available are: compilation of census, delegations of participants and weights by type of member. We can also use the integrated verifier via SMS, email or both. It is possible to use this module without importing a census, you can manage it in order to make delegations and/or weightings. If you need more information, go to guia.cercles.coop.
               <br>
@@ -276,14 +276,14 @@ cs:
         import:
           errors_present: There were errors in the importation
           errors_title: "<b>Found:</b> %{errors_count} errors"
-          greeting: Hello %{name},
+          greeting: Dobrý den %{name},
           info_messages: Reason for skipping
           instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
-          row_number: Row number
+          row_number: Číslo řádku
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: CSV imported
-          success: CSV imported successfully
+          subject: CSV importováno
+          success: CSV úspěšně importováno
           text_error: Error
       invite_participants_mailer:
         confirmation:
