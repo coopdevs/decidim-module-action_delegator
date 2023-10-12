@@ -176,7 +176,7 @@ cs:
             name: Typ členství
             num_users: Census total
             title: Ponderations
-            weight: Vote weight
+            weight: Váha hlasu
           new:
             save: Vytvořit
             title: New ponderation type
@@ -287,13 +287,13 @@ cs:
           text_error: Error
       invite_participants_mailer:
         confirmation:
-          body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
-          confirm: Confirm participation
+          body: Byli jste pozváni k účasti na konzultaci. Pro potvrzení své účasti klikněte na níže uvedený odkaz.
+          confirm: Potvrď účast
           greeting: Dobrý den %{recipient},
       name: Modul Decidim ActionDelegator cooperatives
       participants_csv_importer:
         import:
-          error: There was a problem importing the participants
+          error: Došlo k potížím při importu účastníků
           error_field: Důvod pro přeskočení
           field_name:
             phone: telefon
