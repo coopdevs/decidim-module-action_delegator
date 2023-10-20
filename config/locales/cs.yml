@@ -14,7 +14,7 @@ cs:
         name_help: Typ členství
       setting:
         decidim_consultation_id: Konzultace
-        max_grants: Maximum vote delegations a participant can receive
+        max_grants: Maximální počet delegací hlasů, které může uživatel obdržet
         phone_freezed: Použít telefonní číslo ze seznamu obyvatel. Nedovolte účastníkům jej upravovat.
         verify_with_sms: Ověřit pomocí SMS
     errors:
@@ -22,7 +22,7 @@ cs:
         delegations_verifier:
           attributes:
             email:
-              email_not_found: Sorry, this email is not in the census. Please, contact us if you think this is a mistake.
+              email_not_found: Omlouváme se, tento e-mail není v seznamu obyvatel. Pokud se domníváte, že se jedná o chybu, kontaktujte nás prosím.
             phone:
               phone_not_found: Sorry, this phone number is not in the census. Please, contact us if you think this is a mistake.
   decidim:
@@ -94,7 +94,7 @@ cs:
             success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
           new:
             authorization_method:
-              both: email and phone number
+              both: e-mail a telefonní číslo
               email: e-mail
               phone: telefonní číslo
             describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
@@ -113,10 +113,10 @@ cs:
         participants:
           create:
             error: There was a problem creating the participants
-            success: Participants created successfully
+            success: Účastníci úspěšně uloženi
           destroy:
-            error: There was a problem removing this participant
-            success: Participant successfully destroyed
+            error: Při odebírání tohoto uživatele došlo k chybě
+            success: Uživatel úspěšně zničen
           edit:
             save: Uložit
             title: Upravit účastníka
@@ -125,7 +125,7 @@ cs:
               csv_import: Import CSV
               new_participant: Nový účastník
               remove_census: Remove census
-            all_users_registered_html: All users are registered into the platform
+            all_users_registered_html: Všichni uživatelé jsou zaregistrováni do platformy
             created_at: Vytvořeno v
             email: E-mail
             last_login: Poslední přihlášení
@@ -135,7 +135,7 @@ cs:
             participant: účastník
             phone: Telefon
             ponderation: Ponderation type
-            send_invitation_link: Click here to send an invitation to them
+            send_invitation_link: Klikněte zde pro odeslání pozvánky
             title: Seznam obyvatel
             user: Jméno
             voted: Has voted?
@@ -153,7 +153,7 @@ cs:
             started: Participans synchronization has started. Please wait a few minutes and refresh this page.
           update:
             error: There was a problem updating the permissions
-            success: Permissions updated successfully
+            success: Oprávnění byla úspěšně aktualizována
         ponderations:
           create:
             error: There's been and error creating the ponderation
@@ -199,7 +199,7 @@ cs:
           copy_setting: 'Copy ponderations and census from:'
           create:
             error: Při vytváření nastavení se vyskytl problém
-            success: Settings saved successfully
+            success: Nastavení úspěšně uloženo
           destroy:
             error: Při odstraňování tohoto nastavení došlo k chybě
             success: Nastavení úspěšně zničeno
@@ -214,7 +214,7 @@ cs:
               delegations: Edit the delegations
               new_setting: Nová konfigurace
               ponderate: Set weights for vote ponderation
-            authorization_method: Authorization method
+            authorization_method: Autorizační metoda
             census: Census total
             consultation: Konzultace
             created_at: Vytvořeno v
@@ -251,10 +251,10 @@ cs:
             ongoing: Probíhá
             pending: Čekající
           update:
-            error: There was a problem updating the settings
-            success: Settings saved successfully
+            error: Při aktualizaci nastavení se vyskytl problém
+            success: Nastavení bylo úspěšně uloženo
         weighted_results:
-          title: Results by answer summing membership weights
+          title: Výsledky na základě součtu váh členů
       authorizations:
         new:
           missing_phone_error: Chybějící členský telefon
@@ -273,34 +273,34 @@ cs:
         title: 'Konzultace: udělené delegace'
       import_mailer:
         import:
-          errors_present: There were errors in the importation
-          errors_title: "<b>Found:</b> %{errors_count} errors"
+          errors_present: Došlo k chybám v importu
+          errors_title: "<b>Nalezeno:</b> %{errors_count} chyb"
           greeting: Dobrý den %{name},
           info_messages: Důvod přeskočení
           instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
-          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
+          result: "<b>Importováno:</b> %{rows_count} řádků z %{total_rows_count}."
           row_number: Číslo řádku
-          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
+          skipped_rows: "<b>Přeskočeno:</b> %{skipped_rows} řádků."
           subject: CSV importováno
           success: CSV úspěšně importováno
           text_error: Chyba
       invite_participants_mailer:
         confirmation:
-          body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
+          body: Byli jste pozváni k účasti na konzultaci. Pro potvrzení své účasti klikněte na níže uvedený odkaz.
           confirm: Potvrdit účast
           greeting: Dobrý den %{recipient},
       name: Modul Decidim ActionDelegator cooperatives
       participants_csv_importer:
         import:
-          error: There was a problem importing the participants
-          error_field: Reason for skipping
+          error: Došlo k potížím při importu účastníků
+          error_field: Důvod pro přeskočení
           field_name:
-            phone: phone
-            weight: weight
-          phone_exists: Participant with this phone already exists
+            phone: telefon
+            weight: váha
+          phone_exists: Uživatel s tímto telefonem již existuje
           ponderation_not_found: Ponderation type not found
           skip_import_info: Participant already exists %{with_mismatched_fields}
-          with_mismatched_fields: " with mismatched fields: %{fields}"
+          with_mismatched_fields: " s neodpovídajícími polem: %{fields}"
       sms_message: Váš ověřovací kód je %{code}
       user_delegations:
         index:
@@ -314,24 +314,24 @@ cs:
         delegations_verifier:
           authorizations:
             edit:
-              confirm_destroy: Are you sure you want to reset the verification code?
-              destroy: Reset verification code
-              resend: Didn't receive the verification code?
+              confirm_destroy: Opravdu chcete resetovat ověřovací kód?
+              destroy: Resetovat ověřovací kód
+              resend: Neobdrželi jste ověřovací kód?
               send: Potvrdit
-              title: Introduce the verification code you received
+              title: Zadejte ověřovací kód, který vám přišel
             new:
-              authorize: Authorize my account
-              missing_phone_error: Missing membership phone
+              authorize: Autorizovat můj účet
+              missing_phone_error: Chybějící členský telefon
               not_in_census: We're sorry but you can't be authorized because your email is not in the census. Please contact the admin if you feel this is a mistake.
-              participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
-              phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
-              send_code: Send verification code
+              participate_in: 'Toto oprávnění vám umožní účastnit se následujících konzultací: %{consultations}'
+              phone_warning: Toto telefonní číslo bylo importováno administrátorem. Pokud není správné, obraťte se na něj.
+              send_code: Odeslat ověřovací kód
               title: Authorize with Corporate Governance Verifier
     admin:
       actions:
         invite: Odeslat pozvánku
-        invite_all: Send invitations to non-existing users
-        resend: Resend invitation
+        invite_all: Poslat pozvánky neexistujícím uživatelům
+        resend: Znovu odeslat pozvánku
       consultations:
         results:
           default_metadata: "(členské údaje nejsou k dispozici)"
@@ -354,7 +354,7 @@ cs:
       question:
         actions:
           comment: Komentář
-          vote: Vote
+          vote: Hlasovat
     verifications:
       authorizations:
         first_login:
@@ -363,7 +363,7 @@ cs:
   devise:
     mailer:
       invite_participant:
-        subject: You have been invited to participate in the consultation
+        subject: Byli jste pozváni k účasti na konzultacích
   layouts:
     decidim:
       admin:
