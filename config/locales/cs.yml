@@ -253,7 +253,7 @@ cs:
             pending: Nevyřízeno
           update:
             error: There was a problem updating the settings
-            success: Settings saved successfully
+            success: Nastavení bylo úspěšně uloženo
         weighted_results:
           title: Results by answer summing membership weights
       authorizations:
@@ -277,14 +277,14 @@ cs:
           errors_present: There were errors in the importation
           errors_title: "<b>Found:</b> %{errors_count} errors"
           greeting: Dobrý den %{name},
-          info_messages: Reason for skipping
+          info_messages: Důvod přeskočení
           instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
           result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
           row_number: Číslo řádku
           skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
           subject: CSV importováno
           success: CSV úspěšně importováno
-          text_error: Error
+          text_error: Chyba
       invite_participants_mailer:
         confirmation:
           body: Byli jste pozváni k účasti na konzultaci. Pro potvrzení své účasti klikněte na níže uvedený odkaz.
@@ -365,7 +365,7 @@ cs:
   devise:
     mailer:
       invite_participant:
-        subject: You have been invited to participate in the consultation
+        subject: Byli jste pozváni k účasti na konzultacích
   layouts:
     decidim:
       admin:
