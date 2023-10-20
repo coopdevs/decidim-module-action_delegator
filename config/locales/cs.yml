@@ -132,7 +132,7 @@ cs:
             last_login: Poslední přihlášení
             missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
             missing_registered: There are %{missing_registered} that are not registered into the platform
-            never_logged: Never logged yet
+            never_logged: Nikdy nepřihlášený
             participant: účastník
             phone: Telefon
             ponderation: Ponderation type
@@ -206,16 +206,16 @@ cs:
             success: Nastavení úspěšně zničeno
           edit:
             save: Uložit
-            title: Edit delegation group
+            title: Upravit delegovanou skupinu
           form:
-            max_grants: Maximum delegations per user
+            max_grants: Maximální počet delegací na uživatele
           index:
             actions:
               census: Edit the census
-              delegations: Edit the delegations
+              delegations: Upravit delegace
               new_setting: Nová konfigurace
               ponderate: Set weights for vote ponderation
-            authorization_method: Authorization method
+            authorization_method: Autorizační metoda
             census: Census total
             consultation: Konzultace
             created_at: Vytvořeno v
@@ -235,7 +235,7 @@ cs:
           setting_checks:
             all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
             all_users_registered_html: All participants are registered into the platform.
-            click_to_fix: Click here to automatically fix this
+            click_to_fix: Klikněte zde pro automatické opravení
             consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
             consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
