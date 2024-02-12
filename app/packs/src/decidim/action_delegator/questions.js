@@ -1,14 +1,14 @@
 $(() => {
   const 
-    delegationCallouts = $(".delegation-callout"),
-    delegationCalloutsMessage = $(".delegation-callout-message"),
-    delegationDialog = $("#delegations-modal"),
-    delegationField = $("#decidim_consultations_delegation_id"),
-    delegationVoteButtons = $(".delegation-vote-button"),
-    delegationUnVoteButtons = $(".delegation_unvote_button"),
-    delegationsButton = $("#delegations-button"),
-    voteButton = $("#vote_button"),
-    voteDialog = $("#question-vote-modal");
+      delegationCallouts = $(".delegation-callout"),
+      delegationCalloutsMessage = $(".delegation-callout-message"),
+      delegationDialog = $("#delegations-modal"),
+      delegationField = $("#decidim_consultations_delegation_id"),
+      delegationUnVoteButtons = $(".delegation_unvote_button"),
+      delegationVoteButtons = $(".delegation-vote-button"),
+      delegationsButton = $("#delegations-button"),
+      voteButton = $("#vote_button"),
+      voteDialog = $("#question-vote-modal");
 
   delegationsButton.click(() => {
     delegationDialog.foundation("open");
@@ -22,7 +22,7 @@ $(() => {
     delegationCallouts.removeClass("is-hidden");
   });
 
-  delegationUnVoteButtons.click((evt) => {
+  delegationUnVoteButtons.click(() => {
     delegationDialog.foundation("close");
     delegationCallouts.addClass("is-hidden");
   });
