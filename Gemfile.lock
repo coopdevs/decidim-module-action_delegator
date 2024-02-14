@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    decidim-action_delegator (0.8.0)
+    decidim-action_delegator (0.8.1)
       decidim-admin (>= 0.27.0, < 0.28)
       decidim-consultations (>= 0.27.0, < 0.28)
       decidim-core (>= 0.27.0, < 0.28)
@@ -870,4 +870,4 @@ RUBY VERSION
    ruby 3.0.6p216
 
 BUNDLED WITH
-   2.3.24
+   2.4.22
