@@ -24,6 +24,7 @@ module Decidim::ActionDelegator
         "/app/commands/decidim/consultations/vote_question.rb" => "bb0489e93d3bd142db19d9f93f556d67",
         "/app/commands/decidim/consultations/multiple_vote_question.rb" => "86ac61db829acb4e86a9b6d90bd46333",
         "/app/models/decidim/consultations/vote.rb" => "c06286e3f7366d3a017bf69f1c9e3eef",
+        "/app/models/decidim/consultations/question.rb" => "bc6e8618100f112c1d23bee9aaf5c0ed",
         "/app/controllers/decidim/consultations/question_votes_controller.rb" => "69bf764e99dfcdae138613adbed28b84",
         "/app/forms/decidim/consultations/vote_form.rb" => "d2b69f479b61b32faf3b108da310081a",
         "/app/forms/decidim/consultations/multi_vote_form.rb" => "fc2160f0b5e85c9944d652b568c800f3"
