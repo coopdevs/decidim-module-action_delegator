@@ -30,10 +30,10 @@ ca:
       admin:
         consultations:
           results:
-            ongoing_consultation: This consultations is still ongoing. Be aware that results may change as more people vote.
+            ongoing_consultation: Aquesta consulta encara estan en curs. Tingueu en compte que els resultats poden canviar a mesura que més gent voti.
             title: Resultats per resposta, tipus de soci i pes
           weighted_results:
-            title: Results by answer summing membership weights
+            title: Resultats per resposta sumant ponderació de vot
         delegations:
           create:
             error: S'ha produït un error en crear aquesta delegació
@@ -41,22 +41,22 @@ ca:
             error_max_grants: Has arribat al limit de delegacions permeses
             success: Delegació creada amb èxit
           csv_imports:
-            invalid: There was a problem importing delegations
-            success: Delegations imported successfully
+            invalid: Hi ha hagut un problema important les delegacions
+            success: Delegacions importades correctament
           destroy:
-            error: There was a problem removing this delegation
+            error: S'ha produït un error en eliminar aquesta delegació
             success: S'ha eliminat la delegació amb èxit
-          grantee_missing: The grantee (receiver) is not registered into the platform
-          granter_missing: The granter (from) is not registered into the platform
+          grantee_missing: La persona atorgada no està registrada a la plataforma
+          granter_missing: L'atorgant no està registrada a la plataforma
           index:
             actions:
-              csv_import: Import via csv
-              new_delegation: New delegation
+              csv_import: Importa un arxiu CSV
+              new_delegation: Nova delegació
             consultation: Consulta
             created_at: Creat el
             delete: Eliminar
-            description_html: This is the current delegations for this consultation
-            grantee: Grantee (to)
+            description_html: Aquestes són les delegacions actuals per a aquesta consulta
+            grantee: Receptora (a)
             grantee_voted: Grantee has voted in behalf of granter?
             granter: Granter (from)
             granter_voted: Granter has voted?
