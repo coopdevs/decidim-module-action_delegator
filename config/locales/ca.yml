@@ -3,28 +3,28 @@ ca:
   activemodel:
     attributes:
       delegations_verifier:
-        email: Email
-        phone: Mobile phone number
+        email: Correu electrònic
+        phone: Número de telèfon mòbil
       participant:
-        decidim_action_delegator_ponderation_id: Ponderation
-        email: Email
-        phone: Phone
+        decidim_action_delegator_ponderation_id: Ponderació
+        email: Correu electrònic
+        phone: Telèfon
       ponderation:
-        name: Membership type
-        name_help: Membership type
+        name: Tipus d'associat
+        name_help: Tipus d'associat
       setting:
-        decidim_consultation_id: Consultation
-        max_grants: Maximum vote delegations a participant can receive
-        phone_freezed: Use phone number from the census. Don't allow participants to edit it.
-        verify_with_sms: Verify with SMS
+        decidim_consultation_id: Consulta
+        max_grants: Màxim nombre de delegacions que pot rebre una participant
+        phone_freezed: Usa el número de telèfon del cens. No permet als participants editar-lo.
+        verify_with_sms: Verifica amb SMS
     errors:
       models:
         delegations_verifier:
           attributes:
             email:
-              email_not_found: Sorry, this email is not in the census. Please, contact us if you think this is a mistake.
+              email_not_found: Ho sentim, el teu email no és al cens. Si us plau, contacteu amb nosaltres si penseu que hi ha un error.
             phone:
-              phone_not_found: Sorry, this phone number is not in the census. Please, contact us if you think this is a mistake.
+              phone_not_found: Ho sentim, el teu email no és al cens. Si us plau, contacta amb nosaltres is creieu que és un error.
   decidim:
     action_delegator:
       admin:
