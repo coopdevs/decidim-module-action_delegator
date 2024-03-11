@@ -299,7 +299,7 @@ ca:
             weight: ponderació
           phone_exists: El participant amb aquest telèfon ja existeix
           ponderation_not_found: No s'ha trobat el tipus de ponderació
-          skip_import_info: El participant ja existeix %{with_mismatched_fields}
+          skip_import_info: El participant ja existeix%{with_mismatched_fields}
           with_mismatched_fields: "amb camps no coincidents: %{fields}"
       sms_message: El teu codi de verificació és %{code}
       user_delegations:
