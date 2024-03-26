@@ -1,8 +1,8 @@
 <div class="callout alert">
     <p>
         Has repost 
-        <span><%= current_question.consultation.questions.published.joins(:votes).select(:decidim_author_id).distinct.where(author: current_user.id).count %></span>
-         de <span><%= current_question.consultation.questions.published.joins(:votes).count %></span> preguntes. 
+        <span><%= current_question.consultation.questions.published.joins(:votes).count %></span>
+         de <span></span> preguntes. 
          <a class="" data-open="exampleModal1">Revisa el resum de la teva votació aqui</a>
     </p>
 </div>
