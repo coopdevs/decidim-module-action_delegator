@@ -1,7 +1,11 @@
 <div class="callout alert">
-    <p>Has repost <span></span> de <span> </span> preguntes. <a class="" data-open="exampleModal1">Revisa el resum de la teva votació aqui</a></p>
+    <p>
+        Has repost 
+        <span><%= current_question.consultation.questions.published.joins(:votes).select(:decidim_author_id).distinct.where(author: current_user.id).count %></span>
+         de <span><%= current_question.consultation.questions.published.joins(:votes).count %></span> preguntes. 
+         <a class="" data-open="exampleModal1">Revisa el resum de la teva votació aqui</a>
+    </p>
 </div>
-
 
 <div class="reveal" id="exampleModal1" data-reveal>
   <h1>Awesome. I Have It.</h1>
