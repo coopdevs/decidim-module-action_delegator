@@ -1,3 +1,0 @@
-<!-- insert_before 'h2' -->
-
-<%= render partial: "decidim/consultations/question_votes/vote_modal/vote_modal" %>
