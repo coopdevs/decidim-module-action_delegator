@@ -33,7 +33,7 @@
                         <p><%= translated_attribute(user_response.title) %></p>
                       <% end %>
                   <% else %>
-                      <a href="#" class="text-primary">No answer yet</a>
+                    <%= link_to "No answer yet", decidim_consultations.question_path(question), class: "text-primary" %>
                   <% end %>
                 </td>
               </tr>
