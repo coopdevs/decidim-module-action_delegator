@@ -1,5 +1,5 @@
 <% total_published_questions = current_question.consultation.questions.published.count %>
-<% voted_questions = current_question.consultation.questions.published.joins(:votes).count %>
+<% voted_questions = current_question.consultation.questions.published.joins(:votes).where(votes: { author: current_user }).count %>
 
 <% alert_class = total_published_questions != voted_questions ? "alert" : "success" %>
 
@@ -13,8 +13,29 @@
 </div>
 
 <div class="reveal" id="exampleModal1" data-reveal>
-  <h1>Awesome. I Have It.</h1>
-  <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+  <h4>Els teus vots a "Panell de votacions"</h4>
+  <p class="lead">
+    <table class="table-list">
+      <% current_question.consultation.questions.each do |question| %>
+          <thead>
+            <tr>
+              <th width="200">Pregunta</th>
+              <th width="150">Has respost?</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>Content Goes Here</td>
+                <td>Content Goes Here</td>
+              </tr>
+              <tr>
+                <td>Content Goes Here</td>
+                <td>Content Goes Here</td>
+              </tr>
+          </tbody>
+      <% end %>
+    </table>
+  </p>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
