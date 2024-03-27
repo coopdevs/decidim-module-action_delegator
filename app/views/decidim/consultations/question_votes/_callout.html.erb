@@ -8,11 +8,11 @@
         Has repost
         <span><%= voted_questions %></span>
         de <span><%= total_published_questions %></span> preguntes.
-        <a class="" data-open="exampleModal1">Revisa el resum de la teva votació aqui</a>
+        <a class="" data-open="consultations-questions-modal">Revisa el resum de la teva votació aqui</a>
     </p>
 </div>
 
-<div class="reveal" id="exampleModal1" data-reveal>
+<div class="reveal" id="consultations-questions-modal" data-reveal>
   <h4>Els teus vots a "Panell de votacions"</h4>
   <p class="lead">
     <table class="table-list">
@@ -25,13 +25,16 @@
           <tbody>
             <% current_question.consultation.questions.each do |question| %>
               <tr>
-                <td><%= translated_attribute question.title %></td>
+                <td><%= translated_attribute(question.title) %></td>
                 <td>
                   <% if question.votes.where(author: current_user).any? %>
-                      <%= question.votes.where(author: current_user).count %>
+                    <% user_response = question.responses.joins(:votes).find_by(votes: { author: current_user }) %>
+                      <% if user_response %>
+                        <p><%= translated_attribute(user_response.title) %></p>
+                      <% end %>
                   <% else %>
-                  No answer yet
-              <% end %>
+                      <a href="#">No answer yet</a>
+                  <% end %>
                 </td>
               </tr>
              <% end %>
