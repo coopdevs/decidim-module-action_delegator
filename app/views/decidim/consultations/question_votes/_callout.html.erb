@@ -5,21 +5,21 @@
 
 <div class="callout <%= alert_class %>">
     <p>
-        Has repost
+        <%= t("action_delegator.questions.callout_text", scope: "decidim") %>
         <span><%= voted_questions %></span>
-        de <span><%= total_published_questions %></span> preguntes.
-        <a class="" data-open="consultations-questions-modal">Revisa el resum de la teva votació aqui</a>
+        <%= t("action_delegator.questions.from", scope: "decidim") %> <span><%= total_published_questions %></span> <%= t("action_delegator.questions.callout_text_question", scope: "decidim") %>
+        <a class="text-primary" data-open="consultations-questions-modal"><%= t("action_delegator.questions.callout_link_text", scope: "decidim") %></a>
     </p>
 </div>
 
 <div class="reveal" id="consultations-questions-modal" data-reveal>
-  <h4>Els teus vots a "Panell de votacions"</h4>
+  <h4><%= t("action_delegator.questions.modal.modal_votes_title", scope: "decidim") %></h4>
   <p class="lead">
     <table class="table-list">
           <thead>
             <tr>
-              <th width="200">Pregunta</th>
-              <th width="150">Has respost?</th>
+              <th width="200"><%= t("action_delegator.questions.modal.modal_table_header_question", scope: "decidim") %></th>
+              <th width="150"><%= t("action_delegator.questions.modal.modal_table_header_answer", scope: "decidim") %></th>
             </tr>
           </thead>
           <tbody>
@@ -33,7 +33,7 @@
                         <p><%= translated_attribute(user_response.title) %></p>
                       <% end %>
                   <% else %>
-                    <%= link_to "No answer yet", decidim_consultations.question_path(question), class: "text-primary" %>
+                    <%= link_to t("action_delegator.questions.question_not_answered", scope: "decidim"), decidim_consultations.question_path(question), class: "text-primary" %>
                   <% end %>
                 </td>
               </tr>

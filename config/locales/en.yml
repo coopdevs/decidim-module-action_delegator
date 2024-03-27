@@ -378,6 +378,16 @@ en:
           not_active: The Corporate Governance Verifier cannot be granted at this
             time as there are no active voting spaces.
       questions:
+        callout_text: You have answered
+        from: from
+        callout_text_question: questions.
+        callout_link_text: Review the summary of your vote here
+        question_not_answered: Not answered yet
+        modal:
+          modal_votes_title: Your votes in "Voting panel"
+          modal_table_header_question: Question
+          modal_table_header_answer: Did you answer?
+
     admin:
       actions:
         invite: Send invitation
