@@ -16,7 +16,6 @@
   <h4>Els teus vots a "Panell de votacions"</h4>
   <p class="lead">
     <table class="table-list">
-      <% current_question.consultation.questions.each do |question| %>
           <thead>
             <tr>
               <th width="200">Pregunta</th>
@@ -24,16 +23,13 @@
             </tr>
           </thead>
           <tbody>
+            <% current_question.consultation.questions.each do |question| %>
               <tr>
                 <td>Content Goes Here</td>
                 <td>Content Goes Here</td>
               </tr>
-              <tr>
-                <td>Content Goes Here</td>
-                <td>Content Goes Here</td>
-              </tr>
+             <% end %>
           </tbody>
-      <% end %>
     </table>
   </p>
   <button class="close-button" data-close aria-label="Close modal" type="button">
