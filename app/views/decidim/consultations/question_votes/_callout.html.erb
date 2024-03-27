@@ -1,13 +1,13 @@
 <% total_published_questions = current_question.consultation.questions.published.count %>
 <% voted_questions = current_question.consultation.questions.published.joins(:votes).count %>
 
-<% alert_class = total_published_questions != voted_questions ? 'alert' : 'success' %>
+<% alert_class = total_published_questions != voted_questions ? "alert" : "success" %>
 
 <div class="callout <%= alert_class %>">
     <p>
-        Has repost 
+        Has repost
         <span><%= voted_questions %></span>
-        de <span><%= total_published_questions %></span> preguntes. 
+        de <span><%= total_published_questions %></span> preguntes.
         <a class="" data-open="exampleModal1">Revisa el resum de la teva votació aqui</a>
     </p>
 </div>
