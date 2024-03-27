@@ -25,8 +25,14 @@
           <tbody>
             <% current_question.consultation.questions.each do |question| %>
               <tr>
-                <td>Content Goes Here</td>
-                <td>Content Goes Here</td>
+                <td><%= translated_attribute question.title %></td>
+                <td>
+                  <% if question.votes.where(author: current_user).any? %>
+                      <%= question.votes.where(author: current_user).count %>
+                  <% else %>
+                  No answer yet
+              <% end %>
+                </td>
               </tr>
              <% end %>
           </tbody>
