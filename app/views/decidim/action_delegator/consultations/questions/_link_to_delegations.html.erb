@@ -1,11 +1,16 @@
 <% if Decidim::ActionDelegator::Delegation.granted_to?(current_user, question.consultation) %>
   <% if has_any_delegate_vote?(question) %>
     <div class="delegations-notice flex--cc" style="margin-top:1rem;">
-      <%= link_to t("action_delegator.delegations.has_delegations", scope: "decidim"), "#", id: "delegations-button", class: "card__button hollow button expanded" %>
+      <button id="delegations-button" class="card__button hollow button small expanded text-white">
+        <%= t("action_delegator.delegations.has_delegations", scope: "decidim") %>
+      </button>
     </div>
   <% else %>
-    <div class="delegations-notice flex--cc" style="margin-top:1rem;">
-      <%= link_to t("action_delegator.delegations.link", scope: "decidim"), "#", id: "delegations-button", class: "card__button button expanded warning" %>
-    </div>
+    <div class="delegations-notice flex--cc" style="margin-top:1rem; width: 100%;">
+      <button id="delegations-button" class="card__button button small expanded warning" style="color:white;">
+        <%= icon "chevron-right", class: "icon--small", role: "img", "aria-hidden": true %>
+        <%= t("action_delegator.delegations.link", scope: "decidim") %>
+      </button>
+     </div>
   <% end %>
 <% end %>
