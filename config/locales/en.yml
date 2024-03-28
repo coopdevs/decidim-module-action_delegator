@@ -345,6 +345,16 @@ en:
           ponderation_not_found: Ponderation type not found
           skip_import_info: Participant already exists %{with_mismatched_fields}
           with_mismatched_fields: " with mismatched fields: %{fields}"
+      questions:
+        callout_link_text: Review the summary of your vote here
+        callout_text: You have answered
+        callout_text_question: questions.
+        from: from
+        modal:
+          modal_table_header_answer: Did you answer?
+          modal_table_header_question: Question
+          modal_votes_title: Your votes in "Voting panel"
+        question_not_answered: Not answered yet
       sms_message: Your verification code is %{code}
       user_delegations:
         index:
