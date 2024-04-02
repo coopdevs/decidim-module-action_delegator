@@ -27,10 +27,11 @@ describe "Visit a consultation", type: :system do
     end
 
     it "renders callout" do
-      within ".callout.alert" do
-        click_link(I18n.t("decidim.action_delegator.questions.callout_link_text"), wait: 10)
-      end
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.callout_link_toxt"))
+      click_link(I18n.t("decidim.action_delegator.questions.callout_link_text"))
+      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_table_header_answer"))
+      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_table_header_question"))
+      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_votes_title"))
+      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.question_not_answered"))
     end
   end
 end
