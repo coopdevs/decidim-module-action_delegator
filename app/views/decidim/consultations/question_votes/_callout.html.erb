@@ -5,15 +5,13 @@
 
 <div class="callout <%= alert_class %>">
     <p>
-        <%= t("action_delegator.questions.callout_text", scope: "decidim") %>
-        <span><%= voted_questions %></span>
-        <%= t("action_delegator.questions.from", scope: "decidim") %> <span><%= total_published_questions %></span> <%= t("action_delegator.questions.callout_text_question", scope: "decidim") %>
+        <%= t("action_delegator.questions.callout_text", scope: "decidim", voted: voted_questions, total: total_published_questions) %>
         <a href="#" class="text-primary" data-open="consultations-questions-modal"><%= t("action_delegator.questions.callout_link_text", scope: "decidim") %></a>
     </p>
 </div>
 
 <div class="reveal" id="consultations-questions-modal" data-reveal>
-  <h4><%= t("action_delegator.questions.modal.modal_votes_title", scope: "decidim") %></h4>
+  <h4><%= t("action_delegator.questions.modal.modal_votes_title", scope: "decidim", title: translated_attribute(current_question.consultation.title)) %></h4>
   <p class="lead">
     <table class="table-list">
           <thead>

@@ -347,13 +347,11 @@ en:
           with_mismatched_fields: " with mismatched fields: %{fields}"
       questions:
         callout_link_text: Review the summary of your vote here
-        callout_text: You have answered
-        callout_text_question: questions.
-        from: from
+        callout_text: You have answered %{voted} from a total of %{total} questions.
         modal:
           modal_table_header_answer: Did you answer?
           modal_table_header_question: Question
-          modal_votes_title: Your votes in "Voting panel"
+          modal_votes_title: Your votes in "%{title}"
         question_not_answered: No, take me there
       sms_message: Your verification code is %{code}
       user_delegations:
