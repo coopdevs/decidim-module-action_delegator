@@ -354,7 +354,7 @@ en:
           modal_table_header_answer: Did you answer?
           modal_table_header_question: Question
           modal_votes_title: Your votes in "Voting panel"
-        question_not_answered: Not answered yet
+        question_not_answered: No, take me there
       sms_message: Your verification code is %{code}
       user_delegations:
         index:
