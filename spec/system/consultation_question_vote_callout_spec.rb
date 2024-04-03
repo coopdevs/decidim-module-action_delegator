@@ -21,17 +21,19 @@ describe "Visit a consultation", type: :system do
 
   context "when user logged in" do
     it "can visit the consultation" do
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.callout_link_text"))
+      expect(page).to have_content("Review the summary of your vote here")
       expect(page).to have_content(I18n.t("decidim.questions.vote_button.vote").upcase)
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.callout_text"))
+      expect(page).to have_content("You have answered 0 from a total of 1 questions")
     end
 
     it "renders callout" do
-      click_link(I18n.t("decidim.action_delegator.questions.callout_link_text"))
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_table_header_answer"))
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_table_header_question"))
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_votes_title"))
-      expect(page).to have_link(I18n.t("decidim.action_delegator.questions.question_not_answered"))
+      click_link("Review the summary of your vote here")
+      within "#consultations-questions-modal" do
+        expect(page).to have_content("Did you answer?")
+        expect(page).to have_content("Your votes in \"#{question.title["en"]}\"")
+        expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_votes_title"))
+        expect(page).to have_link("No, take me there", href: decidim_consultations.question_path(question))
+      end
     end
   end
 end
