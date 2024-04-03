@@ -23,7 +23,7 @@
           <tbody>
             <% current_question.consultation.questions.each do |question| %>
               <tr>
-                <td><%= translated_attribute(question.title).html_safe %></td>
+                <td><%= strip_tags(translated_attribute(question.title)).truncate(200, separator: /\s/) %></td>
                 <td>
                   <% if question.votes.where(author: current_user).any? %>
                     <% user_response = question.responses.joins(:votes).find_by(votes: { author: current_user }) %>
