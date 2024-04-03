@@ -31,7 +31,7 @@ describe "Visit a consultation", type: :system do
       expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_table_header_answer"))
       expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_table_header_question"))
       expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_votes_title"))
-      expect(page).to have_content(I18n.t("decidim.action_delegator.questions.question_not_answered"))
+      expect(page).to have_link(I18n.t("decidim.action_delegator.questions.question_not_answered"))
     end
   end
 end
