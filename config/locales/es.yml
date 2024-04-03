@@ -261,7 +261,7 @@ es:
           phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
       delegations:
         has_delegations: Voto delegado realizado
-        link: Tienes delegaciones concedidas
+        link: 👉Tienes delegaciones concedidas
       delegations_authorizer:
         email: Estamos utilizando el correo electrónico %{email} para verificar su identidad. Si cree que esto está mal, póngase en contacto con nosotros.
         no_setting: No se encontró ningún grupo de delegación para esta consulta. Póngase en contacto con el administrador para solucionarlo.
