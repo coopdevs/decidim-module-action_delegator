@@ -1,4 +1,5 @@
 import "src/decidim/action_delegator/questions.js";
+import "src/decidim/action_delegator/summary.js";
 
 require.context("../images", true)
 

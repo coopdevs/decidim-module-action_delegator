@@ -1,3 +1,7 @@
 <!-- insert_before 'h2' -->
 
-<%= render partial: "decidim/consultations/question_votes/callout" %>
+<% if user_signed_in? %>
+  <div id="user-answers-summary" data-summary-path="<%= decidim_action_delegator.questions_summary_path(current_question) %>">
+    <%= render partial: "decidim/consultations/question_votes/callout" %>
+  </div>
+<% end %>

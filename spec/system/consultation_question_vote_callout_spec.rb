@@ -7,6 +7,8 @@ describe "Visit a consultation", type: :system do
   let!(:consultation) { create :consultation, :published, organization: organization }
   let!(:question) { create :question, consultation: consultation }
   let!(:hihglighted_question) { create :question, consultation: consultation, decidim_scope_id: consultation.decidim_highlighted_scope_id }
+  let!(:response1) { create :response, question: question }
+  let!(:response2) { create :response, question: question }
   let(:user) { create :user, :confirmed, :admin, organization: organization }
   let(:enabled) { true }
 
@@ -14,26 +16,63 @@ describe "Visit a consultation", type: :system do
     allow(Decidim::ActionDelegator).to receive(:remove_duplicated_highlighted_questions).and_return(enabled)
 
     switch_to_host(organization.host)
-    login_as user, scope: :user
-    visit decidim_consultations.consultation_path(consultation)
-    click_link("Take part", match: :first)
   end
 
   context "when user logged in" do
+    before do
+      login_as user, scope: :user
+      visit decidim_consultations.consultation_path(consultation)
+      click_link("Take part", match: :first)
+    end
+
     it "can visit the consultation" do
       expect(page).to have_content("Review the summary of your vote here")
-      expect(page).to have_content(I18n.t("decidim.questions.vote_button.vote").upcase)
-      expect(page).to have_content("You have answered 0 from a total of 1 questions")
+      within "#vote_button" do
+        expect(page).to have_content("Vote")
+      end
+      expect(page).to have_content("You have answered 0 from a total of 2 questions")
     end
 
     it "renders callout" do
       click_link("Review the summary of your vote here")
-      within "#consultations-questions-modal" do
+      within "#consultations-questions-summary-modal" do
         expect(page).to have_content("Did you answer?")
-        expect(page).to have_content("Your votes in \"#{question.title["en"]}\"")
-        expect(page).to have_content(I18n.t("decidim.action_delegator.questions.modal.modal_votes_title"))
+        expect(page).to have_content("Your votes in \"#{consultation.title["en"]}\"")
         expect(page).to have_link("No, take me there", href: decidim_consultations.question_path(question))
+        expect(page).to have_link("No, take me there", href: decidim_consultations.question_path(hihglighted_question))
       end
+    end
+
+    it "changes the callout" do
+      expect(page).to have_content("You have answered 0 from a total of 2 questions")
+      click_link("Review the summary of your vote here")
+      within "#consultations-questions-summary-modal" do
+        expect(page).to have_link("No, take me there", href: decidim_consultations.question_path(question))
+        find(".close-button").click
+      end
+      click_link("Vote")
+      click_button response1.body["en"]
+      click_button "Confirm"
+      expect(page).to have_content("You have answered 1 from a total of 2 questions")
+      click_link("Review the summary of your vote here")
+      within "#consultations-questions-summary-modal" do
+        expect(page).to have_link("Yes", href: decidim_consultations.question_path(question))
+      end
+    end
+  end
+
+  context "when user is not logged in" do
+    before do
+      visit decidim_consultations.consultation_path(consultation)
+      click_link("Take part", match: :first)
+    end
+
+    it "can visit the consultation" do
+      expect(page).not_to have_content("Review the summary of your vote here")
+      within "#vote_button" do
+        expect(page).to have_content("Vote")
+      end
+      expect(page).not_to have_content("You have answered 0 from a total of 2 questions")
     end
   end
 end
