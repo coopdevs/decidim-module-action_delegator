@@ -18,22 +18,9 @@ describe "Visit a consultation", type: :system do
     switch_to_host(organization.host)
   end
 
-  context "when user logged in" do
-    before do
-      login_as user, scope: :user
-      visit decidim_consultations.consultation_path(consultation)
-      click_link("Take part", match: :first)
-    end
-
-    it "can visit the consultation" do
-      expect(page).to have_content("Review the summary of your vote here")
-      within "#vote_button" do
-        expect(page).to have_content("Vote")
-      end
-      expect(page).to have_content("You have answered 0 from a total of 2 questions")
-    end
-
+  shared_examples "logged user callout" do
     it "renders callout" do
+      expect(page).to have_content("You have answered 0 from a total of 2 questions")
       click_link("Review the summary of your vote here")
       within "#consultations-questions-summary-modal" do
         expect(page).to have_content("Did you answer?")
@@ -62,18 +49,57 @@ describe "Visit a consultation", type: :system do
     end
   end
 
+  context "when user logged in" do
+    before do
+      login_as user, scope: :user
+      visit decidim_consultations.consultation_path(consultation)
+    end
+
+    context "when visiting a consultation" do
+      it_behaves_like "logged user callout"
+    end
+
+    context "when visiting a question" do
+      before do
+        click_link("Take part", match: :first)
+      end
+
+      it "can view the callout" do
+        expect(page).to have_content("Review the summary of your vote here")
+        within "#vote_button" do
+          expect(page).to have_content("Vote")
+        end
+        expect(page).to have_content("You have answered 0 from a total of 2 questions")
+      end
+
+      it_behaves_like "logged user callout"
+    end
+  end
+
   context "when user is not logged in" do
     before do
       visit decidim_consultations.consultation_path(consultation)
-      click_link("Take part", match: :first)
     end
 
-    it "can visit the consultation" do
-      expect(page).not_to have_content("Review the summary of your vote here")
-      within "#vote_button" do
-        expect(page).to have_content("Vote")
+    context "when visiting a consultation" do
+      it "can visit the consultation" do
+        expect(page).not_to have_content("Review the summary of your vote here")
+        expect(page).not_to have_content("You have answered 0 from a total of 2 questions")
       end
-      expect(page).not_to have_content("You have answered 0 from a total of 2 questions")
+    end
+
+    context "when visiting a question" do
+      before do
+        click_link("Take part", match: :first)
+      end
+
+      it "can visit the consultation" do
+        expect(page).not_to have_content("Review the summary of your vote here")
+        within "#vote_button" do
+          expect(page).to have_content("Vote")
+        end
+        expect(page).not_to have_content("You have answered 0 from a total of 2 questions")
+      end
     end
   end
 end

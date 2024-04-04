@@ -4,10 +4,10 @@ module Decidim
   module ActionDelegator
     # This controller handles user profile actions for this module
     class QuestionsSummaryController < ActionDelegator::ApplicationController
-      include Decidim::Consultations::NeedsQuestion
+      include Decidim::Consultations::NeedsConsultation
 
       def show
-        render partial: "decidim/consultations/question_votes/callout"
+        render partial: "decidim/consultations/question_votes/callout", locals: { consultation: current_consultation }
       end
     end
   end

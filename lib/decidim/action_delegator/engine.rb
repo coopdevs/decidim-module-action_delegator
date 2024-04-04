@@ -19,11 +19,7 @@ module Decidim
           resources :user_delegations, controller: :user_delegations, only: [:index]
           root to: "user_delegations#index"
         end
-        # scope "/questions/:question_slug/" do
-        #   get :summary, to: "questions_summary#index", as: :question_summary
-        # end
         resources :questions_summary, param: :slug, only: [:show]
-        # get "/questions_summary/:slug", to: "decidim/action_delegator/question_summaries#index", as: "question_callout_summary"
       end
 
       config.to_prepare do
