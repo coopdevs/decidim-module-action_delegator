@@ -299,7 +299,7 @@ ca:
             Si us plau, poseu-vos-hi en contacte si no és correcte.
       delegations:
         has_delegations: Vot delegat realitzat
-        link: "\U0001F449Tens delegacions disponibles"
+        link: "\U0001F449 Tens delegacions disponibles"
       delegations_authorizer:
         email: Estem utilitzant el correu electrònic %{email} per verificar la vostra
           identitat. Si creieu que això està malament, poseu-vos en contacte amb nosaltres.

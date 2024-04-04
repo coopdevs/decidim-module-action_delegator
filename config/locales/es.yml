@@ -302,7 +302,7 @@ es:
             Por favor, contacta si no es correcto.
       delegations:
         has_delegations: Voto delegado realizado
-        link: "\U0001F449Tienes delegaciones concedidas"
+        link: "\U0001F449 Tienes delegaciones concedidas"
       delegations_authorizer:
         email: Estamos utilizando el correo electrónico %{email} para verificar su
           identidad. Si cree que esto está mal, póngase en contacto con nosotros.
