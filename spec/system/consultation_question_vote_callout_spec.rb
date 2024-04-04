@@ -47,16 +47,17 @@ describe "Visit a consultation", type: :system do
       expect(page).to have_content("You have answered 0 from a total of 2 questions")
       click_link("Review the summary of your vote here")
       within "#consultations-questions-summary-modal" do
-        expect(page).to have_link("No, take me there", href: decidim_consultations.question_path(question))
-        find(".close-button").click
+        expect(page).not_to have_content("Yes")
+        click_link("No, take me there", href: decidim_consultations.question_path(question))
       end
       click_link("Vote")
-      click_button response1.body["en"]
+      click_button response1.title["en"]
       click_button "Confirm"
       expect(page).to have_content("You have answered 1 from a total of 2 questions")
       click_link("Review the summary of your vote here")
       within "#consultations-questions-summary-modal" do
-        expect(page).to have_link("Yes", href: decidim_consultations.question_path(question))
+        expect(page).to have_content("Yes")
+        expect(page).to have_link("No, take me there", href: decidim_consultations.question_path(hihglighted_question))
       end
     end
   end
