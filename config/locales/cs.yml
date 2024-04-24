@@ -138,7 +138,7 @@ cs:
             send_invitation_link: Klikněte zde pro odeslání pozvánky
             title: Seznam obyvatel
             user: Jméno
-            voted: Has voted?
+            voted: Hlasoval?
           new:
             save: Vytvořit
             title: Nový účastník
@@ -146,13 +146,13 @@ cs:
             confirm: Are you sure you want to remove the census? This operation cannot be undone
             success: "%{participants_count} entries were successfully deleted from the census"
           update:
-            error: There was a problem updating the participants
-            success: Participants saved successfully
+            error: Při aktualizaci účastníků se vyskytl problém
+            success: Účastníci úspěšně uloženi
         permissions:
           sync:
-            started: Participans synchronization has started. Please wait a few minutes and refresh this page.
+            started: Synchronizace účastníků byla zahájena. Počkejte prosím několik minut a obnovte tuto stránku.
           update:
-            error: There was a problem updating the permissions
+            error: Při aktualizaci oprávnění se vyskytl problém
             success: Oprávnění byla úspěšně aktualizována
         ponderations:
           create:
@@ -165,7 +165,7 @@ cs:
             save: Uložit
             title: Edit ponderation type
           form:
-            name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
+            name_help: Typ člena, např. "člen", "přidružený", "podporovatel". Musí být unikátní.
             name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
             weight_help: Váha hlasů, např. "1", "2", "1.5". Toto číslo bude použito k posouzení hlasů pro účastníky tohoto typu ponderace.
           index:
@@ -266,7 +266,7 @@ cs:
         email: We are using the email %{email} to verify your identity. If you think this is wrong, please contact us.
         no_setting: No delegation group found for this consultation. Please contact the admin to fix it.
         not_in_census: You are not in the census
-        phone: We are using the phone %{phone} to verify your identity. If you think this is wrong, please contact us.
+        phone: K ověření Vaší identity používáme telefon %{phone}. Pokud si myslíte, že je to špatně, kontaktujte nás prosím.
       delegations_modal:
         callout: Pamatujte, že hlasujete jménem
         contextual_help: 'Hlasování vám bylo uděleno od:'
