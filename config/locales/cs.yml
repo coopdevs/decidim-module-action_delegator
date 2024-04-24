@@ -113,8 +113,8 @@ cs:
           participants: Účastníci
         participants:
           create:
-            error: There was a problem creating the participants
-            success: Participants created successfully
+            error: Při vytváření účastníků se vyskytl problém
+            success: Účastníci úspěšně vytvořeni
           destroy:
             error: Při odstraňování tohoto uživatele došlo k chybě
             success: Uživatel úspěšně zničen
@@ -126,12 +126,12 @@ cs:
               csv_import: Import CSV
               new_participant: Nový účastník
               remove_census: Remove census
-            all_users_registered_html: All users are registered into the platform
+            all_users_registered_html: Všichni uživatelé jsou zaregistrováni do platformy
             created_at: Vytvořeno v
             email: E-mail
             last_login: Poslední přihlášení
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
-            missing_registered: There are %{missing_registered} that are not registered into the platform
+            missing_emails: Metoda autorizace nevyžaduje e-mail. Z tohoto důvodu se musí %{count} zaregistrovat na platformě
+            missing_registered: Existuje %{missing_registered}, kteří nejsou zaregistrovány na platformě
             never_logged: Nikdy nepřihlášený
             participant: účastník
             phone: Telefon
