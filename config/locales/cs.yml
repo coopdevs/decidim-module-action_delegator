@@ -167,7 +167,7 @@ cs:
           form:
             name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
             name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
-            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the participants in this ponderation type.
+            weight_help: Váha hlasů, např. "1", "2", "1.5". Toto číslo bude použito k posouzení hlasů pro účastníky tohoto typu ponderace.
           index:
             actions:
               new_ponderation: New ponderation
@@ -234,7 +234,7 @@ cs:
           setting_checks:
             all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
             all_users_registered_html: All participants are registered into the platform.
-            click_to_fix: Click here to automatically fix this
+            click_to_fix: Klikněte zde pro automatické opravení
             consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
             consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
@@ -299,7 +299,7 @@ cs:
             weight: váha
           phone_exists: Uživatel s tímto telefonem již existuje
           ponderation_not_found: Ponderation type not found
-          skip_import_info: Participant already exists %{with_mismatched_fields}
+          skip_import_info: Účastník již existuje %{with_mismatched_fields}
           with_mismatched_fields: " s neodpovídajícími polem: %{fields}"
       sms_message: Váš ověřovací kód je %{code}
       user_delegations:
