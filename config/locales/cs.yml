@@ -234,25 +234,25 @@ cs:
             title: Nová konfigurace
           setting_checks:
             all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
-            all_users_registered_html: All participants are registered into the platform.
+            all_users_registered_html: Všichni účastníci jsou zaregistrováni na platformě.
             click_to_fix: Klikněte zde pro automatické opravení
             consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
             consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
-            missing_registered_users_html: There are %{count} participants that are not registered into the platform.
-            no_delegations_html: There are no vote delegations.
+            missing_emails: Metoda autorizace nevyžaduje e-mail. Z tohoto důvodu se musí %{count} zaregistrovat na platformě
+            missing_registered_users_html: Na platformě jsou %{count} účastníci, kteří nejsou zaregistrováni.
+            no_delegations_html: Neexistují žádné delegace pro hlasování.
             no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
             no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
             participant: účastník
             user: uživatel
-            users_need_sync_html: The participants list needs to be synchronized. <b>Consultation results might be wrong!</b>
+            users_need_sync_html: Seznam účastníků musí být synchronizován. <b>Výsledky konzultací mohou být chybné!</b>
           state:
             closed: Uzavřeno
             ongoing: Probíhá
             pending: Nevyřízeno
           update:
-            error: There was a problem updating the settings
+            error: Při aktualizaci nastavení se vyskytl problém
             success: Nastavení bylo úspěšně uloženo
         weighted_results:
           title: Results by answer summing membership weights
