@@ -262,7 +262,7 @@ es:
           phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
       delegations:
         has_delegations: Voto delegado realizado
-        link: Tienes delegaciones concedidas
+        link: "\U0001F449 You have delegations granted"
       delegations_authorizer:
         email: We are using the email %{email} to verify your identity. If you think this is wrong, please contact us.
         no_setting: No delegation group found for this consultation. Please contact the admin to fix it.
@@ -302,6 +302,14 @@ es:
           ponderation_not_found: Ponderation type not found
           skip_import_info: Participant already exists %{with_mismatched_fields}
           with_mismatched_fields: " with mismatched fields: %{fields}"
+      questions:
+        callout_link_text: Review the summary of your vote here
+        callout_text: You have answered %{voted} from a total of %{total} questions.
+        modal:
+          modal_table_header_answer: Did you answer?
+          modal_table_header_question: Question
+          modal_votes_title: Your votes in "%{title}"
+        question_not_answered: No, take me there
       sms_message: Su código de verificación es %{code}
       user_delegations:
         index:
