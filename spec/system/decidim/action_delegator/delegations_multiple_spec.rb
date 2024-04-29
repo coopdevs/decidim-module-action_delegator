@@ -50,7 +50,7 @@ describe "Delegation vote", type: :system do
             end
 
             it "requires verification first" do
-              click_link(id: "delegations-button")
+              click_button(id: "delegations-button")
               within "#delegations-modal" do
                 expect(page).to have_content(t("decidim.questions.vote_button.verification_required").upcase)
               end
@@ -64,7 +64,7 @@ describe "Delegation vote", type: :system do
             end
 
             it "lets the user vote on behalf of another member" do
-              click_link(id: "delegations-button")
+              click_button(id: "delegations-button")
               within "#delegations-modal" do
                 click_link(I18n.t("decidim.questions.vote_button.vote"))
               end
@@ -75,7 +75,7 @@ describe "Delegation vote", type: :system do
               check "vote_id_#{response2.id}"
               click_button(I18n.t("decidim.questions.vote_button.vote"))
 
-              click_link(id: "delegations-button")
+              click_button(id: "delegations-button")
               within "#delegations-modal" do
                 expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
               end
@@ -90,7 +90,7 @@ describe "Delegation vote", type: :system do
           end
 
           it "lets the user vote on behalf of another member" do
-            click_link(id: "delegations-button")
+            click_button(id: "delegations-button")
             within "#delegations-modal" do
               click_link(I18n.t("decidim.questions.vote_button.vote"))
             end
@@ -101,7 +101,7 @@ describe "Delegation vote", type: :system do
             check "vote_id_#{response2.id}"
             click_button(I18n.t("decidim.questions.vote_button.vote"))
 
-            click_link(I18n.t("decidim.action_delegator.delegations.has_delegations"))
+            click_button(I18n.t("decidim.action_delegator.delegations.has_delegations"))
             within "#delegations-modal" do
               expect(page).to have_content(t("decidim.questions.vote_button.already_voted"))
             end
@@ -121,12 +121,12 @@ describe "Delegation vote", type: :system do
         end
 
         it "lets the user unvote on behalf of another member" do
-          click_link(id: "delegations-button")
+          click_button(id: "delegations-button")
           within "#delegations-modal" do
             click_button(class: "delegation_unvote_button")
           end
 
-          click_link(I18n.t("decidim.action_delegator.delegations.link"))
+          click_button(I18n.t("decidim.action_delegator.delegations.link"))
           expect(page).to have_link(I18n.t("decidim.questions.vote_button.vote"))
         end
       end

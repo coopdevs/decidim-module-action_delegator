@@ -16,9 +16,10 @@ module Decidim
       routes do
         # Add engine routes here
         authenticate(:user) do
-          resources :user_delegations, controller: :user_delegations
+          resources :user_delegations, controller: :user_delegations, only: [:index]
           root to: "user_delegations#index"
         end
+        resources :questions_summary, param: :slug, only: [:show]
       end
 
       config.to_prepare do
