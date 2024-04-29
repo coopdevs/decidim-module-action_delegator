@@ -1,7 +1,7 @@
 <% total_published_questions = consultation.questions.published.count %>
 <% voted_questions = consultation.questions.published.joins(:votes).where(votes: { author: current_user }).distinct.count(:id) %>
 
-<% alert_class = total_published_questions != voted_questions ? "alert" : "success" %>
+<% alert_class = total_published_questions != voted_questions ? "warning" : "success" %>
 
 <div class="callout <%= alert_class %>">
     <p>
