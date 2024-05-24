@@ -25,6 +25,8 @@ module Decidim
       validates :email, uniqueness: { scope: :setting }, if: -> { email.present? }
       validates :phone, uniqueness: { scope: :setting }, if: -> { phone.present? }
 
+      validate :user_belongs_to_organization
+
       # sets the decidim user if found
       before_save :set_decidim_user
 
@@ -36,7 +38,7 @@ module Decidim
       end
 
       def user_from_metadata
-        @user_from_metadata ||= if setting.email_required?
+        @user_from_metadata ||= if setting&.email_required?
                                   Decidim::User.find_by(email: email, organization: setting.organization)
                                 else
                                   Decidim::Authorization.find_by(unique_id: uniq_ids)&.user
@@ -95,6 +97,13 @@ module Decidim
 
       def set_decidim_user
         self.decidim_user = user_from_metadata if decidim_user.blank?
+      end
+
+      def user_belongs_to_organization
+        return unless decidim_user && setting && setting.consultation
+        return if decidim_user.organization == organization
+
+        errors.add(:decidim_user, :invalid)
       end
     end
   end

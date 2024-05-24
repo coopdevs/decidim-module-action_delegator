@@ -19,6 +19,12 @@ module Decidim
       it { is_expected.to be_valid }
       it { is_expected.to belong_to(:setting) }
 
+      context "when user belongs to a different organization" do
+        let(:decidim_user) { create(:user) }
+
+        it { is_expected.not_to be_valid }
+      end
+
       it "belong_to a ponderation" do
         expect(subject.ponderation).to eq(ponderation)
       end
