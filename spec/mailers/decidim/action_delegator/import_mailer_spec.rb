@@ -8,7 +8,7 @@ module Decidim
       let(:organization) { create :organization }
       let(:current_user) { create :user, organization: organization }
       let(:current_setting) { create(:setting, consultation: consultation) }
-      let(:consultation) { create(:consultation) }
+      let(:consultation) { create(:consultation, organization: organization) }
 
       describe "#import participants" do
         let(:valid_csv_file) { File.open("spec/fixtures/valid_participants.csv") }
@@ -77,8 +77,8 @@ module Decidim
         let(:invalid_csv_file) { File.open("spec/fixtures/invalid_delegations.csv") }
         let!(:granter_email) { "granter@example.org" }
         let!(:grantee_email) { "grantee@example.org" }
-        let!(:granter) { create(:user, email: granter_email) }
-        let!(:grantee) { create(:user, email: grantee_email) }
+        let!(:granter) { create(:user, email: granter_email, organization: organization) }
+        let!(:grantee) { create(:user, email: grantee_email, organization: organization) }
 
         let(:params) do
           {

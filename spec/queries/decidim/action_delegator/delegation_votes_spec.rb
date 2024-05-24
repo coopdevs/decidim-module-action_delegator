@@ -5,17 +5,17 @@ require "spec_helper"
 module Decidim::ActionDelegator
   describe DelegationVotes do
     let(:organization) { create(:organization) }
-    let(:other_organization) { create(:organization) }
-
     let(:consultation) { create(:consultation, organization: organization) }
-
+    let(:other_consultation) { create(:consultation, organization: organization) }
     let(:question) { create(:question, consultation: consultation) }
     let(:other_question) { create(:question, consultation: consultation) }
 
+    let(:setting) { create(:setting, consultation: consultation) }
+    let(:other_setting) { create(:setting, consultation: other_consultation) }
     let(:granter) { create(:user, organization: organization) }
 
-    let!(:delegation) { create(:delegation, granter: granter) }
-    let!(:other_delegation) { create(:delegation, granter: granter) }
+    let!(:delegation) { create(:delegation, setting: setting, granter: granter) }
+    let!(:other_delegation) { create(:delegation, setting: other_setting, granter: granter) }
 
     before do
       create(:vote, author: granter, question: question)

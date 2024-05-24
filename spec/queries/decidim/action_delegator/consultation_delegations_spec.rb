@@ -6,16 +6,18 @@ describe Decidim::ActionDelegator::ConsultationDelegations do
   subject { described_class.new(consultation) }
 
   let(:consultation) { create(:consultation) }
-  let(:user) { create(:user) }
+  let(:other_consultation) { create(:consultation, organization: consultation.organization) }
+  let(:user) { create(:user, organization: consultation.organization) }
   let(:setting) { create(:setting, consultation: consultation) }
+  let(:other_setting) { create(:setting, consultation: other_consultation) }
 
-  let!(:consultation_delegation) { create(:delegation, setting: setting, grantee: user) }
-  let!(:organization_delegation) { create(:delegation, grantee: user) }
+  let!(:delegation) { create(:delegation, setting: setting, grantee: user) }
+  let!(:other_delegation) { create(:delegation, setting: other_setting, grantee: user) }
   let!(:other_user_delegation) { create(:delegation, setting: setting) }
 
   describe "#query" do
     it "returns delegations of the specified consultation only" do
-      expect(subject.query).to match_array([consultation_delegation, other_user_delegation])
+      expect(subject.query).to match_array([delegation, other_user_delegation])
     end
   end
 end
