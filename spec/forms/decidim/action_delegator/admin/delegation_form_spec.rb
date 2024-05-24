@@ -3,7 +3,7 @@
 require "spec_helper"
 
 describe Decidim::ActionDelegator::Admin::DelegationForm do
-  subject { described_class.from_params(attributes) }
+  subject { described_class.from_params(attributes).with_context(current_organization: organization) }
 
   let(:organization) { create(:organization) }
   let(:granter) { create(:user, organization: organization) }
@@ -23,6 +23,18 @@ describe Decidim::ActionDelegator::Admin::DelegationForm do
 
   context "when there's granter and grantee" do
     it { is_expected.to be_valid }
+
+    context "when granter belongs to another organization" do
+      let(:granter) { create(:user) }
+
+      it { is_expected.not_to be_valid }
+    end
+
+    context "when grantee belongs to another organization" do
+      let(:grantee) { create(:user) }
+
+      it { is_expected.not_to be_valid }
+    end
   end
 
   context "when granter is missing" do

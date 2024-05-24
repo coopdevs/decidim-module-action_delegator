@@ -69,4 +69,12 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
       expect { subject.call }.to broadcast(:error)
     end
   end
+
+  context "when granter is not in the same organization" do
+    let(:granter) { create(:user) }
+
+    it "broadcasts :error" do
+      expect { subject.call }.to broadcast(:error)
+    end
+  end
 end

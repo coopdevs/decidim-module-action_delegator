@@ -11,6 +11,15 @@ module Decidim
       it { is_expected.to be_valid }
       it { is_expected.not_to be_grantee_voted }
 
+      context "when grantee is the same as the granter" do
+        let(:setting) { create(:setting) }
+        let(:grantee) { create(:user, organization: setting.organization) }
+
+        subject { build(:delegation, setting: setting, grantee: grantee, granter: grantee) }
+
+        it { is_expected.not_to be_valid }
+      end
+
       context "when users from different organizations" do
         let(:grantee) { create(:user) }
 

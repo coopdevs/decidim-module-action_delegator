@@ -18,14 +18,18 @@ module Decidim
         validate :grantee_exists
 
         def granter
-          User.find_by(id: granter_id) || User.find_by(email: granter_email)
+          User.find_by(id: granter_id, organization: current_organization) || User.find_by(email: granter_email, organization: current_organization)
         end
 
         def grantee
-          User.find_by(id: grantee_id) || User.find_by(email: grantee_email)
+          User.find_by(id: grantee_id, organization: current_organization) || User.find_by(email: grantee_email, organization: current_organization)
         end
 
         private
+
+        def current_organization
+          context&.current_organization
+        end
 
         def granter_exists
           return if granter.present?
