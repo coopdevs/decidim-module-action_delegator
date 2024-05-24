@@ -7,6 +7,7 @@ describe Decidim::ActionDelegator::SettingDelegations do
 
   let(:organization) { create(:organization) }
   let(:consultation) { create(:consultation, organization: organization) }
+  let(:other_consultation) { create(:consultation, organization: organization) }
   let(:granter) { create(:user, organization: organization) }
   let(:grantee) { create(:user, organization: organization) }
   let(:other_user) { create(:user, organization: organization) }
@@ -14,7 +15,7 @@ describe Decidim::ActionDelegator::SettingDelegations do
   let!(:delegation) { create(:delegation, setting: setting, granter: granter, grantee: grantee) }
   let!(:other_delegation) { create(:delegation, setting: other_setting, granter: granter, grantee: other_user) }
   let!(:setting) { create(:setting, consultation: consultation) }
-  let!(:other_setting) { create(:setting) }
+  let!(:other_setting) { create(:setting, consultation: other_consultation) }
 
   describe "#query" do
     it "returns the delegations of the specified setting only" do

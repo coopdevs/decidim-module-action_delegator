@@ -25,7 +25,7 @@ module Decidim
         def create
           enforce_permission_to :create, :delegation
 
-          @form = DelegationForm.from_params(params)
+          @form = form(DelegationForm).from_params(params)
 
           CreateDelegation.call(@form, current_user, current_setting) do
             on(:ok) do

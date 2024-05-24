@@ -78,7 +78,23 @@ module Decidim
         context "when the setting belongs to another organization" do
           let(:setting) { create(:setting) }
 
-          it "does not destroy the delegation" do
+          it "does not create the delegation" do
+            expect { post :create, params: params }.not_to change(Delegation, :count)
+          end
+        end
+
+        context "when the granter belong to another organization" do
+          let(:granter) { create(:user) }
+
+          it "does not create the delegation" do
+            expect { post :create, params: params }.not_to change(Delegation, :count)
+          end
+        end
+
+        context "when the grantee belong to another organization" do
+          let(:grantee) { create(:user) }
+
+          it "does not create the delegation" do
             expect { post :create, params: params }.not_to change(Delegation, :count)
           end
         end

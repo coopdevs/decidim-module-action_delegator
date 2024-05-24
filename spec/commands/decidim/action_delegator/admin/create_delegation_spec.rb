@@ -6,7 +6,8 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
   subject { described_class.new(form, current_user, current_setting) }
 
   let(:current_user) { create(:user, organization: organization) }
-  let(:current_setting) { create(:setting, max_grants: 1) }
+  let(:consultation) { create(:consultation, organization: organization) }
+  let(:current_setting) { create(:setting, max_grants: 1, consultation: consultation) }
   let(:organization) { create(:organization) }
   let(:granter) { create(:user, organization: organization) }
   let(:grantee) { create(:user, organization: organization) }
@@ -64,6 +65,14 @@ describe Decidim::ActionDelegator::Admin::CreateDelegation do
 
   context "when form is invalid" do
     let(:invalid) { true }
+
+    it "broadcasts :error" do
+      expect { subject.call }.to broadcast(:error)
+    end
+  end
+
+  context "when granter is not in the same organization" do
+    let(:granter) { create(:user) }
 
     it "broadcasts :error" do
       expect { subject.call }.to broadcast(:error)

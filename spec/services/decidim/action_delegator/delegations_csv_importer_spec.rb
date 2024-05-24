@@ -21,8 +21,8 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
 
   let!(:granter_email) { "granter@example.org" }
   let!(:grantee_email) { "grantee@example.org" }
-  let!(:granter) { create(:user, email: granter_email) }
-  let!(:grantee) { create(:user, email: grantee_email) }
+  let!(:granter) { create(:user, email: granter_email, organization: organization) }
+  let!(:grantee) { create(:user, email: grantee_email, organization: organization) }
 
   describe "#import!" do
     context "when the rows in the csv file are valid" do
@@ -64,7 +64,7 @@ describe Decidim::ActionDelegator::DelegationsCsvImporter do
     context "when delegation already exists" do
       subject { described_class.new(valid_csv_file, current_user, current_setting) }
 
-      let!(:delegation) { create(:delegation, granter_id: granter.id, grantee_id: grantee.id) }
+      let!(:delegation) { create(:delegation, setting: current_setting, granter_id: granter.id, grantee_id: grantee.id) }
 
       it "does not create a new delegation" do
         expect do
