@@ -23,7 +23,7 @@ module Decidim
           grantee_email: row["to"].to_s.strip.downcase
         }
 
-        @form = form(Decidim::ActionDelegator::Admin::DelegationForm).from_params(params, setting: @current_setting)
+        @form = form(Decidim::ActionDelegator::Admin::DelegationForm).from_params(params, setting: @current_setting, current_organization: @current_setting.organization)
 
         {
           granter_id: @form.granter&.id,
@@ -31,8 +31,8 @@ module Decidim
         }
       end
 
-      def delegation_exists?(params)
-        @delegation = Delegation.find_by(granter_id: params[:granter_id], grantee_id: params[:grantee_id])
+      def delegation_exists?(_params)
+        @delegation = Delegation.find_by(granter: @form.granter, grantee: @form.grantee)
 
         @delegation.present?
       end

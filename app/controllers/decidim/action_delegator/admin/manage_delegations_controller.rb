@@ -22,15 +22,14 @@ module Decidim
           enforce_permission_to :create, :delegation
 
           @csv_file = params[:csv_file]
-          redirect_to seting_manage_delegations_path && return if @csv_file.blank?
+          redirect_to(new_setting_manage_delegation_path) && return if @csv_file.blank?
 
-          importer_type = "DelegationsCsvImporter"
           csv_file = @csv_file.read.force_encoding("utf-8").encode("utf-8")
-          @import_summary = Decidim::ActionDelegator::Admin::ImportCsvJob.perform_now(importer_type, csv_file, current_user, current_setting)
+          @import_summary = Decidim::ActionDelegator::Admin::ImportCsvJob.perform_now("DelegationsCsvImporter", csv_file, current_user, current_setting)
 
           flash[:notice] = t(".success")
 
-          redirect_to decidim_admin_action_delegator.setting_delegations_path(current_setting)
+          redirect_to setting_delegations_path(current_setting)
         end
 
         private
