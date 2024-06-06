@@ -31,7 +31,7 @@ ca:
         consultations:
           results:
             ongoing_consultation: Aquesta consulta encara estan en curs. Tingueu en compte que els resultats poden canviar a mesura que més gent voti.
-            title: Resultats per resposta, tipus de soci i pes
+            title: Resultats per resposta, tipus d'associat i pes
           weighted_results:
             title: Resultats per resposta sumant ponderació de vot
         delegations:
@@ -51,265 +51,265 @@ ca:
           index:
             actions:
               csv_import: Importa un arxiu CSV
-              new_delegation: Nova delegació
+              new_delegation: Nou participant
             consultation: Consulta
             created_at: Creat el
             delete: Eliminar
             description_html: Aquestes són les delegacions actuals per a aquesta consulta
             grantee: Receptora (a)
-            grantee_voted: Grantee has voted in behalf of granter?
-            granter: Granter (from)
-            granter_voted: Granter has voted?
-            title: User vote delegations
+            grantee_voted: S'ha utilitzat la delegació?
+            granter: Atorgant
+            granter_voted: Ha votat l'atorgant?
+            title: Participants
           new:
-            grantee: Grantee (to)
-            granter: Granter (from)
+            grantee: Receptora (a)
+            granter: Atorgant
             save: Crear
             select_member: Selecciona un membre
             title: Nova delegació
         invite_participants:
           invite_all_users:
-            error: There was an error inviting the users
-            success: Users invited successfully
+            error: S'ha produït un error al convidar aquestes participants
+            success: Participants convidades amb èxit
           invite_user:
-            error: There was an error inviting the user
-            success: User invited successfully
+            error: S'ha produït un error al convidar aquesta participant
+            success: Participant convidada amb èxit
           permissions:
-            not_allowed: You are not allowed for this action
+            not_allowed: No tens permís per fer aquesta acció
           resend_invitation:
-            error: There was an error resending the invitation
-            success: Invitation resent successfully
+            error: Hi ha hagut un error reenviant la invitació
+            success: Invitació reenviada amb èxit
         manage_delegations:
           create:
-            error: There was a problem importing the participants
-            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+            error: S'ha produït un error en importar les participants
+            success: El procés d'importació ha començat, espereu uns minuts i actualitzeu la pàgina per veure la llista de participants. Els resultats d'importació s'enviaran per correu electrònic.
           new:
-            import: Import
-            required_fields: 'Required fields: granter email, grantee email'
-            title: Import delegations
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+            import: Importa
+            required_fields: 'Camps obligatoris: Email de l''atorgant, email de la receptora'
+            title: Importa les delegacions
+            title_example: 'Exemple:'
+            upload_instructions: Ha de ser un fitxer en format CSV amb una capçalera.
         manage_participants:
           create:
-            error: There was a problem importing the participants
-            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+            error: S'ha produït un error en importar les participants
+            success: El procés d'importació ha començat, espereu uns minuts i actualitzeu la pàgina per veure la llista de participants. Els resultats d'importació s'enviaran per correu electrònic.
           new:
             authorization_method:
-              both: email and phone number
-              email: email
-              phone: phone number
-            describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
-            import: Import
-            required_fields: 'Required fields: %{authorization_method}'
-            title: Import participants
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+              both: correu electrònic i número de telèfon mòbil
+              email: correu electrònic
+              phone: número de telèfon
+            describe: 'Tingueu en compte que també és possible importar pesos utilitzant el nom de la taula de ponderació en comptes del número de pes, per exemple:'
+            import: Importar
+            required_fields: 'Camps obligatoris: %{authorization_method}'
+            title: Importar participants
+            title_example: 'Exemple:'
+            upload_instructions: Ha de ser un fitxer en format CSV amb una capçalera.
         menu:
           consultations_submenu:
             by_answer: Per resposta
             by_type_and_weight: Per tipus i ponderació
             sum_of_weights: Per suma ponderada
-          delegations: Corporate Governance
+          delegations: Governança societària
           participants: Participants
         participants:
           create:
-            error: There was a problem creating the participants
-            success: Participants created successfully
+            error: S'ha produït un error en crear la participant
+            success: Participant creada correctament
           destroy:
-            error: There was a problem removing this participant
-            success: Participant successfully destroyed
+            error: Hi ha hagut un problema en eliminar aquesta participant
+            success: Participant eliminada correctament
           edit:
-            save: Save
-            title: Edit participant
+            save: Desa
+            title: Edita la participant
           index:
             actions:
-              csv_import: Import CSV
-              new_participant: New participant
-              remove_census: Remove census
-            all_users_registered_html: All users are registered into the platform
-            created_at: Created at
-            email: Email
-            last_login: Last login
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
-            missing_registered: There are %{missing_registered} that are not registered into the platform
-            never_logged: Never logged yet
+              csv_import: Importa CSV
+              new_participant: Nova participant
+              remove_census: Elimina el cens
+            all_users_registered_html: Totes les participants estan registrades a la plataforma
+            created_at: Creat el
+            email: Correu electrònic
+            last_login: Darrer inici de sessió
+            missing_emails: El mètode d'autorització no requereix un correu electrònic. Per això, %{count} s'han de registrar elles mateixes a la plataforma
+            missing_registered: Hi ha %{missing_registered} participants que no estan registrades a la plataforma
+            never_logged: Mai ha iniciat sessió
             participant: participant
-            phone: Phone
-            ponderation: Ponderation type
-            send_invitation_link: Click here to send an invitation to them
-            title: Census
-            user: Name
-            voted: Has voted?
+            phone: Telèfon
+            ponderation: Tipus de ponderació
+            send_invitation_link: Feu clic aquí per enviar-lis una invitació
+            title: Cens
+            user: Nom
+            voted: Ha votat?
           new:
-            save: Create
-            title: New participant
+            save: Crea
+            title: Nova participant
           remove_census:
-            confirm: Are you sure you want to remove the census? This operation cannot be undone
-            success: "%{participants_count} entries were successfully deleted from the census"
+            confirm: Esteu segur que voleu suprimir aquest cens? Aquesta operació no es pot desfer
+            success: "%{participants_count} entrades s'han suprimit correctament del cens"
           update:
-            error: There was a problem updating the participants
-            success: Participants saved successfully
+            error: S'ha produït un error en actualitzar la participant
+            success: Participant desada correctament
         permissions:
           sync:
-            started: Participans synchronization has started. Please wait a few minutes and refresh this page.
+            started: La sincronització dels participants ha començat. Espereu uns minuts i actualitzeu aquesta pàgina.
           update:
-            error: There was a problem updating the permissions
-            success: Permissions updated successfully
+            error: S'ha produït un error en actualitzar els permisos
+            success: Permisos actualitzats correctament
         ponderations:
           create:
-            error: There's been and error creating the ponderation
-            success: New ponderation created successfully
+            error: S'ha produït un error en crear la ponderació
+            success: Ponderació creada correctament
           destroy:
-            error: There's been and error removing the ponderation
-            success: Ponderation destroyed successfully
+            error: S'ha produït un error en eliminar la ponderació
+            success: Ponderació eliminada correctament
           edit:
-            save: Save
-            title: Edit ponderation type
+            save: Desa
+            title: Edita el tipus d'afiliació
           form:
-            name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
-            name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
-            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the participants in this ponderation type.
+            name_help: Tipus d'associat, per exemple "soci col·laborador", "soci", "patró". Ha de ser únic.
+            name_placeholder: 'Proveu, per exemple: "membre", "soci", "simpatitzant", "usuari base"...'
+            weight_help: 'Pes del vot, per exemple: "1", "2", "1,5". Aquest número servirà per ponderar els vots de les participants assignades a cada tipologia.'
           index:
             actions:
-              new_ponderation: New ponderation
-            created_at: Created at
-            name: Membership Type
-            num_users: Census total
-            title: Ponderations
-            weight: Vote weight
+              new_ponderation: Nou tipus d'afiliació
+            created_at: Creada el
+            name: Tipus d'associat
+            num_users: Cens total
+            title: Tipus d'afiliacions
+            weight: Pes del vot
           new:
-            save: Create
-            title: New ponderation type
+            save: Crea
+            title: Nou tipus d'afiliació
           update:
-            error: There's been and error updating the ponderation
-            success: Ponderation updated successfully
+            error: S'ha produït un error en actualitzar la ponderació
+            success: Ponderació actualitzada correctament
         settings:
           authorization_method:
-            both: Email and phone number
-            email: Only email
-            phone: Only phone number
+            both: Correu electrònic i número de telèfon mòbil
+            email: Només correu electrònic
+            phone: Només telèfon mòbil
           authorization_method_help: |
-            Available options are:
+            Les opcions disponibles són:
             <ul>
-              <li><b>Only phone number:</b> Uses SMS verification. Participants must input their phone number that matches the census.</li>
-              <li><b>Only email:</b> Participant's email must match the census.</li>
-              <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
+               <li><b>Només el número de telèfon:</b> Utilitza la verificació per SMS. Les participants han d'introduir el seu número de telèfon que coincideixi amb el cens.</li>
+               <li><b>Només correu electrònic:</b> el correu electrònic de la participant ha de coincidir amb el cens.</li>
+               <li><b>Correu electrònic i número de telèfon:</b> utilitza la verificació per SMS. El correu electrònic de la participant ha de coincidir amb el cens i el número de telèfon estarà predefinit.</li>
             </ul>
           check_verifier:
-            not_installed_html: It seems that the "Corporate Governance Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
-          copy_setting: 'Copy ponderations and census from:'
+            not_installed_html: Sembla que el mètode d'autorització "Verificador de Governança societària" no està instal·lat. No podeu utilitzar el cens integrat sense aquest. Instal·leu-lo a <a href="/system">/system</a>.
+          copy_setting: 'Copia ponderacions i cens de:'
           create:
             error: S'ha produït un error en crear la configuració
-            success: Configuració guardada amb èxit
+            success: Configuració desada correctament
           destroy:
-            error: There was a problem removing this setting
+            error: S'ha produït un error en eliminar aquesta configuració
             success: Configuració eliminada correctament
           edit:
-            save: Save
-            title: Edit delegation group
+            save: Desa
+            title: Edita la configuració
           form:
-            max_grants: Maximum delegations per user
+            max_grants: Màxim de delegacions rebudes per persona
           index:
             actions:
-              census: Edit the census
-              delegations: Edit the delegations
-              new_setting: New configuration
-              ponderate: Set weights for vote ponderation
-            authorization_method: Authorization method
-            census: Census total
+              census: Edita el cens
+              delegations: Edita les delegacions
+              new_setting: Nova configuració
+              ponderate: Estableix els pesos per les ponderacions de vot
+            authorization_method: Mètode de verificació de la condició d'associat
+            census: Cens total
             consultation: Consulta
             created_at: Creat el
-            delegations: Delegations
+            delegations: Delegacions totals
             description_html: |
-              This module is designed for organizations that do voting through consultations. The functionalities we have available are: compilation of census, delegations of participants and weights by type of member. We can also use the integrated verifier via SMS, email or both. It is possible to use this module without importing a census, you can manage it in order to make delegations and/or weightings. If you need more information, go to guia.cercles.coop.
+              Aquest mòdul està dissenyat per organitzacions que voten mitjançant consultes. Les funcionalitats que tenim disponibles són: càrrega de cens, delegacions de participants i ponderacions per tipus de membre. També podem utilitzar el verificador integrat per SMS, correu electrònic o ambdós. És possible utilitzar aquest mòdul sense carregar un nou cens, podeu gestionar el vostre cens per fer delegacions i/o ponderacions. Si necessiteu més informació, aneu a guia.cercles.coop.
               <br>
-              Each group can be configured with a different number of maximum delegations per user, different user delegations grants and different sets of ponderation types.
+              Cada grup es pot configurar amb un nombre diferent de delegacions màximes per receptora i diferents tipus de ponderació.
             max_grants: Màx. delegacions/persona
-            open: Open
-            ponderations: Ponderation types
-            state: State
-            title: Corporate Governance
+            open: Oberta
+            ponderations: Tipus de ponderacions
+            state: Estat
+            title: Governança societària
           new:
-            save: Create
-            title: New configuration
+            save: Desa
+            title: Nova configuració
           setting_checks:
-            all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
-            all_users_registered_html: All participants are registered into the platform.
-            click_to_fix: Click here to automatically fix this
-            consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
-            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
-            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
-            missing_registered_users_html: There are %{count} participants that are not registered into the platform.
-            no_delegations_html: There are no vote delegations.
-            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
-            no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
+            all_users_authorized_html: Totes les participants són verficades pel <i>Verificador de Governança societària</i>.
+            all_users_registered_html: Totes les participants estan registrades a la plataforma.
+            click_to_fix: Feu clic aquí per solucionar-ho automàticament
+            consultation_questions_all_verified_html: Totes les preguntes estan restringides pel <i>Verificador de Governança societària</i>.
+            consultation_questions_missing_verifier_html: Hi ha %{count} preguntes que no estan restringides pel <i>Verificador de Governança societària</i>. <b>Sense això, tothom podrà votar-hi.</b> <em>Això és correcte si utilitzeu altres mètodes d'autorització o si tothom té permís per votar.</em>
+            missing_authorizations_html: Hi ha %{count} participants que no estan verificats pel <i>Verificador de Governança societària</i>. <em>Això està bé si aquestes participants tenen els seus vots delegats a altres persones o si utilitzeu altres mètodes de verificació (o cap).</em>
+            missing_emails: El mètode d'autorització no requereix un correu electrònic. Per això, %{count} s'han de registrar elles mateixes a la plataforma
+            missing_registered_users_html: Hi ha %{count} participants que no estan registrats a la plataforma.
+            no_delegations_html: No hi ha delegacions de vot.
+            no_participants_html: No hi ha cens! <b>Afegiu participants o ningú podrà votar si el <i>Verificador de Governança societària</i> està actiu.</b> <em>Això és correcte si feu servir altres mètodes d'autorització o si tothom té permís per votar.</em>
+            no_ponderations_html: No hi ha ponderacions de vot. <b>Totes les participants tindran el mateix pes en els seus vots</b>
             participant: participant
-            user: user
-            users_need_sync_html: The participants list needs to be synchronized. <b>Consultation results might be wrong!</b>
+            user: usuària
+            users_need_sync_html: Cal sincronitzar la llista de participants. <b>Els resultats de la consulta poden ser incorrectes!</b>
           state:
-            closed: Closed
-            ongoing: Ongoing
-            pending: Pending
+            closed: Tancat
+            ongoing: En curs
+            pending: Pendent
           update:
-            error: There was a problem updating the settings
-            success: Settings saved successfully
+            error: S'ha produït un error en actualitzar la configuració
+            success: Configuració guardada amb èxit
         weighted_results:
-          title: Results by answer summing membership weights
+          title: Resultats per resposta sumant ponderació de vot
       authorizations:
         new:
-          missing_phone_error: No s'ha trobat telèfon del membre
+          missing_phone_error: No s'ha trobat telèfon de l'associat
           phone_warning: Aquest número de telèfon s'ha importat per l'administrador. Si us plau, poseu-vos-hi en contacte si no és correcte.
       delegations:
         has_delegations: Vot delegat realitzat
-        link: "\U0001F449 You have delegations granted"
+        link: "\U0001F449 Tens delegacions disponibles"
       delegations_authorizer:
-        email: We are using the email %{email} to verify your identity. If you think this is wrong, please contact us.
-        no_setting: No delegation group found for this consultation. Please contact the admin to fix it.
-        not_in_census: You are not in the census
-        phone: We are using the phone %{phone} to verify your identity. If you think this is wrong, please contact us.
+        email: Estem utilitzant el correu electrònic %{email} per verificar la vostra identitat. Si creieu que això està malament, poseu-vos en contacte amb nosaltres.
+        no_setting: No s'ha trobat cap grup de delegació per a aquesta consulta. Poseu-vos en contacte amb l'administrador per solucionar-ho.
+        not_in_census: No ets al cens
+        phone: Estem utilitzant el telèfon %{phone} per verificar la vostra identitat. Si creieu que això està malament, poseu-vos en contacte amb nosaltres.
       delegations_modal:
         callout: Recorda, estàs votant en nom de
         contextual_help: 'Has estat autoritzat a votar en nom de:'
         title: 'Consulta: delegacions atorgades'
       import_mailer:
         import:
-          errors_present: There were errors in the importation
-          errors_title: "<b>Found:</b> %{errors_count} errors"
-          greeting: Hello %{name},
-          info_messages: Reason for skipping
-          instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
-          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
-          row_number: Row number
-          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: CSV imported
-          success: CSV imported successfully
+          errors_present: Hi ha hagut errors en la importació
+          errors_title: "<b>S'han trobat:</b> %{errors_count} errors"
+          greeting: Hola %{name},
+          info_messages: Motiu d'omissió
+          instructions: "<p>S'adjunta un fitxer amb els detalls de la importació, conté les files que no s'han importat.</p>\n<p>Si voleu continuar important, corregiu les files especificades, suprimiu l'última columna del fitxer, deseu el fitxer i torna a importar.</p>"
+          result: "<b>Importat:</b> %{rows_count} files de %{total_rows_count}."
+          row_number: Número de fila
+          skipped_rows: "<b>S'han omès:</b> %{skipped_rows} files."
+          subject: CSV importat
+          success: CSV importat correctament
           text_error: Error
       invite_participants_mailer:
         confirmation:
-          body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
-          confirm: Confirm participation
-          greeting: Hello %{recipient},
+          body: Us han convidat a participar en la consulta. Feu clic a l'enllaç següent per confirmar la vostra participació.
+          confirm: Confirmar la participació
+          greeting: Hola %{recipient},
       name: Mòdul Decidim ActionDelegator per a cooperatives
       participants_csv_importer:
         import:
-          error: There was a problem importing the participants
-          error_field: Reason for skipping
+          error: S'ha produït un error en importar les participants
+          error_field: Motiu per saltar
           field_name:
-            phone: phone
-            weight: weight
-          phone_exists: Participant with this phone already exists
-          ponderation_not_found: Ponderation type not found
-          skip_import_info: Participant already exists %{with_mismatched_fields}
-          with_mismatched_fields: " with mismatched fields: %{fields}"
+            phone: telèfon
+            weight: ponderació
+          phone_exists: El participant amb aquest telèfon ja existeix
+          ponderation_not_found: No s'ha trobat el tipus de ponderació
+          skip_import_info: El participant ja existeix %{with_mismatched_fields}
+          with_mismatched_fields: "amb camps no coincidents: %{fields}"
       questions:
-        callout_link_text: Review the summary of your vote here
-        callout_text: You have answered %{voted} from a total of %{total} questions.
+        callout_link_text: Revisa el resum de la teva votació aquí
+        callout_text: Has respost %{voted} de un total de %{total} preguntes.
         modal:
-          modal_table_header_answer: Did you answer?
-          modal_table_header_question: Question
-          modal_votes_title: Your votes in "%{title}"
-        question_not_answered: No, take me there
+          modal_table_header_answer: Has respost?
+          modal_table_header_question: Pregunta
+          modal_votes_title: Els teus vots a "%{title}"
+        question_not_answered: No, ves-hi
       sms_message: El teu codi de verificació és %{code}
       user_delegations:
         index:
@@ -323,31 +323,31 @@ ca:
         delegations_verifier:
           authorizations:
             edit:
-              confirm_destroy: Are you sure you want to reset the verification code?
-              destroy: Reset verification code
-              resend: Didn't receive the verification code?
-              send: Confirm
-              title: Introduce the verification code you received
+              confirm_destroy: Esteu segur que voleu restablir el codi de verificació?
+              destroy: Reenvia el codi de verificació
+              resend: No heu rebut el codi de verificació?
+              send: Confirmar
+              title: Introduïeix el codi de verificació que has rebut
             new:
-              authorize: Authorize my account
-              missing_phone_error: Missing membership phone
-              not_in_census: We're sorry but you can't be authorized because your email is not in the census. Please contact the admin if you feel this is a mistake.
-              participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
-              phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
-              send_code: Send verification code
-              title: Authorize with Corporate Governance Verifier
+              authorize: Autoritza el meu compte
+              missing_phone_error: Falta el telèfon de l'associat
+              not_in_census: Ho sentim, però no pots estar autoritzat perquè el teu correu electrònic no està al cens. Poseu-vos en contacte amb l'administrador si creieu que es tracta d'un error.
+              participate_in: 'Aquesta autorització us permet participar en les consultes següents: %{consultations}'
+              phone_warning: Aquest número de telèfon ha estat importat per l'administrador. Si us plau, poseu-vos en contacte si no és correcte.
+              send_code: Envia el codi de verificació
+              title: Autoritza amb el Verificador de Governança societària
           not_active: The Corporate Governance Verifier cannot be granted at this time as there are no active voting spaces.
     admin:
       actions:
-        invite: Send invitation
-        invite_all: Send invitations to non-existing users
-        resend: Resend invitation
+        invite: Enviar invitació
+        invite_all: Envia invitacions a participants que no existeixen
+        resend: Reenviar la invitació
       consultations:
         results:
-          default_metadata: "(dades de membre no disponibles)"
+          default_metadata: "(dades de l'associat no disponibles)"
           export: Exporta
           export_filename: consulta_resultats
-          membership_type: Tipus de membre
+          membership_type: Tipus d'associat
           membership_weight: Ponderació
           total_delegates: "%{count} vots delegats"
     authorization_handlers:
@@ -358,22 +358,22 @@ ca:
       delegations_verifier:
         explanation: Els usuaris verificats per aquest mètode poden delegar els seus vots a altres usuaris
         fields:
-          phone: Phone number
-        name: Corporate Governance
+          phone: Número de telèfon
+        name: Governança societària
     resources:
       question:
         actions:
-          comment: Comment
-          vote: Vote
+          comment: Comentari
+          vote: Vota
     verifications:
       authorizations:
         first_login:
           actions:
-            delegations_verifier: Get verified with Corporate Governance Census
+            delegations_verifier: Verificat amb el Cens de Governança Societària
   devise:
     mailer:
       invite_participant:
-        subject: You have been invited to participate in the consultation
+        subject: Us han convidat a participar en la consulta
   layouts:
     decidim:
       admin:
