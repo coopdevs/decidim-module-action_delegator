@@ -336,7 +336,7 @@ es:
               phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
               send_code: Enviar código de verificación
               title: Autorizar con el Verificador de Gobernanza Societaria
-          not_active: The Corporate Governance Verifier cannot be granted at this time as there are no active voting spaces.
+          not_active: No es posible verificar con Gobernanza Corporativa debido a que actualmente no hay ningún espacio de voto activo.
     admin:
       actions:
         invite: Enviar invitación
@@ -369,7 +369,7 @@ es:
       authorizations:
         first_login:
           actions:
-            delegations_verifier: Get verified with Corporate Governance Census
+            delegations_verifier: Verificarse con el Centro de Gobernanza Corporativa
   devise:
     mailer:
       invite_participant:
