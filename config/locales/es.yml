@@ -24,7 +24,7 @@ es:
             email:
               email_not_found: Lo sentimos, este correo electrónico no está en el censo. Por favor, póngase en contacto con nosotros si cree que esto es un error.
             phone:
-              phone_not_found: Lo sentimos, este teléfono móvil no está en el censo. Por favor, póngase en contacto con nosotros si cree que esto es un error.
+              phone_not_found: Lo sentimos, este correo electrónico no está en el censo. Por favor, póngase en contacto con nosotros si cree que esto es un error.
   decidim:
     action_delegator:
       admin:
@@ -51,265 +51,265 @@ es:
           index:
             actions:
               csv_import: Importar un fichero CSV
-              new_delegation: Nueva delegación
+              new_delegation: Nueva participante
             consultation: Consulta
             created_at: Creado el
             delete: Eliminar
             description_html: Estas son las delegaciones actuales para esta consulta
-            grantee: Grantee (to)
-            grantee_voted: Grantee has voted in behalf of granter?
-            granter: Granter (from)
-            granter_voted: Granter has voted?
-            title: User vote delegations
+            grantee: Receptora (a)
+            grantee_voted: '¿Se ha utilizado la delegación?'
+            granter: Otorgante
+            granter_voted: '¿Ha votado la otorgante?'
+            title: Participantes
           new:
-            grantee: Grantee (to)
-            granter: Granter (from)
+            grantee: Beneficiario
+            granter: Otorgante
             save: Crear
             select_member: Seleccionar miembro
             title: Nueva delegación
         invite_participants:
           invite_all_users:
-            error: There was an error inviting the users
-            success: Users invited successfully
+            error: Hubo un error al invitar a las participantes
+            success: Participantes invitadas correctamente
           invite_user:
-            error: There was an error inviting the user
-            success: User invited successfully
+            error: Hubo un error al invitar al participante
+            success: Participante invitada correctamente
           permissions:
-            not_allowed: You are not allowed for this action
+            not_allowed: No tienes permisos para realizar esta acción
           resend_invitation:
-            error: There was an error resending the invitation
-            success: Invitation resent successfully
+            error: Se ha producido un error al reenviar la invitación
+            success: Invitación reenviada con éxito
         manage_delegations:
           create:
-            error: There was a problem importing the participants
-            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+            error: Se ha producido un error en importar las participantes
+            success: El proceso de importación ha comenzado, por favor espere unos minutos y actualice la página para ver la lista de participantes. Los resultados de importación se enviarán por correo electrónico.
           new:
-            import: Import
-            required_fields: 'Required fields: granter email, grantee email'
-            title: Import delegations
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+            import: Importar
+            required_fields: 'Campos requeridos: correo del otorgante, correo del receptor'
+            title: Importar delegaciones
+            title_example: 'Ejemplo:'
+            upload_instructions: Debe ser un archivo en formato CSV con un encabezado.
         manage_participants:
           create:
-            error: There was a problem importing the participants
-            success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
+            error: Se ha producido un error en importar las participantes
+            success: El proceso de importación ha comenzado, por favor espere unos minutos y actualice la página para ver la lista de participantes. Los resultados de importación se enviarán por correo electrónico.
           new:
             authorization_method:
-              both: email and phone number
-              email: email
-              phone: phone number
-            describe: 'Note that there''s also possible to import weights using the name on the ponderation table instead of the weight number, for instance:'
-            import: Import
-            required_fields: 'Required fields: %{authorization_method}'
-            title: Import participants
-            title_example: 'Example:'
-            upload_instructions: Must be a file in CSV format with a header.
+              both: correo electrónico y número de teléfono
+              email: correo electrónico
+              phone: número de teléfono
+            describe: 'Tenga en cuenta que también es posible importar pesos usando el nombre en la tabla de ponderación en lugar del número de peso, por ejemplo:'
+            import: Importar
+            required_fields: 'Campos requeridos: %{authorization_method}'
+            title: Importar participantes
+            title_example: 'Ejemplo:'
+            upload_instructions: Debe ser un archivo en formato CSV con un encabezado.
         menu:
           consultations_submenu:
             by_answer: Por respuesta
             by_type_and_weight: Por tipo y peso
             sum_of_weights: Por suma de pesos
-          delegations: Corporate Governance
+          delegations: Gobernanza Societaria
           participants: Participantes
         participants:
           create:
-            error: There was a problem creating the participants
-            success: Participants created successfully
+            error: Se ha producido un error en importar las participantes
+            success: Participantes creados con éxito
           destroy:
-            error: There was a problem removing this participant
-            success: Participant successfully destroyed
+            error: Se ha producido un error al eliminar este participante
+            success: Participante correctamente eliminado
           edit:
-            save: Save
-            title: Edit participant
+            save: Guardar
+            title: Editar participante
           index:
             actions:
-              csv_import: Import CSV
-              new_participant: New participant
-              remove_census: Remove census
-            all_users_registered_html: All users are registered into the platform
-            created_at: Created at
-            email: Email
-            last_login: Last login
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
-            missing_registered: There are %{missing_registered} that are not registered into the platform
-            never_logged: Never logged yet
-            participant: participant
-            phone: Phone
-            ponderation: Ponderation type
-            send_invitation_link: Click here to send an invitation to them
-            title: Census
-            user: Name
-            voted: Has voted?
+              csv_import: Importar CSV
+              new_participant: Nueva participante
+              remove_census: Eliminar censo
+            all_users_registered_html: Todas las participantes están registradas en la plataforma
+            created_at: Creado el
+            email: Correo electrónico
+            last_login: Último acceso
+            missing_emails: El método de autorización no requiere un correo electrónico. Por esto, %{count} debe registrarse en la plataforma
+            missing_registered: Hay %{missing_registered} participantes que no están registradas en la plataforma
+            never_logged: Nunca ha iniciado sesión
+            participant: participante
+            phone: Teléfono
+            ponderation: Tipos de ponderación
+            send_invitation_link: Haga clic aquí para enviarles una invitación
+            title: Censo
+            user: Nombre
+            voted: '¿Ha votado?'
           new:
-            save: Create
-            title: New participant
+            save: Crear
+            title: Nueva participante
           remove_census:
-            confirm: Are you sure you want to remove the census? This operation cannot be undone
-            success: "%{participants_count} entries were successfully deleted from the census"
+            confirm: '¿Está seguro de que quiere eliminar el censo? Esta acción no se puede deshacer'
+            success: "%{participants_count} entradas fueron eliminadas de la página con éxito"
           update:
-            error: There was a problem updating the participants
-            success: Participants saved successfully
+            error: Se ha producido un error en actualizar las participantes
+            success: Participantes guardados con éxito
         permissions:
           sync:
-            started: Participans synchronization has started. Please wait a few minutes and refresh this page.
+            started: La sincronización de participantes ha comenzado. Por favor espere unos minutos y actualice esta página.
           update:
-            error: There was a problem updating the permissions
-            success: Permissions updated successfully
+            error: Se ha producido un error al actualizar los permisos
+            success: Permisos correctamente actualizados.
         ponderations:
           create:
-            error: There's been and error creating the ponderation
-            success: New ponderation created successfully
+            error: Se ha producido un error al crear la ponderación
+            success: Ponderación creada correctamente
           destroy:
-            error: There's been and error removing the ponderation
-            success: Ponderation destroyed successfully
+            error: Se ha producido un error al eliminar la ponderación
+            success: Ponderación destruida correctamente
           edit:
-            save: Save
-            title: Edit ponderation type
+            save: Guardar
+            title: Editar tipos de ponderación
           form:
-            name_help: Member type, e.g. "member", "associate", "supporter". Must be unique.
-            name_placeholder: 'Try, for example: "member", "associate", "supporter"...'
-            weight_help: Vote weight, e.g. "1", "2", "1.5". This number will be used to ponderate the votes for the participants in this ponderation type.
+            name_help: Tipo de asociado, p. ej., "socio", "consumidor", "patrón". Debe ser único.
+            name_placeholder: 'Prueba, por ejemplo: "miembro", "asociado", "partidario"...'
+            weight_help: Peso del voto p. ej., "1", "2", "1.5". Este número se utilizará para sopesar los votos de las participantes en este tipo de ponderación.
           index:
             actions:
-              new_ponderation: New ponderation
-            created_at: Created at
-            name: Membership Type
-            num_users: Census total
-            title: Ponderations
-            weight: Vote weight
+              new_ponderation: Nueva ponderación
+            created_at: Creado el
+            name: Tipo de miembro
+            num_users: Censo total
+            title: Ponderaciones
+            weight: Peso del voto
           new:
-            save: Create
-            title: New ponderation type
+            save: Crear
+            title: Nuevo tipo de ponderación
           update:
-            error: There's been and error updating the ponderation
-            success: Ponderation updated successfully
+            error: Se ha producido un error al actualizar la ponderación
+            success: Ponderación actualizada correctamente
         settings:
           authorization_method:
-            both: Email and phone number
-            email: Only email
-            phone: Only phone number
+            both: Correo electrónico y número de teléfono
+            email: Solo correo electrónico
+            phone: Solo número de teléfono móvil
           authorization_method_help: |
-            Available options are:
+            Las opciones disponibles son:
             <ul>
-              <li><b>Only phone number:</b> Uses SMS verification. Participants must input their phone number that matches the census.</li>
-              <li><b>Only email:</b> Participant's email must match the census.</li>
-              <li><b>Email and phone number:</b> Uses SMS verification. Participant's email must match the census and phone number will be predefined.</li>
+            <li><b>Solo número de teléfono:</b> Utiliza verificación por SMS. Las participantes deben ingresar su número de teléfono que coincida con el censo.</li>
+            <li><b>Solo correo electrónico:</b> El correo electrónico de la participante debe coincidir con el censo.</li>
+            <li><b>Correo electrónico y número de teléfono:</b> Utiliza verificación por SMS. El correo electrónico de la participante debe coincidir con el censo y el número de teléfono estará predefinido.</li>
             </ul>
           check_verifier:
-            not_installed_html: It seems that the "Corporate Governance Verifier" authorization method is not installed. You cannot use the integrated census without it. Please install it at <a href="/system">/system</a>.
-          copy_setting: 'Copy ponderations and census from:'
+            not_installed_html: Parece que el método de autorización "Verificador de Gobernanza Societaria" no está activado. No puedes autenticar el censo sin la activación. Instálelo en <a href="/system">/system</a>.
+          copy_setting: 'Copiar ponderaciones y censo de:'
           create:
             error: Se ha producido un problema al crear la configuración
             success: Configuración guardada correctamente
           destroy:
-            error: There was a problem removing this setting
+            error: Hubo un problema al destruir esta configuración
             success: Configuración eliminada correctamente
           edit:
-            save: Save
-            title: Edit delegation group
+            save: Guardar
+            title: Editar grupo de delegación
           form:
-            max_grants: Maximum delegations per user
+            max_grants: Máximas delegaciones por participante
           index:
             actions:
-              census: Edit the census
-              delegations: Edit the delegations
-              new_setting: New configuration
-              ponderate: Set weights for vote ponderation
-            authorization_method: Authorization method
-            census: Census total
+              census: Edita el censo
+              delegations: Edita las delegaciones
+              new_setting: Nueva configuración
+              ponderate: Establecer los pesos para la ponderación de votos
+            authorization_method: Método de autorización
+            census: Censo total
             consultation: Consulta
             created_at: Creado el
-            delegations: Delegations
+            delegations: Total de delegaciones
             description_html: |
-              This module is designed for organizations that do voting through consultations. The functionalities we have available are: compilation of census, delegations of participants and weights by type of member. We can also use the integrated verifier via SMS, email or both. It is possible to use this module without importing a census, you can manage it in order to make delegations and/or weightings. If you need more information, go to guia.cercles.coop.
+              Este módulo está diseñado para organizaciones que votan a través de consultas. Las funcionalidades que tenemos disponibles son: elaboración de censo, delegaciones de participantes y ponderaciones por tipo de miembro. También podemos utilizar el verificador integrado a través de SMS, correo electrónico o ambos. Es posible utilizar este módulo sin importar un censo, puede gestionarlo para realizar delegaciones y/o ponderaciones. Si necesitas más información, ingresa a guia.cercles.coop.
               <br>
-              Each group can be configured with a different number of maximum delegations per user, different user delegations grants and different sets of ponderation types.
+              Cada grupo se puede configurar con un número diferente de delegaciones máximas por usuario, diferentes concesiones de delegaciones de usuario y diferentes conjuntos de tipos de ponderación.
             max_grants: Máx. delegaciones/persona
-            open: Open
-            ponderations: Ponderation types
-            state: State
-            title: Corporate Governance
+            open: Abierto
+            ponderations: Tipos de ponderación
+            state: Estado
+            title: Gobernanza Societaria
           new:
-            save: Create
-            title: New configuration
+            save: Guardar
+            title: Nueva configuración
           setting_checks:
-            all_users_authorized_html: All participants are verified by the <i>Corporate Governance Verifier</i>.
-            all_users_registered_html: All participants are registered into the platform.
-            click_to_fix: Click here to automatically fix this
-            consultation_questions_all_verified_html: All questions are restricted by the <i>Corporate Governance Verifier</i>.
-            consultation_questions_missing_verifier_html: There are %{count} questions that are not restricted by the <i>Corporate Governance Verifier</i>. <b>Without it, anyone will be able to vote on them.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
-            missing_authorizations_html: There are %{count} participants that are not verified by the <i>Corporate Governance Verifier</i>. <em>This is ok if these participants have their votes delegated to others or you are using other verification methods (or none).</em>
-            missing_emails: The authorization method does not require an email. Because of this, %{count} must register themselves on the platform
-            missing_registered_users_html: There are %{count} participants that are not registered into the platform.
-            no_delegations_html: There are no vote delegations.
-            no_participants_html: There is no census! <b>Add participants or nobody will be able to vote if <i>Corporate Governance Verifier</i> is active.</b> <em>This is ok if you are using other authorization methods or everyone is allowed to vote.</em>
-            no_ponderations_html: There are no vote ponderations. <b>All users will have the same weight on their votes</b>
-            participant: participant
-            user: user
-            users_need_sync_html: The participants list needs to be synchronized. <b>Consultation results might be wrong!</b>
+            all_users_authorized_html: Todas las participantes están verificadas por el <i>Verificador de Gobernanza Societaria</i>.
+            all_users_registered_html: Todos los participantes están registrados en la plataforma.
+            click_to_fix: Haga clic aquí para arreglar esto automáticamente
+            consultation_questions_all_verified_html: Todas las preguntas están restringidas por el <i>Verificador de Gobernanza Societaria</i>.
+            consultation_questions_missing_verifier_html: Hay %{count} preguntas que no están restringidas por el <i>Verificador de Gobernanza Societaria</i>. <b>Sin la restricción, cualquiera podrá votar las preguntas.</b> <em>Esto está bien si está utilizando otros métodos de autorización o si todas las registradas pueden votar.</em>
+            missing_authorizations_html: Hay %{count} participantes que no están verificadas por el <i>Verificador de Gobernanza Societaria</i>. <em>Está bien si estas participantes tienen sus votos delegados a otras o si está utilizando otros métodos de verificación (o ninguno).</em>
+            missing_emails: El método de autorización no requiere un correo electrónico. Por esto, %{count} debe registrarse en la plataforma
+            missing_registered_users_html: Hay %{count} participantes que no están registrados en la plataforma.
+            no_delegations_html: No hay votos delegados.
+            no_participants_html: '¡No hay censo! <b>Añade participantes o nadie podrá votar si el <i>Verificador de Gobernanza Societaria</i> está activo.</b> <em>Está bien si está utilizando otros métodos de autorización o si todas las registradas pueden votar.</em>'
+            no_ponderations_html: No hay ponderaciones de votos. <b>Todos los usuarios tendrán el mismo peso en sus votos</b>
+            participant: participante
+            user: participante
+            users_need_sync_html: La lista de participantes debe sincronizarse. <b>¡Los resultados de la consulta pueden ser incorrectos!</b>
           state:
-            closed: Closed
-            ongoing: Ongoing
-            pending: Pending
+            closed: Cerrado
+            ongoing: En proceso
+            pending: Pendiente
           update:
-            error: There was a problem updating the settings
-            success: Settings saved successfully
+            error: Se ha producido un problema al actualizar la configuración
+            success: Configuración guardada correctamente
         weighted_results:
-          title: Results by answer summing membership weights
+          title: Resultados por respuesta sumando pesos de miembros
       authorizations:
         new:
           missing_phone_error: Falta el teléfono de miembro
           phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
       delegations:
         has_delegations: Voto delegado realizado
-        link: "\U0001F449 You have delegations granted"
+        link: "\U0001F449 Tienes delegaciones concedidas"
       delegations_authorizer:
-        email: We are using the email %{email} to verify your identity. If you think this is wrong, please contact us.
-        no_setting: No delegation group found for this consultation. Please contact the admin to fix it.
-        not_in_census: You are not in the census
-        phone: We are using the phone %{phone} to verify your identity. If you think this is wrong, please contact us.
+        email: Estamos utilizando el correo electrónico %{email} para verificar su identidad. Si cree que esto está mal, póngase en contacto con nosotros.
+        no_setting: No se encontró ningún grupo de delegación para esta consulta. Póngase en contacto con el administrador para solucionarlo.
+        not_in_census: No estás en el censo
+        phone: Estamos usando el teléfono %{phone} para verificar su identidad. Si cree que esto está mal, póngase en contacto con nosotros.
       delegations_modal:
         callout: Recuerda, estás votando en nombre de
         contextual_help: 'Se le ha concedido el voto de:'
         title: 'Consulta: delegaciones concedidas'
       import_mailer:
         import:
-          errors_present: There were errors in the importation
-          errors_title: "<b>Found:</b> %{errors_count} errors"
-          greeting: Hello %{name},
-          info_messages: Reason for skipping
-          instructions: "<p>Attached is a file with import details, which contains rows that were not imported.</p>\n<p>If you want to continue importing, correct the rows specified, delete the last column from the file, save \nthe file and import again.</p>\n"
-          result: "<b>Imported:</b> %{rows_count} rows of %{total_rows_count}."
-          row_number: Row number
-          skipped_rows: "<b>Skipped:</b> %{skipped_rows} rows."
-          subject: CSV imported
-          success: CSV imported successfully
+          errors_present: Se han producido errores durante la importación
+          errors_title: "<b>Se han encontrado:</b> %{errors_count} errores"
+          greeting: Hola %{name},
+          info_messages: Motivo de omisión
+          instructions: "<p>Se adjunta un archivo con detalles de importación, contiene filas que no fueron importadas.</p>\n<p>Si desea continuar con la importación, corrija las filas especificadas, elimine la última columna del archivo, guarde el archivo e importar de nuevo.</p>"
+          result: "<b>Importado:</b> %{rows_count} filas de %{total_rows_count}."
+          row_number: Numero fila
+          skipped_rows: "<b>Omitidas:</b> %{skipped_rows} filas."
+          subject: CSV importado
+          success: CSV importado correctamente
           text_error: Error
       invite_participants_mailer:
         confirmation:
-          body: You have been invited to participate in the consultation. Please click the link below to confirm your participation.
-          confirm: Confirm participation
-          greeting: Hello %{recipient},
+          body: Has sido invitado a participar en la consulta. Por favor, haz clic en el enlace de abajo para confirmar tu participación.
+          confirm: Confirmar la participación
+          greeting: '¡Hola, %{recipient}!,'
       name: Módulo Cooperativas - ActionDelegator para Decidim
       participants_csv_importer:
         import:
-          error: There was a problem importing the participants
-          error_field: Reason for skipping
+          error: Se ha producido un error en importar las participantes
+          error_field: Motivo para omitir
           field_name:
-            phone: phone
-            weight: weight
-          phone_exists: Participant with this phone already exists
-          ponderation_not_found: Ponderation type not found
-          skip_import_info: Participant already exists %{with_mismatched_fields}
-          with_mismatched_fields: " with mismatched fields: %{fields}"
+            phone: teléfono
+            weight: peso
+          phone_exists: Ya existe un participante con esta dirección de correo electrónico
+          ponderation_not_found: Tipo de ponderación no encontrado
+          skip_import_info: El participante ya existe %{with_mismatched_fields}
+          with_mismatched_fields: "con campos no coincidentes: %{fields}"
       questions:
-        callout_link_text: Review the summary of your vote here
-        callout_text: You have answered %{voted} from a total of %{total} questions.
+        callout_link_text: Revisa el resumen de tu votación aquí
+        callout_text: Has respondido %{voted} de un total de %{total} preguntas.
         modal:
-          modal_table_header_answer: Did you answer?
-          modal_table_header_question: Question
-          modal_votes_title: Your votes in "%{title}"
-        question_not_answered: No, take me there
+          modal_table_header_answer: Has respondido?
+          modal_table_header_question: Pregunta
+          modal_votes_title: Tus votos a "%{title}"
+        question_not_answered: No, ir a la pregunta
       sms_message: Su código de verificación es %{code}
       user_delegations:
         index:
@@ -323,25 +323,25 @@ es:
         delegations_verifier:
           authorizations:
             edit:
-              confirm_destroy: Are you sure you want to reset the verification code?
-              destroy: Reset verification code
-              resend: Didn't receive the verification code?
-              send: Confirm
-              title: Introduce the verification code you received
+              confirm_destroy: '¿Seguro que quieres restablecer el código de verificación?'
+              destroy: Reiniciar código de verificación
+              resend: '¿No has recibido el código de verificación?'
+              send: Confirmar
+              title: Introduce el código de verificación que recibiste
             new:
-              authorize: Authorize my account
-              missing_phone_error: Missing membership phone
-              not_in_census: We're sorry but you can't be authorized because your email is not in the census. Please contact the admin if you feel this is a mistake.
-              participate_in: 'This authorization allows you to participate in the following consultations: %{consultations}'
-              phone_warning: This phone number has been imported by the admin. Please, reach out if it's not correct.
-              send_code: Send verification code
-              title: Authorize with Corporate Governance Verifier
+              authorize: Autorizar mi cuenta
+              missing_phone_error: Falta el teléfono de miembro
+              not_in_census: Lo sentimos, pero no puede ser autorizado porque su correo electrónico no está en el censo. Póngase en contacto con el administrador si cree que se trata de un error.
+              participate_in: 'Esta autorización le permite participar en las siguientes consultas: %{consultations}'
+              phone_warning: Este número de teléfono ha sido importado por el administrador. Por favor, contacta si no es correcto.
+              send_code: Enviar código de verificación
+              title: Autorizar con el Verificador de Gobernanza Societaria
           not_active: The Corporate Governance Verifier cannot be granted at this time as there are no active voting spaces.
     admin:
       actions:
-        invite: Send invitation
-        invite_all: Send invitations to non-existing users
-        resend: Resend invitation
+        invite: Enviar invitación
+        invite_all: Enviar invitaciones a participantes no registradas
+        resend: Reenviar la invitación
       consultations:
         results:
           default_metadata: "(datos de afiliación no disponibles)"
@@ -358,13 +358,13 @@ es:
       delegations_verifier:
         explanation: Las participantes verificadas con este método pueden delegar votos a otras participantes
         fields:
-          phone: Phone number
-        name: Corporate Governance
+          phone: Número de teléfono
+        name: Gobernanza Societaria
     resources:
       question:
         actions:
-          comment: Comment
-          vote: Vote
+          comment: Comentario
+          vote: Votar
     verifications:
       authorizations:
         first_login:
@@ -373,7 +373,7 @@ es:
   devise:
     mailer:
       invite_participant:
-        subject: You have been invited to participate in the consultation
+        subject: Has sido invitada a participar en una consulta
   layouts:
     decidim:
       admin:
