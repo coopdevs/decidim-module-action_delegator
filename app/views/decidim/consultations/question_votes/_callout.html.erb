@@ -28,7 +28,7 @@
                   <% if question.votes.where(author: current_user).any? %>
                     <% user_response = question.responses.joins(:votes).find_by(votes: { author: current_user }) %>
                       <% if user_response %>
-                        <p title="<%= translated_attribute(user_response.title) %>"><%= t("action_delegator.questions.question_answered") %></p>
+                        <p title="<%= translated_attribute(user_response.title) %>"><%= t("action_delegator.questions.question_answered", scope: "decidim") %></p>
                       <% else %>
                         <%= link_to t("action_delegator.questions.question_not_answered", scope: "decidim"), decidim_consultations.question_path(question), class: "text-primary" %>
                       <% end %>
