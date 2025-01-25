@@ -86,12 +86,12 @@ cs:
           new:
             import: Import
             required_fields: 'Required fields: granter email, grantee email'
-            title: Import delegations
+            title: Importovat delegace
             title_example: 'Příklad:'
-            upload_instructions: Must be a file in CSV format with a header.
+            upload_instructions: Musí být soubor ve formátu CSV se záhlavím.
         manage_participants:
           create:
-            error: There was a problem importing the participants
+            error: Při importu účastníků došlo k chybě
             success: The import process has started, please wait a few minutes and refresh the page to see the list of participants. Import results will be sent by email.
           new:
             authorization_method:
